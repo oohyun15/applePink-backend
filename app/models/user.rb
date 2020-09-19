@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :chats, through: :user_chats
   has_many :messages
 
-  belongs_to :group
+  belongs_to :group, optional: :true
 
   enum user_type: %i(normal company)
 
