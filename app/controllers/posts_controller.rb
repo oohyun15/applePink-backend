@@ -4,6 +4,11 @@ class PostsController < ApplicationController
     render json: @posts, status: :ok
   end
 
+  def show
+    @post = Post.find(params[:id])
+    render json: @post, status: :ok
+  end
+
   def new
     @post = Post.new
     render json: @post, status: :ok
@@ -11,7 +16,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.create! post_params
-    render json: @post, status: :ok
+    redirect_to post_path @post
   end
 
   private
