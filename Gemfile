@@ -12,8 +12,6 @@ gem "puma", "~> 3.11"
 gem "sass-rails", "~> 5"
 
 gem "devise"
-gem "jwt"
-gem "figaro"
 gem "ransack"
 gem "carrierwave"
 gem "mini_magick"
