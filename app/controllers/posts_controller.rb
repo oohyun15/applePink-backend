@@ -22,7 +22,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.create! post_params
-    render json: @post, status: :ok
+    redirect_to post_path @post
   end
 
   private
