@@ -14,9 +14,13 @@ class ChatsController < ApplicationController
   end
 
   def create
-    @chat = current_user.chats.create!    
-    @post.user.user_chats.create!(chat_id: @chat.id)
-
+    if user = @post.chat_users.find_by(id: current_user.id)
+      @chat = user.chats.find_by(post_id: @post.id)
+    else
+      @chat = @post.chats.create!
+      UserChat.create!(user_id: current_user.id, chat_id: @chat.id)
+      UserChat.create!(user_id: @post.user.id, chat_id: @chat.id)
+    end
     redirect_to chat_path @chat
   end
 
