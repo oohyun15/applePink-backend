@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
 
-  before_action :load_post, only: %i(show edit update destory) 
-  
+  before_action :load_post, only: %i(show edit update destroy)
+  before_action :post_params, only: %i(create update)
+
   def index
     @posts = Post.all
     render json: @posts, status: :ok
@@ -20,9 +21,19 @@ class PostsController < ApplicationController
     render json: @post, status: :ok
   end
 
+  def update
+    @post.update(post_params)
+    redirect_to post_path(@post)
+  end
+
   def create
     @post = Post.create! post_params
-    render json: @post, status: :ok
+    redirect_to post_path(@post)
+  end
+
+  def destroy
+    @post.destroy
+    redirect_to posts_path
   end
 
   private
