@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  USER_COLUMNS = %i(email name password)  
+  USER_COLUMNS = %i(email name password password_confirmation)  
 
   has_secure_password
 

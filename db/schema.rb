@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_111814) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_type"
     t.bigint "group_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
   end
 
