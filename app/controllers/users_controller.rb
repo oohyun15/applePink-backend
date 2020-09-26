@@ -6,6 +6,14 @@ class UsersController < ApplicationController
   end
 
   def sign_in
+    debugger
+    login_params = JSON.parse(request.body.read)
+    @user = User.find_by(email: login_params["email"])
+    if @user&.authenticate(login_params["password"])
+      render json: { token: payload(@user), username: @user.name }, status: :ok
+    else
+      render json: { error: "unauthorized" }, status: :unauthorized
+    end
   end
 
   # 유저 목록 보기
