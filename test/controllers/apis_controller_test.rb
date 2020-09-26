@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class ApiControllerTest < ActionDispatch::IntegrationTest
+class ApisControllerTest < ActionDispatch::IntegrationTest
   test "should get test" do
-    get api_test_url
+    get apis_test_url
     assert_response :success
   end
 
