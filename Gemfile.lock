@@ -336,6 +336,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 6.0)
   acts_as_list
   array_enum
+  bcrypt
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)

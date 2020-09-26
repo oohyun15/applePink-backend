@@ -22,6 +22,8 @@ gem "activeadmin_addons"
 gem "acts_as_list"
 gem "activeadmin_reorderable"
 gem "array_enum"
+gem 'bcrypt' 
+
 
 # hashtag
 gem "acts-as-taggable-on", "~> 6.0"

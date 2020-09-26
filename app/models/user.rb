@@ -1,9 +1,6 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-         
+  USER_COLUMNS = %i(email name password)  
+
   has_many :posts
   has_many :user_chats
   has_many :chats, through: :user_chats

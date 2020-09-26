@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :load_user, only: %i(show edit update destroy)
 
   # 로그인 페이지
   def log_in
@@ -13,13 +14,18 @@ class UsersController < ApplicationController
 
   # 유저 마이페이지
   def show
+    render json: @user, status: :ok
   end
 
   def new
+    @user = User.new
+    render json: @user, status: :ok
   end
 
   # 유저 생성 POST sign_up
   def create
+    @user = User.create! user_params
+    redirect_to user_path(@user)
   end
 
   def edit
@@ -30,5 +36,15 @@ class UsersController < ApplicationController
 
   # 회원 탈퇴
   def destroy
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(User::USER_COLUMNS)
+  end
+
+  def load_user
+    @user = User.find(params[:id])
   end
 end
