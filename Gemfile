@@ -38,6 +38,10 @@ gem "turbolinks", "~> 5"
 gem "jbuilder", "~> 2.7"
 gem "bootsnap", ">= 1.4.2", require: false
 
+# JWT 인증
+gem "jwt"
+gem "figaro"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
