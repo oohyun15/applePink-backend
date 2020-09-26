@@ -11,7 +11,6 @@ gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 3.11"
 gem "sass-rails", "~> 5"
 
-gem "devise"
 gem "ransack"
 gem "carrierwave"
 gem "mini_magick"
