@@ -1,23 +1,11 @@
 class UsersController < ApplicationController
   before_action :load_user, only: %i(show edit update destroy)
-
-  # 로그인 페이지
-  def log_in
-  end
-
-  def sign_in
-    debugger
-    login_params = JSON.parse(request.body.read)
-    @user = User.find_by(email: login_params["email"])
-    if @user&.authenticate(login_params["password"])
-      render json: { token: payload(@user), username: @user.name }, status: :ok
-    else
-      render json: { error: "unauthorized" }, status: :unauthorized
-    end
-  end
+  before_action :authenticate_user!, only: %i(edit update destroy)
 
   # 유저 목록 보기
   def index
+    @users = User.all
+    render json: @users, status: :ok
   end
 
   # 유저 마이페이지

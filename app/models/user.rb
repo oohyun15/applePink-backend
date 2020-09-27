@@ -1,7 +1,10 @@
 class User < ApplicationRecord
-  USER_COLUMNS = %i(email name password password_confirmation)  
+  USER_COLUMNS = %i(email nickname password password_confirmation)  
 
   has_secure_password
+
+  validates :email, presence: true
+  validates :nickname, presence: true
 
   has_many :posts
   has_many :user_chats

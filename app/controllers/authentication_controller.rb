@@ -1,29 +1,22 @@
 class AuthenticationController < ApplicationController
-
+  before_action :authenticate_user!, only: %i(create) 
   # 로그인 페이지
   def new
   end
 
   def create
-    login_params = JSON.parse(request.body.read)
-    @user = User.find_by(email: login_params["email"])
-    if @user&.authenticate(login_params["password"])
-      render json: { token: payload(@user), username: @user.name }, status: :ok
-    else
-      render json: { error: "unauthorized" }, status: :unauthorized
-    end
   end
 
   ## JWT 토큰 생성을 위한 Devise 유저 정보 검증
-  def authenticate_user
+  def authenticate_user!
     ## body로 부터 받은 json 형식의 params를 parsing
     json_params = JSON.parse(request.body.read)
 
-    user = User.find_for_database_authentication(email: json_params["auth"]["email"])
-    if user.valid_password?(json_params["auth"]["password"])
-      render json: payload(user)
+    @user = User.find_by(email: json_params["user"]["email"])
+    if @user&.authenticate(json_params["user"]["password"])
+      render json: { token: payload(@user), nickname: @user.nickname }, status: :ok
     else
-      render json: { errors: ["Invalid Username/Password"] }, status: :unauthorized
+      render json: { error: "unauthorized" }, status: :unauthorized
     end
   end
 
