@@ -4,8 +4,7 @@ class ApplicationController < ActionController::API
 
   protected
 
-  ## JWT 토큰 검증
-  def jwt_authenticate_request!
+  def authenticate_user!
     ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
     unless user_id_in_token?
       render json: { errors: ["Not Authenticated"] }, status: :unauthorized
@@ -16,6 +15,7 @@ class ApplicationController < ActionController::API
     @current_user = User.find(auth_token[:user_id])
   rescue JWT::VerificationError, JWT::DecodeError
     render json: { errors: ["Not Authenticated"] }, status: :unauthorized
+    return
   end
 
   private

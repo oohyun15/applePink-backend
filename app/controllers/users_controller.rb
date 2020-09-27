@@ -21,10 +21,11 @@ class UsersController < ApplicationController
   # 유저 생성 POST sign_up
   def create
     @user = User.create! user_params
-    redirect_to user_path(@user)
+    redirect_to users_sign_in_path
   end
 
   def edit
+    render json: current_user, status: :ok
   end
 
   def update

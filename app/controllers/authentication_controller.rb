@@ -1,15 +1,10 @@
 class AuthenticationController < ApplicationController
-  before_action :authenticate_user!, only: %i(create) 
   # 로그인 페이지
   def new
+    render json: { message: "로그인 정보를 입력해주세요."}, status: :ok
   end
 
   def create
-  end
-
-  ## JWT 토큰 생성을 위한 Devise 유저 정보 검증
-  def authenticate_user!
-    ## body로 부터 받은 json 형식의 params를 parsing
     json_params = JSON.parse(request.body.read)
 
     @user = User.find_by(email: json_params["user"]["email"])
