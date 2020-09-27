@@ -5,11 +5,3 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
-
-User.create!(email: 'test@test.com', password: 'password', password_confirmation: 'password') if Rails.env.development? && !User.where(email: 'admin@example.com').exists?
-
-
-4.times do |index|
-  Category.create!(title: "카테고리 #{index+1}", position: index+1)
-end
