@@ -13,11 +13,6 @@ class UsersController < ApplicationController
     render json: @user, status: :ok
   end
 
-  def new
-    @user = User.new
-    render json: @user, status: :ok
-  end
-
   # 유저 생성 POST sign_up
   def create
     @user = User.create! user_params
