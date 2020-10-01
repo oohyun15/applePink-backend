@@ -39,8 +39,7 @@ class PostsController < ApplicationController
 
   def check_owner
     if @post.user != current_user
-      @msg = "접근권한이 없습니다."
-      render json: @msg, status: :unauthorized
+      render json: { error: "unauthorized" }, status: :unauthorized
     end
   end
 
