@@ -4,5 +4,5 @@ class Chat < ApplicationRecord
   has_many :users, through: :user_chats
   has_many :messages
   
-  belongs_to :post, optional: true
+  belongs_to :post
 end

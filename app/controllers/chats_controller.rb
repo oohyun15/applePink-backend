@@ -10,33 +10,51 @@ class ChatsController < ApplicationController
   end
 
   def show
-    render json: @chat, status: :ok
+    render json: {
+      notice: params[:notice]
+      chat: @chat,
+      post: @chat.post,
+      users: @chat.users,
+      }, status: :ok
   end
 
   def create
-    if user = @post.chat_users.find_by(id: current_user.id)
-      @chat = user.chats.find_by(post_id: @post.id)
+    if current_user == @post.user
+      render json: {error: "자신의 게시글에 대한 채팅은 생성할 수 없습니다."}, status: :bad_request
     else
-      @chat = @post.chats.create!
-      UserChat.create!(user_id: current_user.id, chat_id: @chat.id)
-      UserChat.create!(user_id: @post.user.id, chat_id: @chat.id)
+      @chat = current_user.chats.find_or_create_by!(post_id: @post.id)
+      unless @chat.users.include?(@post.user)
+        @chat.users << @post.user
+      end
+      redirect_to chat_path @chat, notice: "거래 시 직거래가 아닌 방법으로 유도 시..."
     end
-    redirect_to chat_path @chat, notice: "채팅 생성 완료"
+  end
+
+  def destroy
+    @chat.destroy!
+    redirect_to chats_path, notice: "채팅 삭제 완료"
   end
 
   private
-  def load_post
-    @chat = Chat.find(params[:id])
+  def load_chat
+    begin
+      @chat = Chat.find(params[:id])
+    rescue => e
+      render json: {error: "없는 채팅입니다."}, status: :bad_request
+    end
   end
 
   def load_post
-    @post = Post.find(params[:post_id])
+    begin
+      @post = Post.find(params[:post_id])
+    rescue => e
+      render json: {error: "없는 게시글입니다."}, status: :bad_request
+    end
   end
 
   def check_owner
-    if @post.user != current_user
-      redirect_to :back, notice: "권한이 없습니다."
-      end
+    unless @chat.users.include? current_user
+      render json: { error: "unauthorized" }, status: :unauthorized
     end
   end
 end

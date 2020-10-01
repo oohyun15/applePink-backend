@@ -35,7 +35,11 @@ class PostsController < ApplicationController
   end
 
   def load_post
-    @post = Post.find(params[:id])
+    begin
+      @post = Post.find(params[:id])
+    rescue => e
+      render json: {error: "없는 게시글입니다."}, status: :bad_request
+    end
   end
 
   def check_owner
