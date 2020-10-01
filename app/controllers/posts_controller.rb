@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
-
-  before_action :load_post, only: %i(show edit update destroy)
+  before_action :load_post, only: %i(show update destroy)
   before_action :post_params, only: %i(create update)
+  before_action :authenticate_user!
+  before_action :check_owner, only: %i(update destroy)
 
   def index
     @posts = Post.all
@@ -34,6 +35,13 @@ class PostsController < ApplicationController
 
   def load_post
     @post = Post.find(params[:id])
+  end
+
+  def check_owner
+    if @post.user != current_user
+      @msg = "접근권한이 없습니다."
+      render json: @msg, status: :unauthorized
+    end
   end
 
 end
