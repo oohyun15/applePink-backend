@@ -11,9 +11,10 @@ class ChatsController < ApplicationController
 
   def show
     render json: {
+      notice: params[:notice]
       chat: @chat,
       post: @chat.post,
-      users: @chat.users
+      users: @chat.users,
       }, status: :ok
   end
 
@@ -25,7 +26,7 @@ class ChatsController < ApplicationController
       unless @chat.users.include?(@post.user)
         @chat.users << @post.user
       end
-      redirect_to chat_path @chat, notice: "채팅 생성 완료"
+      redirect_to chat_path @chat, notice: "거래 시 직거래가 아닌 방법으로 유도 시..."
     end
   end
 
