@@ -15,8 +15,9 @@ class UsersController < ApplicationController
 
   # 유저 생성 POST sign_up
   def create
-    @user = User.create! user_params
-    redirect_to users_sign_in_path
+    @user = User.new user_params
+    @user.normal!
+    redirect_to users_sign_in_path, notice: "회원가입 완료"
   end
 
   def edit
