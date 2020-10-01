@@ -5,12 +5,11 @@ class PostsController < ApplicationController
   before_action :check_owner, only: %i(update destroy)
 
   def index
-    @posts = Post.all
+    @posts = Post.all.order(created_at: :desc)
     render json: @posts, status: :ok
   end
 
   def show
-    debugger
     render json: @post, status: :ok
   end
   
