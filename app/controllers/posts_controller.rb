@@ -11,16 +11,7 @@ class PostsController < ApplicationController
   def show
     render json: @post, status: :ok
   end
-
-  def new
-    @post = Post.new
-    render json: @post, status: :ok
-  end
   
-  def edit
-    render json: @post, status: :ok
-  end
-
   def update
     @post.update(post_params)
     redirect_to post_path(@post)
