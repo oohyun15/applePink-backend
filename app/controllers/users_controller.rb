@@ -38,6 +38,10 @@ class UsersController < ApplicationController
   end
 
   def load_user
-    @user = User.find(params[:id])
+    begin
+      @user = User.find(params[:id])
+    rescue => e
+      render json: {error: "없는 유저입니다."}, status: :bad_request
+    end
   end
 end
