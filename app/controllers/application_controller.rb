@@ -18,6 +18,11 @@ class ApplicationController < ActionController::API
     return
   end
 
+  # 리다이렉트 기본 값
+  def redirect_to_default
+    redirect_to root_path
+  end
+
   private
 
   ## 헤더에 있는 정보 중, Authorization 내용(토큰) 추출

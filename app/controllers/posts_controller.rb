@@ -10,22 +10,24 @@ class PostsController < ApplicationController
   end
 
   def show
+    debugger
     render json: @post, status: :ok
   end
   
   def update
     @post.update(post_params)
-    redirect_to post_path(@post)
+    redirect_to post_path(@post), notice: "게시글 수정 완료"
   end
 
   def create
-    @post = current_user.posts.create! post_params
-    redirect_to post_path(@post)
+    @post = current_user.posts.build post_params
+    @post.able!
+    redirect_to post_path(@post), notice: "게시글 생성 완료"
   end
 
   def destroy
-    @post.destroy
-    redirect_to posts_path
+    @post.destroy!
+    redirect_to posts_path, notice: "게시글 삭제 완료"
   end
 
   private

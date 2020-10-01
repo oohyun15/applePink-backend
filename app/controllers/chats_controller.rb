@@ -21,7 +21,7 @@ class ChatsController < ApplicationController
       UserChat.create!(user_id: current_user.id, chat_id: @chat.id)
       UserChat.create!(user_id: @post.user.id, chat_id: @chat.id)
     end
-    redirect_to chat_path @chat
+    redirect_to chat_path @chat, notice: "채팅 생성 완료"
   end
 
   private
@@ -35,7 +35,7 @@ class ChatsController < ApplicationController
 
   def check_owner
     if @post.user != current_user
-      redirect_to root_path
+      redirect_to :back, notice: "권한이 없습니다."
       end
     end
   end
