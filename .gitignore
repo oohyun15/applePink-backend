@@ -36,7 +36,3 @@ yarn-debug.log*
 
 .vercel
 .DS_Store
-
-/config/master.key
-/config/application.yml
-/config/database.yml
