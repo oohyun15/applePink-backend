@@ -41,4 +41,13 @@ class ApplicationController < ActionController::API
   def user_id_in_token?
     http_token && auth_token && auth_token[:user_id].to_i
   end
+
+  def create_params
+    begin
+      @params = (request.post? || request.put?) ? JSON.parse(request.body.read) : request.params
+      ActionController::Parameters.new(@params)
+    rescue
+      {}
+    end
+  end
 end
