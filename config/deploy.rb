@@ -36,7 +36,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # Capistrano를 통해 배포된 현재/과거에 배포됐던 프로젝트 최대 수용갯수 (Default : 5)
 set :keep_releases, 5
 
-# set :rvm_ruby_version, 'ruby-2.6.3'
+# set :rvm_ruby_version, 'ruby-2.6.5'
 # set :rvm_type, :user
 # set :passenger_restart_with_touch, true
 # set :rvm_bin_path, `which rvm`

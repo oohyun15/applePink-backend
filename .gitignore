@@ -36,3 +36,4 @@ yarn-debug.log*
 
 .vercel
 .DS_Store
+config/database.yml
