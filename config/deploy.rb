@@ -2,7 +2,7 @@
 lock "~> 3.14.1"
 
 set :application, "market"
-set :repo_url, "git@github.com:oohyun15/rails-market.git"
+set :repo_url, "git@github.com:oohyun15/applePink-backend.git"
 set :deploy_to, '/home/ubuntu/applepink-api'
 set :keep_releases, 2
 append :linked_files, "config/master.key", "config/application.yml"

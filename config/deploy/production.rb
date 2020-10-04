@@ -1,4 +1,4 @@
-server '13.125.21.134', user: 'ubuntu', roles: %w{app db web}
+server '54.180.79.38', user: 'ubuntu', roles: %w{app db web}
 set :rails_env, :production
 set :deploy_to, '/home/ubuntu/applepink-api'
 
