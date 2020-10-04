@@ -98,7 +98,7 @@ GEM
       msgpack (~> 1.0)
     builder (3.2.4)
     byebug (11.1.3)
-    capistrano (3.13.0)
+    capistrano (3.14.1)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
@@ -366,7 +366,7 @@ DEPENDENCIES
   bcrypt
   bootsnap (>= 1.4.2)
   byebug
-  capistrano (~> 3.13.0)
+  capistrano
   capistrano-bundler
   capistrano-database-yml
   capistrano-figaro-yml

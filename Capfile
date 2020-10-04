@@ -33,6 +33,8 @@ require "capistrano/rails/assets"
 ## * rails/migrations require가 없으면 배포 후 자동으로 DB Migrate가 안된다.
 require "capistrano/rails/migrations"
 
+# require 'capistrano/rails'
+
 ## Capistrano ↔ Bundler
 ## * passenger require가 없으면 배포 후 Nginx Restart가 안된다.
 require "capistrano/passenger"
