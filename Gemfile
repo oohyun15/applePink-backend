@@ -35,7 +35,6 @@ gem "activerecord-import"
 gem "delayed_job_active_record"
 
 gem "webpacker", "~> 4.0"
-gem "turbolinks", "~> 5"
 gem "jbuilder", "~> 2.7"
 gem "bootsnap", ">= 1.4.2", require: false
 
@@ -67,8 +66,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-gem 'therubyracer', platforms: :ruby
 
 gem 'capistrano', '~> 3.7', '>= 3.7.1'
 gem 'capistrano-rails', '~> 1.2'
