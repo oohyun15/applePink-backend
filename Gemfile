@@ -70,10 +70,11 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'therubyracer', platforms: :ruby
 
-gem 'capistrano'
+gem 'capistrano', '~> 3.7', '>= 3.7.1'
+gem 'capistrano-rails', '~> 1.2'
+gem 'capistrano-passenger', '~> 0.2.0'
+gem 'capistrano-webpacker-precompile', require: false
 gem 'capistrano-bundler'
-gem 'capistrano-passenger'
-gem 'capistrano-rails'
 gem 'capistrano-rvm'
 gem 'capistrano-rails-collection'
 gem 'capistrano-figaro-yml'

@@ -1,3 +1,5 @@
+## Capfile
+
 # Load DSL and set up stages
 require "capistrano/setup"
 
@@ -21,6 +23,10 @@ install_plugin Capistrano::SCM::Git
 ## Capistrano ↔ RVM 구동
 require "capistrano/rvm"
 
+## bundler 이슈
+set :rbenv_type, :user
+set :rbenv_ruby, '2.6.5'
+
 ## Capistrano ↔ Bundler
 ## * bundler require가 없으면 배포 후 자동으로 Gem 설치가 안된다.
 require "capistrano/bundler"
@@ -32,8 +38,6 @@ require "capistrano/rails/assets"
 ## Capistrano ↔ migrations
 ## * rails/migrations require가 없으면 배포 후 자동으로 DB Migrate가 안된다.
 require "capistrano/rails/migrations"
-
-# require 'capistrano/rails'
 
 ## Capistrano ↔ Bundler
 ## * passenger require가 없으면 배포 후 Nginx Restart가 안된다.
