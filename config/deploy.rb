@@ -1,9 +1,9 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.14.1"
 
-set :application, "market"
+set :application, "applepink"
 set :repo_url, "git@github.com:oohyun15/applePink-backend.git"
-set :deploy_to, '/home/ubuntu/applepink-api'
+set :deploy_to, '/home/ubuntu/applepink'
 set :keep_releases, 2
 append :linked_files, "config/master.key", "config/application.yml"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system", "public/uploads"
