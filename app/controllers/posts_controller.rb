@@ -6,16 +6,17 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all.order(created_at: :desc)
-    render json: @posts, status: :ok
+    render json: @posts, status: :ok, scope: {params: create_params}
   end
 
   def show
-    render json: @post, status: :ok
+    render json: @post, status: :ok, scope: {params: create_params}
   end
   
   def update
     @post.update(post_params)
-    redirect_to post_path(@post), notice: "게시글 수정 완료"
+    #redirect_to post_path(@post), notice: "게시글 수정 완료"
+    render json: @post, status: :ok, scope: {params: create_params}
   end
 
   def create

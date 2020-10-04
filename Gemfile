@@ -27,6 +27,8 @@ gem 'bcrypt'
 # hashtag
 gem "acts-as-taggable-on", "~> 6.0"
 
+gem 'active_model_serializers'
+
 # 결제 관련
 gem "iamport"
 gem "activerecord-import"

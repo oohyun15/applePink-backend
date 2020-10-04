@@ -11,7 +11,7 @@ class ChatsController < ApplicationController
 
   def show
     render json: {
-      notice: params[:notice]
+      notice: params[:notice],
       chat: @chat,
       post: @chat.post,
       users: @chat.users,
