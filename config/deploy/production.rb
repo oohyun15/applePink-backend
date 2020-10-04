@@ -17,5 +17,13 @@ set :deploy_to, "/home/#{fetch(:user)}/#{fetch(:application)}"
 server fetch(:aws_ec2_ip), port: 22, roles:g [:web, :app, :db], primary: true
 
 ## SSH Remote 설정 (서버 아이디 및 pem Key 경로 설정)
-set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w(/home/ubuntu/.ssh/id_rsa) }
+# set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w(/home/ubuntu/.ssh/id_rsa) }
 # set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w(~/Downloads/key_applepink.pem) }
+
+ssh_options: {
+  user: "user_name", # overrides user setting above
+  keys: %w(/home/user_name/.ssh/id_rsa),
+  forward_agent: false,
+  auth_methods: %w(publickey password)
+  # password: "please use keys"
+}
