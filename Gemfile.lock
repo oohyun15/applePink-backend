@@ -374,7 +374,7 @@ DEPENDENCIES
   capistrano-database-yml
   capistrano-figaro-yml
   capistrano-passenger (~> 0.2.0)
-  capistrano-rails (~> 1.2)
+  capistrano-rails
   capistrano-rails-collection
   capistrano-rvm
   capistrano-webpacker-precompile

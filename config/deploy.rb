@@ -55,3 +55,9 @@ namespace :deploy do
     end
   end
 end
+
+
+set :default_env, {
+  PATH: '$HOME/.npm-packages/bin/:$PATH',
+  NODE_ENVIRONMENT: 'production'
+}
