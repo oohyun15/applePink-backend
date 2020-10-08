@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   resources :posts
   resources :chats
 
+  resources :image, only: %i(create destroy)
+
 end
