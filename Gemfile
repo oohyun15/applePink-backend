@@ -14,6 +14,7 @@ gem "sass-rails", "~> 5"
 gem "ransack"
 gem "carrierwave"
 gem "mini_magick"
+gem "fog-aws"
 
 gem "activeadmin"
 gem "active_skin"

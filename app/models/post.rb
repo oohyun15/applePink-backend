@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  include Imagable
+  
   POST_COLUMNS = %i(title body price category_id)  
 
   validates :title, presence: :true
