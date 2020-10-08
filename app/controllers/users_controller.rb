@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # 유저 목록 보기
   def index
     @users = User.all
-    render json: @users, status: :ok
+    render json: @users, status: :ok, scope: {params: create_params}
   end
 
   # 유저 마이페이지
