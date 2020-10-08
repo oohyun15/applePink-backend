@@ -1,8 +1,8 @@
 class Post < ApplicationRecord
   include Imagable
   
-  POST_COLUMNS = %i(title body price category_id)  
-
+  POST_COLUMNS = %i(title body price category_id image) + [images_attributes: %i(imagable_type imagable_id image)]
+  
   validates :title, presence: :true
   validates :body, presence: :true
   validates :price, presence: :true
