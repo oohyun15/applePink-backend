@@ -1,4 +1,5 @@
 class Post < ApplicationRecord
+  include ImageUrl
   include Imagable
   
   POST_COLUMNS = %i(title body price category_id image) + [images_attributes: %i(imagable_type imagable_id image)]
