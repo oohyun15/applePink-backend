@@ -10,8 +10,6 @@ gem "activesupport"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 3.11"
 gem "sass-rails", "~> 5"
-gem "devise"
-
 
 gem "ransack"
 gem "carrierwave"
@@ -76,7 +74,3 @@ gem 'capistrano-rvm'
 gem 'capistrano-rails-collection'
 gem 'capistrano-figaro-yml'
 gem 'capistrano-database-yml'
-
-gem 'omniauth'
-gem 'omniauth-oauth2', '<= 1.3.1'
-gem 'omniauth-kakao', :git => 'git://github.com/insomenia/omniauth-kakao'
