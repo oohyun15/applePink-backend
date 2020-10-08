@@ -8,7 +8,7 @@
 ## Intro
 This repository is Modunanum's Back-end API server built with **Ruby on Rails**.
   
-You can find our [Front-end](https://github.com/d-virusss/capstone_front_RN) repo built **React Native**.
+You can find our [Front-end repo](https://github.com/d-virusss/capstone_front_RN) built **React Native**.
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
@@ -31,7 +31,7 @@ application up and running.
 
 
 ## How to run
-**1. Create applcation.yml and database.yml**
+**1. Create applcation.yml & database.yml**
 
 ```zsh
 # install Gemfile
@@ -44,13 +44,14 @@ figaro install
 touch config/database.yml
 ```
 
-**2. Set environment variables**
+**2. Set application.yml**
 ```yml
 # config/application.yml
 
 DB_NAME: "YOUR_DB_NAME"
 DB_USER_NAME: "YOUR_LOCAL_NAME"
 DB_USER_PASSWD: "YOUR_PASSWORD"
+
 ```
 
 **3. Set database.yml**
@@ -81,6 +82,7 @@ test:
 production:
   <<: *default
   database: <%= ENV["DB_NAME"] %>_<%= Rails.env %>
+  
 ```
 
 **4. run local server**
@@ -94,6 +96,7 @@ rake db:seed    // optional
 # Start local server
 rails s         // localhost:3000
 rails s -p 8081 // localhost:8081
+
 ```
 
 ## How to deploy
@@ -101,7 +104,8 @@ I will not explain in detail in this part.
 If you were in trouble, please contact us.
 
 ```zsh
-cap install
+cap install   // you have to edit files: Capfile, production.rb deploy.rb
 cap production setup
 cap production deploy
+
 ```
