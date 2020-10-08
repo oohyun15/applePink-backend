@@ -8,7 +8,7 @@
 ## Intro
 This repository is Modunanum's Back-end API server built with **Ruby on Rails**.
   
-You can find our [Front-end repo](https://github.com/d-virusss/capstone_front_RN) built **React Native**.
+You can find our [Front-end repo](https://github.com/d-virusss/capstone_front_RN) built with **React Native**.
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
