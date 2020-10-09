@@ -5,7 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-AdminUser.create!(email: ENV["ACTIVEADMIN_EMAIL"], password: ENV["ACTIVEADMIN_PASSWD"], password_confirmation: ENV["ACTIVEADMIN_PASSWD"])
 
 CATEGORIES = %w(패션 뷰티 생활용품 가전 스포츠 자동차 도서)
 
@@ -19,6 +18,10 @@ def generate_user num
     )
     p "User 'tester#{index+1}' created."
   end
+end
+
+def generate_admin
+  AdminUser.create!(email: "#{ENV["ACTIVEADMIN_EMAIL"]}", password: "#{ENV["ACTIVEADMIN_PASSWD"]}", password_confirmation: "#{ENV["ACTIVEADMIN_PASSWD"]}")
 end
 
 def generate_categories
@@ -47,6 +50,7 @@ def generate_post
 end
 
 # seed func
-generate_user 5
-generate_categories
-generate_post
+generate_user 5 unless User.exists?
+generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exists?
+generate_categories unless Category.exists?
+generate_post unless Category.exists?
