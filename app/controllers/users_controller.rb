@@ -20,11 +20,9 @@ class UsersController < ApplicationController
     redirect_to users_sign_in_path, notice: "회원가입 완료"
   end
 
-  def edit
-    render json: current_user, status: :ok
-  end
-
   def update
+    @user.update! user_params
+    render json: @user, status: :ok
   end
 
   # 회원 탈퇴
