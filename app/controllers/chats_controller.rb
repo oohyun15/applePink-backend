@@ -11,7 +11,7 @@ class ChatsController < ApplicationController
 
   def show
     render json: {
-      notice: params[:notice],
+      notice: params[:notice].present? ? params[:notice] : "",
       chat: @chat,
       post: @chat.post,
       users: @chat.users,
@@ -20,19 +20,30 @@ class ChatsController < ApplicationController
 
   def create
     if current_user == @post.user
+      
+      # 자기가 쓴 게시글에 채팅 생성 시
       render json: {error: "자신의 게시글에 대한 채팅은 생성할 수 없습니다."}, status: :bad_request
     else
+      # 기존에 생성한 채팅방 있으면 그걸로 불러옴
       @chat = current_user.chats.find_or_create_by!(post_id: @post.id)
+      
+      # 처음 채팅 시
       unless @chat.users.include?(@post.user)
         @chat.users << @post.user
       end
+      
+      # 채팅방 생성 성공
       redirect_to chat_path @chat, notice: "거래 시 직거래가 아닌 방법으로 유도 시..."
     end
   end
 
   def destroy
-    @chat.destroy!
-    redirect_to chats_path, notice: "채팅 삭제 완료"
+    begin
+      @chat.destroy!
+      render json: {notice: "채팅방에서 나오셨습니다."}, status: :ok
+    rescue => e
+      render json: {error: e.errors.full_messages}, status: :bad_request
+    end
   end
 
   private
