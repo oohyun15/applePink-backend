@@ -22,6 +22,7 @@ end
 
 def generate_admin
   AdminUser.create!(email: "#{ENV["ACTIVEADMIN_EMAIL"]}", password: "#{ENV["ACTIVEADMIN_PASSWD"]}", password_confirmation: "#{ENV["ACTIVEADMIN_PASSWD"]}")
+  p "Admin created."
 end
 
 def generate_categories
