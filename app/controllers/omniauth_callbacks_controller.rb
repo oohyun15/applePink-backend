@@ -1,0 +1,28 @@
+class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  def kakao
+    auth_login("kakao")
+  end
+
+  def after_sign_in_path_for(resource)
+    auth = request.env['omniauth.auth']
+    @identity = Identity.find_for_oauth(auth)
+    if current_user.persisted?
+      root_path
+    else
+        new_user_registration_path
+    end
+  end
+
+  private
+  def auth_login(provider)
+    sns_login = SnsLogin.new(request.env["omniauth.auth"], current_user) # 서비스 레이어로 작업했습니다.
+    @user = sns_login.find_user_oauth
+
+    if @user.persisted?
+      render json: { token: payload(@user), nickname: @user.nickname }, status: :ok
+      # redirect_to root_path, notice: "성공적으로 로그인 되었습니다."
+    else
+      render json: { error: "로그인 에러가 발생하였습니다." }, status: :not_found
+    end
+  end
+end
