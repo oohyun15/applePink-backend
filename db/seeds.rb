@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+AdminUser.create!(email: ENV["ACTIVEADMIN_EMAIL"], password: ENV["ACTIVEADMIN_PASSWD"], password_confirmation: ENV["ACTIVEADMIN_PASSWD"])
 
 CATEGORIES = %w(패션 뷰티 생활용품 가전 스포츠 자동차 도서)
 
