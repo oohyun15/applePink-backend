@@ -54,4 +54,4 @@ end
 generate_user 5 unless User.exists?
 generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exists?
 generate_categories unless Category.exists?
-generate_post unless Category.exists?
+generate_post unless Post.exists?
