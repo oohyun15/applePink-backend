@@ -32,7 +32,7 @@ def generate_categories
 end
 
 def generate_post
-  user = User.first
+  user = User.last
   post = user.posts.create!(
     title: "맥북 프로 13인치 대여합니다!",
     body: "맥북 프로 13인치 2020년형 싸게 대여합니다. 관심있으신 분들 연락주세요.",
