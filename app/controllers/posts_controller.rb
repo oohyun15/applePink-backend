@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :load_post, only: %i(show update destroy)
   before_action :post_params, only: %i(create update)
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i(index)
   before_action :check_owner, only: %i(update destroy)
 
   def index
@@ -15,7 +15,6 @@ class PostsController < ApplicationController
   
   def update
     @post.update(post_params)
-    #redirect_to post_path(@post), notice: "게시글 수정 완료"
     render json: @post, status: :ok, scope: {params: create_params}
   end
 
@@ -26,8 +25,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post.destroy!
-    redirect_to posts_path, notice: "게시글 삭제 완료"
+    begin
+      @post.destroy!
+      render json: {notice: "채팅방에서 나오셨습니다."}, status: :ok
+    rescue => e
+      render json: {error: e.errors.full_messages}, status: :bad_request
+    end
   end
 
   private

@@ -20,7 +20,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       render json: { token: payload(@user), nickname: @user.nickname }, status: :ok
-      # redirect_to root_path, notice: "성공적으로 로그인 되었습니다."
     else
       render json: { error: "로그인 에러가 발생하였습니다." }, status: :not_found
     end

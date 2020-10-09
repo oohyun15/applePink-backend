@@ -16,8 +16,11 @@ class ImagesController < ApplicationController
   end
 
   def load_image
+    begin
     @image = Image.find_by(id: params[:id])
-    redirect_to root_path unless @image
+    rescue => e
+      render json: {error: "없는 이미지입니다."}, status: :bad_request
+    end
   end
 
 end
