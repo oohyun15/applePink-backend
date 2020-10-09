@@ -5,10 +5,13 @@ class AuthenticationController < ApplicationController
   end
 
   def create
-    json_params = JSON.parse(request.body.read)
+    # json_params = JSON.parse(request.body.read)
 
-    @user = User.find_by(email: json_params["user"]["email"])
-    if @user&.authenticate(json_params["user"]["password"])
+    # @user = User.find_by(email: json_params["user"]["email"])
+    @user = User.find_by(email: auth_params[:email])
+    
+    # if @user&.authenticate(json_params["user"]["password"])
+    if @user&.authenticate(auth_params[:password]) 
       render json: { token: payload(@user), nickname: @user.nickname }, status: :ok
     else
       render json: { error: "unauthorized" }, status: :unauthorized
@@ -24,5 +27,9 @@ class AuthenticationController < ApplicationController
     @tree = { jwt: @token, userInfo: { id: user.id, email: user.email } }
 
     return @tree
+  end
+
+  def auth_params
+    params.require(:user).permit(:email, :password)
   end
 end

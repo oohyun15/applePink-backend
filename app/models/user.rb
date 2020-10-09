@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  USER_COLUMNS = %i(email nickname password password_confirmation)  
+  include ImageUrl
+
+  USER_COLUMNS = %i(email nickname password password_confirmation image)
 
   has_secure_password
 

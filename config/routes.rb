@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   root "authentication#new"
 
   get 'users/sign_in', to: 'authentication#new'
@@ -9,5 +11,7 @@ Rails.application.routes.draw do
   resources :users, only: %i(index show edit update destroy)
   resources :posts
   resources :chats
+
+  resources :image, only: %i(create destroy)
 
 end
