@@ -1,5 +1,6 @@
 class PostSerializer < ActiveModel::Serializer
   #보여줄 attribute들을 설정함. 현재는 post_detail_info와 post_simple_info를 보여줌
+  has_one :user
   attributes %i(post_simple_info post_detail_info)
   
   #조건문이 없으니 default가 됨

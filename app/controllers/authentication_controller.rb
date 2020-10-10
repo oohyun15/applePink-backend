@@ -1,4 +1,5 @@
 class AuthenticationController < ApplicationController
+
   # 로그인 페이지
   def new
     render json: { message: "로그인 정보를 입력해주세요."}, status: :ok
@@ -17,6 +18,8 @@ class AuthenticationController < ApplicationController
       render json: { error: "unauthorized" }, status: :unauthorized
     end
   end
+
+  ## Response으로서 보여줄 json 내용 생성 및 JWT Token 생성
 
   private
 
