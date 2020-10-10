@@ -37,6 +37,10 @@ class ChatsController < ApplicationController
     end
   end
 
+  #def send
+
+  #end
+
   def destroy
     begin
       @chat.destroy!
