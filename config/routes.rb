@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   resources :posts
   resources :chats
   resources :image, only: %i(create destroy)
-  resources :booking
+  resources :bookings, only: %i(index create destroy)
 end
