@@ -4,7 +4,8 @@ class BookingsController < ApplicationController
   before_action :load_booking, only: %i(show)
 
   def index
-    @bookings = current_user.bookings
+    @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
+
     render json: @bookings, status: :ok
   end
 
