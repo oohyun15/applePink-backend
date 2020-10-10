@@ -2,8 +2,8 @@ module ImageUrl
   extend ActiveSupport::Concern
 
   included do
-    mount_uploader :image, ImageUploader
-    # mount_uploader :image, S3Uploader
+    # mount_uploader :image, ImageUploader
+    mount_uploader :image, S3Uploader
   end
 
   def image_path size = :square
