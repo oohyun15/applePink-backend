@@ -11,8 +11,9 @@ Rails.application.routes.draw do
 
   resources :users, only: %i(index show edit update destroy)
   resources :posts
-  resources :chats
-  resources :messages, only: %i(create)
+  resources :chats do
+    resources :messages, only: %i(create)  
+  end
 
   resources :image, only: %i(create destroy)
 
