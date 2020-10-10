@@ -10,6 +10,7 @@ class Post < ApplicationRecord
 
   has_many :chats
   has_many :chat_users, through: :chats, source: :users
+  has_many :bookings
 
   belongs_to :user
   belongs_to :category, optional: true
