@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :chats, through: :user_chats
   has_many :messages
   has_many :bookings
+  has_many :received_bookings, through: :posts, source: :bookings
 
   belongs_to :group, optional: :true
 
