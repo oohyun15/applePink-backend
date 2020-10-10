@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :users, only: %i(index show edit update destroy)
   resources :posts
   resources :chats
+  resources :messages, only: %i(create)
   resources :image, only: %i(create destroy)
   resources :bookings, only: %i(index create destroy)
 end
