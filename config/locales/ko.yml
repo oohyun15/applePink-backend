@@ -87,3 +87,6 @@ ko:
       user_type:
         normal: 일반
         company: 광고주
+      account_type:
+        normal: 일반
+        kakao: 카카오
