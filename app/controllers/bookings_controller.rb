@@ -22,6 +22,15 @@ class BookingsController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      @booking.destroy!
+      render json: {notice: "예약을 취소하셨습니다."}, status: :ok
+    rescue => e
+      render json: {error: e.errors.full_messages}, status: :bad_request
+    end    
+  end
+
   private
   def load_post
     begin
