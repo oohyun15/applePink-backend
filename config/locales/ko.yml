@@ -1,0 +1,89 @@
+ko:
+  attributes:
+    id: ID
+    user: 사용자
+    name: 이름
+    gender: 성별
+    email: 이메일
+    phone: 전화번호
+    title: 제목
+    body: 내용
+    image: "이미지"
+    position: "순서"
+    created_at: "생성시간"
+    updated_at: "수정시간"
+    price: "가격"
+    amount: "상품수량"
+    start_at: "시작시간"
+    end_at: "종료시간"
+    status: "상태"
+    post: 서비스
+    chat: 채팅
+    category: 카테고리
+    lat: 위도
+    lng: 경도
+
+  activerecord:
+    attributes:
+      user:
+        account_type: 계정타입
+        name: 사용자명
+        nickname: 닉네임
+        email: 이메일
+        gender: 성별
+        user_type: 사용자 유형
+        lat: 위도
+        lng: 경도
+        provider: 플랫폼
+      post:
+        title: 제목
+        body: 내용
+        post_type: 서비스 유형
+        user: 게시자
+        price: 가격
+      category:
+        title: 카테고리명
+      booking:
+        start_at: 시작일
+        end_at: 종료일
+        lent_day: 대여기간
+        acceptance: 예약상태
+
+    models:
+      dashboard: 대시보드
+      user: "사용자"
+      admin_user: 어드민
+      category: 카테고리
+      post: 서비스
+      booking: 예약
+      image: 이미지
+      chat: 채팅
+
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "항목이 비어있습니다"
+            gender: "성별"
+
+
+  enum:
+    booking:
+      acceptance:
+        waiting: 대기중
+        accepted: 승인
+        rejected: 거절
+        completed: 종료
+    post:
+      status:
+        able: 대여 가능
+        unable: 대여 불가능
+    user:
+      gender:
+        man: 남성
+        woman: 여성
+        no_select: 선택안함
+      user_type:
+        normal: 일반
+        company: 광고주
