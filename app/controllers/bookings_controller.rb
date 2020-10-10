@@ -1,7 +1,8 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_post, only: %i(create)
-  before_action :load_booking, only: %i(show)
+  before_action :load_booking, only: %i(show destroy)
+  before_action :check_owner, only: %i(destroy)
 
   def index
     @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
@@ -10,7 +11,7 @@ class BookingsController < ApplicationController
   end
 
   def show
-    render json: @booking, status: :ok
+    render json: { booking: @booking }, status: :ok
   end
 
   def create
@@ -22,10 +23,12 @@ class BookingsController < ApplicationController
     end
   end
 
+  # booking 모델을 삭제하므로 일반적인 경우가 아닐 시 사용하지 않습니다.
+  # 예약 기간이 종료되었을 경우 booking.acceptance를 변경해야합니다.
   def destroy
     begin
       @booking.destroy!
-      render json: {notice: "예약을 취소하셨습니다."}, status: :ok
+      render json: {notice: "예약을 삭제하셨습니다."}, status: :ok
     rescue => e
       render json: {error: e.errors.full_messages}, status: :bad_request
     end    
@@ -42,9 +45,15 @@ class BookingsController < ApplicationController
 
   def load_booking
     begin
-      @booking = Post.find(params[:id])
+      @booking = Booking.find(params[:id])
     rescue => e
       render json: {error: "없는 예약입니다."}, status: :bad_request
+    end
+  end
+
+  def check_owner
+    if @booking.user != current_user
+      render json: { error: "unauthorized" }, status: :unauthorized
     end
   end
 
