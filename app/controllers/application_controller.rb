@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
-  
+
   attr_reader :current_user
 
   protected
@@ -24,6 +24,14 @@ class ApplicationController < ActionController::Base
   # 리다이렉트 기본 값
   def redirect_to_default
     redirect_to root_path
+  end
+
+  def payload(user)
+    ## 해당 코드 예제에서 토큰 만료기간은 '30일' 로 설정
+    @token = JWT.encode({ user_id: user.id, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+    # @tree = { jwt: @token, userInfo: { id: user.id, email: user.email } }
+
+    return @token
   end
 
   private
