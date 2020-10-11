@@ -7,6 +7,7 @@ class Post < ApplicationRecord
   validates :title, presence: :true
   validates :body, presence: :true
   validates :price, presence: :true
+  validates :post_type, presence: :true
 
   has_many :chats
   has_many :chat_users, through: :chats, source: :users
@@ -16,4 +17,5 @@ class Post < ApplicationRecord
   belongs_to :category, optional: true
 
   enum status: %i(able unable)
+  enum post_type: %i(provide ask)
 end

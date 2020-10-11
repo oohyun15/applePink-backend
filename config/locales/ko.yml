@@ -79,6 +79,9 @@ ko:
       status:
         able: 대여 가능
         unable: 대여 불가능
+      post_type:
+        provide: 제공
+        ask: 요청
     user:
       gender:
         man: 남성
