@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: %i(show edit update destroy)
-  before_action :authenticate_user!, only: %i(edit update destroy)
+  before_action :authenticate_user!, only: %i(edit update destroy list)
 
   # 유저 목록 보기
   def index
@@ -27,6 +27,17 @@ class UsersController < ApplicationController
 
   # 회원 탈퇴
   def destroy
+  end
+
+  def list
+    if params[:post_type] == "provide"
+      @posts = current_user.posts.provide
+    elsif params[:post_type == "ask"]
+      @posts = current_user.posts.ask
+    else
+      render json: {error: "서비스 타입을 지정해주세요."}, status: :not_found
+    end
+      render json: {posts: @posts}, status: :ok, scope: {params: create_params}
   end
 
   private

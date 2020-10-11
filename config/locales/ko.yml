@@ -17,7 +17,7 @@ ko:
     start_at: "시작시간"
     end_at: "종료시간"
     status: "상태"
-    post: 서비스
+    post: 게시글
     chat: 채팅
     category: 카테고리
     lat: 위도
@@ -38,7 +38,7 @@ ko:
       post:
         title: 제목
         body: 내용
-        post_type: 서비스 유형
+        post_type: 게시글 유형
         user: 게시자
         price: 가격
       category:
@@ -54,7 +54,7 @@ ko:
       user: "사용자"
       admin_user: 어드민
       category: 카테고리
-      post: 서비스
+      post: 게시글
       booking: 예약
       image: 이미지
       chat: 채팅

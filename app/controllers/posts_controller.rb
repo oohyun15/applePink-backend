@@ -5,7 +5,12 @@ class PostsController < ApplicationController
   before_action :check_owner, only: %i(update destroy)
 
   def index
-    @posts = Post.all.order(created_at: :desc)
+
+    if params[:post_type] == "provide" || params[:post_type].nil?
+      @posts = Post.provide
+    elsif params[:post_type] == "ask"
+      @posts = Post.ask
+    end
     render json: @posts, status: :ok, scope: {params: create_params}
   end
 
