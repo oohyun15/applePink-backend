@@ -26,6 +26,7 @@ class SnsLogin
       password: Devise.friendly_token[0, 20],
       nickname: @auth.info.name,
       account_type: @auth.provider,
+      gender: :no_select
     }
 
     # 이메일은 현재 선택 항목임

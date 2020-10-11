@@ -14,7 +14,10 @@ def generate_user num
       email: "tester#{index+1}@test.com",
       password: "test123",
       nickname: "tester#{index+1}",
-      image: File.open("#{Rails.root}/public/image/default.png")
+      image: File.open("#{Rails.root}/public/image/default.png"),
+      gender: :no_select,
+      user_type: :normal,
+      body: "tester#{index+1} account."
     )
     p "User 'tester#{index+1}' created."
   end
@@ -41,7 +44,9 @@ def generate_post
     title: "맥북 프로 13인치 대여합니다!",
     body: "맥북 프로 13인치 2020년형 싸게 대여합니다. 관심있으신 분들 연락주세요.",
     price: "10000",
-    image: File.open("#{Rails.root}/public/image/mac_1.jpeg")    
+    image: File.open("#{Rails.root}/public/image/mac_1.jpeg"),
+    post_type: :provide,
+    status: :able
   )
   4.times do |index| 
     post.images.create!(image: File.open("#{Rails.root}/public/image/mac_#{index+1}.jpeg"))
