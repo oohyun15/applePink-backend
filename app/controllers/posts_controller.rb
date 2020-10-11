@@ -25,8 +25,12 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.build post_params
-    @post.able!
-    redirect_to post_path(@post), notice: "게시글 생성 완료"
+    begin
+      @post.able!
+      redirect_to post_path(@post), notice: "게시글 생성 완료"
+    rescue => e
+      render json: {error: e}, status: :bad_request
+    end
   end
 
   def destroy
@@ -34,7 +38,7 @@ class PostsController < ApplicationController
       @post.destroy!
       render json: {notice: "채팅방에서 나오셨습니다."}, status: :ok
     rescue => e
-      render json: {error: e.errors.full_messages}, status: :bad_request
+      render json: {error: e}, status: :bad_request
     end
   end
 
