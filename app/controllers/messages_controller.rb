@@ -3,7 +3,8 @@ class MessagesController < ApplicationController
   before_action :load_chat, only: %i(index create)
 
   def index
-    @messages = @chat.messages
+    @messages = @chat.messages.order(created_at: :asc)
+    
     render json: @messages, status: :ok
   end
 
