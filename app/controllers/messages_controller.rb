@@ -1,6 +1,11 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_chat, only: %i(create)
+  before_action :load_chat, only: %i(index create)
+
+  def index
+    @messages = @chat.messages
+    render json: @messages, status: :ok
+  end
 
   def create
     @message = current_user.messages.build message_params
