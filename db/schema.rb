@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_123317) do
     t.bigint "category_id"
     t.integer "price"
     t.string "image"
+    t.integer "post_type"
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -138,13 +139,13 @@ ActiveRecord::Schema.define(version: 2020_10_12_123317) do
     t.string "email"
     t.string "password_digest"
     t.string "nickname"
-    t.integer "gender"
+    t.integer "gender", default: 0
     t.float "lat"
     t.float "lng"
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_type"
+    t.integer "user_type", default: 0
     t.bigint "group_id"
     t.string "image"
     t.string "uid"
