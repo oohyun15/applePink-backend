@@ -5,7 +5,7 @@ class ChatsController < ApplicationController
   before_action :check_owner, only: %i(show destroy)
 
   def index
-    @chats = current_user.chats
+    @chats = current_user.chats.where(has_message: :true)
     render json: @chats, status: :ok, scope: {params: create_params}
   end
 
