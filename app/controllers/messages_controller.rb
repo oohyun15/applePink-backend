@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
     @message.chat = @chat
     @message.save!
 
-    @chat.update!(has_message: :true)
+    @chat.update!(has_message: :true) unless @chat.has_message
 
     render json: @message, status: :ok
   end
