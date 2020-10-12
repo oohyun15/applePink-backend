@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   post 'users/sign_in', to: 'authentication#create'
   post 'users/sign_up', to: 'users#create'
 
-  resources :users, only: %i(index show edit update destroy)
+  resources :users, only: %i(index show edit update destroy) do
+    collection do
+      get :list
+    end
+  end
   resources :posts
   resources :chats do
     resources :messages, only: %i(create)  
