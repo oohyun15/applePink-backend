@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
   resources :posts
   resources :chats do
-    resources :messages, only: %i(create)  
+    resources :messages, only: %i(index create)  
   end
   resources :image, only: %i(create destroy)
   resources :bookings, only: %i(index show create destroy)

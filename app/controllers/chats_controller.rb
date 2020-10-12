@@ -5,18 +5,18 @@ class ChatsController < ApplicationController
   before_action :check_owner, only: %i(show destroy)
 
   def index
-    @chats = current_user.chats
-    render json: @chats, status: :ok
+    @chats = current_user.chats.where(has_message: :true)
+    render json: @chats, status: :ok, scope: {params: create_params}
   end
 
-  def show
-    render json: {
-      notice: params[:notice].present? ? params[:notice] : "",
-      chat: @chat,
-      post: @chat.post,
-      users: @chat.users,
-      }, status: :ok
-  end
+  #def show
+  #  render json: {
+  #    notice: params[:notice].present? ? params[:notice] : "",
+  #    chat: @chat,
+  #    post: @chat.post,
+  #    users: @chat.users,
+  #    }, status: :ok
+  #end
 
   def create
     if current_user == @post.user
@@ -33,7 +33,7 @@ class ChatsController < ApplicationController
       end
       
       # 채팅방 생성 성공
-      redirect_to chat_path @chat, notice: "거래 시 직거래가 아닌 방법으로 유도 시..."
+      redirect_to chat_messages_path @chat, notice: "거래 시 직거래가 아닌 방법으로 유도 시..."
     end
   end
 
