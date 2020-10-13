@@ -6,7 +6,7 @@ class ChatsController < ApplicationController
 
   def index
     @chats = current_user.chats.where(has_message: :true)
-    render json: @chats, status: :ok, scope: {params: create_params}
+    render json: @chats, status: :ok, scope: {params: create_params}, user_id: current_user.id 
   end
 
   #def show
