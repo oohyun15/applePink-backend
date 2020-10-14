@@ -3,10 +3,10 @@ class MessagesController < ApplicationController
   before_action :load_chat, only: %i(index create)
 
   def index
-    @messages = @chat.messages.where("is_checked < '#{@chat.users.size}' and user_id != '#{current_user.id}'").order(created_at: :asc)
+    @messages = @chat.messages.where("is_checked < '#{@chat.users.size}'").where.not(user_id: current_user.id).order(created_at: :asc)
     
     unless @messages.empty?
-      @messages.increment(:is_checked)
+      @messages.update(is_checked: @chat.users.size)
     end
     
     render json: @messages, status: :ok
