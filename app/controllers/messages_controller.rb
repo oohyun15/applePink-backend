@@ -3,8 +3,8 @@ class MessagesController < ApplicationController
   before_action :load_chat, only: %i(index create)
 
   def index
-    @messages = @chat.messages.where(is_checked: 1, target_id: current_user.id).order(created_at: :asc)
-    
+    @messages = @chat.messages.where.not("check_id @> ?", "#{current_user.id}")
+
     unless @messages.empty?
       @messages.update(is_checked: @chat.users.size)
     end
@@ -15,6 +15,7 @@ class MessagesController < ApplicationController
   def create
     @message = current_user.messages.build message_params
     @message.chat = @chat
+    @message.check_ids << current_user.id
     @message.save!
 
     @chat.update!(has_message: :true) unless @chat.has_message
