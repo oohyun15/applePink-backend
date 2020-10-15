@@ -5,7 +5,6 @@ class Message < ApplicationRecord
 
   belongs_to :chat
   belongs_to :user, optional: :true
-  belongs_to :target, class_name: "User", optional: :true
 
   has_many :user_chats, through: :chat
   has_many :checked_users, through: :user_chats, source: :user
