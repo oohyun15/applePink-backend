@@ -3,19 +3,23 @@ class MessagesController < ApplicationController
   before_action :load_chat, only: %i(index create)
 
   def index
+    # 현재 유저가 읽지 않은 메시지 가져오기
     @messages = @chat.messages.where.not("check_id @> ?", "#{current_user.id}")
-
-    unless @messages.empty?
-      @messages.update(is_checked: @chat.users.size)
-    end
     
+    # 메시지에 현재 유저가 읽었다고 추가
+    @messages.each do |message|
+      message.check_id << current_user.id
+      message.save!
+    end
+
+    # 메시지 렌더
     render json: @messages, status: :ok
   end
 
   def create
     @message = current_user.messages.build message_params
     @message.chat = @chat
-    @message.check_ids << current_user.id
+    @message.check_id << current_user.id
     @message.save!
 
     @chat.update!(has_message: :true) unless @chat.has_message
