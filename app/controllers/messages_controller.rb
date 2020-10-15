@@ -1,10 +1,11 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
   before_action :load_chat, only: %i(index create)
+  before_action :check_owner, only: %i(index create)
 
   def index
     # 현재 유저가 읽지 않은 메시지 가져오기
-    @messages = @chat.messages.where.not("check_id @> ?", "#{current_user.id}")
+    @messages = @chat.messages.where.not("check_id @> ?", "{#{current_user.id}}")
     
     # 메시지에 현재 유저가 읽었다고 추가
     @messages.each do |message|
@@ -38,5 +39,11 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(Message::MESSAGE_COLUMNS)
+  end
+
+  def check_owner
+    unless @chat.users.include? current_user
+      render json: { error: "unauthorized" }, status: :unauthorized
+    end
   end
 end
