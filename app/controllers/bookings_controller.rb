@@ -2,7 +2,7 @@ class BookingsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_post, only: %i(create)
   before_action :load_booking, only: %i(show destroy)
-  before_action :check_owner, only: %i(destroy)
+  before_action :check_owner, only: %i(show destroy)
 
   def index
     @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
@@ -52,7 +52,7 @@ class BookingsController < ApplicationController
   end
 
   def check_owner
-    if @booking.user != current_user
+    if @booking.user != current_user && @booking.post.user != current_user
       render json: { error: "unauthorized" }, status: :unauthorized
     end
   end

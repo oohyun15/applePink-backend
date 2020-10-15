@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 
   def update
     @user.update! user_params
-    render json: @user, status: :ok
+    render json: @user, status: :ok, scope: {params: create_params}
   end
 
   # 회원 탈퇴
