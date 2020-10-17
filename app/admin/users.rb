@@ -14,8 +14,6 @@ ActiveAdmin.register User do
     column :email
     tag_column :gender
     tag_column :user_type do |user| user.user_type.present? ? I18n.t("enum.user.user_type.#{user.user_type}") : "미지정" end
-    column :lat do |user| number_to_currency(user.lat, unit: '') end
-    column :lng do |user| number_to_currency(user.lng, unit: '') end
     column :created_at
     column :updated_at
     column :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end

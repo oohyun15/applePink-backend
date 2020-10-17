@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 CATEGORIES = %w(패션 뷰티 생활용품 가전 스포츠 자동차 도서)
+# LOCATIONS = %w(파장동 이목동 천천동 율전동 정자동 영화동 송죽동 조원동 연무동 상광교동 하광교동 세류동 장지동 오목천동 평동 고색동 평리동 호매실동 금곡동 구운동 서둔동 탑동 권선동 곡반전동 대황교동 입북동 당수동 팔달로1가 팔달로2가 팔달로3가 남창동 영동 구천동 중동 매향동 남수동 북수동 장안동 신풍동 매교동 교동 매산로1가 매산로2가 매산로3가 고등동 화서동 지동 우만동 인계동 매탄동 원천동 이의동 하동 영통동 신동 망포동)
 
 def generate_user num
   num.times do |index|
@@ -55,8 +56,20 @@ def generate_post
   p "Post '#{post.title}' created."
 end
 
-# seed func
+def generate_locations
+  CSV.foreach("public/SuwonLocation.csv", :headers => true, encoding:'iso-8859-1:utf-8') do |row|
+    begin
+      location = Location.create!(row.to_hash)
+      p "Location '#{location.title}' created."
+    rescue => e
+      p e.message
+    end
+  end
+end
+
+# seed functions
 generate_user 5 unless User.exists?
 generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exists?
 generate_categories unless Category.exists?
+generate_locations unless Location.exists?
 generate_post unless Post.exists?

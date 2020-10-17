@@ -58,6 +58,7 @@ ko:
       booking: 예약
       image: 이미지
       chat: 채팅
+      location: 지역
 
     errors:
       models:
