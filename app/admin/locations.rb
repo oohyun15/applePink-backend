@@ -1,9 +1,7 @@
 ActiveAdmin.register Location do
   config.sort_order = 'position_asc'
   
-  reorderable
-  
-  index as: :reorderable_table do
+  index do
     br
     column :position  
     column :title  

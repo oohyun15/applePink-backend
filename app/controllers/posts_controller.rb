@@ -11,16 +11,16 @@ class PostsController < ApplicationController
     # 특정 지역 검색
     if params[:location_title].present?
       # 1. 파라미터로 지역 찾기
-      location = Location.find_by(title: params[:location_title])
+      @location = Location.find_by(title: params[:location_title])
       
       # exception: 만약 없는 동네일 경우
-      if location.nil?
+      if @location.nil?
         render json: {error: "존재하지 않는 동네입니다."}, status: :not_found
         return
       end
 
       # 2. location_positions에 해당 position 추가
-      location_positions << location.position
+      location_positions << @location.position
 
     # 사용자 지역 범위로 검색
     else
@@ -81,7 +81,7 @@ class PostsController < ApplicationController
   def destroy
     begin
       @post.destroy!
-      render json: {notice: "채팅방에서 나오셨습니다."}, status: :ok
+      render json: {notice: "게시글을 삭제하셨습니다."}, status: :ok
     rescue => e
       render json: {error: e}, status: :bad_request
     end

@@ -35,6 +35,7 @@ ko:
         lat: 위도
         lng: 경도
         provider: 플랫폼
+        location: 지역
         location_range: 지역 검색 범위
       post:
         title: 제목

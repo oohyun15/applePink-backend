@@ -12,6 +12,7 @@ ActiveAdmin.register User do
     column :image do |user| image_tag(user&.image_path ,class: 'admin-index-image') end
     column :nickname
     column :email
+    column :location
     tag_column :gender
     tag_column :user_type do |user| user.user_type.present? ? I18n.t("enum.user.user_type.#{user.user_type}") : "미지정" end
     column :location_range do |user| user.user_type.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
@@ -26,6 +27,7 @@ ActiveAdmin.register User do
       row :image do |user| image_tag(user&.image_path ,class: 'admin-show-image') end
       row :nickname
       row :email
+      row :location
       row :gender
       row :user_type do |user| user.user_type.present? ? I18n.t("enum.user.user_type.#{user.user_type}") : "미지정" end
       row :location_range do |user| user.location_range.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
@@ -39,6 +41,7 @@ ActiveAdmin.register User do
     f.inputs do
       f.input :nickname
       f.input :email
+      f.input :location
       f.input :gender
       f.input :image, as: :file, hint: image_tag(f.object&.image_path, class: 'admin-show-image')
       f.input :user_type, as: :select, collection: User.enum_selectors(:user_type)

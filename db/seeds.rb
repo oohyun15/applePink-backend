@@ -18,7 +18,7 @@ def generate_user num
       image: File.open("#{Rails.root}/public/image/default.png"),
       gender: :no_select,
       user_type: :normal,
-      location_id: Location.first.id,
+      location_id: Location.all[index].id,
       location_range: :location_alone,
       body: "tester#{index+1} account."
     )
@@ -41,23 +41,28 @@ def generate_categories
   end
 end
 
-def generate_post
-  user = User.last
-  post = user.posts.create!(
-    title: "맥북 프로 13인치 대여합니다!",
-    body: "맥북 프로 13인치 2020년형 싸게 대여합니다. 관심있으신 분들 연락주세요.",
-    price: "10000",
-    image: File.open("#{Rails.root}/public/image/mac_1.jpeg"),
-    post_type: :provide,
-    status: :able,
-    category_id: Category.find_by(title: "가전").id,
-    location_id: user.location.id
-  )
-  4.times do |index| 
-    post.images.create!(image: File.open("#{Rails.root}/public/image/mac_#{index+1}.jpeg"))
+def generate_post num
+  
+  num.times do |index|
+    user = User.all[index]
+    
+    post = user.posts.create!(
+      title: "맥북 프로 13인치 대여합니다!",
+      body: "맥북 프로 13인치 2020년형 싸게 대여합니다. 관심있으신 분들 연락주세요.",
+      price: "10000",
+      image: File.open("#{Rails.root}/public/image/mac_1.jpeg"),
+      post_type: :provide,
+      status: :able,
+      category_id: Category.find_by(title: "가전").id,
+      location_id: user.location.id
+    )
+    4.times do |jndex| 
+      post.images.create!(image: File.open("#{Rails.root}/public/image/mac_#{jndex+1}.jpeg"))
+    end
+
+    p "Post #{index+1} '#{post.title}' created."
   end
 
-  p "Post '#{post.title}' created."
 end
 
 def generate_locations
@@ -76,4 +81,4 @@ generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exis
 generate_categories unless Category.exists?
 generate_locations unless Location.exists?
 generate_user 5 unless User.exists?
-generate_post unless Post.exists?
+generate_post 5 unless Post.exists?
