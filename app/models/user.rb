@@ -23,5 +23,6 @@ class User < ApplicationRecord
 
   enum gender: %i(no_select man woman)
   enum user_type: %i(normal company)
+  enum location_range: %i(location_alone location_near location_normal location_far)
 
 end

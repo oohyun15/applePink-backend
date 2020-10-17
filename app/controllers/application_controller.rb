@@ -14,9 +14,9 @@ class ApplicationController < ActionController::Base
 
     ## Token 안에 있는 user_id 값을 받아와서 User 모델의 유저 정보 탐색
     @current_user = User.find(auth_token[:user_id])
-  rescue JWT::VerificationError, JWT::DecodeError
-    # redirect_to users_sign_in_path
-    render json: { error: "unauthorized" }, status: :unauthorized
+    rescue JWT::VerificationError, JWT::DecodeError
+      # redirect_to users_sign_in_path
+      render json: { error: "unauthorized" }, status: :unauthorized
     return
   end
 

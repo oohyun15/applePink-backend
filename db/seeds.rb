@@ -19,6 +19,7 @@ def generate_user num
       gender: :no_select,
       user_type: :normal,
       location_id: Location.first.id,
+      location_range: :location_alone,
       body: "tester#{index+1} account."
     )
     p "User 'tester#{index+1}' created."

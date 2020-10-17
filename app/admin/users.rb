@@ -14,6 +14,7 @@ ActiveAdmin.register User do
     column :email
     tag_column :gender
     tag_column :user_type do |user| user.user_type.present? ? I18n.t("enum.user.user_type.#{user.user_type}") : "미지정" end
+    column :location_range do |user| user.user_type.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
     column :created_at
     column :updated_at
     column :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end
@@ -27,8 +28,7 @@ ActiveAdmin.register User do
       row :email
       row :gender
       row :user_type do |user| user.user_type.present? ? I18n.t("enum.user.user_type.#{user.user_type}") : "미지정" end
-      row :lat do |user| number_to_currency(user.lat, unit: '') end
-      row :lng do |user| number_to_currency(user.lng, unit: '') end
+      row :location_range do |user| user.location_range.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
       row :created_at
       row :updated_at
       row :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end
@@ -42,6 +42,7 @@ ActiveAdmin.register User do
       f.input :gender
       f.input :image, as: :file, hint: image_tag(f.object&.image_path, class: 'admin-show-image')
       f.input :user_type, as: :select, collection: User.enum_selectors(:user_type)
+      f.input :location_range, as: :select, collection: User.enum_selectors(:location_range)
 
     end
     f.actions

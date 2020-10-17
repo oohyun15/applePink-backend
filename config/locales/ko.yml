@@ -35,6 +35,7 @@ ko:
         lat: 위도
         lng: 경도
         provider: 플랫폼
+        location_range: 지역 검색 범위
       post:
         title: 제목
         body: 내용
@@ -103,3 +104,8 @@ ko:
       account_type:
         normal: 일반
         kakao: 카카오
+      location_range:
+        location_alone: 자기 동네만
+        location_near: 가까운 동네
+        location_normal: 중간 동네
+        location_far: 먼 동네
