@@ -57,7 +57,7 @@ def generate_post
 end
 
 def generate_locations
-  CSV.foreach("public/SuwonLocation.csv", :headers => true, encoding:'iso-8859-1:utf-8') do |row|
+  CSV.foreach("public/SuwonLocation.csv", headers: true) do |row|
     begin
       location = Location.create!(row.to_hash)
       p "Location '#{location.title}' created."
