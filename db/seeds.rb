@@ -18,6 +18,7 @@ def generate_user num
       image: File.open("#{Rails.root}/public/image/default.png"),
       gender: :no_select,
       user_type: :normal,
+      location_id: Location.first.id,
       body: "tester#{index+1} account."
     )
     p "User 'tester#{index+1}' created."
@@ -47,7 +48,9 @@ def generate_post
     price: "10000",
     image: File.open("#{Rails.root}/public/image/mac_1.jpeg"),
     post_type: :provide,
-    status: :able
+    status: :able,
+    category_id: Category.find_by(title: "가전").id,
+    location_id: user.location.id
   )
   4.times do |index| 
     post.images.create!(image: File.open("#{Rails.root}/public/image/mac_#{index+1}.jpeg"))
@@ -68,8 +71,8 @@ def generate_locations
 end
 
 # seed functions
-generate_user 5 unless User.exists?
 generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exists?
 generate_categories unless Category.exists?
 generate_locations unless Location.exists?
+generate_user 5 unless User.exists?
 generate_post unless Post.exists?
