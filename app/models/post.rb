@@ -14,6 +14,7 @@ class Post < ApplicationRecord
   has_many :bookings
 
   belongs_to :user
+  belongs_to :location
   belongs_to :category, optional: true
 
   enum status: %i(able unable)
