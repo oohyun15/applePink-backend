@@ -48,6 +48,15 @@ ko:
         end_at: 종료일
         lent_day: 대여기간
         acceptance: 예약상태
+      location:
+        title: 법정동
+        lat: 위도
+        lng: 경도
+        location_near: 가까운 동네
+        location_normal: 중간 동네
+        location_far: 먼 동네
+      chat:
+        has_message: 메시지 여부
 
     models:
       dashboard: 대시보드

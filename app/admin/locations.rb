@@ -1,18 +1,17 @@
 ActiveAdmin.register Location do
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :title, :lat, :lng, :position, :location_near, :location_normal, :location_far
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:title, :lat, :lng, :position, :location_near, :location_normal, :location_far]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+  config.sort_order = 'position_asc'
   
+  reorderable
+  
+  index as: :reorderable_table do
+    br
+    column :position  
+    column :title  
+    column :lat  
+    column :lng  
+    column :location_near do |location| Location.where(position: location.location_near) end
+    column :location_normal do |location| Location.where(position: location.location_normal) end
+    column :location_far do |location| Location.where(position: location.location_far) end
+    actions
+  end
 end
