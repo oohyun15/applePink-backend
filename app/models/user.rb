@@ -19,8 +19,10 @@ class User < ApplicationRecord
   has_many :received_bookings, through: :posts, source: :bookings
 
   belongs_to :group, optional: :true
+  belongs_to :location
 
   enum gender: %i(no_select man woman)
   enum user_type: %i(normal company)
+  enum location_range: %i(location_alone location_near location_normal location_far)
 
 end

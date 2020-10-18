@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_17_071201) do
+ActiveRecord::Schema.define(version: 2020_10_17_184639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,18 @@ ActiveRecord::Schema.define(version: 2020_10_17_071201) do
     t.index ["imagable_type", "imagable_id"], name: "index_images_on_imagable_type_and_imagable_id"
   end
 
+  create_table "locations", force: :cascade do |t|
+    t.string "title"
+    t.decimal "lat"
+    t.decimal "lng"
+    t.integer "position"
+    t.integer "location_near", default: [], array: true
+    t.integer "location_normal", default: [], array: true
+    t.integer "location_far", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "messages", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -112,8 +124,6 @@ ActiveRecord::Schema.define(version: 2020_10_17_071201) do
     t.text "body"
     t.integer "status"
     t.integer "rent_count"
-    t.decimal "lat"
-    t.decimal "lng"
     t.integer "like_count"
     t.integer "chat_count"
     t.datetime "created_at", precision: 6, null: false
@@ -123,7 +133,9 @@ ActiveRecord::Schema.define(version: 2020_10_17_071201) do
     t.integer "price"
     t.string "image"
     t.integer "post_type"
+    t.bigint "location_id"
     t.index ["category_id"], name: "index_posts_on_category_id"
+    t.index ["location_id"], name: "index_posts_on_location_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -141,8 +153,6 @@ ActiveRecord::Schema.define(version: 2020_10_17_071201) do
     t.string "password_digest"
     t.string "nickname"
     t.integer "gender", default: 0
-    t.float "lat"
-    t.float "lng"
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -152,8 +162,11 @@ ActiveRecord::Schema.define(version: 2020_10_17_071201) do
     t.string "uid"
     t.string "provider"
     t.string "account_type", default: "normal"
+    t.bigint "location_id"
+    t.integer "location_range", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
+    t.index ["location_id"], name: "index_users_on_location_id"
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 

@@ -6,7 +6,12 @@ class PostSerializer < ActiveModel::Serializer
   #조건문이 없으니 default가 됨
   def post_simple_info
     post_simple_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :post_simple_info))
-    {title: object.title, body: object.body}
+    {
+      title: object.title,
+      body: object.body,
+      image: object.image_path,
+      location: object.location.title,
+    }
   end
 
   #넘어온 body에서 post_detail_scope가 true일 때만 실행됨
