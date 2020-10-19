@@ -71,6 +71,7 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build post_params
     begin
+      @post.location = current_user.location
       @post.able!
       redirect_to post_path(@post), notice: "게시글 생성 완료"
     rescue => e
