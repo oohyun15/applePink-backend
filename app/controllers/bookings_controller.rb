@@ -19,6 +19,10 @@ class BookingsController < ApplicationController
       render json: {error: "자신의 게시글에 대한 예약은 생성할 수 없습니다."}, status: :bad_request
     else
       @booking = current_user.bookings.create! booking_params
+
+      # post 상태를 예약 불가능으로 바꿈
+      @post.unable!
+      
       render json: @booking, status: :ok
     end
   end

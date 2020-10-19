@@ -11,6 +11,7 @@ class PostSerializer < ActiveModel::Serializer
       body: object.body,
       image: object.image_path,
       location: object.location.title,
+      status: object.status
     }
   end
 
