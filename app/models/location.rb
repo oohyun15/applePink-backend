@@ -6,4 +6,6 @@ class Location < ApplicationRecord
   
   has_many :users
   has_many :posts
+  has_many :likes, as: :target, class_name: "Like", dependent: :destroy
+
 end
