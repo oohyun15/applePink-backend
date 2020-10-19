@@ -1,6 +1,18 @@
 class LikesController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_possible, only: %i(toggle)
   before_action :load_target, only: %i(toggle)
+  before_action :load_user, only: %i(index)
+
+  def index
+    if params[:target_type].present?
+      @likes = @user.likes.where(target_type: params[:target_type].capitalize)
+    else
+      @likes = @user.likes
+    end
+
+    render json: @likes, status: :ok
+  end
 
   def toggle
     # 좋아요 대상이 자신인 경우
@@ -27,11 +39,16 @@ class LikesController < ApplicationController
 
   private
 
-  def load_target
-    return render json: {error: "좋아요를 할 수 없는 객체입니다."}, status: :bad_request if Like::LIKE_MODELS.exclude? like_params[:target_type]
+  def check_possible
+    params[:like][:target_type] = params[:like][:target_type].capitalize
 
+    return render json: {error: "좋아요를 할 수 없는 객체입니다."}, status: :bad_request if Like::LIKE_MODELS.exclude? like_params[:target_type].capitalize
+  end
+
+  def load_target
     begin
-      @target = like_params[:target_type].constantize.find(like_params[:target_id])
+      model = like_params[:target_type].capitalize
+      @target = model.constantize.find(like_params[:target_id])
     rescue => e
       render json: {error: e}, status: :bad_request
     end
@@ -39,5 +56,13 @@ class LikesController < ApplicationController
 
   def like_params
     params.require(:like).permit(:target_id, :target_type)
+  end
+
+  def load_user
+    begin
+      @user = User.find(params[:user_id])
+    rescue => e
+      render json: {error: "없는 유저입니다."}, status: :bad_request
+    end
   end
 end
