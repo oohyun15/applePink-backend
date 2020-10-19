@@ -53,9 +53,9 @@ class PostsController < ApplicationController
       @posts = Post.where(post_type: :ask, location_id: location_ids)
     end
     render json: {
-      posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, scope: {params: create_params}),
       location: @location.title,
-      location_range: I18n.t("enum.user.location_range.#{current_user.location_range}")
+      location_range: I18n.t("enum.user.location_range.#{current_user.location_range}"),
+      posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, scope: {params: create_params})
        # scope 적용이 안됨. 수정 필요
     }#, status: :ok, scope: {params: create_params}
   end
