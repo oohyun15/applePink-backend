@@ -14,10 +14,7 @@ class PostsController < ApplicationController
       @location = Location.find_by(title: params[:location_title])
       
       # exception: 만약 없는 동네일 경우
-      if @location.nil?
-        render json: {error: "존재하지 않는 동네입니다."}, status: :not_found
-        return
-      end
+      return render json: {error: "존재하지 않는 동네입니다."}, status: :not_found if @location.nil?
 
       # 2. location_positions에 해당 position 추가
       location_positions << @location.position
