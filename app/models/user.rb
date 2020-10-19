@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :messages
   has_many :bookings
   has_many :received_bookings, through: :posts, source: :bookings
+  has_many :likes
 
   belongs_to :group, optional: :true
   belongs_to :location
