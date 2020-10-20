@@ -1,7 +1,7 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_post, only: %i(create)
-  before_action :load_booking, only: %i(show destroy)
+  before_action :load_post, only: %i(create complete)
+  before_action :load_booking, only: %i(show complete destroy)
   before_action :check_owner, only: %i(show destroy)
 
   def index
@@ -15,11 +15,24 @@ class BookingsController < ApplicationController
   end
 
   def create
-    if current_user == @post.user
+    if current_user == @post.user 
       render json: {error: "자신의 게시글에 대한 예약은 생성할 수 없습니다."}, status: :bad_request
     else
       @booking = current_user.bookings.create! booking_params
+
+      @post.unable!
+
       render json: @booking, status: :ok
+    end
+  end
+
+  def complete
+    begin
+      @booking.update!(acceptance: :completed)
+      @post.able!
+      render json: {notice: "반납이 완료되었습니다."}, status: :ok
+    rescue => e
+      render json: {error: e.errors.full_messages}, status: :bad_request
     end
   end
 
@@ -37,7 +50,7 @@ class BookingsController < ApplicationController
   private
   def load_post
     begin
-      @post = Post.find(params[:post_id])
+      @post = Post.find(params[:booking][:post_id])
     rescue => e
       render json: {error: "없는 게시글입니다."}, status: :bad_request
     end

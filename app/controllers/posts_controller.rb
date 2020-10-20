@@ -49,11 +49,13 @@ class PostsController < ApplicationController
     elsif params[:post_type] == "ask"
       @posts = Post.where(post_type: :ask, location_id: location_ids)
     end
-    render json: {
-      location: @location.title,
-      location_range: I18n.t("enum.user.location_range.#{current_user.location_range}"),
-      posts: @posts # scope 적용이 안됨. 수정 필요
-      }, status: :ok, scope: {params: create_params}
+    #render json: {
+    #  location: @location.title,
+    #  location_range: I18n.t("enum.user.location_range.#{current_user.location_range}"),
+    #  posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, scope: {params: create_params})
+       # scope 적용이 안됨. 수정 필요
+    #}#, status: :ok, scope: {params: create_params}
+    render json: @posts, status: :ok, scope: { params: create_params, location: {info: true, title: @location.title, range: I18n.t("enum.user.location_range.#{current_user.location_range}")} }
   end
 
   def show
