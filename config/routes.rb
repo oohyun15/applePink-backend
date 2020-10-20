@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'users/sign_in', to: 'authentication#new'
   post 'users/sign_in', to: 'authentication#create'
   post 'users/sign_up', to: 'users#create'
+  put 'bookings/:id', to: 'bookings#complete'
 
   resources :users, only: %i(index show edit update destroy) do
     collection do
