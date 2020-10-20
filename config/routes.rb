@@ -8,9 +8,12 @@ Rails.application.routes.draw do
   get 'users/sign_in', to: 'authentication#new'
   post 'users/sign_in', to: 'authentication#create'
   post 'users/sign_up', to: 'users#create'
+  post 'users/like', to: 'likes#toggle'
   put 'bookings/:id', to: 'bookings#complete'
-
+  
   resources :users, only: %i(index show edit update destroy) do
+    resources :likes, only: %i(index)
+
     collection do
       get :list
     end
