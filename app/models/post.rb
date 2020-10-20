@@ -12,6 +12,7 @@ class Post < ApplicationRecord
   has_many :chats
   has_many :chat_users, through: :chats, source: :users
   has_many :bookings
+  has_many :likes, as: :target, class_name: "Like", dependent: :destroy
 
   belongs_to :user
   belongs_to :location

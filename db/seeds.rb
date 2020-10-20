@@ -1,13 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
-CATEGORIES = %w(패션 뷰티 생활용품 가전 스포츠 자동차 도서)
-# LOCATIONS = %w(파장동 이목동 천천동 율전동 정자동 영화동 송죽동 조원동 연무동 상광교동 하광교동 세류동 장지동 오목천동 평동 고색동 평리동 호매실동 금곡동 구운동 서둔동 탑동 권선동 곡반전동 대황교동 입북동 당수동 팔달로1가 팔달로2가 팔달로3가 남창동 영동 구천동 중동 매향동 남수동 북수동 장안동 신풍동 매교동 교동 매산로1가 매산로2가 매산로3가 고등동 화서동 지동 우만동 인계동 매탄동 원천동 이의동 하동 영통동 신동 망포동)
+CATEGORIES = %w(잡화 의류 뷰티 전자제품 레져용품 생활용품 요리 자동차)
 
 def generate_user num
   num.times do |index|
@@ -53,7 +44,7 @@ def generate_post num
       image: File.open("#{Rails.root}/public/image/mac_1.jpeg"),
       post_type: :provide,
       status: :able,
-      category_id: Category.find_by(title: "가전").id,
+      category_id: Category.find_by(title: "전자제품").id,
       location_id: user.location.id
     )
     4.times do |jndex| 
