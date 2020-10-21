@@ -59,7 +59,13 @@ end
 def generate_locations
   CSV.foreach("public/SuwonLocation.csv", headers: true) do |row|
     begin
-      location = Location.create!(row.to_hash)
+      one_location = row.to_hash
+      one_location["location_near"] = one_location["location_near"].split(",").map{ |s| s.to_i }
+      one_location["location_normal"] = one_location["location_normal"].split(",").map{ |s| s.to_i }
+      one_location["location_far"] = one_location["location_far"].split(",").map{ |s| s.to_i }
+      
+      location = Location.create!(one_location)
+      
       p "Location '#{location.title}' created."
     rescue => e
       p e.message
