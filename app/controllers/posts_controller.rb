@@ -27,8 +27,8 @@ class PostsController < ApplicationController
       location_
       
       case current_user.location_range
-      when "location_alone"
-        location_positions << @location.position
+      #when "location_alone"
+      #  location_positions << @location.position
       when "location_near"
         location_positions = @location.location_near
       when "location_normal"
