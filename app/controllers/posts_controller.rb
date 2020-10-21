@@ -23,10 +23,11 @@ class PostsController < ApplicationController
     else
       # 1. 사용자의 지역을 변수로 받음
       @location = current_user.location
+
       # 2. 사용자의 지역 검색 범위에 따라 location_positions 추가
       case current_user.location_range
-      #when "location_alone"
-      #  location_positions << @location.position
+      when "location_alone"
+        location_positions << @location.position
       when "location_near"
         location_positions = @location.location_near
       when "location_normal"
