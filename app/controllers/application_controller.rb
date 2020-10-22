@@ -38,11 +38,15 @@ class ApplicationController < ActionController::Base
     http_token ||= if request.headers["Authorization"].present?
         request.headers["Authorization"].split(" ").last
       end
+      p "http_token: #{http_token}"
+      return http_token
   end
 
   ## 토큰 해석 : 토큰 해석은 lib/json_web_token.rb 내의 decode 메소드에서 진행됩니다.
   def auth_token
     auth_token ||= JsonWebToken.decode(http_token)
+    p "auth_token: #{auth_token}"
+    return auth_token
   end
 
   ## 토큰 해석 후, Decode 내용 중 User id 정보 확인
