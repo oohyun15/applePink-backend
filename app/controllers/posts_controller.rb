@@ -72,7 +72,7 @@ class PostsController < ApplicationController
     begin
       @post.location = current_user.location
       @post.able!
-      redirect_to post_path(@post), notice: "게시글 생성 완료"
+      render json: @post, status: :ok, scope: {params: create_params}
     rescue => e
       render json: {error: e}, status: :bad_request
     end
