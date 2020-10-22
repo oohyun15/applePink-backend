@@ -44,6 +44,9 @@ gem "bootsnap", ">= 1.4.2", require: false
 gem "jwt"
 gem "figaro"
 
+# 이메일
+gem 'sendgrid-actionmailer'
+
 # omniauth
 gem 'omniauth'
 gem 'omniauth-oauth2', '<= 1.3.1'
