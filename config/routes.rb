@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     resources :messages, only: %i(index create)  
   end
   resources :image, only: %i(create destroy)
-  resources :locations, only: %i(update)
+  resources :locations, only: %i(index show update)
   resources :bookings, only: %i(index show create destroy) do
     put :complete, on: :collection
   end
