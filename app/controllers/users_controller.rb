@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: %i(show edit update destroy)
-  before_action :authenticate_user!, only: %i(edit update destroy list mypage)
+  before_action :authenticate_user!, except: %i(index)
 
   # 유저 목록 보기
   def index
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
         end
       end
     # 이메일만 있을 경우
-    elsif email_params[:email].presnet?
+    elsif email_params[:email].present?
       if EmailCertification.generate_code(email_params[:email])
         return render json: {message: "소속 인증 메일을 발송했습니다. 메일을 확인해 주세요."}, status: :ok
       else

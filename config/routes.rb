@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     collection do
       get :list
       get :mypage
-      get :email_auth
+      post :email_auth
     end
   end
   resources :posts
