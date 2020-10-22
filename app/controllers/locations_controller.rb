@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
-  before_action :load_user, only: %i(update)
-  before_action :load_location, only: %i(show update)
+  before_action :load_user, only: %i(certificate)
+  before_action :load_location, only: %i(show)
   before_action :authenticate_user!
 
   #모든 동네 목록
@@ -15,9 +15,17 @@ class LocationsController < ApplicationController
   end
 
   #처음 회원가입 시 지역인증
-  def update
-    @user.update!(location_id: @location.id)
-    render json: {notice: "사용자의 지역이 인증되었습니다."}
+  def certificate
+    begin
+      @location = Location.find_by(title: params[:location_title])
+      return render json: {error: "존재하지 않는 지역입니다."}, status: :not_found if @location.nil?
+
+      @user.update!(location_id: @location.id)
+
+      render json: {notice: "사용자의 지역이 인증되었습니다."}
+    rescue => e
+      render json: {error: e}, status: :bad_request
+    end
   end
 
   private
