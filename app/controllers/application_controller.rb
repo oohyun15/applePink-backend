@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
     unless user_id_in_token?
       # redirect_to users_sign_in_path
-      return render json: { error: "unauthorized" }, status: :unauthorized
+      return render json: { error: "Unauthorized. 알 수 없는 유저 아이디입니다." }, status: :unauthorized
     end
 
     ## Token 안에 있는 user_id 값을 받아와서 User 모델의 유저 정보 탐색
@@ -38,11 +38,15 @@ class ApplicationController < ActionController::Base
     http_token ||= if request.headers["Authorization"].present?
         request.headers["Authorization"].split(" ").last
       end
+      Rails.logger.debug "http_token: #{http_token}"
+      return http_token
   end
 
   ## 토큰 해석 : 토큰 해석은 lib/json_web_token.rb 내의 decode 메소드에서 진행됩니다.
   def auth_token
     auth_token ||= JsonWebToken.decode(http_token)
+    Rails.logger.debug "auth_token: #{auth_token}"
+    return auth_token
   end
 
   ## 토큰 해석 후, Decode 내용 중 User id 정보 확인

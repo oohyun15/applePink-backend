@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: %i(show edit update destroy)
-  before_action :authenticate_user!, only: %i(edit update destroy list)
+  before_action :authenticate_user!, only: %i(edit update destroy list mypage)
 
   # 유저 목록 보기
   def index
@@ -27,6 +27,10 @@ class UsersController < ApplicationController
 
   # 회원 탈퇴
   def destroy
+  end
+
+  def mypage
+    render json: current_user, status: :ok, scope: {params: create_params}
   end
 
   def list
