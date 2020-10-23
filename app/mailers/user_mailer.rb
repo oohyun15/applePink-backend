@@ -1,5 +1,6 @@
 class UserMailer < ApplicationMailer
   default from: "tonem0809@gmail.com"
+  # default from: "sakiss4774@gmail.com"
 
   def generate_code(email, generated_code)
     @email = email

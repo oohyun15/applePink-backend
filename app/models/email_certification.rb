@@ -16,7 +16,7 @@ class EmailCertification < ApplicationRecord
 
       Rails.logger.debug "generate_code: #{generate_code}, email: #{email}"
 
-      UserMailer.generate_code(email, generate_code).deliver_now
+      UserMailer.generate_code(email, generate_code).deliver_now!
       result = true
     end
     return result
