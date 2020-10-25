@@ -10,6 +10,4 @@ unless Rails.env.development?
       end
     end
   )
-  system 'RAILS_ENV=production bin/delayed_job start'
-  system 'RAILS_ENV=production bin/delayed_job stop'
 end
