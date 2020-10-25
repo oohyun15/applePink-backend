@@ -65,15 +65,7 @@ Rails.application.configure do
   config.action_mailer.sendgrid_actionmailer_settings = {
     api_key: ENV["SENDGRID_API_KEY"]
   }
-
-  config.middleware.use ExceptionNotification::Rack,
-    :email => {
-      :deliver_with => :deliver, # Rails >= 4.2.1 do not need this option since it defaults to :deliver_now
-      :email_prefix => "[모두나눔] ",
-      :sender_address => %{"notifier" <admin@applepink.com>},
-      :exception_recipients => %w(sakiss4774@gmail.com tonem0809@gmail.com)
-  }
-
+  
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
