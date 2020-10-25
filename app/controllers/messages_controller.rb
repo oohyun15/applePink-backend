@@ -14,7 +14,7 @@ class MessagesController < ApplicationController
     end
 
     # 메시지 렌더
-    render json: @messages, status: :ok
+    render json: @messages, status: :ok, scope: {params: create_params}
   end
 
   def create
@@ -25,7 +25,7 @@ class MessagesController < ApplicationController
 
     @chat.update!(has_message: :true) unless @chat.has_message
 
-    render json: @message, status: :ok
+    render json: @message, status: :ok, scope: {params: create_params}
   end
 
   private

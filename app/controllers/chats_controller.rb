@@ -33,7 +33,8 @@ class ChatsController < ApplicationController
       end
       
       # 채팅방 생성 성공
-      redirect_to chat_messages_path @chat, notice: "거래 시 직거래가 아닌 방법으로 유도 시..."
+      #redirect_to chat_messages_path @chat, notice: "거래 시 직거래가 아닌 방법으로 유도 시..."
+      render json: @chat, status: :ok, scope: {params: create_params}, user_id: current_user.id
     end
   end
 
