@@ -41,13 +41,13 @@ class PostsController < ApplicationController
     # location 모델에서 position이 unique하게 가지고 있어 지금처럼 id를 구하는 과정이 오버헤드임
     # 추후에 user 모델에 location_position 이라는 컬럼을 추가해서관리해도 괜찮을 것 같음
     # ex Post.where(post_type: :provide, location_position: location_positions)
-    location_ids = Location.where(position: location_positions).ids
+    # location_ids = Location.where(position: location_positions).ids
 
     # location_ids와 post_type에 따른 서비스 분류
     if params[:post_type] == "provide" || params[:post_type].nil?
-      @posts = Post.where(post_type: :provide, location_id: location_ids)
+      @posts = Post.where(post_type: :provide, location_id: location_positions)
     elsif params[:post_type] == "ask"
-      @posts = Post.where(post_type: :ask, location_id: location_ids)
+      @posts = Post.where(post_type: :ask, location_id: location_positions)
     end
     #render json: {
     #  location: @location.title,

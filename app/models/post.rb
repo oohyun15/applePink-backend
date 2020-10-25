@@ -15,7 +15,7 @@ class Post < ApplicationRecord
   has_many :likes, as: :target, class_name: "Like", dependent: :destroy
 
   belongs_to :user
-  belongs_to :location
+  belongs_to :location, foreign_key: :location_id, primary_key: :position
   belongs_to :category, optional: true
 
   enum status: %i(able unable)
