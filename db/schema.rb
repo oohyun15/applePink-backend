@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_25_044904) do
+ActiveRecord::Schema.define(version: 2020_10_25_061017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,15 @@ ActiveRecord::Schema.define(version: 2020_10_25_044904) do
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["location_id"], name: "index_posts_on_location_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.bigint "delayed_job_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "delayed_job_type"
+    t.index ["user_id"], name: "index_schedules_on_user_id"
   end
 
   create_table "user_chats", force: :cascade do |t|
