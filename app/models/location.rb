@@ -7,5 +7,4 @@ class Location < ApplicationRecord
   has_many :users, foreign_key: :location_id, primary_key: :position
   has_many :posts, foreign_key: :location_id, primary_key: :position
   has_many :likes, as: :target, class_name: "Like", dependent: :destroy
-
 end

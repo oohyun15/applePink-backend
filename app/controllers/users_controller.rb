@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :load_user, only: %i(show edit update destroy)
+  before_action :load_user, only: %i(show edit update)
   before_action :authenticate_user!, except: %i(index)
 
   # 유저 목록 보기
@@ -26,7 +26,25 @@ class UsersController < ApplicationController
   end
 
   # 회원 탈퇴
-  def destroy
+  def withdrawal
+    begin
+      # 해당 유저의 예약 스케줄 모두 삭제
+      current_user.schedules.each do |schedule|
+        Delayed::Job.find_by_id(schedule.delayed_job_id)&.delete
+      end
+
+      # 게시글 삭제
+      current_user.posts.each do |post|
+        post.destroy!
+      end
+
+      # 유저 삭제
+      current_user.destroy!
+
+      render json: {notice: "회원 탈퇴되었습니다."}, status: :ok
+    rescue => e
+      render json: {error: e}, status: :bad_request
+    end
   end
 
   def mypage

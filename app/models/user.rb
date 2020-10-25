@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :received_bookings, through: :posts, source: :bookings
   has_many :likes
   has_many :received_likes, class_name: "Like", as: :target, dependent: :destroy
+  has_many :schedules
 
   accepts_nested_attributes_for :likes
 
