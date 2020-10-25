@@ -12,12 +12,13 @@ Rails.application.routes.draw do
   
   # put 'bookings/:id', to: 'bookings#complete'
   
-  resources :users, only: %i(index show edit update destroy) do
+  resources :users, only: %i(index show edit update) do
     resources :likes, only: %i(index)
     collection do
       get :list
       get :mypage
       post :email_auth
+      delete :withdrawal
     end
   end
   resources :posts

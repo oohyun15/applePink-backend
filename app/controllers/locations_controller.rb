@@ -1,5 +1,4 @@
 class LocationsController < ApplicationController
-  before_action :load_user, only: %i(certificate)
   before_action :load_location, only: %i(show certificate)
   before_action :authenticate_user!
 
@@ -17,17 +16,17 @@ class LocationsController < ApplicationController
   #처음 회원가입 시 지역인증
   def certificate
     # 유저의 지역을 업데이트 함.
-    @user.update!(location_id: @location.position)
+    current_user.update!(location_id: @location.position)
     
     # @post.delayed_job_id를 통해 기존 job 제거
-    schedule = @user.schedules.find_or_initialize_by(delayed_job_type: "Location")
+    schedule = current_user.schedules.find_or_initialize_by(delayed_job_type: "Location")
   
     # 기존 schedule이 있을 경우 제거
     Delayed::Job.find_by_id(schedule.delayed_job_id)&.delete unless schedule.new_record?
 
     # 1달 이후 지역 인증 초기화
     expire_time = 1.month.from_now
-    delayed_job = @user.delay(run_at: expire_time).update!(location_id: nil)
+    delayed_job = current_user.delay(run_at: expire_time).update!(location_id: nil)
 
     # job id 업데이트
     schedule.update!(delayed_job_id: delayed_job.id)
@@ -36,13 +35,6 @@ class LocationsController < ApplicationController
   end
 
   private
-  def load_user
-    begin
-      @user = User.find(params[:location][:user_id])
-    rescue => e
-      render json: {error: "존재하지 않는 유저입니다."}, status: :bad_request
-    end
-  end
 
   def load_location
     begin
