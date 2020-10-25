@@ -9,7 +9,7 @@ def generate_user num
       image: File.open("#{Rails.root}/public/image/default.png"),
       gender: :no_select,
       user_type: :normal,
-      location_id: Location.all[index].id,
+      location_id: Location.all[index].position,
       location_range: :location_alone,
       body: "tester#{index+1} account."
     )
@@ -45,7 +45,7 @@ def generate_post num
       post_type: :provide,
       status: :able,
       category_id: Category.find_by(title: "전자제품").id,
-      location_id: user.location.id
+      location_id: user.location.position
     )
     4.times do |jndex| 
       post.images.create!(image: File.open("#{Rails.root}/public/image/mac_#{jndex+1}.jpeg"))

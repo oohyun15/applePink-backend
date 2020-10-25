@@ -23,7 +23,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :likes
 
   belongs_to :group, optional: :true
-  belongs_to :location, optional: :true
+  belongs_to :location, foreign_key: :location_id, primary_key: :position, optional: :true
 
   enum gender: %i(no_select man woman)
   enum user_type: %i(normal company)
