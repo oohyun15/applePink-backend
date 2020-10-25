@@ -4,7 +4,7 @@ namespace :deploy do
     on roles(:app) do
       within "#{current_path}" do # /home/deploy/proj_name/current
         with rails_env: fetch(:stage) do # production
-          execute :pm2, "dlrestart"
+          execute :dlrestart, "restart delayed job"
         end
       end
     end
