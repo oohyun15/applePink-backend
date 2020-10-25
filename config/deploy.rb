@@ -56,8 +56,9 @@ namespace :deploy do
   end
 end
 
-
 set :default_env, {
   PATH: '$HOME/.npm-packages/bin/:$PATH',
   NODE_ENVIRONMENT: 'production'
 }
+
+after :deploy, 'deploy:restart_delayed_job'
