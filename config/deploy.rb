@@ -61,4 +61,4 @@ set :default_env, {
   NODE_ENVIRONMENT: 'production'
 }
 
-after :deploy, 'deploy:restart_delayed_job'
+# after :deploy, 'deploy:restart_delayed_job'
