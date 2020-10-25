@@ -19,7 +19,7 @@ class LocationsController < ApplicationController
     @location = Location.find_by(title: params[:location][:location_title])
     
     #유저의 지역을 업데이트 함.
-    @user.update!(location_id: @location.id)
+    @user.update!(location_id: @location.position)
 
     render json: {notice: "사용자의 지역이 인증되었습니다."}
   end
