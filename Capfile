@@ -51,5 +51,7 @@ require "capistrano/figaro_yml"
 ## * database_yml require가 없으면 database.yml 파일이 Remote 서버에 업로드가 안된다.
 require 'capistrano/database_yml'
 
+require 'capistrano/delayed_job'
+
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
