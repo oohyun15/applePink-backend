@@ -61,4 +61,12 @@ set :default_env, {
   NODE_ENVIRONMENT: 'production'
 }
 
-# after :deploy, 'deploy:restart_delayed_job'
+set :delayed_job_server_role, :worker
+set :delayed_job_args, "-n 2"
+
+after 'deploy:publishing', 'deploy:restart'
+namespace :deploy do
+  task :restart do
+    invoke 'delayed_job:restart'
+  end
+end
