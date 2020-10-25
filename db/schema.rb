@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_19_094853) do
+ActiveRecord::Schema.define(version: 2020_10_22_123149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,15 @@ ActiveRecord::Schema.define(version: 2020_10_19_094853) do
     t.bigint "post_id"
     t.boolean "has_message", default: false
     t.index ["post_id"], name: "index_chats_on_post_id"
+  end
+
+  create_table "email_certifications", force: :cascade do |t|
+    t.string "email"
+    t.string "code"
+    t.datetime "confirmed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_email_certifications_on_email"
   end
 
   create_table "groups", force: :cascade do |t|

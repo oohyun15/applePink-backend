@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
     unless user_id_in_token?
       # redirect_to users_sign_in_path
-      return render json: { error: "Unauthorized. 알 수 없는 유저 아이디입니다." }, status: :unauthorized
+      return render json: { error: "Unauthorized" }, status: :unauthorized
     end
 
     ## Token 안에 있는 user_id 값을 받아와서 User 모델의 유저 정보 탐색

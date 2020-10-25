@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: %i(show edit update destroy)
-  before_action :authenticate_user!, only: %i(edit update destroy list mypage)
+  before_action :authenticate_user!, except: %i(index)
 
   # 유저 목록 보기
   def index
@@ -45,10 +45,36 @@ class UsersController < ApplicationController
     end
   end
 
+  def email_auth
+    # 이메일, 코드 2개 다 있을 경우
+    if email_params[:code].present? && email_params[:email].present?
+      if email_certification = EmailCertification.find_by(email: email_params[:email])
+        
+        if email_certification.check_code(email_params[:code])
+          return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
+        else
+          return render json: {error: "인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."}, status: :not_acceptable
+        end
+      end
+    # 이메일만 있을 경우
+    elsif email_params[:email].present?
+      if EmailCertification.generate_code(email_params[:email])
+        return render json: {message: "소속 인증 메일을 발송했습니다. 메일을 확인해 주세요."}, status: :ok
+      else
+        return render json: {error: "정상적으로 메일을 발송하지 못했습니다. 메일 주소를 확인해 주세요."}, status: :not_acceptable
+      end
+    end
+    return render json: {error: "unauthorized"}, status: :unauthorized
+  end
+
   private
 
   def user_params
     params.require(:user).permit(User::USER_COLUMNS)
+  end
+
+  def email_params
+    params.require(:user).permit(:code, :email)
   end
 
   def load_user
