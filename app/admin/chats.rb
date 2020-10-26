@@ -1,4 +1,5 @@
 ActiveAdmin.register Chat do
+  menu parent: "2. 서비스 관리", priority: 2, label: "#{I18n.t("activerecord.models.chat")} 관리"
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

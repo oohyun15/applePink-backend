@@ -1,4 +1,5 @@
 ActiveAdmin.register User do
+  menu parent: "1. 유저 관리", priority: 1, label: "#{I18n.t("activerecord.models.user")} 관리"
   
   filter :nickname
   filter :email
