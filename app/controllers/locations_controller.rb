@@ -25,7 +25,7 @@ class LocationsController < ApplicationController
     Delayed::Job.find_by_id(schedule.delayed_job_id)&.delete unless schedule.new_record?
 
     # 1달 이후 지역 인증 초기화
-    expire_time = 1.week.from_now
+    expire_time = 5.minutes.from_now
     delayed_job = current_user.delay(run_at: expire_time).update!(location_id: nil)
 
     # job id 업데이트
