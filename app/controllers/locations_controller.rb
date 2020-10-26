@@ -31,7 +31,7 @@ class LocationsController < ApplicationController
     # job id 업데이트
     schedule.update!(delayed_job_id: delayed_job.id)
 
-    render json: {notice: "사용자의 지역이 인증되었습니다. #{I18n.l(expire_time)} 후에 인증이 만료됩니다."}
+    render json: {notice: "사용자의 지역이 인증되었습니다. #{expire_time.strftime('%Y년 %m월 %d일')} 후에 인증이 만료됩니다."}
   end
 
   private

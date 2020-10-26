@@ -14,12 +14,12 @@ ActiveAdmin.register User do
     column :nickname
     column :email
     column :location do |user| user.location.present? ? user.location : "지역인증 필요" end
-    column :expiration_time do |user| user.location.present? && user.schedules.exists? ? I18n.l(user.schedules.find_by(delayed_job_type: "Location").updated_at, format: :short) : "지역인증 필요" end
-    tag_column :gender
+    column :expiration_time do |user| user.location.present? && user.schedules.exists? ? user.schedules.find_by(delayed_job_type: "Location").updated_at.strftime('%Y년 %m월 %d일') : "지역인증 필요" end
+    column :gender do |user| I18n.t("enum.user.gender.#{user.gender}") end
     tag_column :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
     column :location_range do |user| user.user_type.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
-    column :created_at do |user| I18n.l(user.created_at, format: :short) end
-    column :updated_at do |user| I18n.l(user.updated_at, format: :short) end
+    column :created_at do |user| user.created_at.strftime('%Y년 %m월 %d일') end
+    column :updated_at do |user| user.updated_at.strftime('%Y년 %m월 %d일') end
     tag_column :account_type do |user| user.account_type end
     actions
   end

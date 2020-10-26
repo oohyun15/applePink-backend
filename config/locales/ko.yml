@@ -53,6 +53,8 @@ ko:
         end_at: 종료일
         lent_day: 대여기간
         acceptance: 예약상태
+        user: 소비자
+        provider: 제공자
       location:
         title: 법정동
         lat: 위도
