@@ -16,11 +16,11 @@ ActiveAdmin.register User do
     column :location do |user| user.location.present? ? user.location : "지역인증 필요" end
     column :expiration_time do |user| user.location.present? && user.schedules.exists? ? I18n.l(user.schedules.find_by(delayed_job_type: "Location").updated_at, format: :short) : "지역인증 필요" end
     tag_column :gender
-    tag_column :user_type do |user| user.user_type.present? ? I18n.t("enum.user.user_type.#{user.user_type}") : "미지정" end
+    tag_column :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
     column :location_range do |user| user.user_type.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
-    column :created_at
-    column :updated_at
-    column :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end
+    column :created_at do |user| I18n.l(user.created_at, format: :short) end
+    column :updated_at do |user| I18n.l(user.updated_at, format: :short) end
+    tag_column :account_type do |user| user.account_type end
     actions
   end
 

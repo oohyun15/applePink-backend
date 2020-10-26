@@ -45,7 +45,8 @@ def generate_post num
       post_type: :provide,
       status: :able,
       category_id: Category.find_by(title: "전자제품").id,
-      location_id: user.location.position
+      location_id: user.location.position,
+      rent_count: index
     )
     4.times do |jndex| 
       post.images.create!(image: File.open("#{Rails.root}/public/image/mac_#{jndex+1}.jpeg"))

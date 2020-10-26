@@ -29,6 +29,7 @@ class BookingsController < ApplicationController
   def complete
     begin
       @booking.update!(acceptance: :completed)
+      @post.rent_count += 1
       @post.able!
       render json: {notice: "반납이 완료되었습니다."}, status: :ok
     rescue => e

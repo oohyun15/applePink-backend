@@ -44,6 +44,8 @@ ko:
         post_type: 게시글 유형
         user: 게시자
         price: 가격
+        location: 지역
+        rent_count: 대여 횟수
       category:
         title: 카테고리명
       booking:
