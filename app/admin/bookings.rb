@@ -12,7 +12,8 @@ ActiveAdmin.register Booking do
     column :post
     column :user do |booking| booking.user end
     column :provider do |booking| booking.post.user end
-    column :lent_day do |booking| "#{booking.lent_day}일" end
+    column :lent_day do |booking| "#{number_with_delimiter booking.lent_day}일" end
+    column :price do |booking| number_to_currency booking.price end
     tag_column :acceptance
     column :start_at do |booking| booking&.start_at&.strftime('%Y년 %m월 %d일') end
     column :end_at do |booking| booking&.end_at&.strftime('%Y년 %m월 %d일') end

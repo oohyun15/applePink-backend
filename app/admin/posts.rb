@@ -19,10 +19,11 @@ ActiveAdmin.register Post do
     column :post_type do |post| post.post_type.present? ? I18n.t("enum.post.post_type.#{post.post_type}") : "게시글 타입 없음<br>비정상적인 게시글".html_safe end
     column :image do |post| image_tag(post&.image_path ,class: 'admin-index-image') end
     column :user do |post| post.user end
+    column :price do |post| number_to_currency post.price end
     column :body do |post| post&.body&.truncate(27) end
     column :category
     column :location do |post| post.location.present? ? post.location : "없음" end
-    column :rent_count
+    column :rent_count do |post| number_to_currency post.rent_count end
     tag_column :status do |post| post.status.present? ? post.status : "게시글 상태 없음<br>비정상적인 게시글".html_safe end
     actions
   end
@@ -34,10 +35,11 @@ ActiveAdmin.register Post do
       row :post_type do |post| post.post_type.present? ? I18n.t("enum.post.post_type.#{post.post_type}") : "게시글 타입 없음<br>비정상적인 게시글".html_safe end
       row :image do |post| image_tag(post&.image_path ,class: 'admin-index-image') end
       row :user do |post| post.user end
+      row :price do |post| number_to_currency post.price end
       row :body do |post| post&.body&.truncate(27) end
       row :category
       row :location do |post| post.location.present? ? post.location : "없음" end
-      row :rent_count
+      row :rent_count do |post| number_to_currency post.rent_count end
       tag_row :status do |post| post.status.present? ? post.status : "게시글 상태 없음<br>비정상적인 게시글".html_safe end      
       row :image do |post| image_tag(post.image_path ,class: 'admin-show-image') end
       panel '이미지 리스트' do
@@ -57,6 +59,7 @@ ActiveAdmin.register Post do
 
       f.input :title
       f.input :post_type, as: :select, collection: Post.enum_selectors(:post_type)
+      f.input :price
       f.input :body
       f.input :category_id, as: :select, collection: Category.all.map{|category| [category.title, category.id]}
       f.input :status, as: :select, collection: Post.enum_selectors(:status)

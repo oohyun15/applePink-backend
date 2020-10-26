@@ -55,6 +55,7 @@ ko:
         acceptance: 예약상태
         user: 소비자
         provider: 제공자
+        price: 가격
       location:
         title: 법정동
         lat: 위도

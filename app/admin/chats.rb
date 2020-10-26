@@ -6,7 +6,7 @@ ActiveAdmin.register Chat do
     id_column
     column :post
     column :user_list do |chat| chat.users end
-    column :message_count do |chat| chat.messages.size end
+    column :message_count do |chat| "#{number_with_delimiter chat.messages.size}개" end
     column :last_message do |chat| chat.has_message ? chat.messages.last&.body&.truncate(27) : "메시지가 없습니다." end
   end
 end
