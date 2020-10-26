@@ -30,12 +30,12 @@ ActiveAdmin.register User do
       row :nickname
       row :email
       row :location
-      row :gender
-      row :user_type do |user| user.user_type.present? ? I18n.t("enum.user.user_type.#{user.user_type}") : "미지정" end
+      tag_row :gender
+      tag_row :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
       row :location_range do |user| user.location_range.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
       row :created_at
       row :updated_at
-      row :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end
+      tag_row :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end
     end
   end
 

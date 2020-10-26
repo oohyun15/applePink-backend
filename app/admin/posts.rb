@@ -26,4 +26,50 @@ ActiveAdmin.register Post do
     tag_column :status do |post| post.status.present? ? post.status : "게시글 상태 없음<br>비정상적인 게시글".html_safe end
     actions
   end
+
+  show do
+    attributes_table do
+      # row :id
+      row :title
+      row :post_type do |post| post.post_type.present? ? I18n.t("enum.post.post_type.#{post.post_type}") : "게시글 타입 없음<br>비정상적인 게시글".html_safe end
+      row :image do |post| image_tag(post&.image_path ,class: 'admin-index-image') end
+      row :user do |post| post.user end
+      row :body do |post| post&.body&.truncate(27) end
+      row :category
+      row :location do |post| post.location.present? ? post.location : "없음" end
+      row :rent_count
+      tag_row :status do |post| post.status.present? ? post.status : "게시글 상태 없음<br>비정상적인 게시글".html_safe end      
+      row :image do |post| image_tag(post.image_path ,class: 'admin-show-image') end
+      panel '이미지 리스트' do
+        table_for '이미지' do
+          post.images.each_with_index do |image, index|
+            column "상세이미지#{index + 1}" do
+              image_tag(image.image_path ,class: 'admin-show-image')
+            end
+          end
+        end
+      end
+    end
+  end
+
+  form do |f|
+    f.inputs do
+
+      f.input :title
+      f.input :post_type, as: :select, collection: Post.enum_selectors(:post_type)
+      f.input :body
+      f.input :category_id, as: :select, collection: Category.all.map{|category| [category.title, category.id]}
+      f.input :status, as: :select, collection: Post.enum_selectors(:status)
+
+      f.input :image, as: :file, hint: image_tag(f.object&.image_path, class: 'admin-show-image')
+      f.has_many :images, allow_destroy: true do |p|
+        #p.object.image = image_tag(p.object.image_path)
+        p.inputs '사진업로드' do
+          p.input :image, as: :file, hint: image_tag(p.object.image_path, class: 'admin-show-image' )
+          # p.input :image_cache, as: :hidden
+        end
+      end
+    end
+    f.actions
+  end
 end
