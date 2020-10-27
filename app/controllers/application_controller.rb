@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   attr_reader :current_user
 
-  helper_method :money, :short_time, :long_time
+  helper_method :money, :short_time, :long_time, :short_date
   
   public
   
@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
   
   def long_time time
     time.methods.includes?(:strftime) ? time.strftime("%Y.%m.%d %H:%M") : nil
+  end
+  
+  def short_date date
+    date.methods.includes?(:strftime) ? time.strftime("%Y년 %m월 %d일") : nil
   end
   
   protected
