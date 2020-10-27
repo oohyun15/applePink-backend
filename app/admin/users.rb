@@ -18,8 +18,8 @@ ActiveAdmin.register User do
     column :gender do |user| I18n.t("enum.user.gender.#{user.gender}") end
     tag_column :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
     column :location_range do |user| user.user_type.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
-    column :created_at do |user| user.created_at.strftime('%Y년 %m월 %d일') end
-    column :updated_at do |user| user.updated_at.strftime('%Y년 %m월 %d일') end
+    column :created_at do |user| short_date user.created_at end
+    column :updated_at do |user| short_date user.updated_at end
     tag_column :account_type do |user| user.account_type end
     actions
   end
@@ -33,8 +33,8 @@ ActiveAdmin.register User do
       tag_row :gender
       tag_row :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
       row :location_range do |user| user.location_range.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
-      row :created_at
-      row :updated_at
+      row :created_at do |user| short_date user.created_at end
+      row :updated_at do |user| short_date user.updated_at end
       tag_row :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end
     end
   end
