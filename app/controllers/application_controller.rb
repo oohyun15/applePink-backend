@@ -2,6 +2,22 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   attr_reader :current_user
 
+  helper_method :money, :short_time, :long_time
+  
+  public
+  
+  def money num
+    number_with_currency(num)
+  end
+  
+  def short_time time
+    time.methods.includes?(:strftime) ? time.strftime("%m/%d %H:%M") : nil
+  end
+  
+  def long_time time
+    time.methods.includes?(:strftime) ? time.strftime("%Y.%m.%d %H:%M") : nil
+  end
+  
   protected
 
   def authenticate_user!
