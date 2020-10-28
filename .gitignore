@@ -22,6 +22,7 @@
 !/storage/.keep
 
 /public/assets
+/public/uploads
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
@@ -33,3 +34,10 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+.vercel
+.DS_Store
+/config/application.yml
+/config/database.yml
+
+/config/deploy/production.rb

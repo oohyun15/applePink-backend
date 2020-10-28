@@ -1,0 +1,121 @@
+ko:
+  attributes:
+    id: ID
+    user: 사용자
+    name: 이름
+    gender: 성별
+    email: 이메일
+    phone: 전화번호
+    title: 제목
+    body: 내용
+    image: "이미지"
+    position: "순서"
+    created_at: "생성시간"
+    updated_at: "수정시간"
+    price: "가격"
+    amount: "상품수량"
+    start_at: "시작시간"
+    end_at: "종료시간"
+    status: "상태"
+    post: 게시글
+    chat: 채팅
+    category: 카테고리
+    lat: 위도
+    lng: 경도
+
+  activerecord:
+    attributes:
+      user:
+        account_type: 계정타입
+        name: 사용자명
+        nickname: 닉네임
+        email: 이메일
+        gender: 성별
+        user_type: 사용자 유형
+        lat: 위도
+        lng: 경도
+        provider: 플랫폼
+        location: 지역
+        location_range: 지역 검색 범위
+        expire_time: 지역 인증 만료 시간
+      post:
+        title: 제목
+        body: 내용
+        post_type: 게시글 유형
+        user: 게시자
+        price: 가격
+        location: 지역
+        rent_count: 대여 횟수
+      category:
+        title: 카테고리명
+      booking:
+        start_at: 시작일
+        end_at: 종료일
+        lent_day: 대여기간
+        acceptance: 예약상태
+        user: 소비자
+        provider: 제공자
+        price: 가격
+      location:
+        title: 법정동
+        lat: 위도
+        lng: 경도
+        location_near: 가까운 동네
+        location_normal: 중간 동네
+        location_far: 먼 동네
+      chat:
+        has_message: 메시지 여부
+        user_list: 채팅방 내 유저 목록
+        message_count: 메시지 수
+        last_message: 마지막 메시지
+
+    models:
+      dashboard: 대시보드
+      user: "사용자"
+      admin_user: 어드민
+      category: 카테고리
+      post: 게시글
+      booking: 예약
+      image: 이미지
+      chat: 채팅
+      location: 지역
+
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "항목이 비어있습니다"
+            gender: "성별"
+
+
+  enum:
+    booking:
+      acceptance:
+        waiting: 대기중
+        accepted: 승인
+        rejected: 거절
+        completed: 종료
+    post:
+      status:
+        able: 대여 가능
+        unable: 대여 불가능
+      post_type:
+        provide: 제공
+        ask: 요청
+    user:
+      gender:
+        man: 남성
+        woman: 여성
+        no_select: 선택안함
+      user_type:
+        normal: 일반
+        company: 광고주
+      account_type:
+        normal: 일반
+        kakao: 카카오
+      location_range:
+        location_alone: 자기 동네만
+        location_near: 가까운 동네
+        location_normal: 중간 동네
+        location_far: 먼 동네

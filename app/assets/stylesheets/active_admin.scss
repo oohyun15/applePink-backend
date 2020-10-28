@@ -1,0 +1,137 @@
+// Sass variable overrides must be declared before loading up Active Admin's styles.
+//
+// To view the variables that Active Admin provides, take a look at
+// `app/assets/stylesheets/active_admin/mixins/_variables.scss` in the
+// Active Admin source.
+//
+// For example, to change the sidebar width:
+// $sidebar-width: 242px;
+
+// Active Admin's got SASS!
+
+@import "active_admin/mixins";
+@import "active_admin/base";
+@import 'activeadmin_addons/all';
+@import "activeadmin_reorderable";
+
+// Add active skin
+$skinActiveColor: #83054a;
+$skinHeaderBck: #002744;
+$panelHeaderBck: #333333;
+$skinBgColor: #f5f5f5;
+
+@import "active_skin";
+
+form fieldset.inputs {
+  padding-top:0px;
+}
+
+html {background-color:$skinBgColor}
+body.active_admin {padding-bottom:0;background-color:$skinBgColor}
+
+#active_admin_content {
+  padding-bottom: 100px;
+}
+
+/* header */
+#header {
+  background-color:$skinBgColor;
+  h1.site_title {
+    background-color: #fff;
+    background: none;
+    padding-left: 30px;
+    color: #1e2a33;
+    text-indent: 0px;
+    font-size: 20px;
+    font-weight:700;
+    width:100px;
+  }
+  .header-item {top:0}
+  ul.tabs {
+    display:flex;flex-wrap:wrap;
+    li {
+      display:block;height:40px;font-size:14px;line-height:40px;vertical-align:top;cursor:pointer;
+      &:hover,
+      &.has_nested {
+        a {margin:0}
+        &> a,
+        &:hover a {background-position:calc(100% - 7px) 50%;font-weight:normal}
+        &:hover ul {
+          background-color:#fff;
+          border:1px solid $skinActiveColor;
+          li a {
+            background-color:#fff;color:#555;
+            &:hover {background-color:#f1f1f1;color:#000}
+          }
+        }
+      }
+      &.current {
+        a {margin:0}
+      }
+      &.current.has_nested {
+        a {margin:0;font-weight:bold}
+      }
+      a {display:block;height:40px;padding:0 15px;line-height:40px}
+      ul {margin-top:0}
+    }
+  }
+  #utility_nav {
+    background:none;
+    li {display:inline-block}
+  }
+}
+
+.admin-index-image {
+  width: 70px;
+  height: 70px;
+}
+
+.admin-show-image {
+  width: 300px;
+  height: 300px;
+}
+
+table.index_table {
+  white-space: nowrap;
+}
+
+.active {
+  background: green;
+}
+.disabled {
+  backbround: grey;
+}
+.sold_out {
+  background: yellow;
+  color: black;
+}
+
+fieldset.inputs {
+  padding-top: 30px !important;
+}
+
+.table_tools {
+  margin-bottom: 0px !important;
+}
+
+
+.status_tag.able, .status_tag.accepted {
+  background: darkgreen  
+}
+
+.status_tag.unable, .status_tag.rejected{
+  background: darkred  
+}
+
+.status_tag.normal, .status_tag.waiting {
+  background: darkslategray;
+}
+
+.status_tag.company, .status_tag.completed {
+  background: darkblue  
+}
+
+.status_tag.kakao {
+  background: gold;
+  color: black;
+}

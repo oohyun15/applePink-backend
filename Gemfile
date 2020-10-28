@@ -11,20 +11,24 @@ gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 3.11"
 gem "sass-rails", "~> 5"
 
-gem "devise"
 gem "ransack"
 gem "carrierwave"
 gem "mini_magick"
+gem "fog-aws"
 
+gem "devise"
 gem "activeadmin"
 gem "active_skin"
 gem "activeadmin_addons"
 gem "acts_as_list"
 gem "activeadmin_reorderable"
 gem "array_enum"
+gem 'bcrypt' 
 
 # hashtag
 gem "acts-as-taggable-on", "~> 6.0"
+
+gem 'active_model_serializers'
 
 # 결제 관련
 gem "iamport"
@@ -33,10 +37,21 @@ gem "activerecord-import"
 # job scheduling
 gem "delayed_job_active_record"
 
-gem "webpacker", "~> 4.0"
-gem "turbolinks", "~> 5"
 gem "jbuilder", "~> 2.7"
 gem "bootsnap", ">= 1.4.2", require: false
+
+# JWT 인증
+gem "jwt"
+gem "figaro"
+
+# 이메일
+gem 'sendgrid-actionmailer'
+
+# omniauth
+gem 'omniauth'
+gem 'omniauth-oauth2', '<= 1.3.1'
+# gem 'omniauth-kakao'
+gem 'omniauth-kakao', :git => 'git://github.com/insomenia/omniauth-kakao'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -60,5 +75,14 @@ group :test do
   gem "webdrivers"
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'capistrano', '~> 3.7', '>= 3.7.1'
+gem 'capistrano-rails'
+gem 'capistrano-passenger', '~> 0.2.0'
+gem 'capistrano-webpacker-precompile', require: false
+gem 'capistrano-bundler'
+gem 'capistrano-rvm'
+gem 'capistrano-rails-collection'
+gem 'capistrano-figaro-yml'
+gem 'capistrano-database-yml'
+
+gem 'daemons'
