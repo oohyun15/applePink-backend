@@ -73,6 +73,7 @@ group :test do
   gem "selenium-webdriver"
   # Easy installation and use of web drivers to run system tests with browsers
   gem "webdrivers"
+  gem 'rspec-rails', '~> 4.0.1'
 end
 
 gem 'capistrano', '~> 3.7', '>= 3.7.1'
