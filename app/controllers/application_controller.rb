@@ -1,7 +1,28 @@
 class ApplicationController < ActionController::Base
+  include ActionView::Helpers::NumberHelper
   skip_before_action :verify_authenticity_token
   attr_reader :current_user
 
+  helper_method :money, :short_time, :long_time, :short_date
+  
+  public
+  
+  def money num
+    number_to_currency num.to_i rescue ""
+  end
+  
+  def short_time time
+    time.methods.include?(:strftime) ? time.strftime("%m/%d %H:%M") : nil
+  end
+  
+  def long_time time
+    time.methods.include?(:strftime) ? time.strftime("%Y.%m.%d %H:%M") : nil
+  end
+  
+  def short_date date
+    date.methods.include?(:strftime) ? date.strftime("%Y년 %m월 %d일") : nil
+  end
+  
   protected
 
   def authenticate_user!

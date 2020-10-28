@@ -1,4 +1,6 @@
 ActiveAdmin.register Location do
+  menu parent: "3. 사이트 관리", priority: 1, label: "#{I18n.t("activerecord.models.location")} 관리"
+
   config.sort_order = 'position_asc'
   
   index do

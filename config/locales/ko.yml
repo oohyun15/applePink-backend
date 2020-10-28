@@ -37,12 +37,15 @@ ko:
         provider: 플랫폼
         location: 지역
         location_range: 지역 검색 범위
+        expire_time: 지역 인증 만료 시간
       post:
         title: 제목
         body: 내용
         post_type: 게시글 유형
         user: 게시자
         price: 가격
+        location: 지역
+        rent_count: 대여 횟수
       category:
         title: 카테고리명
       booking:
@@ -50,6 +53,9 @@ ko:
         end_at: 종료일
         lent_day: 대여기간
         acceptance: 예약상태
+        user: 소비자
+        provider: 제공자
+        price: 가격
       location:
         title: 법정동
         lat: 위도
@@ -59,6 +65,9 @@ ko:
         location_far: 먼 동네
       chat:
         has_message: 메시지 여부
+        user_list: 채팅방 내 유저 목록
+        message_count: 메시지 수
+        last_message: 마지막 메시지
 
     models:
       dashboard: 대시보드

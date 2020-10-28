@@ -113,3 +113,25 @@ fieldset.inputs {
 .table_tools {
   margin-bottom: 0px !important;
 }
+
+
+.status_tag.able, .status_tag.accepted {
+  background: darkgreen  
+}
+
+.status_tag.unable, .status_tag.rejected{
+  background: darkred  
+}
+
+.status_tag.normal, .status_tag.waiting {
+  background: darkslategray;
+}
+
+.status_tag.company, .status_tag.completed {
+  background: darkblue  
+}
+
+.status_tag.kakao {
+  background: gold;
+  color: black;
+}

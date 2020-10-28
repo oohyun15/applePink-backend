@@ -15,8 +15,11 @@ class LocationsController < ApplicationController
 
   #처음 회원가입 시 지역인증
   def certificate
+    # 1달 이후 지역 인증 초기화
+    expire_time = 5.minutes.from_now
+
     # 유저의 지역을 업데이트 함.
-    current_user.update!(location_id: @location.position)
+    current_user.update!(location_id: @location.position, expire_time: expire_time)
     
     # @post.delayed_job_id를 통해 기존 job 제거
     schedule = current_user.schedules.find_or_initialize_by(delayed_job_type: "Location")
@@ -24,14 +27,12 @@ class LocationsController < ApplicationController
     # 기존 schedule이 있을 경우 제거
     Delayed::Job.find_by_id(schedule.delayed_job_id)&.delete unless schedule.new_record?
 
-    # 1달 이후 지역 인증 초기화
-    expire_time = 1.week.from_now
-    delayed_job = current_user.delay(run_at: expire_time).update!(location_id: nil)
+    delayed_job = current_user.delay(run_at: expire_time).update!(location_id: nil, expire_time: nil)
 
     # job id 업데이트
     schedule.update!(delayed_job_id: delayed_job.id)
 
-    render json: {notice: "사용자의 지역이 인증되었습니다. #{I18n.l(expire_time)} 후에 인증이 만료됩니다."}
+    render json: {notice: "사용자의 지역이 인증되었습니다. #{expire_time.strftime('%Y년 %m월 %d일')} 후에 인증이 만료됩니다."}
   end
 
   private

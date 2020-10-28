@@ -40,6 +40,19 @@ ko:
     status_tag:
       "yes": "있음"
       "no": "없음"
+      no_select: 선택 안함
+      man: 남자
+      woman: 여자
+      able: 대여 가능
+      unable: 대여 불가능
+      normal: 일반
+      company: 광고주
+      kakao: 카카오
+      waiting: 대기중
+      accepted: 승인
+      rejected: 거절
+      completed: 종료
+
     main_content: "내용을 보시려면 %{model}#main_content의 코드를 먼저 구현해 주시기 바랍니다."
     logout: "로그아웃"
     powered_by: "Powered by %{active_admin} %{version}"

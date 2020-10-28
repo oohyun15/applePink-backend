@@ -1,4 +1,6 @@
 ActiveAdmin.register AdminUser do
+  menu parent: "1. 유저 관리", priority: 2, label: "#{I18n.t("activerecord.models.admin_user")} 관리"
+
   permit_params :email, :password, :password_confirmation
 
   index do
