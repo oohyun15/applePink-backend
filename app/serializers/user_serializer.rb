@@ -4,7 +4,7 @@ class UserSerializer < ActiveModel::Serializer
 
   def user_simple_info
     user_simple_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :user_simple_info))
-    {id: object.id, title: object.email, nickname: object.nickname, location_title: object.location&.title}
+    {id: object.id, title: object.email, nickname: object.nickname, location_title: object.location&.title, expire_time: object.expire_time}
   end
 
   def user_detail_info
