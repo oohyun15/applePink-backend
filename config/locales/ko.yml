@@ -37,7 +37,7 @@ ko:
         provider: 플랫폼
         location: 지역
         location_range: 지역 검색 범위
-        expiration_time: 지역 인증 만료 시간
+        expire_time: 지역 인증 만료 시간
       post:
         title: 제목
         body: 내용

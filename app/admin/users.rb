@@ -13,8 +13,8 @@ ActiveAdmin.register User do
     column :image do |user| image_tag(user&.image_path ,class: 'admin-index-image') end
     column :nickname
     column :email
-    column :location do |user| user.location.present? ? user.location : "지역인증 필요" end
-    column :expiration_time do |user| user.location.present? && user.schedules.exists? ? user.schedules.find_by(delayed_job_type: "Location").updated_at.strftime('%Y년 %m월 %d일') : "지역인증 필요" end
+    column :location do |user| user.expire_time&.present? ? (user.expire_time > Time.current ? user.location : "지역인증 필요") : "지역인증 필요" end
+    column :expire_time do |user| user.expire_time&.present? ? (user.expire_time > Time.current ? long_time(user.expire_time) : "지역인증 필요") : "지역인증 필요" end
     column :gender do |user| I18n.t("enum.user.gender.#{user.gender}") end
     tag_column :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
     column :location_range do |user| user.user_type.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end

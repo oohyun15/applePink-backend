@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_25_061017) do
+ActiveRecord::Schema.define(version: 2020_10_28_030529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 2020_10_25_061017) do
     t.string "account_type", default: "normal"
     t.bigint "location_id"
     t.integer "location_range", default: 0
+    t.datetime "expire_time"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["location_id"], name: "index_users_on_location_id"

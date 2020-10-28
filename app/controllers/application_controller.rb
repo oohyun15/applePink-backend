@@ -11,15 +11,15 @@ class ApplicationController < ActionController::Base
   end
   
   def short_time time
-    time.methods.includes?(:strftime) ? time.strftime("%m/%d %H:%M") : nil
+    time.methods.include?(:strftime) ? time.strftime("%m/%d %H:%M") : nil
   end
   
   def long_time time
-    time.methods.includes?(:strftime) ? time.strftime("%Y.%m.%d %H:%M") : nil
+    time.methods.include?(:strftime) ? time.strftime("%Y.%m.%d %H:%M") : nil
   end
   
   def short_date date
-    date.methods.includes?(:strftime) ? time.strftime("%Y년 %m월 %d일") : nil
+    date.methods.include?(:strftime) ? date.strftime("%Y년 %m월 %d일") : nil
   end
   
   protected
