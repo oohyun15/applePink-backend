@@ -89,8 +89,8 @@ class PostsController < ApplicationController
 
   def like
     user_ids = @post.likes.pluck(:user_id)
-    user_emails = User.where(id: user_ids).pluck(:email)
-    return render json: { user_list: user_emails }, status: :ok
+    user_nicknames = User.where(id: user_ids).pluck(:nickname)
+    return render json: { user_list: user_nicknames }, status: :ok
   end
 
   private
