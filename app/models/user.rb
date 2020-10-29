@@ -10,7 +10,9 @@ class User < ApplicationRecord
 
   validates :email, presence: true
   validates :nickname, presence: true
-
+  
+  has_one :company, dependent: :destroy
+  
   has_many :posts
   has_many :user_chats
   has_many :chats, through: :user_chats
