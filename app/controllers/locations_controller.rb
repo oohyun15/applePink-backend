@@ -44,7 +44,7 @@ class LocationsController < ApplicationController
         @location = Location.find(params[:id])     
       else 
         #카카오 맵 API를 사용해 넘어온 법정동 이름으로 location을 load함.
-        unless @location = Location.find_by(title: params[:location][:location_title])
+        unless @location = Location.find_by(title: params[:location][:title])
           return render json: {error: "존재하지 않는 지역입니다."}, status: :not_found
         end
       end
