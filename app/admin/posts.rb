@@ -10,6 +10,7 @@ ActiveAdmin.register Post do
 
   index do
     selectable_column
+    id_column
     br
     a link_to ("제공 서비스 보기"), "/admin/posts?q%5Bpost_type_in%5D%5B%5D=0", class: "button small"
     a link_to ("요청 서비스 보기"), "/admin/posts?q%5Bpost_type_in%5D%5B%5D=1", class: "button small"
