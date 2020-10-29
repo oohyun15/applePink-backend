@@ -68,6 +68,14 @@ ko:
         user_list: 채팅방 내 유저 목록
         message_count: 메시지 수
         last_message: 마지막 메시지
+      company:
+        name: 이름
+        phone: 연락처
+        message: 한줄소개
+        image: 이미지
+        description: 상세정보
+        location: 지역
+        approve: 승인여부
 
     models:
       dashboard: 대시보드
@@ -79,6 +87,7 @@ ko:
       image: 이미지
       chat: 채팅
       location: 지역
+      company: 광고주
 
     errors:
       models:

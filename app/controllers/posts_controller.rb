@@ -77,6 +77,7 @@ class PostsController < ApplicationController
     @post = current_user.posts.build post_params
     begin
       @post.location = current_user.location
+      @post.rent_count = 0
       @post.able!
       render json: @post, status: :ok, scope: {params: create_params}
     rescue => e
