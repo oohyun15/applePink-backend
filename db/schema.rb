@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_28_030529) do
+ActiveRecord::Schema.define(version: 2020_10_29_120719) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,18 @@ ActiveRecord::Schema.define(version: 2020_10_28_030529) do
     t.bigint "post_id"
     t.boolean "has_message", default: false
     t.index ["post_id"], name: "index_chats_on_post_id"
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.string "phone"
+    t.string "message"
+    t.string "image"
+    t.text "description"
+    t.bigint "location_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_companies_on_location_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -207,6 +219,8 @@ ActiveRecord::Schema.define(version: 2020_10_28_030529) do
     t.bigint "location_id"
     t.integer "location_range", default: 0
     t.datetime "expire_time"
+    t.bigint "company_id"
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["location_id"], name: "index_users_on_location_id"
