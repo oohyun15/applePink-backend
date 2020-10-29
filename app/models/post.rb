@@ -4,10 +4,10 @@ class Post < ApplicationRecord
   
   POST_COLUMNS = %i(title body price category_id image post_type) + [images_attributes: %i(imagable_type imagable_id image)]
   
-  validates :title, presence: :true
-  validates :body, presence: :true
-  validates :price, presence: :true
-  validates :post_type, presence: :true
+  validates :title, presence: true#, on: :create
+  validates :body, presence: true
+  validates :price, presence: true
+  validates :post_type, presence: true
 
   has_many :chats
   has_many :chat_users, through: :chats, source: :users

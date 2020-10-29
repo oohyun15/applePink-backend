@@ -2,7 +2,8 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+  #ActiveAdmin 관련 오류로 수정함
+  ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
   root "authentication#new"
 
   get 'users/sign_in', to: 'authentication#new'
