@@ -75,6 +75,10 @@ group :test do
   gem "webdrivers"
 end
 
+group :test, :development do
+  gem 'rspec-rails', '~> 4.0.1'
+end
+
 gem 'capistrano', '~> 3.7', '>= 3.7.1'
 gem 'capistrano-rails'
 gem 'capistrano-passenger', '~> 0.2.0'
