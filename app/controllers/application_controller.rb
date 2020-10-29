@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
   
   rescue_from SecurityError do |exception|
-    redirect_to root_url
+    return render json: { error: "Unauthorized" }, status: :unauthorized
   end
   
   def authenticate_user!
