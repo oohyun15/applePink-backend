@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :load_post, only: %i(show update destroy)
+  before_action :load_post, only: %i(show update destroy like)
   before_action :post_params, only: %i(create update)
   before_action :authenticate_user!
   before_action :check_owner, only: %i(update destroy)
@@ -85,6 +85,10 @@ class PostsController < ApplicationController
     rescue => e
       render json: {error: e}, status: :bad_request
     end
+  end
+
+  def like
+    return render json: @post.likes, status: :ok
   end
 
   private

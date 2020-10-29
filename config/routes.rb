@@ -22,11 +22,19 @@ Rails.application.routes.draw do
       delete :withdrawal
     end
   end
-  resources :posts
+  
+  resources :posts do
+    collection do
+      get :like
+    end
+  end
+  
   resources :chats do
     resources :messages, only: %i(index create)  
   end
+  
   resources :image, only: %i(create destroy)
+  
   resources :locations, only: %i(index show) do
     put :certificate, on: :collection
   end
