@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   end
   
   resources :posts do
-    collection do
+    member do
       get :like
     end
   end
