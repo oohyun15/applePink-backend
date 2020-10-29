@@ -10,7 +10,9 @@ class User < ApplicationRecord
 
   validates :email, presence: true
   validates :nickname, presence: true
-
+  
+  has_one :company, dependent: :destroy
+  
   has_many :posts
   has_many :user_chats
   has_many :chats, through: :user_chats
@@ -25,7 +27,6 @@ class User < ApplicationRecord
 
   belongs_to :group, optional: :true
   belongs_to :location, foreign_key: :location_id, primary_key: :position, optional: :true
-  belongs_to :company, optional: true
 
   enum gender: %i(no_select man woman)
   enum user_type: %i(normal company)
