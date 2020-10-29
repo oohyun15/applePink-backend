@@ -47,6 +47,9 @@ gem "figaro"
 # 이메일
 gem 'sendgrid-actionmailer'
 
+# 검색
+gem 'ransack'
+
 # omniauth
 gem 'omniauth'
 gem 'omniauth-oauth2', '<= 1.3.1'

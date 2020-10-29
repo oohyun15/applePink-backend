@@ -11,7 +11,7 @@ class LikesController < ApplicationController
       @likes = @user.likes
     end
 
-    render json: @likes, status: :ok
+    render json: @likes, status: :ok, scope: {params: create_params}
   end
 
   def toggle

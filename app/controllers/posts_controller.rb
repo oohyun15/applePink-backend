@@ -55,6 +55,12 @@ class PostsController < ApplicationController
     #  posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, scope: {params: create_params})
        # scope 적용이 안됨. 수정 필요
     #}#, status: :ok, scope: {params: create_params}
+
+    # 추가적인 검색 조건이 있는 경우
+    if params[:q].present?
+      @posts = @posts.ransack(params[:q]).result(distinct: true)
+    end
+
     render json: @posts, status: :ok, scope: { params: create_params, location: {info: true, title: @location.title, range: I18n.t("enum.user.location_range.#{current_user.location_range}")} }
   end
 
