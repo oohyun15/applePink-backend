@@ -1,4 +1,5 @@
 ActiveAdmin.register Company do
+  menu parent: "1. 유저 관리", priority: 2, label: "#{I18n.t("activerecord.models.company")} 관리"
 
   index do
     selectable_column
