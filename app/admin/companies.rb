@@ -5,7 +5,7 @@ ActiveAdmin.register Company do
     selectable_column
     id_column
     br
-    column :user do |company| link_to company.user.email, admin_user_path(company.user) end
+    column :user
     column :name
     column :image do |company| image_tag(company&.image_path ,class: 'admin-index-image') end
     column :phone

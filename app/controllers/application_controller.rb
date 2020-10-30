@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
   
   protected
-
+  
   def authenticate_user!
     ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
     unless user_id_in_token?

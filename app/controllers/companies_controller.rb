@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :authenticate_user!, except: %i(confirm)
+  before_action :authenticate_admin_user!, only: %i(confirm)
   before_action :load_company, only: %i(show destroy confirm)
   before_action :check_owner, only: %i(destroy)
 
