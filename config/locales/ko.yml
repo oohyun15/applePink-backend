@@ -76,6 +76,9 @@ ko:
         description: 상세정보
         location: 지역
         approve: 승인여부
+      report:
+        reason: 신고사유
+        detail: 상세내용
 
     models:
       dashboard: 대시보드
@@ -88,6 +91,7 @@ ko:
       chat: 채팅
       location: 지역
       company: 광고주
+      report: 신고
 
     errors:
       models:
@@ -128,3 +132,13 @@ ko:
         location_near: 가까운 동네
         location_normal: 중간 동네
         location_far: 먼 동네
+    report:
+      reason:
+        fake_item: 허위매물
+        break_rule: 계약위반
+        lost_contact: 연락두절
+        impertinence: 부적절한 언어 사용
+        unsuitable_post: 적합하지 않은 게시글
+        fraud: 사기의심
+        threat_violence: 폭력 및 협박
+        etc: 기타사유
