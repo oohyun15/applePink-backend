@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_possible, only: %i(create)
-  before_action :load_target, only: %i(create)
+  before_action :check_possible, only: %i(report)
+  before_action :load_target, only: %i(report)
   before_action :load_user, only: %i(index)
 
   def index 
