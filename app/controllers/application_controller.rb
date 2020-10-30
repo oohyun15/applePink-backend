@@ -24,15 +24,6 @@ class ApplicationController < ActionController::Base
   end
   
   protected
-
-  # restrict access to admin module for non-admin users
-  def authenticate_admin_user!
-    raise SecurityError unless current_user.try(:admin?)
-  end
-  
-  rescue_from SecurityError do |exception|
-    return render json: { error: "Unauthorized" }, status: :unauthorized
-  end
   
   def authenticate_user!
     ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환

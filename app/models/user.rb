@@ -32,4 +32,7 @@ class User < ApplicationRecord
   enum user_type: %i(normal company)
   enum location_range: %i(location_alone location_near location_normal location_far)
 
+  def display_name
+    self.nickname
+  end
 end
