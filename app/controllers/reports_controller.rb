@@ -10,6 +10,8 @@ class ReportsController < ApplicationController
     else
       @reports = @user.reports
     end
+
+    return render json: @reports, status: :ok
   end
 
   def report
@@ -23,7 +25,7 @@ class ReportsController < ApplicationController
 
     current_user.reports.create! report_params
 
-    return json: @report, status: :ok
+    return render json: {message: "신고가 접수되었습니다."}, status: :ok
   end
 
   private

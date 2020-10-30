@@ -3,7 +3,9 @@ class Report < ApplicationRecord
   include Imagable
 
   REPORT_MODELS = %w(User Post)
-  REPORT_COLUMNS = %i(detail reason image) + [images_attributes: %i(imagable_type imagable_id image)]
+  REPORT_COLUMNS = %i(report_target_id report_target_type detail reason image) + [images_attributes: %i(imagable_type imagable_id image)]
+
+  validates :reason, presence: true
 
   belongs_to :user
   belongs_to :report_target, polymorphic: true
