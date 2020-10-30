@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
     end
   end
 
-  def create
+  def report
     #신고 대상이 자기 자신일 때
     return render json: {error: "신고 할 수 없습니다."}, status: :bad_request if current_user == @target
 
