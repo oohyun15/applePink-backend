@@ -21,7 +21,7 @@ class User < ApplicationRecord
   has_many :received_bookings, through: :posts, source: :bookings
   has_many :likes
   has_many :received_likes, class_name: "Like", as: :target, dependent: :destroy
-  has_many :reports
+  has_many :reports, dependent: :destroy
   #has_many :received_reports, class_name: "Report", as: :report_target, dependent: :destroy
   has_many :schedules
 
