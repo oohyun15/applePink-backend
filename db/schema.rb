@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_31_072701) do
+ActiveRecord::Schema.define(version: 2020_10_31_082513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -236,6 +236,8 @@ ActiveRecord::Schema.define(version: 2020_10_31_072701) do
     t.bigint "location_id"
     t.integer "location_range", default: 0
     t.datetime "expire_time"
+    t.integer "likes_count", default: 0
+    t.integer "reports_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["location_id"], name: "index_users_on_location_id"
