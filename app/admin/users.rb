@@ -21,6 +21,8 @@ ActiveAdmin.register User do
     column :created_at do |user| short_date user.created_at end
     column :updated_at do |user| short_date user.updated_at end
     tag_column :account_type do |user| user.account_type end
+    column :likes_count
+    column :reports_count
     actions
   end
 
@@ -35,6 +37,8 @@ ActiveAdmin.register User do
       row :location_range do |user| user.location_range.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
       row :created_at do |user| short_date user.created_at end
       row :updated_at do |user| short_date user.updated_at end
+      row :likes_count
+      row :reports_count
       tag_row :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end
     end
   end

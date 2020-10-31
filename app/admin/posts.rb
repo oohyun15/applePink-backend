@@ -26,6 +26,8 @@ ActiveAdmin.register Post do
     column :location do |post| post.location.present? ? post.location : "없음" end
     column :rent_count do |post| number_with_delimiter post.rent_count end
     tag_column :status do |post| post.status.present? ? post.status : "게시글 상태 없음<br>비정상적인 게시글".html_safe end
+    column :likes_count
+    column :reports_count
     actions
   end
 
@@ -51,6 +53,8 @@ ActiveAdmin.register Post do
           end
         end
       end
+      row :likes_count
+      row :reports_count
     end
   end
 
