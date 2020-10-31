@@ -80,6 +80,9 @@ end
 
 group :test, :development do
   gem 'rspec-rails', '~> 4.0.1'
+  gem 'faker'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
 end
 
 gem 'capistrano', '~> 3.7', '>= 3.7.1'
