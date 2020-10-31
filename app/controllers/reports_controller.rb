@@ -1,25 +1,24 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_possible, only: %i(report)
-  before_action :load_target, only: %i(report)
-  before_action :load_user, only: %i(index)
+  before_action :check_possible, only: %i(create)
+  before_action :load_target, only: %i(create)
 
   def index 
-    if params[:report_target_type].present?
-      @reports = @user.reports.where(report_target_type: params[:report_target_type].capitalize)
+    if params[:target_type].present?
+      @reports = current_user.reports.where(target_type: params[:target_type].capitalize)
     else
-      @reports = @user.reports
+      @reports = current_user.reports
     end
 
     return render json: @reports, status: :ok
   end
 
-  def report
+  def create
     #신고 대상이 자기 자신일 때
     return render json: {error: "신고 할 수 없습니다."}, status: :bad_request if current_user == @target
 
     #이미 신고한 대상일 때
-    if @report = current_user.reports.find_by(report_target_type: report_params[:report_target_type], report_target_id: report_params[:report_target_id])
+    if @report = current_user.reports.find_by(target_type: report_params[:target_type], target_id: report_params[:target_id])
       return render json: {message: "이미 신고한 대상입니다."}
     end
 
@@ -34,27 +33,19 @@ class ReportsController < ApplicationController
     params.require(:report).permit(Report::REPORT_COLUMNS)
   end
 
-  def load_user
-    begin
-      @user = User.find(params[:user_id])
-    rescue => e
-      render json: {error: "없는 유저입니다."}, status: :bad_request
-    end
-  end
-
   def load_target
     begin
-      model = report_params[:report_target_type].capitalize
-      @target = model.constantize.find(report_params[:report_target_id])
+      model = report_params[:target_type].capitalize
+      @target = model.constantize.find(report_params[:target_id])
     rescue => e
       render json: {error: e}, status: :bad_request
     end
   end
 
   def check_possible
-    params[:report][:report_target_type] = params[:report][:report_target_type].capitalize
+    params[:report][:target_type] = params[:report][:target_type].capitalize
 
-    return render json: {error: "신고할 수 없는 대상입니다."}, status: :bad_request if Report::REPORT_MODELS.exclude? report_params[:report_target_type].capitalize
+    return render json: {error: "신고할 수 없는 대상입니다."}, status: :bad_request if Report::REPORT_MODELS.exclude? report_params[:target_type].capitalize
   end
 
 end

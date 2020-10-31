@@ -29,10 +29,14 @@ class LikesController < ApplicationController
       result = "좋아요!"
     end
 
+    #기존의 target의 likes_count는 counter_cache에 의해 업데이트되지 않은 상태임.
+    #따라서 업데이트된 likes_count를 얻으려면 @target을 다시 업데이트해야 함.
+    load_target
+
     render json: {
       result: result,
       type: I18n.t("activerecord.models.#{like_params[:target_type].downcase}"),
-      size: @target.model_name.name == "User" ? @target.received_likes.size : @target.likes.size,
+      size: @target.model_name.name == "User" ? @target.received_likes.size : @target.likes_count,
       target: @target.model_name.name == "User" ? @target.nickname : @target.title
       }, status: :ok
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_30_060330) do
+ActiveRecord::Schema.define(version: 2020_10_31_072701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 2020_10_30_060330) do
     t.integer "location_far", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "likes_count", default: 0
   end
 
   create_table "messages", force: :cascade do |t|
@@ -182,20 +183,21 @@ ActiveRecord::Schema.define(version: 2020_10_30_060330) do
     t.string "image"
     t.integer "post_type"
     t.bigint "location_id"
+    t.integer "reports_count", default: 0
+    t.integer "likes_count", default: 0
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["location_id"], name: "index_posts_on_location_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "reports", force: :cascade do |t|
-    t.bigint "report_target_id"
-    t.string "report_target_type"
+    t.bigint "target_id"
+    t.string "target_type"
     t.bigint "user_id"
-    t.integer "reason", default: 0
+    t.integer "reason"
     t.text "detail"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "image"
     t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
