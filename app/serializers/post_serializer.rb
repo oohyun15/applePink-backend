@@ -14,7 +14,8 @@ class PostSerializer < ActiveModel::Serializer
       post_type: object.post_type,
       image: object.image_path,
       location: object.location.title,
-      status: object.status
+      status: object.status,
+      likes_count: object.likes_count
     }
   end
 
