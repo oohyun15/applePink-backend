@@ -15,7 +15,7 @@ class ReportsController < ApplicationController
 
   def create
     #신고 대상이 자기 자신일 때
-    return render json: {error: "신고 할 수 없습니다."}, status: :bad_request if current_user == @target || @target.user == current_user
+    return render json: {error: "신고 할 수 없습니다."}, status: :bad_request if (@target.user rescue @target) == current_user
 
     #이미 신고한 대상일 때
     return render json: {message: "이미 신고한 대상입니다."} if @report = current_user.reports.find_by(target_type: report_params[:target_type], target_id: report_params[:target_id])

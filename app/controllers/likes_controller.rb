@@ -16,7 +16,7 @@ class LikesController < ApplicationController
 
   def toggle
     # 좋아요 대상이 자신인 경우
-    return render json: {error: "자기 자신은 좋아요를 할 수 없습니다."}, status: :bad_request if current_user == @target
+    return render json: {error: "자기 자신은 좋아요를 할 수 없습니다."}, status: :bad_request if (@target.user rescue @target) == current_user 
 
     # 기존에 좋아요를 했을 경우
     if @like = current_user.likes.find_by(target_type: like_params[:target_type], target_id: like_params[:target_id])
@@ -36,8 +36,8 @@ class LikesController < ApplicationController
     render json: {
       result: result,
       type: I18n.t("activerecord.models.#{like_params[:target_type].downcase}"),
-      size: @target.model_name.name == "User" ? @target.received_likes.size : @target.likes_count,
-      target: @target.model_name.name == "User" ? @target.nickname : @target.title
+      size: @target.likes_count,
+      target: @target.display_name
       }, status: :ok
   end
 

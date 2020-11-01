@@ -21,4 +21,8 @@ class Post < ApplicationRecord
 
   enum status: %i(able unable)
   enum post_type: %i(provide ask)
+
+  def display_name
+    self.title
+  end
 end
