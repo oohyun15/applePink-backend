@@ -48,7 +48,10 @@ ko:
         user: 게시자
         price: 가격
         location: 지역
+        location_id: 지역
         rent_count: 대여 횟수
+        category: 카테고리
+        category_id: 카테고리
       category:
         title: 카테고리명
       booking:

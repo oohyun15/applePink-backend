@@ -20,6 +20,8 @@ class LocationsController < ApplicationController
 
     # 유저의 지역을 업데이트 함.
     current_user.update!(location_id: @location.position, expire_time: expire_time)
+
+    current_user.posts.each do |post| post.update!(location_id: @location.position) end
     
     # @post.delayed_job_id를 통해 기존 job 제거
     schedule = current_user.schedules.find_or_initialize_by(delayed_job_type: "Location")
