@@ -19,7 +19,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = sns_login.find_user_oauth
 
     if @user.persisted?
-      render json: { token: payload(@user), nickname: @user.nickname }, status: :ok
+      # render json: { token: payload(@user), nickname: @user.nickname }, status: :ok
+      @token = payload(@user)
+      render "shared/alert"
     else
       render json: { error: "로그인 에러가 발생하였습니다." }, status: :not_found
     end
