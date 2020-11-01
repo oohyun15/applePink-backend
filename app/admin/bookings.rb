@@ -14,9 +14,9 @@ ActiveAdmin.register Booking do
     column :provider do |booking| booking.post.user end
     column :lent_day do |booking| "#{number_with_delimiter booking.lent_day}일" end
     column :price do |booking| money booking.price end
-    tag_column :acceptance
     column :start_at do |booking| short_date booking&.start_at end
     column :end_at do |booking| short_date booking&.end_at end
+    tag_column :acceptance
     actions
   end
 

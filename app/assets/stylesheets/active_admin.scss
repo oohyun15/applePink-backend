@@ -99,7 +99,7 @@ table.index_table {
   background: green;
 }
 .disabled {
-  backbround: grey;
+  background: grey;
 }
 .sold_out {
   background: yellow;
@@ -116,22 +116,33 @@ fieldset.inputs {
 
 
 .status_tag.able, .status_tag.accepted {
-  background: darkgreen  
+  background: darkgreen;  
 }
 
 .status_tag.unable, .status_tag.rejected{
-  background: darkred  
+  background: darkred;  
 }
 
 .status_tag.normal, .status_tag.waiting {
   background: darkslategray;
 }
 
-.status_tag.company, .status_tag.completed {
-  background: darkblue  
+.status_tag.completed {
+  background: darkblue;  
 }
 
 .status_tag.kakao {
   background: gold;
   color: black;
+}
+
+.status_tag.company {
+  background: darkblue;  
+  color: #fff !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+  padding: 3px 5px 2px 5px !important;
+  font-size: 0.8em !important;
+  margin: 0 !important;
+  text-decoration: none !important;
 }
