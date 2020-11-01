@@ -1,12 +1,40 @@
-<div class="container my-5">
-  <div class="justify-content-center text-center py-5">
-    <h1>카카오 로그인이 완료되었습니다.</h1>
-    <div href="#" class="btn btn-primary mt-3">모두나눔 시작하기</div>
+<div class="container" style="height:100vh;">
+  <div class="justify-content-center text-center">
+    <img src="/image/kakao_login.png" alt="" class="image">
+    <div class="title">카카오 로그인이 완료되었습니다!</div>
+    <div class="body">잠시만 기다려주세요...</div>
   </div>
 </div>
 
 <script>
-$(".btn").on("click", function() {
-  window.postMessage("<%= @token %>");
-})
+  setTimeout(() => {
+    window.postMessage("<%= @token %>");
+    console.log("Send postMessage.")
+  }, 1000);
 </script>
+
+<style>
+.container {
+  height:90vh;
+}
+
+.image {
+  padding-top: 25vh;
+  width: 70%;
+}
+
+.title {
+  padding-top: 5vh;
+  font-size: 4em;
+  line-height: 1;
+  margin-bottom: 0.7em;
+  font-weight: 700;
+}
+
+.body {
+  font-size: 3em;
+  line-height: 1;
+  margin-bottom: 0.5em;
+}
+
+</style>
