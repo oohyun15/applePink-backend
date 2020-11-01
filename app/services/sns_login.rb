@@ -30,7 +30,7 @@ class SnsLogin
     }
 
     # 이메일은 현재 선택 항목임
-    if @auth.info.email.present?
+    if @auth.info.email.present? && User.find_by(email: @auth.info.email) == nil
       auth_params[:email] = @auth.info.email
     else
       loop do

@@ -9,7 +9,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if current_user.persisted?
       root_path
     else
-        new_user_registration_path
+        root_path
     end
   end
 
