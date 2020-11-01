@@ -21,7 +21,14 @@ ActiveAdmin.register User do
     column :updated_at do |user| short_date user.updated_at end
     column :likes_count do |user| "#{number_with_delimiter user.likes_count}개" end
     column :reports_count do |user| "#{number_with_delimiter user.reports_count}개" end
-    tag_column :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
+    # tag_column :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
+    column :user_type do |user|
+      if user.is_company?
+        link_to "광고주", admin_company_path(user.company), class: "status_tag company"
+      else
+        span "일반", class: "status_tag normal"
+      end
+    end
     tag_column :account_type do |user| user.account_type end
     actions
   end
@@ -38,7 +45,14 @@ ActiveAdmin.register User do
       row :updated_at do |user| short_date user.updated_at end
       row :likes_count do |user| "#{number_with_delimiter user.likes_count}개" end
       row :reports_count do |user| "#{number_with_delimiter user.reports_count}개" end
-      tag_row :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
+      # tag_row :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
+      row :user_type do |user|
+        if user.is_company?
+          link_to "광고주", admin_company_path(user.company), class: "status_tag company"
+        else
+          span "일반", class: "status_tag normal"
+        end
+      end
       tag_row :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end
     end
   end

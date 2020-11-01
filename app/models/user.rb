@@ -37,4 +37,8 @@ class User < ApplicationRecord
   def display_name
     self.nickname
   end
+
+  def is_company?
+    self.company.present? && self.company&.approve
+  end
 end
