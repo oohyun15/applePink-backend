@@ -16,13 +16,13 @@ ActiveAdmin.register User do
     column :location do |user| user.expire_time&.present? ? (user.expire_time > Time.current ? user.location : "지역인증 필요") : "지역인증 필요" end
     column :expire_time do |user| user.expire_time&.present? ? (user.expire_time > Time.current ? long_time(user.expire_time) : "지역인증 필요") : "지역인증 필요" end
     column :gender do |user| I18n.t("enum.user.gender.#{user.gender}") end
-    tag_column :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
     column :location_range do |user| user.user_type.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
     column :created_at do |user| short_date user.created_at end
     column :updated_at do |user| short_date user.updated_at end
+    column :likes_count do |user| "#{number_with_delimiter user.likes_count}개" end
+    column :reports_count do |user| "#{number_with_delimiter user.reports_count}개" end
+    tag_column :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
     tag_column :account_type do |user| user.account_type end
-    column :likes_count
-    column :reports_count
     actions
   end
 
@@ -33,12 +33,12 @@ ActiveAdmin.register User do
       row :email
       row :location
       tag_row :gender
-      tag_row :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
       row :location_range do |user| user.location_range.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
       row :created_at do |user| short_date user.created_at end
       row :updated_at do |user| short_date user.updated_at end
-      row :likes_count
-      row :reports_count
+      row :likes_count do |user| "#{number_with_delimiter user.likes_count}개" end
+      row :reports_count do |user| "#{number_with_delimiter user.reports_count}개" end
+      tag_row :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
       tag_row :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end
     end
   end

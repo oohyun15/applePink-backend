@@ -18,15 +18,19 @@ class LikesController < ApplicationController
     # 좋아요 대상이 자신인 경우
     return render json: {error: "자기 자신은 좋아요를 할 수 없습니다."}, status: :bad_request if (@target.user rescue @target) == current_user 
 
-    # 기존에 좋아요를 했을 경우
-    if @like = current_user.likes.find_by(target_type: like_params[:target_type], target_id: like_params[:target_id])
-      @like.destroy!
-      result = "좋아요 취소!"
-
-      # 좋아요가 없을 경우 
-    else
-      current_user.likes.create! like_params
-      result = "좋아요!"
+    begin
+      # 기존에 좋아요를 했을 경우
+      if @like = current_user.likes.find_by(target_type: like_params[:target_type], target_id: like_params[:target_id])
+        @like.destroy!
+        result = "좋아요 취소!"
+  
+        # 좋아요가 없을 경우 
+      else
+        current_user.likes.create! like_params
+        result = "좋아요!"
+      end
+    rescue => e
+      return render json: {error: e}, status: :bad_request
     end
 
     #기존의 target의 likes_count는 counter_cache에 의해 업데이트되지 않은 상태임.

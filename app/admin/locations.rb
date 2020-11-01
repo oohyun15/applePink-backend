@@ -7,12 +7,10 @@ ActiveAdmin.register Location do
     br
     column :position  
     column :title  
-    column :lat  
-    column :lng  
+    column :likes_count do |location| "#{number_with_delimiter location.likes_count}개" end
     column :location_near do |location| Location.where(position: location.location_near) end
     column :location_normal do |location| Location.where(position: location.location_normal) end
     column :location_far do |location| Location.where(position: location.location_far) end
-    column :likes_count
     actions
   end
 end

@@ -15,8 +15,8 @@ class LocationsController < ApplicationController
 
   #처음 회원가입 시 지역인증
   def certificate
-    # 1달 이후 지역 인증 초기화
-    expire_time = 5.minutes.from_now
+    # 1주일 이후 지역 인증 초기화
+    expire_time = 1.week.from_now
 
     # 유저의 지역을 업데이트 함.
     current_user.update!(location_id: @location.position, expire_time: expire_time)

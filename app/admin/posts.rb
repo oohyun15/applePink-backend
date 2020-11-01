@@ -25,9 +25,9 @@ ActiveAdmin.register Post do
     column :category
     column :location do |post| post.location.present? ? post.location : "없음" end
     column :rent_count do |post| number_with_delimiter post.rent_count end
+    column :likes_count do |post| "#{number_with_delimiter post.likes_count}개" end
+    column :reports_count do |post| "#{number_with_delimiter post.reports_count}개" end
     tag_column :status do |post| post.status.present? ? post.status : "게시글 상태 없음<br>비정상적인 게시글".html_safe end
-    column :likes_count
-    column :reports_count
     actions
   end
 
@@ -42,8 +42,10 @@ ActiveAdmin.register Post do
       row :category
       row :location do |post| post.location.present? ? post.location : "없음" end
       row :rent_count do |post| number_with_delimiter post.rent_count end
-      tag_row :status do |post| post.status.present? ? post.status : "게시글 상태 없음<br>비정상적인 게시글".html_safe end      
+      row :likes_count do |post| "#{number_with_delimiter post.likes_count}개" end
+      row :reports_count do |post| "#{number_with_delimiter post.reports_count}개" end
       row :image do |post| image_tag(post.image_path ,class: 'admin-show-image') end
+      tag_row :status do |post| post.status.present? ? post.status : "게시글 상태 없음<br>비정상적인 게시글".html_safe end      
       panel '이미지 리스트' do
         table_for '이미지' do
           post.images.each_with_index do |image, index|
@@ -53,8 +55,7 @@ ActiveAdmin.register Post do
           end
         end
       end
-      row :likes_count
-      row :reports_count
+
     end
   end
 
