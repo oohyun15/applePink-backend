@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post 'users/sign_in', to: 'authentication#create'
   post 'users/sign_up', to: 'users#create'
   post 'users/like', to: 'likes#toggle'
-  
+
   # put 'bookings/:id', to: 'bookings#complete'
   
   resources :users, only: %i(index show edit update) do
@@ -45,4 +45,6 @@ Rails.application.routes.draw do
   resources :companies, only: %i(create destroy) do
     patch :confirm, on: :member
   end
+
+  resources :reports, only: %i(index create)
 end

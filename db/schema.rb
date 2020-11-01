@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_29_125228) do
+ActiveRecord::Schema.define(version: 2020_10_31_082513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 2020_10_29_125228) do
     t.integer "location_far", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "likes_count", default: 0
   end
 
   create_table "messages", force: :cascade do |t|
@@ -182,9 +183,22 @@ ActiveRecord::Schema.define(version: 2020_10_29_125228) do
     t.string "image"
     t.integer "post_type"
     t.bigint "location_id"
+    t.integer "reports_count", default: 0
+    t.integer "likes_count", default: 0
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["location_id"], name: "index_posts_on_location_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.bigint "target_id"
+    t.string "target_type"
+    t.bigint "user_id"
+    t.integer "reason"
+    t.text "detail"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
   create_table "schedules", force: :cascade do |t|
@@ -222,6 +236,8 @@ ActiveRecord::Schema.define(version: 2020_10_29_125228) do
     t.bigint "location_id"
     t.integer "location_range", default: 0
     t.datetime "expire_time"
+    t.integer "likes_count", default: 0
+    t.integer "reports_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["location_id"], name: "index_users_on_location_id"
