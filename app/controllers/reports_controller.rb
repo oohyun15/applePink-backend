@@ -15,16 +15,17 @@ class ReportsController < ApplicationController
 
   def create
     #신고 대상이 자기 자신일 때
-    return render json: {error: "신고 할 수 없습니다."}, status: :bad_request if current_user == @target
+    return render json: {error: "신고 할 수 없습니다."}, status: :bad_request if current_user == @target || @target.user == current_user
 
     #이미 신고한 대상일 때
-    if @report = current_user.reports.find_by(target_type: report_params[:target_type], target_id: report_params[:target_id])
-      return render json: {message: "이미 신고한 대상입니다."}
+    return render json: {message: "이미 신고한 대상입니다."} if @report = current_user.reports.find_by(target_type: report_params[:target_type], target_id: report_params[:target_id])
+
+    begin
+      current_user.reports.create! report_params
+      return render json: {message: "신고가 접수되었습니다."}, status: :ok
+    rescue => e
+      return render json: {error: e}, status: :bad_request
     end
-
-    current_user.reports.create! report_params
-
-    return render json: {message: "신고가 접수되었습니다."}, status: :ok
   end
 
   private
