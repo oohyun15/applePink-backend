@@ -1,5 +1,4 @@
 class UserSerializer < ActiveModel::Serializer
-  has_many :posts
   attributes %i(user_info)
 
   def user_info

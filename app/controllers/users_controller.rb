@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: %i(show edit update)
-  before_action :authenticate_user!, except: %i(index)
+  before_action :authenticate_user!, except: %i(index create)
 
   # 유저 목록 보기
   def index
