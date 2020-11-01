@@ -16,10 +16,12 @@ Rails.application.routes.draw do
   resources :users, only: %i(index show edit update) do
     resources :likes, only: %i(index)
     collection do
-      get :list
       get :mypage
       post :email_auth
       delete :withdrawal
+    end
+    member do
+      get :list
     end
   end
   
