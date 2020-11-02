@@ -8,7 +8,7 @@
 
 <script>
   setTimeout(() => {
-    window.postMessage("<%= @result %>", "*");
+    window.ReactNativeWebView.postMessage("token: <%= @token %>, id: <%= @user.id %>", "*");
     console.log("Send postMessage.")
   }, 1000);
 </script>
@@ -20,7 +20,7 @@
 
 .image {
   padding-top: 25vh;
-  width: 70%;
+  width: 23vh;
 }
 
 .title {
