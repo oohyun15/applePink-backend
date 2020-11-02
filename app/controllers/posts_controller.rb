@@ -61,16 +61,16 @@ class PostsController < ApplicationController
       @posts = @posts.ransack(params[:q]).result(distinct: true)
     end
 
-    render json: @posts, status: :ok, scope: { params: create_params, location: {info: true, title: @location.title, range: I18n.t("enum.user.location_range.#{current_user.location_range}")} }
+    render json: @posts, status: :ok, scope: { params: create_params, location: {info: true, title: @location.title, range: I18n.t("enum.user.location_range.#{current_user.location_range}")} }, user_id: current_user.id
   end
 
   def show
-    render json: @post, status: :ok, scope: {params: create_params}
+    render json: @post, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
   
   def update
     @post.update(post_params)
-    render json: @post, status: :ok, scope: {params: create_params}
+    render json: @post, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
 
   def create
@@ -79,7 +79,7 @@ class PostsController < ApplicationController
       @post.location = current_user.location
       @post.rent_count = 0
       @post.able!
-      render json: @post, status: :ok, scope: {params: create_params}
+      render json: @post, status: :ok, scope: {params: create_params}, user_id: current_user.id
     rescue => e
       render json: {error: e}, status: :bad_request
     end
