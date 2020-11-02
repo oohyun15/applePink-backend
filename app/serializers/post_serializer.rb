@@ -8,6 +8,7 @@ class PostSerializer < ActiveModel::Serializer
     post_simple_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :post_info))
     {
       id: object.id,
+      user_id: object.user_id,
       title: object.title,
       body: object.body,
       price: object.price, 
@@ -15,7 +16,8 @@ class PostSerializer < ActiveModel::Serializer
       image: object.image_path,
       location: object.location.title,
       status: object.status,
-      likes_count: object.likes_count
+      likes_count: object.likes_count,
+      like_check: object.likes&.pluck(:user_id).include?(@instance_options[:user_id])
     }
   end
 
