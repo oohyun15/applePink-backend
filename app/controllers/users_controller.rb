@@ -85,6 +85,20 @@ class UsersController < ApplicationController
     return render json: {error: "unauthorized"}, status: :unauthorized
   end
 
+  def range
+    return render json: {error: "Unpermitted parameter."}, status: :bad_request unless User.location_ranges.keys.include? params[:user][:location_range]
+
+    begin
+      current_user.send(params[:user][:location_range] + "!")
+      render json: {
+        result: params[:user][:location_range],
+        nickname: current_user.nickname
+      }, status: :ok
+    rescue => e
+      render json: {error: e}, status: :bad_request
+    end
+  end
+
   private
 
   def user_params
