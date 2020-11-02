@@ -20,7 +20,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       # render json: { token: payload(@user), nickname: @user.nickname }, status: :ok
-      @token = payload(@user)
+      @result = { token: payload(@user), id: @user.id }.to_json
       render "shared/alert"
     else
       render json: { error: "로그인 에러가 발생하였습니다." }, status: :not_found
