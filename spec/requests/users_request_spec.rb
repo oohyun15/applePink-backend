@@ -46,10 +46,10 @@ describe "Users withdrawal test", type: :request do
   
   before {post '/users/sign_in', params: {user: {email: "tonem123@naver.com", password: "test123"}} }
 
-  before {delete '/users/withdrawal'}
-
   # 로그인 후 JWT 토큰이 유효한지 확인
   it 'user_deleted?' do
+    body =  JSON.parse(response.body)
+    delete '/users/withdrawal', headers: {Authorization: body["token"]}
     expect(User.find_by(email: "tonem123@naver.com")).to eq(nil)
   end
   
