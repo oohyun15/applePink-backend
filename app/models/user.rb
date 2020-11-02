@@ -15,6 +15,8 @@ class User < ApplicationRecord
 
   has_one :company, dependent: :destroy
   has_one :identity, dependent: :destroy
+
+  has_one_attached :image
   
   has_many :posts
   has_many :user_chats
@@ -43,5 +45,9 @@ class User < ApplicationRecord
 
   def is_company?
     self.company.present? && self.company&.approve
+  end
+
+  def is_location_auth?
+    self.expire_time.present? && (self.expire_time > Time.current rescue false)
   end
 end

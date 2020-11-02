@@ -8,7 +8,7 @@
 
 <script>
   setTimeout(() => {
-    window.ReactNativeWebView.postMessage("{\"token\":\"<%= @token %>\", \"id\":\"<%= @user.id %>\"}", "*");
+    window.ReactNativeWebView.postMessage("{\"token\":\"<%= @token %>\", \"id\":\"<%= @user.id %>\"\"location_auth\":\"<%= @user.is_location_auth? %>\"}", "*");
     console.log("Send postMessage.")
   }, 1000);
 </script>
