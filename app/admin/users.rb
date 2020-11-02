@@ -44,6 +44,7 @@ ActiveAdmin.register User do
       row :created_at do |user| short_date user.created_at end
       row :updated_at do |user| short_date user.updated_at end
       row :likes_count do |user| "#{number_with_delimiter user.likes_count}개" end
+      row "좋아요한 유저" do |user| User.where(id: user.received_likes.pluck(:user_id)).limit(10) end
       row :reports_count do |user| "#{number_with_delimiter user.reports_count}개" end
       # tag_row :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
       row :user_type do |user|

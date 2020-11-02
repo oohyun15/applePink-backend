@@ -1,23 +1,15 @@
 require 'rails_helper'
 
-describe "User #index test", type: :request do
+describe "1. User #index test", type: :request do
   before {get '/users'}
   #전체 유저 목록을 불러오는지 확인
   it 'returns all users' do
     expect(JSON.parse(response.body).size).to eq(User.all.size)
   end
-
-  #status가 200인지 확인
-  it 'returns status code 200' do
-    expect(response).to have_http_status(:success)
-  end
-  
 end
 
-describe "User #show test", type: :request do
-  
+describe "2. User #show test", type: :request do
   before { post '/users/sign_in', params: {user: {email: "tester1@test.com", password: "test123"}} }
-
   #전체 유저 목록을 불러오는지 확인
   it 'returns selected user' do
     body =  JSON.parse(response.body)
@@ -25,15 +17,9 @@ describe "User #show test", type: :request do
 
     expect(JSON.parse(response.body)["user_info"]["id"]).to eq(2)
   end
-
-  #status가 200인지 확인
-  it 'returns status code 200' do
-    expect(response).to have_http_status(:success)
-  end
-  
 end
 
-describe "User #sign_up test", type: :request do
+describe "3. User #sign_up test", type: :request do
   #현재 sign_up 후 sign_in_path로 redirect 중
   #devise는 Get Method에 대해서 200이 아닌 302(Found)를 반환함
   it 'returns status code 302' do
@@ -43,18 +29,18 @@ describe "User #sign_up test", type: :request do
   end
 end
 
-describe "User #sign_in test", type: :request do
+describe "4. User #sign_in test", type: :request do
   # 로그인 후 JWT 토큰이 유효한지 확인
   it 'is_token_validates' do
     post '/users/sign_in', params: {user: {email: "tester1@test.com", password: "test123"}}
     body =  JSON.parse(response.body)
+    @token = body["token"]
     auth_token ||= JsonWebToken.decode(body["token"])
     expect(auth_token[:user_id].to_i).to eq(User.find_by(email: "tester1@test.com").id)
   end
-  
 end
 
-describe "User #withdrawal test", type: :request do
+describe "5. User #withdrawal test", type: :request do
   # 로그인 후 JWT 토큰이 유효한지 확인
   it 'user_deleted?' do
     post '/users/sign_in', params: {user: {email: "tonem123@naver.com", password: "test123"}}
@@ -63,11 +49,20 @@ describe "User #withdrawal test", type: :request do
     delete '/users/withdrawal', headers: {Authorization: body["token"]}
     expect(User.find_by(email: "tonem123@naver.com")).to eq(nil)
   end
-  
 end
 
-describe "User #list test", type: :request do
+describe "6. User #mypage test", type: :request do
+  it 'current_user test' do
+    post '/users/sign_in', params: {user: {email: "tester1@test.com", password: "test123"}}
+    body =  JSON.parse(response.body)
+    
+    get mypage_users_path, headers: {Authorization: body["token"]}
+    #결과로 나온 user 정보가 로그인한 유저의 정보인지 확인
+    expect(JSON.parse(response.body)["user_info"]["id"]).to eq(User.find_by(email: "tester1@test.com").id)
+  end
+end
 
+describe "7. User #list test", type: :request do
   it 'post_type test' do
     post '/users/sign_in', params: {user: {email: "tester1@test.com", password: "test123"}}
     body =  JSON.parse(response.body)
@@ -82,8 +77,6 @@ describe "User #list test", type: :request do
         is_provide = false
       end
     end
-
     expect(is_provide).to eq(true)
   end
-  
 end

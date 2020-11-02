@@ -9,6 +9,8 @@ class Post < ApplicationRecord
   validates :price, presence: true
   validates :post_type, presence: true
 
+  has_one_attached :image
+  
   has_many :chats
   has_many :chat_users, through: :chats, source: :users
   has_many :bookings
