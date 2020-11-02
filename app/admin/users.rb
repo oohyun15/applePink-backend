@@ -13,8 +13,8 @@ ActiveAdmin.register User do
     column :image do |user| image_tag(user&.image_path ,class: 'admin-index-image') end
     column :nickname
     column :email
-    column :location do |user| user.expire_time&.present? ? (user.expire_time > Time.current ? user.location : "지역인증 필요") : "지역인증 필요" end
-    column :expire_time do |user| user.expire_time&.present? ? (user.expire_time > Time.current ? long_time(user.expire_time) : "지역인증 필요") : "지역인증 필요" end
+    column :location do |user| user.is_location_auth? ? user.location : "지역인증 필요" end
+    column :expire_time do |user|  user.is_location_auth? ? long_time(user.expire_time) : "지역인증 필요" end
     column :gender do |user| I18n.t("enum.user.gender.#{user.gender}") end
     column :location_range do |user| user.user_type.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
     column :created_at do |user| short_date user.created_at end
@@ -38,7 +38,8 @@ ActiveAdmin.register User do
       row :image do |user| image_tag(user&.image_path ,class: 'admin-show-image') end
       row :nickname
       row :email
-      row :location
+      row :location do |user| user.is_location_auth? ? user.location : "지역인증 필요" end
+      row :expire_time do |user|  user.is_location_auth? ? long_time(user.expire_time) : "지역인증 필요" end
       tag_row :gender
       row :location_range do |user| user.location_range.present? ? I18n.t("enum.user.location_range.#{user.location_range}") : "미지정" end
       row :created_at do |user| short_date user.created_at end
