@@ -12,6 +12,7 @@ class User < ApplicationRecord
   validates :nickname, presence: true
   
   validates_uniqueness_of :email
+  validates_uniqueness_of :nickname
 
   has_one :company, dependent: :destroy
   has_one :identity, dependent: :destroy
