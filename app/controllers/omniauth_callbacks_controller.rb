@@ -20,7 +20,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       # render json: { token: payload(@user), nickname: @user.nickname }, status: :ok
-      @token = payload(@user)
+      @result = "{\"token\":\"#{payload(@user)}\", \"id\":\"#{@user.id}\", \"location_auth\":#{@user.is_location_auth?}\"}"
       render "shared/login"
     else
       render json: { error: "로그인 에러가 발생하였습니다." }, status: :not_found
