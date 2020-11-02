@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get :mypage
       post :email_auth
       delete :withdrawal
+      put :range
     end
     member do
       get :list
