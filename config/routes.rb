@@ -41,7 +41,8 @@ Rails.application.routes.draw do
     put :certificate, on: :collection
   end
   resources :bookings, only: %i(index show create destroy) do
-    put :complete, on: :collection
+    put :complete, on: :member
+    put :accept, on: :member
   end
 
   resources :companies, only: %i(create destroy) do

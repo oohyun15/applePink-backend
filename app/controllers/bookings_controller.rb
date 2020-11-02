@@ -1,8 +1,8 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_post, only: %i(create complete)
-  before_action :load_booking, only: %i(show complete destroy)
-  before_action :check_owner, only: %i(show destroy)
+  before_action :load_post, only: %i(create accept complete)
+  before_action :load_booking, only: %i(show accept complete destroy)
+  before_action :check_owner, only: %i(show accept complete destroy)
 
   def index
     @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
@@ -20,18 +20,43 @@ class BookingsController < ApplicationController
     else
       @booking = current_user.bookings.create! booking_params
 
-      @post.unable!
-
       render json: @booking, status: :ok
     end
   end
 
+  def accept
+    acceptance_list = %w(accepted rejected)
+    return render json: {error: "Unpermitted parameter."}, status: :bad_request unless acceptance_list.include? params[:booking][:acceptance]
+    begin
+      @booking.send(params[:booking][:acceptance] + "!")
+      
+      case params[:booking][:acceptance]
+      when "accepted"
+        @post.unable! if @post.able?
+
+      when "rejected"
+        @post.able! if @post.unable?        
+      end
+
+      render json: {
+        result: params[:booking][:acceptance],
+        booking: @booking
+      }, status: :ok
+    rescue => e
+      render json: {error: e}, status: :bad_request
+    end
+  end
+
   def complete
+    return render json: {error: "Couldn't complete booking. booking acceptance: #{@booking.acceptance}."}, status: :bad_request unless @booking.accepted?
     begin
       @booking.update!(acceptance: :completed)
       @post.rent_count += 1
       @post.able!
-      render json: {notice: "반납이 완료되었습니다."}, status: :ok
+      render json: {
+        result: "completed",
+        booking: @booking
+      }, status: :ok
     rescue => e
       render json: {error: e.errors.full_messages}, status: :bad_request
     end

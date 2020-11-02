@@ -22,12 +22,12 @@ class LikesController < ApplicationController
       # 기존에 좋아요를 했을 경우
       if @like = current_user.likes.find_by(target_type: like_params[:target_type], target_id: like_params[:target_id])
         @like.destroy!
-        result = "좋아요 취소!"
+        result = "false"
   
         # 좋아요가 없을 경우 
       else
         current_user.likes.create! like_params
-        result = "좋아요!"
+        result = "true"
       end
     rescue => e
       return render json: {error: e}, status: :bad_request
