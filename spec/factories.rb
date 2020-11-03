@@ -1,4 +1,8 @@
 FactoryBot.define do
+  factory :question do
+    
+  end
+
 
   passwd_array = ["test1231", "test1232", "test1233", "test1234", "test1235"]
 
