@@ -23,6 +23,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @token = payload(@user)
       render "shared/login"
     else
+      Rails.logger.debug "ERROR: 로그인 에러가 발생하였습니다."
       render json: { error: "로그인 에러가 발생하였습니다." }, status: :not_found
     end
   end

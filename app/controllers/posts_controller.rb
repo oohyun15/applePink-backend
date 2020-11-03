@@ -14,7 +14,10 @@ class PostsController < ApplicationController
       @location = Location.find_by(title: params[:location_title])
       
       # exception: 만약 없는 동네일 경우
-      return render json: {error: "존재하지 않는 동네입니다."}, status: :not_found if @location.nil?
+      if @location.nil?
+        Rails.logger.debug "ERROR: 존재하지 않는 동네입니다."
+        return render json: {error: "존재하지 않는 동네입니다."}, status: :not_found 
+      end
 
       # 2. location_positions에 해당 position 추가
       location_positions << @location.position
@@ -81,6 +84,7 @@ class PostsController < ApplicationController
       @post.able!
       render json: @post, status: :ok, scope: {params: create_params}, user_id: current_user.id
     rescue => e
+      Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
     end
   end
@@ -90,6 +94,7 @@ class PostsController < ApplicationController
       @post.destroy!
       render json: {notice: "게시글을 삭제하셨습니다."}, status: :ok
     rescue => e
+      Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
     end
   end
@@ -109,12 +114,14 @@ class PostsController < ApplicationController
     begin
       @post = Post.find(params[:id])
     rescue => e
+      Rails.logger.debug "ERROR: 없는 게시글입니다."
       render json: {error: "없는 게시글입니다."}, status: :bad_request
     end
   end
 
   def check_owner
     if @post.user != current_user
+      Rails.logger.debug "ERROR: 게시글 관리 권한이 없습니다."
       render json: { error: "unauthorized" }, status: :unauthorized
     end
   end

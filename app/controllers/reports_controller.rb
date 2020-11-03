@@ -15,15 +15,22 @@ class ReportsController < ApplicationController
 
   def create
     #신고 대상이 자기 자신일 때
-    return render json: {error: "신고 할 수 없습니다."}, status: :bad_request if (@target.user rescue @target) == current_user
+    if (@target.user rescue @target) == current_user
+      Rails.logger.debug "ERROR: 자기 자신은 신고 할 수 없습니다."
+      return render json: {error: "신고 할 수 없습니다."}, status: :bad_request 
+    end
 
     #이미 신고한 대상일 때
-    return render json: {message: "이미 신고한 대상입니다."} if @report = current_user.reports.find_by(target_type: report_params[:target_type], target_id: report_params[:target_id])
+    if @report = current_user.reports.find_by(target_type: report_params[:target_type], target_id: report_params[:target_id])
+      Rails.logger.debug "ERROR: 이미 신고한 대상입니다."
+      return render json: {message: "이미 신고한 대상입니다."}, status: :bad_request
+    end
 
     begin
       current_user.reports.create! report_params
       return render json: {message: "신고가 접수되었습니다."}, status: :ok
     rescue => e
+      Rails.logger.debug "ERROR: #{e}"
       return render json: {error: e}, status: :bad_request
     end
   end
@@ -39,14 +46,18 @@ class ReportsController < ApplicationController
       model = report_params[:target_type].capitalize
       @target = model.constantize.find(report_params[:target_id])
     rescue => e
+      Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
     end
   end
 
   def check_possible
     params[:report][:target_type] = params[:report][:target_type].capitalize
-
-    return render json: {error: "신고할 수 없는 대상입니다."}, status: :bad_request if Report::REPORT_MODELS.exclude? report_params[:target_type].capitalize
+    
+    if Report::REPORT_MODELS.exclude? report_params[:target_type].capitalize
+      Rails.logger.debug "ERROR: 신고할 수 없는 대상입니다."
+      return render json: {error: "신고할 수 없는 대상입니다."}, status: :bad_request 
+    end
   end
 
 end

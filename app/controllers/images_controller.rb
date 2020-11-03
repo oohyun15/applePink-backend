@@ -19,6 +19,7 @@ class ImagesController < ApplicationController
     begin
     @image = Image.find_by(id: params[:id])
     rescue => e
+      Rails.logger.debug "ERROR: 없는 이미지입니다."
       render json: {error: "없는 이미지입니다."}, status: :bad_request
     end
   end

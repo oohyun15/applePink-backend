@@ -43,6 +43,7 @@ class UsersController < ApplicationController
 
       render json: {notice: "회원 탈퇴되었습니다."}, status: :ok
     rescue => e
+      Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
     end
   end
@@ -59,6 +60,7 @@ class UsersController < ApplicationController
       @posts = @user.posts.ask
       render json: {posts: @posts}, status: :ok, scope: {params: create_params}
     else
+      Rails.logger.debug "ERROR: 서비스 타입을 지정해주세요."
       render json: {error: "서비스 타입을 지정해주세요."}, status: :not_found
     end
   end
@@ -71,6 +73,7 @@ class UsersController < ApplicationController
         if email_certification.check_code(email_params[:code])
           return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
         else
+          Rails.logger.debug "ERROR: 인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."
           return render json: {error: "인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."}, status: :not_acceptable
         end
       end
@@ -79,14 +82,19 @@ class UsersController < ApplicationController
       if EmailCertification.generate_code(email_params[:email])
         return render json: {message: "소속 인증 메일을 발송했습니다. 메일을 확인해 주세요."}, status: :ok
       else
+        Rails.logger.debug "ERROR: 정상적으로 메일을 발송하지 못했습니다. 메일 주소를 확인해 주세요."
         return render json: {error: "정상적으로 메일을 발송하지 못했습니다. 메일 주소를 확인해 주세요."}, status: :not_acceptable
       end
     end
+    Rails.logger.debug "ERROR: 이메일 인증 오류"
     return render json: {error: "unauthorized"}, status: :unauthorized
   end
 
   def range
-    return render json: {error: "Unpermitted parameter."}, status: :bad_request unless User.location_ranges.keys.include? params[:user][:location_range]
+    unless User.location_ranges.keys.include? params[:user][:location_range]
+      Rails.logger.debug "ERROR: Unpermitted parameter."
+      return render json: {error: "Unpermitted parameter."}, status: :bad_request
+    end
 
     begin
       current_user.send(params[:user][:location_range] + "!")
@@ -95,6 +103,7 @@ class UsersController < ApplicationController
         nickname: current_user.nickname
       }, status: :ok
     rescue => e
+      Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
     end
   end
@@ -113,6 +122,7 @@ class UsersController < ApplicationController
     begin
       @user = User.find(params[:id])
     rescue => e
+      Rails.logger.debug "ERROR: 없는 유저입니다."
       render json: {error: "없는 유저입니다."}, status: :bad_request
     end
   end
