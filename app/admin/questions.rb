@@ -11,6 +11,7 @@ ActiveAdmin.register Question do
     selectable_column
     id_column
     br
+    column :user
     column :title
     column :body do |question| question.body&.truncate(20) end
     column :contact
