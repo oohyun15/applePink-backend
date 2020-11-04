@@ -86,6 +86,8 @@ ko:
         report_target_type: 신고대상
         reason: 신고사유
         detail: 상세내용
+      question:
+        contact: 연락처
 
     models:
       dashboard: 대시보드
@@ -99,6 +101,7 @@ ko:
       location: 지역
       company: 광고주
       report: 신고
+      question: 문의
 
     errors:
       models:
