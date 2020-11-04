@@ -86,9 +86,10 @@ ko:
         target_type: 신고대상
         reason: 신고사유
         detail: 상세내용
+        user: 신고자
       question:
         contact: 연락처
-        user: 소비자
+        user: 
 
     models:
       dashboard: 대시보드
