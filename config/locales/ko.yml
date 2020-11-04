@@ -84,16 +84,17 @@ ko:
         approve: 승인여부
       report:
         target_type: 신고대상
+        target: 신고대상
         reason: 신고사유
         detail: 상세내용
         user: 신고자
       question:
         contact: 연락처
-        user: 
+        user: 사용자
 
     models:
       dashboard: 대시보드
-      user: "사용자"
+      user: 사용자
       admin_user: 어드민
       category: 카테고리
       post: 게시글
