@@ -88,6 +88,7 @@ ko:
         detail: 상세내용
       question:
         contact: 연락처
+        user: 소비자
 
     models:
       dashboard: 대시보드
@@ -110,7 +111,6 @@ ko:
             name:
               blank: "항목이 비어있습니다"
             gender: "성별"
-
 
   enum:
     booking:
