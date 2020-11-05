@@ -52,23 +52,21 @@ class ApplicationController < ActionController::Base
     return @token
   end
 
-  def push_notification(registraions_ids, message, title, body, priority="normal")
+  def push_notification(message, user)
     begin
-      notification = Rpush::Gcm::Notification.new
-      notification.app = Rpush::Gcm::App.find_by_name("modu_nanum")
-      notification.registration_ids = [registraions_ids]
-      notification.data = { message: message }
-      notification.priority = priority        
-      notification.content_available = true
-      notification.notification = {
-        title: title,
-        body: body,
-        #  icon: 'myicon'
+      devices = user.push_notification_devices
+
+      return if devices.blank?
+
+      data = {
+        message: message,
+        user_id: user.id
       }
-      notification.save!
+      
+      PushNotificationDevice.push_notification(devices, data)
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
-      render json: {error: e}, status: :bad_request
+      render json: {error: e}, status: :internal_server_error
     end
   end
 

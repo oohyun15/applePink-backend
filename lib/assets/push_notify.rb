@@ -4,8 +4,8 @@ class PushNotify
     invalid_app_type: 'PLEASE PROVIDE A VALID APP TYPE'
   }
   APP_NAME = {
-    android: :android,
-    ios: :ios
+    android: "modu_nanum",
+    ios: "modu_nanum"
   }
 
   # push the message
@@ -14,7 +14,7 @@ class PushNotify
   # @param options [Hash] Notification options
   # @return [Array/Boolean]
   def self.push(type, options)
-    app = Rpush::Apns::App.find_by_name(type) # Apple developer key needed.
+    app = Rpush::Gcm::App.find_by_name(type) # Apple developer key needed.
     case type
     when :android
       push_android(app, options)

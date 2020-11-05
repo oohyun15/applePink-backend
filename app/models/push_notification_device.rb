@@ -3,7 +3,7 @@ class PushNotificationDevice < ApplicationRecord
   validates :device_token, presence: true
   
   has_many :user_push_notification_devices
-  has_many :users, thorugh: :user_push_notification_devices
+  has_many :users, through: :user_push_notification_devices
 
   enum device_type: %i(android ios)
     
@@ -17,7 +17,6 @@ class PushNotificationDevice < ApplicationRecord
     if android_device_tokens.present?
       options = { registration_ids: android_device_tokens, data: data }
       PushNotify.push(
-        PushNotify::SERVICE[:android],
         PushNotify::APP_NAME[:android],
         options
       )
@@ -27,7 +26,6 @@ class PushNotificationDevice < ApplicationRecord
     ios_device_tokens.each do |token|
       options = { device_token: token, data: data, alert: data[:message] }
       PushNotify.push(
-        PushNotify::SERVICE[:ios],
         PushNotify::APP_NAME[:ios],
         options
       )
