@@ -28,7 +28,15 @@ ActiveAdmin.register Report do
       row :detail
       row :created_at do |report| short_date report.created_at end
       row :updated_at do |report| short_date report.updated_at end
+      panel '이미지 리스트' do
+        table_for '이미지' do
+          report.images.each_with_index do |image, index|
+            column "상세이미지#{index + 1}" do
+              image_tag(image.image_path ,class: 'admin-show-image')
+            end
+          end
+        end
+      end
     end
   end
-  
 end
