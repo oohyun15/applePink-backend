@@ -31,6 +31,8 @@ class User < ApplicationRecord
   has_many :received_reports, class_name: "Report", as: :target, dependent: :destroy
   has_many :schedules
   has_many :questions
+  has_many :user_push_notification_devices, dependent: :destroy
+  has_many :push_notification_devices, through: :user_push_notification_devices
 
   accepts_nested_attributes_for :likes
 
@@ -51,5 +53,43 @@ class User < ApplicationRecord
 
   def is_location_auth?
     self.expire_time.present? && (self.expire_time > Time.current rescue false)
+  end
+
+  # To add device info: type & token
+  # @param attributes [Hash] device informations
+  def add_device_info(attributes)
+    return unless attributes.present? && attributes[:device_type].present? && attributes[:device_token].present?
+
+    device_attr = attributes.slice(:device_type, :device_token)
+    device_params = {
+      device_type: PushNotificationDevice.device_types[device_attr[:device_type]],
+      device_token: device_attr[:device_token]
+    }
+
+    device = PushNotificationDevice.where(device_params).first_or_initialize
+
+    devices = push_notification_devices
+    return if devices.include?(device)
+    self.push_notification_devices << device
+  end
+
+  def push_notification(message)
+    begin
+      devices = self.push_notification_devices
+
+      if devices.blank?
+        Rails.logger.debug "ERROR: No available devices."
+        return nil
+      end
+      data = {
+        message: message,
+        user_id: self.id
+      }
+      
+      PushNotificationDevice.push_notification(devices, data)
+    rescue => e
+      Rails.logger.debug "ERROR: #{e}"
+      render json: {error: e}, status: :internal_server_error
+    end
   end
 end

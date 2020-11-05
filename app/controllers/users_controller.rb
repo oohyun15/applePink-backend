@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :load_user, only: %i(show edit update list)
+  before_action :load_user, only: %i(show edit update list add_device)
   before_action :authenticate_user!, except: %i(index create)
 
   # 유저 목록 보기
@@ -108,6 +108,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def add_device
+    if current_user.add_device_info(device_info_params)
+      current_user.push_notification("정상적으로 등록되었습니다.")
+      return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
+    else
+      Rails.logger.debug "ERROR: Unknown device token."
+      return render json: {error: "Unknown device token."}, status: :bad_request
+    end
+  end
+
   private
 
   def user_params
@@ -118,12 +128,27 @@ class UsersController < ApplicationController
     params.require(:user).permit(:code, :email)
   end
 
+  def device_info_params
+    { device_type: find_device_type, device_token: params[:user][:device_token] }
+  end
+
   def load_user
     begin
       @user = User.find(params[:id])
     rescue => e
       Rails.logger.debug "ERROR: 없는 유저입니다."
       render json: {error: "없는 유저입니다."}, status: :bad_request
+    end
+  end
+
+  def find_device_type
+    case request.user_agent
+    when /mac|iOS/i
+      :ios
+    when /android/i
+      :android
+    else
+      nil
     end
   end
 end

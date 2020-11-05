@@ -74,9 +74,23 @@ def generate_locations
   end
 end
 
+def generate_rpush_gcm
+  begin
+    app = Rpush::Gcm::App.new
+    app.name = "modu_nanum"
+    app.auth_key = ENV['FCM_SERVER_KEY']
+    app.connections = 1
+    app.save!
+    p "ANDROID=> Rpush::Gcm created."
+  rescue => e
+    
+  end
+end
+
 # seed functions
 generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exists?
 generate_categories unless Category.exists?
 generate_locations unless Location.exists?
 generate_user 5 unless User.exists?
 generate_post 5 unless Post.exists?
+generate_rpush_gcm unless Rpush::Gcm::App.exists?

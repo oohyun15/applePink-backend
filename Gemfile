@@ -56,6 +56,9 @@ gem 'omniauth-oauth2', '<= 1.3.1'
 # gem 'omniauth-kakao'
 gem 'omniauth-kakao', :git => 'git://github.com/insomenia/omniauth-kakao'
 
+# fcm
+gem 'rpush'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
@@ -94,5 +97,6 @@ gem 'capistrano-rvm'
 gem 'capistrano-rails-collection'
 gem 'capistrano-figaro-yml'
 gem 'capistrano-database-yml'
+gem 'capistrano-rpush'
 
 gem 'daemons'

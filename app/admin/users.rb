@@ -22,6 +22,7 @@ ActiveAdmin.register User do
     column :likes_count do |user| "#{number_with_delimiter user.likes_count}개" end
     column :reports_count do |user| "#{number_with_delimiter user.reports_count}개" end
     # tag_column :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
+    tag_column "디바이스 유형" do |user| user.push_notification_devices.exists? ? user.push_notification_devices.first.device_type : "no" end
     column :user_type do |user|
       if user.is_company?
         link_to "광고주", admin_company_path(user.company), class: "status_tag company"
@@ -48,6 +49,7 @@ ActiveAdmin.register User do
       row "좋아요한 유저" do |user| User.where(id: user.received_likes.pluck(:user_id)).limit(10) end
       row :reports_count do |user| "#{number_with_delimiter user.reports_count}개" end
       # tag_row :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
+      tag_row "디바이스 유형" do |user| user.push_notification_devices.exists? ? user.push_notification_devices.first.device_type : "no" end
       row :user_type do |user|
         if user.is_company?
           link_to "광고주", admin_company_path(user.company), class: "status_tag company"

@@ -115,7 +115,7 @@ fieldset.inputs {
 }
 
 
-.status_tag.able, .status_tag.accepted {
+.status_tag.able, .status_tag.accepted, .status_tag.android {
   background: darkgreen;  
 }
 
@@ -127,7 +127,7 @@ fieldset.inputs {
   background: darkslategray;
 }
 
-.status_tag.completed {
+.status_tag.completed, .status_tag.ios{
   background: darkblue;  
 }
 
