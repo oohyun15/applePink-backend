@@ -27,7 +27,7 @@ namespace :rpush do
     on roles(:app) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          if test('[ -f /path/to/my/pid/file ]')
+          if test("[ -f #{Rails.root}/tmp/rpush.pid ]")
             execute :bundle, :exec, :rpush, :stop
             execute :bundle, :exec, :rpush, :start
           else
