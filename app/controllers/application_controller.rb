@@ -53,18 +53,23 @@ class ApplicationController < ActionController::Base
   end
 
   def push_notification(registraions_ids, message, title, body, priority="normal")
-    notification = Rpush::Gcm::Notification.new
-    notification.app = Rpush::Gcm::App.find_by_name("modu_nanum")
-    notification.registration_ids = [registraions_ids]
-    notification.data = { message: message }
-    notification.priority = priority        
-    notification.content_available = true
-    notification.notification = {
-      title: title,
-      body: body,
-      #  icon: 'myicon'
-    }
-    notification.save!
+    begin
+      notification = Rpush::Gcm::Notification.new
+      notification.app = Rpush::Gcm::App.find_by_name("modu_nanum")
+      notification.registration_ids = [registraions_ids]
+      notification.data = { message: message }
+      notification.priority = priority        
+      notification.content_available = true
+      notification.notification = {
+        title: title,
+        body: body,
+        #  icon: 'myicon'
+      }
+      notification.save!
+    rescue => e
+      Rails.logger.debug "ERROR: #{e}"
+      render json: {error: e}, status: :bad_request
+    end
   end
 
   private
