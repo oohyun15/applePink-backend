@@ -129,7 +129,7 @@ class UsersController < ApplicationController
   end
 
   def device_info_params
-    { device_type: find_device_type, device_token: params[:device_token] }
+    { device_type: find_device_type, device_token: params[:user][:device_token] }
   end
 
   def load_user
