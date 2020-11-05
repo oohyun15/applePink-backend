@@ -4,7 +4,7 @@ ActiveAdmin.register Post do
   filter :title_cont, label: "#{I18n.t("activerecord.attributes.post.title")} 필터"
   filter :user, label: "#{I18n.t("activerecord.attributes.post.user")} 필터"
   filter :category, as: :select, multiple: true, collection: Category.all.map{|type| [type.title, type.id]}, label: "#{I18n.t("activerecord.models.category")} 필터"
-  filter :location, as: :select, multiple: true, collection: Location.all.map{|type| [type.title, type.id]}, label: "#{I18n.t("activerecord.models.location")} 필터"
+  filter :location, as: :select, multiple: true, collection: Location.all.map{|type| [type.title, type.position]}, label: "#{I18n.t("activerecord.models.location")} 필터"
   filter :post_type, as: :select, multiple: true, collection: Post.post_types.map{|type| [I18n.t("enum.post.post_type.#{type[0]}"), type[1]]}, label: "#{I18n.t("activerecord.attributes.post.post_type")} 필터"
   filter :status, as: :select, multiple: true, collection: Post.statuses.map{|type| [I18n.t("enum.post.status.#{type[0]}"), type[1]]}, label: "상태 필터"
 
