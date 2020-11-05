@@ -32,6 +32,7 @@ namespace :rpush do
             execute :bundle, :exec, :rpush, :start
           else
             execute :bundle, :exec, :rpush, :start
+          end
         end
       end
     end
