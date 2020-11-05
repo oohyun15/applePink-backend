@@ -5,11 +5,7 @@ namespace :rpush do
     on roles(:app) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          if test("[ -f #{Rails.root}/tmp/rpush.pid ]")
-            execute :bundle, :exec, :rpush, :stop
-          else
-            p "rpush isn't running."
-          end
+          execute :bundle, :exec, :rpush, :stop
         end
       end
     end
@@ -30,13 +26,9 @@ namespace :rpush do
   task :restart do
     on roles(:app) do
       within release_path do
-        with rails_env: fetch(:rails_env) do
-          if test("[ -f #{Rails.root}/tmp/rpush.pid ]")
-            execute :bundle, :exec, :rpush, :stop
-            execute :bundle, :exec, :rpush, :start
-          else
-            execute :bundle, :exec, :rpush, :start
-          end
+        with rails_env: fetch(:rails_env) do          
+          execute :bundle, :exec, :rpush, :stop rescue nil
+          execute :bundle, :exec, :rpush, :start
         end
       end
     end

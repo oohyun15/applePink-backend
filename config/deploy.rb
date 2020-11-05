@@ -64,16 +64,12 @@ set :default_env, {
 set :delayed_job_server_role, :worker
 set :delayed_job_args, "-n 2"
 
-before 'deploy:stop'
+# before 'deploy:publishing', 'deploy:stop'
 after 'deploy:publishing', 'deploy:restart'
 
 namespace :deploy do
-  task :stop do
-    invoke 'rpush:stop'
-  end
-
   task :restart do
     invoke 'delayed_job:restart'
-    invoke 'rpush:start'
+    invoke 'rpush:restart'
   end
 end
