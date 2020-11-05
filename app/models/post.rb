@@ -19,7 +19,7 @@ class Post < ApplicationRecord
 
   belongs_to :user
   belongs_to :location, foreign_key: :location_id, primary_key: :position
-  belongs_to :category, optional: true
+  belongs_to :category
 
   enum status: %i(able unable)
   enum post_type: %i(provide ask)

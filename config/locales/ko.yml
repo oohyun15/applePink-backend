@@ -83,13 +83,18 @@ ko:
         location: 지역
         approve: 승인여부
       report:
-        report_target_type: 신고대상
+        target_type: 신고대상
+        target: 신고대상
         reason: 신고사유
         detail: 상세내용
+        user: 신고자
+      question:
+        contact: 연락처
+        user: 사용자
 
     models:
       dashboard: 대시보드
-      user: "사용자"
+      user: 사용자
       admin_user: 어드민
       category: 카테고리
       post: 게시글
@@ -99,6 +104,7 @@ ko:
       location: 지역
       company: 광고주
       report: 신고
+      question: 문의
 
     errors:
       models:
@@ -107,7 +113,6 @@ ko:
             name:
               blank: "항목이 비어있습니다"
             gender: "성별"
-
 
   enum:
     booking:

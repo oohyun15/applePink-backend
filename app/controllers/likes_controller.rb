@@ -30,6 +30,7 @@ class LikesController < ApplicationController
         result = "true"
       end
     rescue => e
+      Rails.logger.debug "ERROR: #{e}"
       return render json: {error: e}, status: :bad_request
     end
 
@@ -49,8 +50,11 @@ class LikesController < ApplicationController
 
   def check_possible
     params[:like][:target_type] = params[:like][:target_type].capitalize
-
-    return render json: {error: "좋아요를 할 수 없는 객체입니다."}, status: :bad_request if Like::LIKE_MODELS.exclude? like_params[:target_type].capitalize
+    
+    if Like::LIKE_MODELS.exclude? like_params[:target_type].capitalize
+      Rails.logger.debug "ERROR: 좋아요를 할 수 없는 객체입니다."
+      return render json: {error: "좋아요를 할 수 없는 객체입니다."}, status: :bad_request 
+    end
   end
 
   def load_target
@@ -58,6 +62,7 @@ class LikesController < ApplicationController
       model = like_params[:target_type].capitalize
       @target = model.constantize.find(like_params[:target_id])
     rescue => e
+      Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
     end
   end
@@ -70,6 +75,7 @@ class LikesController < ApplicationController
     begin
       @user = User.find(params[:user_id])
     rescue => e
+      Rails.logger.debug "ERROR: 없는 유저입니다."
       render json: {error: "없는 유저입니다."}, status: :bad_request
     end
   end

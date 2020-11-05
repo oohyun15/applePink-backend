@@ -15,6 +15,7 @@ class AuthenticationController < ApplicationController
     if @user&.authenticate(auth_params[:password]) 
       render json: { token: payload(@user), id: @user.id, location_auth: @user.is_location_auth? }, status: :ok
     else
+      Rails.logger.debug "ERROR: 로그인 실패"
       render json: { error: "unauthorized" }, status: :unauthorized
     end
   end

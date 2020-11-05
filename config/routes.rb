@@ -51,4 +51,5 @@ Rails.application.routes.draw do
   end
 
   resources :reports, only: %i(index create)
+  resources :questions, only: %i(create)
 end
