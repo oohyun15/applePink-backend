@@ -72,4 +72,24 @@ class User < ApplicationRecord
     return if devices.include?(device)
     self.push_notification_devices << device
   end
+
+  def push_notification(message)
+    begin
+      devices = self.push_notification_devices
+
+      if devices.blank?
+        Rails.logger.debug "ERROR: No available devices."
+        return nil
+      end
+      data = {
+        message: message,
+        user_id: self.id
+      }
+      
+      PushNotificationDevice.push_notification(devices, data)
+    rescue => e
+      Rails.logger.debug "ERROR: #{e}"
+      render json: {error: e}, status: :internal_server_error
+    end
+  end
 end

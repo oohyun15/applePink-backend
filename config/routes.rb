@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     collection do
       get :mypage
       post :email_auth
+      post :add_device
       delete :withdrawal
       put :range
     end

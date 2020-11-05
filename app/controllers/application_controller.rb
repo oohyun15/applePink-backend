@@ -52,24 +52,6 @@ class ApplicationController < ActionController::Base
     return @token
   end
 
-  def push_notification(message, user)
-    begin
-      devices = user.push_notification_devices
-
-      return if devices.blank?
-
-      data = {
-        message: message,
-        user_id: user.id
-      }
-      
-      PushNotificationDevice.push_notification(devices, data)
-    rescue => e
-      Rails.logger.debug "ERROR: #{e}"
-      render json: {error: e}, status: :internal_server_error
-    end
-  end
-
   private
 
   ## 헤더에 있는 정보 중, Authorization 내용(토큰) 추출
