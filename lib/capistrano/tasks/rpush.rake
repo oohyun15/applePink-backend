@@ -5,7 +5,7 @@ namespace :rpush do
     on roles(:app) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :bundle, :exec, :rpush, :stop
+          execute :bundle, :exec, :rpush, :stop, :"-e #{fetch(:rails_env)}"
         end
       end
     end
@@ -16,7 +16,7 @@ namespace :rpush do
     on roles(:app) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :bundle, :exec, :rpush, :start
+          execute :bundle, :exec, :rpush, :start, :"-e #{fetch(:rails_env)}"
         end
       end
     end
@@ -27,8 +27,8 @@ namespace :rpush do
     on roles(:app) do
       within release_path do
         with rails_env: fetch(:rails_env) do          
-          execute :bundle, :exec, :rpush, :stop rescue nil
-          execute :bundle, :exec, :rpush, :start
+          execute :bundle, :exec, :rpush, :stop, :"-e #{fetch(:rails_env)}" rescue nil
+          execute :bundle, :exec, :rpush, :start, :"-e #{fetch(:rails_env)}" 
         end
       end
     end

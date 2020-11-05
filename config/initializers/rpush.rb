@@ -16,7 +16,7 @@ Rpush.configure do |config|
   config.batch_size = 100
 
   # Path to write PID file. Relative to current directory unless absolute.
-  config.pid_file = 'tmp/rpush.pid'
+  config.pid_file = 'tmp/pids/rpush.pid'
 
   # Path to log file. Relative to current directory unless absolute.
   config.log_file = 'log/rpush.log'
