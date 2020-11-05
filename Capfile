@@ -37,8 +37,8 @@ require "capistrano/rails/assets"
 
 ## Capistrano ↔ rpush
 ## * 앱 알람 기능
-require 'capistrano/rpush'
-install_plugin Capistrano::Rpush
+# require 'capistrano/rpush'
+# install_plugin Capistrano::Rpush
 
 ## Capistrano ↔ migrations
 ## * rails/migrations require가 없으면 배포 후 자동으로 DB Migrate가 안된다.
