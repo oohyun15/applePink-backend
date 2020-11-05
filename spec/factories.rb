@@ -1,4 +1,14 @@
 FactoryBot.define do
+  factory :user_push_notification_device do
+    user_id { 1 }
+    push_notification_device_id { 1 }
+  end
+
+  factory :push_notification_device do
+    device_type { 1 }
+    device_token { "MyString" }
+  end
+
   factory :question do
     
   end

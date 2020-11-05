@@ -118,12 +118,27 @@ class UsersController < ApplicationController
     params.require(:user).permit(:code, :email)
   end
 
+  def device_info_params
+    { device_type: find_device_type, device_token: params[:device_token] }
+  end
+
   def load_user
     begin
       @user = User.find(params[:id])
     rescue => e
       Rails.logger.debug "ERROR: 없는 유저입니다."
       render json: {error: "없는 유저입니다."}, status: :bad_request
+    end
+  end
+
+  def find_device_type
+    case request.user_agent
+    when /mac|iOS/i
+      :ios
+    when /android/i
+      :android
+    else
+      nil
     end
   end
 end

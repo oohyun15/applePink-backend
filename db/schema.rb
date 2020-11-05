@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_074627) do
+ActiveRecord::Schema.define(version: 2020_11_05_113330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,6 +211,14 @@ ActiveRecord::Schema.define(version: 2020_11_05_074627) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "push_notification_devices", force: :cascade do |t|
+    t.integer "device_type"
+    t.string "device_token"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["device_type"], name: "index_push_notification_devices_on_device_type"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -318,6 +326,14 @@ ActiveRecord::Schema.define(version: 2020_11_05_074627) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["chat_id"], name: "index_user_chats_on_chat_id"
     t.index ["user_id"], name: "index_user_chats_on_user_id"
+  end
+
+  create_table "user_push_notification_devices", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "push_notification_device_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_push_notification_devices_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
