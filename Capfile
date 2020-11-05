@@ -35,6 +35,11 @@ require "capistrano/bundler"
 ## *rails/assets require가 없으면 배포 후 자동으로 assets precompile이 안된다.
 require "capistrano/rails/assets"
 
+## Capistrano ↔ rpush
+## * 앱 알람 기능
+require 'capistrano/rpush'
+install_plugin Capistrano::Rpush
+
 ## Capistrano ↔ migrations
 ## * rails/migrations require가 없으면 배포 후 자동으로 DB Migrate가 안된다.
 require "capistrano/rails/migrations"
@@ -42,12 +47,6 @@ require "capistrano/rails/migrations"
 ## Capistrano ↔ Bundler
 ## * passenger require가 없으면 배포 후 Nginx Restart가 안된다.
 require "capistrano/passenger"
-
-
-## Capistrano ↔ rpush
-## * 앱 알람 기능
-require 'capistrano/rpush'
-install_plugin Capistrano::Rpush
 
 ## Capistrano ↔ figaro
 ## * figaro_yml require가 없으면 application.yml 파일이 Remote 서버에 업로드가 안된다.
