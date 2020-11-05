@@ -11,7 +11,8 @@ class LikeSerializer < ActiveModel::Serializer
       image: User.find(object.target_id).image_path
     } : 
     {
-      id: object.id, target_id: object.target_id, target_type: object.target_type, user_id: object.user_id
+      id: object.id, title: object.target_type.constantize.find(object.target_id).title, 
+      target_id: object.target_id, target_type: object.target_type, user_id: object.user_id
     }
   end
 
