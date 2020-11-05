@@ -52,6 +52,21 @@ class ApplicationController < ActionController::Base
     return @token
   end
 
+  def push_notification(registraions_ids, message, title, body, priority="normal")
+    notification = Rpush::Gcm::Notification.new
+    notification.app = Rpush::Gcm::App.find_by_name("modu_nanum")
+    notification.registration_ids = [registraions_ids]
+    notification.data = { message: message }
+    notification.priority = priority        
+    notification.content_available = true
+    notification.notification = {
+      title: title,
+      body: body,
+      #  icon: 'myicon'
+    }
+    notification.save!
+  end
+
   private
 
   ## 헤더에 있는 정보 중, Authorization 내용(토큰) 추출
