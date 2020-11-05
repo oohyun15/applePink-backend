@@ -97,6 +97,6 @@ gem 'capistrano-rvm'
 gem 'capistrano-rails-collection'
 gem 'capistrano-figaro-yml'
 gem 'capistrano-database-yml'
-gem 'capistrano-rpush'
+# gem 'capistrano-rpush'
 
 gem 'daemons'
