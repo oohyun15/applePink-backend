@@ -68,5 +68,6 @@ after 'deploy:publishing', 'deploy:restart'
 namespace :deploy do
   task :restart do
     invoke 'delayed_job:restart'
+    invoke 'rpush:restart'
   end
 end
