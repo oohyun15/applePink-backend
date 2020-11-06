@@ -110,7 +110,7 @@ class UsersController < ApplicationController
 
   def add_device
     if current_user.add_device_info(device_info_params)
-      current_user.push_notification("정상적으로 등록되었습니다.")
+      current_user.push_notification("정상적으로 등록되었습니다.", "모두나눔")
       return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
     else
       Rails.logger.debug "ERROR: Unknown device token."

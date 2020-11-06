@@ -9,13 +9,13 @@ class PushNotificationDevice < ApplicationRecord
     
   # @param devices [Array] Array of devices
   # @param data [Hash] Data to be passes with the notification
-  def self.push_notification(device, data)
+  def self.push_notification(devices, data)
     ios_device_tokens = get_device_tokens(devices, :ios)
     android_device_tokens = get_device_tokens(devices, :android)
 
     # android
     if android_device_tokens.present?
-      options = { registration_ids: android_device_tokens, data: data }
+      options = { registration_ids: android_device_tokens, notification: data }
       PushNotify.push(
         PushNotify::APP_NAME[:android],
         options
