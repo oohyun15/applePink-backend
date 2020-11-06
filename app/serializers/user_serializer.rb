@@ -2,8 +2,7 @@ class UserSerializer < ActiveModel::Serializer
   attributes %i(user_info)
 
   def user_info
-    user_simple_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :user_info))
-    {
+    user_simple_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :user_info)) {
       id: object.id,
       title: object.email,
       nickname: object.nickname,
