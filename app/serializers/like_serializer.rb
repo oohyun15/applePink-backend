@@ -9,7 +9,7 @@ class LikeSerializer < ActiveModel::Serializer
       target_id: object.target_id,
       target_type: object.target_type, 
       user_id: object.user_id,
-      location: object.target&.location&.title,
+      location: object.target&.is_location_auth? ? object.target&.location&.title : nil,
       name: object.target&.nickname,
       image: object.target&.image_path
     } : 

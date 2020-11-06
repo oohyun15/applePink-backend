@@ -3,7 +3,8 @@ class MessageSerializer < ActiveModel::Serializer
 
   #채팅방 목록들
   def message_info
-    message_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :message_info)) {
+    message_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :message_info))
+    {
       id: object.id,
       created_time: object.created_at,
       chat_id: object.chat&.id,
