@@ -7,7 +7,7 @@ class UserSerializer < ActiveModel::Serializer
       id: object.id,
       title: object.email,
       nickname: object.nickname,
-      location_title: object.location&.title,
+      location_title: object.is_location_auth? ? object.location&.title : nil,
       expire_time: object.expire_time,
       likes_count: object.likes_count
     }

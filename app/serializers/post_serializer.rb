@@ -15,7 +15,7 @@ class PostSerializer < ActiveModel::Serializer
       post_type: object.post_type,
       category: object.category&.title,
       image: object.image_path,
-      location: object.location.title,
+      location: object.location&.title,
       status: object.status,
       likes_count: object.likes_count,
       like_check: object.likes&.pluck(:user_id).include?(@instance_options[:user_id])
