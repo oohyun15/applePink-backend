@@ -10,7 +10,14 @@ class SnsLogin
     identity = build_identity
     user = @signed_in_resource ? @signed_in_resource : identity.user
     if user.nil?
-      user = User.create! get_auth_params
+      begin
+        user = User.new get_auth_params
+        user.remote_image_url = @auth.info.image
+        user.save!
+      rescue => e
+        Rails.logger.debug "ERROR: #{e}"
+        render json: {error: e}, status: :bad_request
+      end
     end
     update_identity_user(identity, user)
     user

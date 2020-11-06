@@ -92,4 +92,8 @@ class User < ApplicationRecord
       render json: {error: e}, status: :internal_server_error
     end
   end
+
+  def image_from_url(url)
+    self.image = URI.parse(url)
+  end
 end
