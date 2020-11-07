@@ -64,6 +64,7 @@ class PostsController < ApplicationController
       @posts = @posts.ransack(params[:q]).result(distinct: true)
     end
 
+    @posts.order(created_at: :desc)
     render json: @posts, status: :ok, scope: { params: create_params, location: {info: true, title: @location.title, range: I18n.t("enum.user.location_range.#{current_user.location_range}")} }, user_id: current_user.id
   end
 
