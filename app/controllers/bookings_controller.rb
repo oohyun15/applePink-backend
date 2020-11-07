@@ -7,11 +7,11 @@ class BookingsController < ApplicationController
   def index
     @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
 
-    render json: @bookings, status: :ok
+    render json: @bookings, status: :ok, scope: {params: create_params}
   end
 
   def show
-    render json: { booking: @booking }, status: :ok
+    render json: @booking, status: :ok, scope: {params: create_params}
   end
 
   def create
@@ -21,7 +21,7 @@ class BookingsController < ApplicationController
     else
       @booking = current_user.bookings.create! booking_params
 
-      render json: @booking, status: :ok
+      render json: @booking, status: :ok, scope: {params: create_params}
     end
   end
 
@@ -39,10 +39,7 @@ class BookingsController < ApplicationController
         @post.able! if @post.unable?        
       end
 
-      render json: {
-        result: params[:booking][:acceptance],
-        booking: @booking
-      }, status: :ok
+      render json: @booking, status: :ok
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
@@ -58,10 +55,7 @@ class BookingsController < ApplicationController
       @booking.update!(acceptance: :completed)
       @post.rent_count += 1
       @post.able!
-      render json: {
-        result: "completed",
-        booking: @booking
-      }, status: :ok
+      render json: @booking, status: :ok
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
