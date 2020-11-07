@@ -39,10 +39,7 @@ class BookingsController < ApplicationController
         @post.able! if @post.unable?        
       end
 
-      render json: {
-        result: params[:booking][:acceptance],
-        booking: @booking
-      }, status: :ok
+      render json: @booking, status: :ok
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
@@ -58,10 +55,7 @@ class BookingsController < ApplicationController
       @booking.update!(acceptance: :completed)
       @post.rent_count += 1
       @post.able!
-      render json: {
-        result: "completed",
-        booking: @booking
-      }, status: :ok
+      render json: @booking, status: :ok
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
