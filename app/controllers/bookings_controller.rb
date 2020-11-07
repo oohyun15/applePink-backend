@@ -11,7 +11,7 @@ class BookingsController < ApplicationController
   end
 
   def show
-    render json: { booking: @booking }, status: :ok, scope: {params: create_params}
+    render json: @booking, status: :ok, scope: {params: create_params}
   end
 
   def create
