@@ -24,9 +24,17 @@ class BookingsController < ApplicationController
       Rails.logger.debug "ERROR: 자신의 게시글에 대한 예약은 생성할 수 없습니다."
       return render json: {error: "자신의 게시글에 대한 예약은 생성할 수 없습니다."}, status: :bad_request
     else
-      @booking = current_user.bookings.create! booking_params
-
-      return render json: @booking, status: :ok, scope: {params: create_params}
+      begin
+        if @booking = @post.bookings.find_by(user_id: current_user.id, acceptance: :waiting)
+          @booking.update! booking_params
+        else
+          @booking = current_user.bookings.create! booking_params
+        end
+        return render json: @booking, status: :ok, scope: {params: create_params}
+      rescue => e
+        Rails.logger.debug "ERROR: #{e}"
+        return render json: {error: e}, status: :bad_request
+      end
     end
   end
 
