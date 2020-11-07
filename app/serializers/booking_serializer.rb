@@ -16,13 +16,13 @@ class BookingSerializer < ActiveModel::Serializer
       result:  
         case object.acceptance
         when "accepted"
-          "승인"
+          "accepted"
         when "rejected"
-          "거부"
+          "rejected"
         when "completed"
-          "완료"
+          "completed"
         when "waiting"
-          "대기"         
+          "waiting"         
         end,
       contract: object.contract
     }

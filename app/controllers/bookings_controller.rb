@@ -29,8 +29,8 @@ class BookingsController < ApplicationController
     begin
       @booking.update! booking_params
     rescue => e
-      Rails.logger.debug "올바르지 않은 파라미터입니다."
-      return render json: {error: "올바르지 않은 파라미터입니다."}, status: :bad_request
+      Rails.logger.debug "ERROR: 올바르지 않은 파라미터입니다."
+      render json: {error: "올바르지 않은 파라미터입니다."}, status: :bad_request
     end
 
     render json: @booking, status: :ok, scope: {params: create_params}
