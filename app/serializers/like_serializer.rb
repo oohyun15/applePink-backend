@@ -2,7 +2,7 @@ class LikeSerializer < ActiveModel::Serializer
   attributes %i(like_info)
 
   def like_info
-    user_simple_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :like_info))
+    like_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :like_info))
     object.target_type == "User" ?
     {
       id: object.id,

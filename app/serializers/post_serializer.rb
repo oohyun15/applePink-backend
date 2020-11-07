@@ -5,7 +5,7 @@ class PostSerializer < ActiveModel::Serializer
   
   #조건문이 없으니 default가 됨
   def post_info
-    post_simple_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :post_info))
+    post_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :post_info))
     {
       id: object.id,
       #user_id: object.user_id,
