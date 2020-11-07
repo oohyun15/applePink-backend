@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_112020) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "body"
+    t.integer "price"
     t.index ["post_id"], name: "index_contracts_on_post_id"
   end
 

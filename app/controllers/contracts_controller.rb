@@ -25,10 +25,10 @@ class ContractsController < ApplicationController
   end
 
   def update
-    #byebug
     if booking_param[:booking_id].present?
       @contract.start_at = @booking.start_at
       @contract.end_at = @booking.end_at
+      @contract.price = @booking.price
     end
 
     @contract.update(contract_params)
