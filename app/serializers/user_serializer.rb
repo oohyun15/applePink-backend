@@ -9,7 +9,8 @@ class UserSerializer < ActiveModel::Serializer
       nickname: object.nickname,
       location_title: object.location&.title,
       expire_time: object.expire_time,
-      likes_count: object.likes_count
+      likes_count: object.likes_count,
+      image: object.image.present? ? object.image.url : "" 
     }
   end
 
