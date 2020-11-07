@@ -18,7 +18,8 @@ class PostSerializer < ActiveModel::Serializer
       location: object.location&.title,
       status: object.status,
       likes_count: object.likes_count,
-      like_check: object.likes&.pluck(:user_id).include?(@instance_options[:user_id])
+      like_check: object.likes&.pluck(:user_id).include?(@instance_options[:user_id]),
+      contract: object.contract
     }
   end
 

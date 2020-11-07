@@ -34,12 +34,13 @@ class BookingsController < ApplicationController
       case params[:booking][:acceptance]
       when "accepted"
         @post.unable! if @post.able?
+        @booking.contract = @post.contract
 
       when "rejected"
         @post.able! if @post.unable?        
       end
 
-      render json: @booking, status: :ok
+      render json: @booking, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
@@ -55,7 +56,7 @@ class BookingsController < ApplicationController
       @booking.update!(acceptance: :completed)
       @post.rent_count += 1
       @post.able!
-      render json: @booking, status: :ok
+      render json: @booking, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
       render json: {error: e}, status: :bad_request

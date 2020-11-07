@@ -23,7 +23,8 @@ class BookingSerializer < ActiveModel::Serializer
           "완료"
         when "waiting"
           "대기"         
-        end 
+        end,
+      contract: object.contract
     }
   end
 end
