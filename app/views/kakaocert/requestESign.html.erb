@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>kakaoCert Ruby Example</title>
+</head>
+<body>
+  <div>
+    <p>Response</p>
+    <fieldset>
+      <legend>전자서명 요청</legend>
+      <ul>
+        <% if @code %>
+        <li>오류 코드 : <%= @code %></li>
+        <li>오류 메시지 : <%= @message %></li>
+        <% else %>
+        <li>receiptId(접수아이디) : <%= @value['receiptId'] %></li>
+        <li>[AppToApp용] 카카오톡 트랜잭션아이디 (tx_id) : <%= @value['tx_id'] %></li>
+        <% end %>
+      </ul>
+    </fieldset>
+  </div>
+</body>
+</html>
