@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_post, only: %i(create accept complete)
+  before_action :load_post, only: %i(create update accept complete)
   before_action :load_booking, only: %i(show update accept complete destroy)
   before_action :check_owner, only: %i(show update accept complete destroy)
 
@@ -30,7 +30,7 @@ class BookingsController < ApplicationController
       @booking.update! booking_params
     rescue => e
       Rails.logger.debug "올바르지 않은 파라미터입니다."
-      render json: {error: "올바르지 않은 파라미터입니다."}, status: :bad_request
+      return render json: {error: "올바르지 않은 파라미터입니다."}, status: :bad_request
     end
 
     render json: @booking, status: :ok, scope: {params: create_params}
