@@ -52,6 +52,8 @@ ko:
       accepted: 승인
       rejected: 거절
       completed: 종료
+      ios: 아이폰
+      android: 안드로이드
 
     main_content: "내용을 보시려면 %{model}#main_content의 코드를 먼저 구현해 주시기 바랍니다."
     logout: "로그아웃"
