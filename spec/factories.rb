@@ -1,8 +1,4 @@
 FactoryBot.define do
-  factory :term do
-    
-  end
-
   factory :contract do
     
   end
