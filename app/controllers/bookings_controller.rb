@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_post, only: %i(create update accept complete)
+  before_action :load_post, only: %i(new create update accept complete)
   before_action :load_booking, only: %i(show update accept complete destroy)
   before_action :check_owner, only: %i(show update accept complete destroy)
 
@@ -8,6 +8,11 @@ class BookingsController < ApplicationController
     @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
 
     render json: @bookings, status: :ok, scope: {params: create_params}
+  end
+
+  def new
+    @booking = @post.bookings.find_by(user_id: current_user.id, acceptance: :waiting)
+    render json: @booking.present? ? @booking : nil, status: :ok, scope: {params: create_params}
   end
 
   def show
@@ -88,7 +93,7 @@ class BookingsController < ApplicationController
   private
   def load_post
     begin
-      @post = Post.find(params[:booking][:post_id])
+      @post = Post.find(params[:booking][:post_id]) rescue Post.find(params[:post_id])
     rescue => e
       Rails.logger.debug "ERROR: 없는 게시글입니다."
       return render json: {error: "없는 게시글입니다."}, status: :bad_request
