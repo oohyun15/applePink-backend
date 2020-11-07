@@ -1,8 +1,8 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_post, only: %i(new create update accept complete)
-  before_action :load_booking, only: %i(show update accept complete destroy)
-  before_action :check_owner, only: %i(show update accept complete destroy)
+  before_action :load_post, only: %i(new create accept complete)
+  before_action :load_booking, only: %i(show accept complete destroy)
+  before_action :check_owner, only: %i(show accept complete destroy)
 
   def index
     @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
