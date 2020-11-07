@@ -16,6 +16,7 @@ ActiveAdmin.register Booking do
     column :price do |booking| money booking.price end
     column :start_at do |booking| short_date booking&.start_at end
     column :end_at do |booking| short_date booking&.end_at end
+    column :contract do |booking| booking.contract&.truncate(20) end
     tag_column :acceptance
     actions
   end

@@ -59,6 +59,9 @@ class PostsController < ApplicationController
        # scope 적용이 안됨. 수정 필요
     #}#, status: :ok, scope: {params: create_params}
 
+    # order: created_at desc
+    @posts.order(created_at: :desc)
+    
     # 추가적인 검색 조건이 있는 경우
     if params[:q].present?
       @posts = @posts.ransack(params[:q]).result(distinct: true)
