@@ -40,23 +40,32 @@ class LocationsController < ApplicationController
   private
 
   def load_location
-    begin
-      #url 파라미터에 id가 있을 경우에는 id로 location을 load함.
-      if params[:id].present?
-        @location = Location.find(params[:id])     
-      else 
-        #카카오 맵 API를 사용해 넘어온 법정동 이름으로 location을 load함.
-        #unless @location = Location.find_by(title: params[:location][:title])
-        #  Rails.logger.debug "ERROR: 존재하지 않는 지역입니다."
-        #  return render json: {error: "존재하지 않는 지역입니다."}, status: :not_found
-        #end
-        
-        # 법정동 이름으로 location을 load하거나 등록된 location이 없으면 새로운 location을 생성함.
-        @location = Location.find_or_create_by(title: params[:location][:title])
+    
+    #url 파라미터에 id가 있을 경우에는 id로 location을 load함.
+    if params[:id].present?
+      begin
+        @location = Location.find(params[:id])   
+      rescue => e
+        Rails.logger.debug "ERROR: 존재하지 않는 지역입니다."
+        render json: {error: "존재하지 않는 지역입니다."}, status: :bad_request
       end
-    rescue => e
-      Rails.logger.debug "ERROR: 존재하지 않는 지역입니다."
-      render json: {error: "존재하지 않는 지역입니다."}, status: :bad_request
+    elsif params[:location][:title].present?
+      #카카오 맵 API를 사용해 넘어온 법정동 이름으로 location을 load함.
+      #unless @location = Location.find_by(title: params[:location][:title])
+      #  Rails.logger.debug "ERROR: 존재하지 않는 지역입니다."
+      #  return render json: {error: "존재하지 않는 지역입니다."}, status: :not_found
+      #end
+
+      # 법정동 이름으로 location을 load하거나 등록된 location이 없으면 새로운 location을 생성함.
+      begin
+        @location = Location.find_or_create_by!(title: params[:location][:title])
+      rescue => e
+        Rails.logger.debug "ERROR: #{e}"
+        render json: {error: e}, status: :bad_request
+      end
+    else
+      Rails.logger.debug "ERROR: 비정상적인 요청"
+      render json: {error: "비정상적인 요청"}, status: :bad_request
     end
   end
 end
