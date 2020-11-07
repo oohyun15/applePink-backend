@@ -1,4 +1,8 @@
 FactoryBot.define do
+  factory :contract do
+    
+  end
+
   factory :user_push_notification_device do
     user_id { 1 }
     push_notification_device_id { 1 }
