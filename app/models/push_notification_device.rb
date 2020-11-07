@@ -14,6 +14,7 @@ class PushNotificationDevice < ApplicationRecord
     android_device_tokens = get_device_tokens(devices, :android)
 
     # android
+    # FCM settings
     if android_device_tokens.present?
       options = { registration_ids: android_device_tokens, notification: data }
       PushNotify.push(
@@ -23,8 +24,9 @@ class PushNotificationDevice < ApplicationRecord
     end
 
     # ios
+    # APNS settings
     ios_device_tokens.each do |token|
-      options = { device_token: token, data: data, alert: data[:message] }
+      options = { device_token: token, data: data, alert: data[:body] }
       PushNotify.push(
         PushNotify::APP_NAME[:ios],
         options
