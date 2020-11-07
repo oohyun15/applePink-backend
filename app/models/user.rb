@@ -73,7 +73,7 @@ class User < ApplicationRecord
     self.push_notification_devices << device
   end
 
-  def push_notification(message)
+  def push_notification(body, title)
     begin
       devices = self.push_notification_devices
 
@@ -82,8 +82,8 @@ class User < ApplicationRecord
         return nil
       end
       data = {
-        message: message,
-        user_id: self.id
+        title: title,
+        body: body
       }
       
       PushNotificationDevice.push_notification(devices, data)
