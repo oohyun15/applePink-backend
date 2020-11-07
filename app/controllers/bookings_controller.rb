@@ -21,19 +21,18 @@ class BookingsController < ApplicationController
     else
       @booking = current_user.bookings.create! booking_params
 
-      render json: @booking, status: :ok, scope: {params: create_params}
+      return render json: @booking, status: :ok, scope: {params: create_params}
     end
   end
 
   def update
     begin
       @booking.update! booking_params
+      return render json: @booking, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.debug "ERROR: 올바르지 않은 파라미터입니다."
-      render json: {error: "올바르지 않은 파라미터입니다."}, status: :bad_request
+      return render json: {error: "올바르지 않은 파라미터입니다."}, status: :bad_request
     end
-
-    render json: @booking, status: :ok, scope: {params: create_params}
   end
 
   def accept
@@ -51,10 +50,10 @@ class BookingsController < ApplicationController
         @post.able! if @post.unable?        
       end
 
-      render json: @booking, status: :ok, scope: {params: create_params}
+      return render json: @booking, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
-      render json: {error: e}, status: :bad_request
+      return render json: {error: e}, status: :bad_request
     end
   end
 
@@ -67,10 +66,10 @@ class BookingsController < ApplicationController
       @booking.update!(acceptance: :completed)
       @post.rent_count += 1
       @post.able!
-      render json: @booking, status: :ok, scope: {params: create_params}
+      return render json: @booking, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
-      render json: {error: e}, status: :bad_request
+      return render json: {error: e}, status: :bad_request
     end
   end
 
@@ -79,10 +78,10 @@ class BookingsController < ApplicationController
   def destroy
     begin
       @booking.destroy!
-      render json: {notice: "예약을 삭제하셨습니다."}, status: :ok
+      return render json: {notice: "예약을 삭제하셨습니다."}, status: :ok
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
-      render json: {error: e}, status: :bad_request
+      return render json: {error: e}, status: :bad_request
     end    
   end
 
@@ -92,7 +91,7 @@ class BookingsController < ApplicationController
       @post = Post.find(params[:booking][:post_id])
     rescue => e
       Rails.logger.debug "ERROR: 없는 게시글입니다."
-      render json: {error: "없는 게시글입니다."}, status: :bad_request
+      return render json: {error: "없는 게시글입니다."}, status: :bad_request
     end
   end
 
@@ -108,7 +107,7 @@ class BookingsController < ApplicationController
   def check_owner
     if @booking.user != current_user && @booking.post.user != current_user
       Rails.logger.debug "ERROR: 예약 확인할 권한이 없습니다."
-      render json: { error: "unauthorized" }, status: :unauthorized
+      return render json: { error: "unauthorized" }, status: :unauthorized
     end
   end
 
