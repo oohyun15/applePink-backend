@@ -46,10 +46,13 @@ class LocationsController < ApplicationController
         @location = Location.find(params[:id])     
       else 
         #카카오 맵 API를 사용해 넘어온 법정동 이름으로 location을 load함.
-        unless @location = Location.find_by(title: params[:location][:title])
-          Rails.logger.debug "ERROR: 존재하지 않는 지역입니다."
-          return render json: {error: "존재하지 않는 지역입니다."}, status: :not_found
-        end
+        #unless @location = Location.find_by(title: params[:location][:title])
+        #  Rails.logger.debug "ERROR: 존재하지 않는 지역입니다."
+        #  return render json: {error: "존재하지 않는 지역입니다."}, status: :not_found
+        #end
+        
+        # 법정동 이름으로 location을 load하거나 등록된 location이 없으면 새로운 location을 생성함.
+        @location = Location.find_or_create_by(title: params[:location][:title])
       end
     rescue => e
       Rails.logger.debug "ERROR: 존재하지 않는 지역입니다."

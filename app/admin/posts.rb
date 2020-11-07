@@ -27,6 +27,7 @@ ActiveAdmin.register Post do
     column :rent_count do |post| "#{number_with_delimiter post.rent_count}번" end
     column :likes_count do |post| "#{number_with_delimiter post.likes_count}개" end
     column :reports_count do |post| "#{number_with_delimiter post.reports_count}개" end
+    column :contract do |post| post.contract&.truncate(20) end
     column :created_at do |post| long_time post.created_at end
     column :updated_at do |post| long_time post.updated_at end
     tag_column :status do |post| post.status.present? ? post.status : "게시글 상태 없음<br>비정상적인 게시글".html_safe end
@@ -47,6 +48,7 @@ ActiveAdmin.register Post do
       row :likes_count do |post| "#{number_with_delimiter post.likes_count}개" end
       row "좋아요한 유저" do |post| User.where(id: post.likes.pluck(:user_id)).limit(10) end
       row :reports_count do |post| "#{number_with_delimiter post.reports_count}개" end
+      row :contract
       row :image do |post| image_tag(post.image_path ,class: 'admin-show-image') end
       row :created_at do |post| long_time post.created_at end
       row :updated_at do |post| long_time post.updated_at end

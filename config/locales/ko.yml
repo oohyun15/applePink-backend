@@ -25,6 +25,7 @@ ko:
     lng: 경도
     likes_count: 좋아요 수
     reports_count: 신고 수
+    contract: 계약 내용
 
   activerecord:
     attributes:

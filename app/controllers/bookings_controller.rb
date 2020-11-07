@@ -34,7 +34,7 @@ class BookingsController < ApplicationController
       case params[:booking][:acceptance]
       when "accepted"
         @post.unable! if @post.able?
-        @booking.contract = @post.contract
+        @booking.update!(contract: @post.contract)
 
       when "rejected"
         @post.able! if @post.unable?        
