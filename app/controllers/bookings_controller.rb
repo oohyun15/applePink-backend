@@ -38,16 +38,6 @@ class BookingsController < ApplicationController
     end
   end
 
-  def update
-    begin
-      @booking.update! booking_params
-      return render json: @booking, status: :ok, scope: {params: create_params}
-    rescue => e
-      Rails.logger.debug "ERROR: 올바르지 않은 파라미터입니다."
-      return render json: {error: "올바르지 않은 파라미터입니다."}, status: :bad_request
-    end
-  end
-
   def accept
     acceptance_list = %w(accepted rejected)
     return render json: {error: "Unpermitted parameter."}, status: :bad_request unless acceptance_list.include? params[:booking][:acceptance]
