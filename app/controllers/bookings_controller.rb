@@ -109,7 +109,7 @@ class BookingsController < ApplicationController
   def booking_params
     params[:booking][:end_at] = params[:booking][:start_at] if params.dig(:booking, :end_at).blank?
     book_params = params.require(:booking).permit(:post_id, :start_at, :end_at)
-    lent_day = Time.at(book_params[:end_at].to_time - book_params[:start_at].to_time).day
+    lent_day = (params[:booking][:start_at].to_datetime...params[:booking][:end_at].to_datetime).count
     extra = {
       post_id: @post.id,
       title: @post.title,
