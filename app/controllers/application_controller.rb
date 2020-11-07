@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
     ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
     unless user_id_in_token?
       # redirect_to users_sign_in_path
+      Rails.logger.debug "Unauthorized"
       return render json: { error: "Unauthorized" }, status: :unauthorized
     end
 
@@ -36,6 +37,7 @@ class ApplicationController < ActionController::Base
     @current_user = User.find(auth_token[:user_id])
     rescue JWT::VerificationError, JWT::DecodeError
       # redirect_to users_sign_in_path
+      Rails.logger.debug "Unauthorized"
       return render json: { error: "unauthorized" }, status: :unauthorized
   end
 
