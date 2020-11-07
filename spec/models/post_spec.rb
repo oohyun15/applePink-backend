@@ -34,7 +34,7 @@ RSpec.describe Post, type: :model do
     end
 
     it "success_case" do
-      post = Post.new(title: "test", body: "test", price: 15000, post_type: 0, user_id: User.first.id, location_id: Location.first.id).save
+      post = Post.new(title: "test", body: "test", price: 15000, post_type: 0, user_id: User.first.id, category_id: Category.first.id, location_id: Location.first.id).save
       expect(post).to eq(true)
     end
 

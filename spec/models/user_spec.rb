@@ -29,10 +29,5 @@ RSpec.describe User, type: :model do
       test_user = User.new(email: 'applePink@test.com', nickname: 'applePink', password: nil).save
       expect(test_user).to eq(false)
     end 
-
-    it 'success_case' do
-      test_user = User.new(email: 'applePink@test.com', nickname: 'applePink', password: 'test123').save
-      expect(test_user).to eq(true)
-    end
   end
 end

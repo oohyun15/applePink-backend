@@ -236,6 +236,8 @@ GEM
       thor (>= 0.14, < 2.0)
     jsonapi-renderer (0.2.2)
     jwt (2.2.2)
+    kakaocert (2.0.0)
+      linkhub (= 1.2.0)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
@@ -248,6 +250,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.1)
     kaminari-core (1.2.1)
+    linkhub (1.2.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -487,6 +490,7 @@ DEPENDENCIES
   iamport
   jbuilder (~> 2.7)
   jwt
+  kakaocert
   listen (>= 3.0.5, < 3.2)
   mini_magick
   omniauth
