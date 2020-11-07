@@ -17,7 +17,7 @@ class BookingsController < ApplicationController
   def create
     if current_user == @post.user
       Rails.logger.debug "ERROR: 자신의 게시글에 대한 예약은 생성할 수 없습니다."
-      render json: {error: "자신의 게시글에 대한 예약은 생성할 수 없습니다."}, status: :bad_request
+      return render json: {error: "자신의 게시글에 대한 예약은 생성할 수 없습니다."}, status: :bad_request
     else
       @booking = current_user.bookings.create! booking_params
 
