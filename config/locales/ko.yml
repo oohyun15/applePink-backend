@@ -91,6 +91,7 @@ ko:
       question:
         contact: 연락처
         user: 사용자
+        
 
     models:
       dashboard: 대시보드
@@ -105,6 +106,7 @@ ko:
       company: 광고주
       report: 신고
       question: 문의
+      contract: 계약서
 
     errors:
       models:

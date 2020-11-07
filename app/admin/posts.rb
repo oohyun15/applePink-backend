@@ -60,6 +60,17 @@ ActiveAdmin.register Post do
           end
         end
       end
+      panel '계약서' do
+        if post.contract.present?
+          attributes_table_for post.contract do
+            row :start_at
+            row :end_at
+            row :title
+            row :body do |contract| simple_format(contract.body) end
+            row :price 
+          end 
+        end
+      end
 
     end
   end
