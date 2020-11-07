@@ -41,10 +41,16 @@ describe "Post test", type: :request do
       location_positions = location.location_far
     end
 
-    posts = Post.where(post_type: :provide, location_id: location_positions)
-    expect(posts.length).to eq(JSON.parse(response.body).length)
+    # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들을 id를 비교함.
+    posts = Post.where(post_type: :provide, location_id: location_positions).ids
+
+    ids = []
+    JSON.parse(response.body).each do |post| 
+      ids << post["post_info"]["id"]
+    end
+    expect(posts).to eq(ids)
     
-    posts = JSON.parse(response.body).select { |post| post["post_info"]["location_id"].in? location_positions }
-    expect(posts.length).to eq(JSON.parse(response.body).length)
+    #posts = JSON.parse(response.body).select { |post| post["post_info"]["location_id"].in? location_positions }
+    #expect(posts.length).to eq(JSON.parse(response.body).length)
   end
 end

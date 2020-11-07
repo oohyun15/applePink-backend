@@ -76,12 +76,14 @@ describe "User test", type: :request do
   it 'user list test' do
     get list_user_path(@id), params: {post_type: "provide"}, headers: {Authorization: @token}
 
-    posts = JSON.parse(response.body)
+    posts = Post.where(["user_id = :user_id and post_type = :post_type", { user_id: @id, post_type: 0 }]).ids
     
-    result = Post.where(["user_id = :user_id and post_type = :post_type", { user_id: @id, post_type: 0 }])
-    
+    ids = []
+    JSON.parse(response.body).each do |post|
+      ids << post["post_info"]["id"]
+    end
     #현재는 길이 비교만 하는 중. 
-    expect(posts.length).to eq(result.length)
+    expect(posts).to eq(ids)
   end
   
 end
