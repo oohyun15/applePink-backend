@@ -20,8 +20,8 @@ class PostSerializer < ActiveModel::Serializer
       likes_count: object.likes_count,
       like_check: object.likes&.pluck(:user_id).include?(@instance_options[:user_id]),
       contract: object.contract,
-      created_at: object.created_at,
-      updated_at: object.updated_at
+      created_at: object.created_at.strftime("%Y-%m-%d %H:%M"),
+      updated_at: object.updated_at.strftime("%Y-%m-%d %H:%M")
     }
   end
 

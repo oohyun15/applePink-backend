@@ -1,8 +1,8 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_post, only: %i(create accept complete)
-  before_action :load_booking, only: %i(show accept complete destroy)
-  before_action :check_owner, only: %i(show accept complete destroy)
+  before_action :load_booking, only: %i(show update accept complete destroy)
+  before_action :check_owner, only: %i(show update accept complete destroy)
 
   def index
     @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
@@ -23,6 +23,17 @@ class BookingsController < ApplicationController
 
       render json: @booking, status: :ok, scope: {params: create_params}
     end
+  end
+
+  def update
+    begin
+      @booking.update! booking_params
+    rescue => e
+      Rails.logger.debug "Unpermitted parameters"
+      render json: {error: "Unpermitted parameters"}, status: :bad_request
+    end
+
+    render json: @booking, status: :ok, scope: {params: create_params}
   end
 
   def accept
@@ -96,7 +107,7 @@ class BookingsController < ApplicationController
 
   def check_owner
     if @booking.user != current_user && @booking.post.user != current_user
-      Rails.logger.debug "ERROR: 예약 확인할 권한아 없습니다."
+      Rails.logger.debug "ERROR: 예약 확인할 권한이 없습니다."
       render json: { error: "unauthorized" }, status: :unauthorized
     end
   end
