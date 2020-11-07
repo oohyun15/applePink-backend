@@ -1,3 +1,6 @@
+require 'action_view'
+require 'action_view/helpers'
+
 class PostSerializer < ActiveModel::Serializer
   #보여줄 attribute들을 설정함.
   
