@@ -10,7 +10,7 @@ class Post < ApplicationRecord
   validates :post_type, presence: true
 
   has_one_attached :image
-  has_one :contract
+  has_one :contract, dependent: :destroy
   
   has_many :chats
   has_many :chat_users, through: :chats, source: :users

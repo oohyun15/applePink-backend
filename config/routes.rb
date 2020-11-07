@@ -53,4 +53,5 @@ Rails.application.routes.draw do
 
   resources :reports, only: %i(index create)
   resources :questions, only: %i(create)
+  resources :contracts, only: %i(create update)
 end
