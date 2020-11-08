@@ -5,7 +5,6 @@ class PostsController < ApplicationController
   before_action :check_owner, only: %i(update destroy)
 
   def index
-    byebug
     # 지역 설정
     location_positions = []
 
