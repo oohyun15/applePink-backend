@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_07_142710) do
+ActiveRecord::Schema.define(version: 2020_11_08_054414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_142710) do
     t.bigint "post_id"
     t.string "title"
     t.text "body"
-    t.integer "price"
+    t.bigint "price"
     t.integer "acceptance", default: 0
     t.datetime "start_at"
     t.datetime "end_at"
@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_142710) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
     t.bigint "category_id"
-    t.integer "price"
+    t.bigint "price"
     t.string "image"
     t.integer "post_type"
     t.bigint "location_id"
