@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   before_action :check_owner, only: %i(update destroy)
 
   def index
+    byebug
     # 지역 설정
     location_positions = []
 
@@ -60,7 +61,7 @@ class PostsController < ApplicationController
     #}#, status: :ok, scope: {params: create_params}
 
     # order: created_at desc
-    @posts.order(created_at: :desc)
+    @posts = @posts.order(created_at: :desc)
     
     # 추가적인 검색 조건이 있는 경우
     if params[:q].present?
