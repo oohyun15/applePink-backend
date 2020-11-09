@@ -24,6 +24,7 @@ gem "acts_as_list"
 gem "activeadmin_reorderable"
 gem "array_enum"
 gem 'bcrypt' 
+gem 'cloudmersive-convert-api-client'
 
 # hashtag
 gem "acts-as-taggable-on", "~> 6.0"

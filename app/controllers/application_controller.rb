@@ -54,6 +54,34 @@ class ApplicationController < ActionController::Base
     return @token
   end
 
+  def heic2png(image_path)
+    api_instance = CloudmersiveConvertApiClient::ConvertImageApi.new
+    
+    begin
+      input_file = File.new(image_path)  
+    rescue => e
+      Rails.logger.debug "ERROR: #{e}"
+      return render json: {error: e}, status: :bad_request
+    end
+
+    begin
+      #Image format conversion
+      result = api_instance.convert_image_image_format_convert("HEIC", "PNG", input_file)
+      image = MiniMagick::Image.read(result)
+      image.resize "25%"
+      image.format "png"
+      # image.write "output.png"
+      return image
+    rescue CloudmersiveConvertApiClient::ApiError => e
+      Rails.logger.debug "ERROR: Exception when calling ConvertImageApi->convert_image_image_format_convert: #{e}"
+    end
+  end
+
+  def is_heic?(column)
+    model = controller_name.singularize.to_sym
+    params.dig(model, column)&.content_type == "image/heic"
+  end
+
   private
 
   ## 헤더에 있는 정보 중, Authorization 내용(토큰) 추출
