@@ -10,7 +10,8 @@ class UserSerializer < ActiveModel::Serializer
       image: object.image_path,
       location_title: object.is_location_auth? ? object.location&.title : nil,
       expire_time: object.expire_time,
-      likes_count: object.likes_count
+      likes_count: object.likes_count,
+      image: object.image.present? ? object.image.url : "" 
     }
   end
 
