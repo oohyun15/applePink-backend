@@ -8,6 +8,7 @@ class ChatSerializer < ActiveModel::Serializer
     {
       id: object.id,
       post_id: object.post_id,
+      nickname: User.find( (object.user_ids - [@instance_options[:user_id]]) ).pluck(:nickname),
       created_time: object.has_message ? object.messages.last.created_at : nil, 
       num_unchecked: object.has_message ? object.messages.where.not("check_id @> ?", "{#{@instance_options[:user_id]}}").size : nil, 
       message: object.has_message ? object.messages.last.body : nil
