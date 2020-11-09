@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
     return @token
   end
 
-  def Heic2Png(image_path)
+  def heic2png(image_path)
     api_instance = CloudmersiveConvertApiClient::ConvertImageApi.new
     
     begin
@@ -70,6 +70,8 @@ class ApplicationController < ActionController::Base
       
       image = MiniMagick::Image.read(result)
       image.resize "25%"
+      image.format "png"
+      # image.write "output.png"
       return image
     rescue CloudmersiveConvertApiClient::ApiError => e
       Rails.logger.debug "ERROR: Exception when calling ConvertImageApi->convert_image_image_format_convert: #{e}"
