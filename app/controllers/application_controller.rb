@@ -63,11 +63,14 @@ class ApplicationController < ActionController::Base
       Rails.logger.debug "ERROR: #{e}"
       return render json: {error: e}, status: :bad_request
     end
-    
+
     begin
       #Image format conversion
       result = api_instance.convert_image_image_format_convert("HEIC", "PNG", input_file)
-      p result
+      
+      image = MiniMagick::Image.read(result)
+      image.resize "25%"
+      return image
     rescue CloudmersiveConvertApiClient::ApiError => e
       Rails.logger.debug "ERROR: Exception when calling ConvertImageApi->convert_image_image_format_convert: #{e}"
     end
