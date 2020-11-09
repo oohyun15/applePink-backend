@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_post, only: %i(new create accept complete)
+  before_action :load_post, only: %i(new create)
   before_action :load_booking, only: %i(show accept complete destroy)
   before_action :check_owner, only: %i(show accept complete destroy)
 
@@ -39,6 +39,8 @@ class BookingsController < ApplicationController
   end
 
   def accept
+    @post = @booking.post
+
     acceptance_list = %w(accepted rejected)
     return render json: {error: "Unpermitted parameter."}, status: :bad_request unless acceptance_list.include? params[:booking][:acceptance]
     begin
@@ -61,6 +63,8 @@ class BookingsController < ApplicationController
   end
 
   def complete
+    @post = @booking.post
+
     unless @booking.accepted?
       Rails.logger.debug "ERROR: Couldn't complete booking. booking acceptance: #{@booking.acceptance}."
       return render json: {error: "Couldn't complete booking. booking acceptance: #{@booking.acceptance}."}, status: :bad_request

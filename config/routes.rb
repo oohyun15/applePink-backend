@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   # put 'bookings/:id', to: 'bookings#complete'
   
-  resources :users, only: %i(index show edit update) do
+  resources :users, only: %i(index show update) do
     resources :likes, only: %i(index)
     collection do
       get :mypage
