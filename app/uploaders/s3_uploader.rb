@@ -16,8 +16,15 @@ class S3Uploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_whitelist
-    %w(jpg jpeg gif png)
+    %w(jpg jpeg gif png heic)
   end
+
+  # Override the filename of the uploaded files:
+  # Avoid using model.id or version_name here, see uploader/store.rb for details.
+  def filename
+    "#{secure_token}#{original_filename.truncate(200, omission: "")}" if original_filename.present?
+  end
+
   protected
   def secure_token
     var = :"@#{mounted_as}_secure_token"

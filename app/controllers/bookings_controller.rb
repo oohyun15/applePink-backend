@@ -1,27 +1,40 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_post, only: %i(create accept complete)
+  before_action :load_post, only: %i(new create accept complete)
   before_action :load_booking, only: %i(show accept complete destroy)
   before_action :check_owner, only: %i(show accept complete destroy)
 
   def index
     @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
 
-    render json: @bookings, status: :ok
+    render json: @bookings, status: :ok, scope: {params: create_params}
+  end
+
+  def new
+    @booking = @post.bookings.find_by(user_id: current_user.id, acceptance: :waiting)
+    render json: @booking.present? ? @booking : nil, status: :ok, scope: {params: create_params}
   end
 
   def show
-    render json: { booking: @booking }, status: :ok
+    render json: @booking, status: :ok, scope: {params: create_params}
   end
 
   def create
     if current_user == @post.user
       Rails.logger.debug "ERROR: 자신의 게시글에 대한 예약은 생성할 수 없습니다."
-      render json: {error: "자신의 게시글에 대한 예약은 생성할 수 없습니다."}, status: :bad_request
+      return render json: {error: "자신의 게시글에 대한 예약은 생성할 수 없습니다."}, status: :bad_request
     else
-      @booking = current_user.bookings.create! booking_params
-
-      render json: @booking, status: :ok
+      begin
+        if @booking = @post.bookings.find_by(user_id: current_user.id, acceptance: :waiting)
+          @booking.update! booking_params
+        else
+          @booking = current_user.bookings.create! booking_params
+        end
+        return render json: @booking, status: :ok, scope: {params: create_params}
+      rescue => e
+        Rails.logger.debug "ERROR: #{e}"
+        return render json: {error: e}, status: :bad_request
+      end
     end
   end
 
@@ -34,18 +47,16 @@ class BookingsController < ApplicationController
       case params[:booking][:acceptance]
       when "accepted"
         @post.unable! if @post.able?
+        @booking.update!(contract: @post.contract)
 
       when "rejected"
         @post.able! if @post.unable?        
       end
 
-      render json: {
-        result: params[:booking][:acceptance],
-        booking: @booking
-      }, status: :ok
+      return render json: @booking, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
-      render json: {error: e}, status: :bad_request
+      return render json: {error: e}, status: :bad_request
     end
   end
 
@@ -58,13 +69,10 @@ class BookingsController < ApplicationController
       @booking.update!(acceptance: :completed)
       @post.rent_count += 1
       @post.able!
-      render json: {
-        result: "completed",
-        booking: @booking
-      }, status: :ok
+      return render json: @booking, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
-      render json: {error: e}, status: :bad_request
+      return render json: {error: e}, status: :bad_request
     end
   end
 
@@ -73,20 +81,20 @@ class BookingsController < ApplicationController
   def destroy
     begin
       @booking.destroy!
-      render json: {notice: "예약을 삭제하셨습니다."}, status: :ok
+      return render json: {notice: "예약을 삭제하셨습니다."}, status: :ok
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
-      render json: {error: e}, status: :bad_request
+      return render json: {error: e}, status: :bad_request
     end    
   end
 
   private
   def load_post
     begin
-      @post = Post.find(params[:booking][:post_id])
+      @post = Post.find(params[:booking][:post_id]) rescue Post.find(params[:post_id])
     rescue => e
       Rails.logger.debug "ERROR: 없는 게시글입니다."
-      render json: {error: "없는 게시글입니다."}, status: :bad_request
+      return render json: {error: "없는 게시글입니다."}, status: :bad_request
     end
   end
 
@@ -101,15 +109,15 @@ class BookingsController < ApplicationController
 
   def check_owner
     if @booking.user != current_user && @booking.post.user != current_user
-      Rails.logger.debug "ERROR: 예약 확인할 권한아 없습니다."
-      render json: { error: "unauthorized" }, status: :unauthorized
+      Rails.logger.debug "ERROR: 예약 확인할 권한이 없습니다."
+      return render json: { error: "unauthorized" }, status: :unauthorized
     end
   end
 
   def booking_params
     params[:booking][:end_at] = params[:booking][:start_at] if params.dig(:booking, :end_at).blank?
     book_params = params.require(:booking).permit(:post_id, :start_at, :end_at)
-    lent_day = book_params[:end_at].to_datetime.day - book_params[:start_at].to_datetime.day + 1
+    lent_day = (params[:booking][:start_at].to_datetime...params[:booking][:end_at].to_datetime).count
     extra = {
       post_id: @post.id,
       title: @post.title,
