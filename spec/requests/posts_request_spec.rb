@@ -22,6 +22,7 @@ describe "Post test", type: :request do
     title = Location.all.pluck(:title).sample
     get "/posts", params: {location_title: title}, headers: {Authorization: @token}
 
+    # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들을 id를 비교함.
     posts = Post.where(title: title).ids
     ids = []
     JSON.parse(response.body).each do |post| 
@@ -66,7 +67,7 @@ describe "Post test", type: :request do
   end
 
   it "post show test" do
-    post_id = Post.first.id
+    post_id = Post.all.ids.sample
     
     get "/posts/#{post_id}", headers: {Authorization: @token}
     expect(JSON.parse(response.body)["post_info"]["id"]).to eq(post_id)
@@ -113,8 +114,7 @@ describe "Post test", type: :request do
   end
 
   it "post like test" do
-    ids = Post.all.ids
-    id = ids.sample
+    id = Post.all.ids.sample
 
     # post에 좋아요한 유저의 이름을 반환함
     get "/posts/#{id}/like", headers: {Authorization: @token}
