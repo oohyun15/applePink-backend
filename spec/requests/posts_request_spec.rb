@@ -23,8 +23,6 @@ describe "Post test", type: :request do
       posts = JSON.parse(response.body).select { |post| post["post_info"]["location"] == "파장동" }
       expect(posts.length).to eq(JSON.parse(response.body).length)
     end
-
-    get "/posts", headers: {Authorization: @token}
     
     # 사용자 거리 설정에 따라 index로 나오는 post의 결과가 달라짐.
     user = User.find(@id)
@@ -41,6 +39,7 @@ describe "Post test", type: :request do
       location_positions = location.location_far
     end
 
+    get "/posts", headers: {Authorization: @token}
     # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들을 id를 비교함.
     posts = Post.where(post_type: :provide, location_id: location_positions).ids
 
@@ -50,7 +49,15 @@ describe "Post test", type: :request do
     end
     expect(posts).to eq(ids)
     
-    #posts = JSON.parse(response.body).select { |post| post["post_info"]["location_id"].in? location_positions }
-    #expect(posts.length).to eq(JSON.parse(response.body).length)
+    get "/posts", params: {post_type: :ask}, headers: {Authorization: @token}
+    # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들을 id를 비교함.
+    posts = Post.where(post_type: :ask, location_id: location_positions).ids
+
+    ids = []
+    JSON.parse(response.body).each do |post| 
+      ids << post["post_info"]["id"]
+    end
+    expect(posts).to eq(ids)
+
   end
 end
