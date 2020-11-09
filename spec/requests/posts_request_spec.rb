@@ -1,6 +1,4 @@
 require 'rails_helper'
-<<<<<<< HEAD
-=======
 require 'active_support'
 
 describe "Post test", type: :request do
@@ -128,4 +126,3 @@ describe "Post test", type: :request do
     expect(user_list).to eq(user_nicknames)
   end
 end
->>>>>>> 1a88848840ca5f3a2c2e8598034fe12b1178e507
