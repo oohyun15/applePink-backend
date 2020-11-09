@@ -67,7 +67,6 @@ class ApplicationController < ActionController::Base
     begin
       #Image format conversion
       result = api_instance.convert_image_image_format_convert("HEIC", "PNG", input_file)
-      
       image = MiniMagick::Image.read(result)
       image.resize "25%"
       image.format "png"
@@ -76,6 +75,11 @@ class ApplicationController < ActionController::Base
     rescue CloudmersiveConvertApiClient::ApiError => e
       Rails.logger.debug "ERROR: Exception when calling ConvertImageApi->convert_image_image_format_convert: #{e}"
     end
+  end
+
+  def is_heic?(column)
+    model = controller_name.singularize.to_sym
+    params.dig(model, column)&.content_type == "image/heic"
   end
 
   private

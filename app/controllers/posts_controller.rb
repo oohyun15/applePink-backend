@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
   before_action :load_post, only: %i(show update destroy like)
-  before_action :post_params, only: %i(create update)
   before_action :authenticate_user!
   before_action :check_owner, only: %i(update destroy)
 
@@ -110,7 +109,11 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(Post::POST_COLUMNS)
+    if is_heic?(:image)
+      params.require(:post).permit(Post::POST_COLUMNS).merge(image: heic2png(params[:post][:image].path))
+    else
+      params.require(:post).permit(Post::POST_COLUMNS)
+    end
   end
 
   def load_post
