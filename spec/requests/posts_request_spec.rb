@@ -4,8 +4,9 @@ require 'active_support'
 describe "Post test", type: :request do
   before(:all) do
     # 유저 중 임의의 유저를 선택함.
-    @id = User.all.ids.sample
-    @email = User.find(@id).email
+    user = User.all.sample
+    @id = user.id
+    @email = user.email
 
     post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
     @token =  JSON.parse(response.body)["token"]
@@ -46,7 +47,7 @@ describe "Post test", type: :request do
     end
 
     get "/posts", headers: {Authorization: @token}
-    # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들을 id를 비교함.
+    # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들의 id를 비교함.
     posts = Post.where(post_type: :provide, location_id: location_positions).ids
 
     ids = []
@@ -56,7 +57,7 @@ describe "Post test", type: :request do
     expect(posts).to eq(ids)
     
     get "/posts", params: {post_type: :ask}, headers: {Authorization: @token}
-    # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들을 id를 비교함.
+    # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들의 id를 비교함.
     posts = Post.where(post_type: :ask, location_id: location_positions).ids
 
     ids = []

@@ -2,11 +2,18 @@ require 'rails_helper'
 
 describe "User test", type: :request do
   before(:all) do
-    @id = User.first.id
-    @email = User.first.email
+    user = User.all.sample
+    @id = user.id
+    @email = user.email
 
     post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
     @token =  JSON.parse(response.body)["token"]
+  end
+
+  # JWT 토큰이 유효한지 확인
+  it 'user sign_in test => token validation' do
+    auth_token ||= JsonWebToken.decode(@token)
+    expect(auth_token[:user_id].to_i).to eq(@id)
   end
 
   # sign_up 이전에는 tonem123@naver.com 이메일을 가진 유저가 없음
@@ -61,16 +68,10 @@ describe "User test", type: :request do
     expect(JSON.parse(response.body)["user_info"]["id"]).to eq(@id)
   end
 
-  # 로그인 후 JWT 토큰이 유효한지 확인
-  it 'user sign_in test => token validation' do
-    auth_token ||= JsonWebToken.decode(@token)
-    expect(auth_token[:user_id].to_i).to eq(User.find_by(email: @email).id)
-  end
-
   it 'user mypage test' do
     get mypage_users_path, headers: {Authorization: @token}
     #결과로 나온 user 정보가 로그인한 유저의 정보인지 확인
-    expect(JSON.parse(response.body)["user_info"]["id"]).to eq(User.find_by(email: @email).id)
+    expect(JSON.parse(response.body)["user_info"]["id"]).to eq(@id)
   end
 
   it 'user list test' do
@@ -78,11 +79,11 @@ describe "User test", type: :request do
 
     posts = Post.where(["user_id = :user_id and post_type = :post_type", { user_id: @id, post_type: 0 }]).ids
     
+    # response에서 온 user들의 id와 db에서 query로 직접 뽑아낸 user들의 id를 비교함.
     ids = []
     JSON.parse(response.body).each do |post|
       ids << post["post_info"]["id"]
     end
-    #현재는 길이 비교만 하는 중. 
     expect(posts).to eq(ids)
   end
   
