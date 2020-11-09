@@ -19,7 +19,7 @@ class PostSerializer < ActiveModel::Serializer
       price: object.price, 
       post_type: object.post_type,
       category: object.category&.title,
-      category_id: object.category&.id,
+      category_id: object.category_id,
       image: object.image_path,
       location: object.location&.title,
       status: object.status,
