@@ -109,11 +109,8 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    if is_heic?(:image)
-      params.require(:post).permit(Post::POST_COLUMNS).merge(image: heic2png(params[:post][:image].path))
-    else
-      params.require(:post).permit(Post::POST_COLUMNS)
-    end
+    is_heic?(:image) ? params.require(:post).permit(Post::POST_COLUMNS).merge(image: heic2png(params[:post][:image].path)) 
+    : params.require(:post).permit(Post::POST_COLUMNS)
   end
 
   def load_post
