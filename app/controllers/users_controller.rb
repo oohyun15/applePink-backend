@@ -55,10 +55,14 @@ class UsersController < ApplicationController
   def list
     if params[:post_type] == "provide"
       @posts = @user.posts.provide
-      render json: {posts: @posts}, status: :ok, scope: {params: create_params}
+      # order: created_at desc
+      @posts = @posts.order(created_at: :desc)
+      render json: @posts, status: :ok, scope: {params: create_params}
     elsif params[:post_type] == "ask"
       @posts = @user.posts.ask
-      render json: {posts: @posts}, status: :ok, scope: {params: create_params}
+      # order: created_at desc
+      @posts = @posts.order(created_at: :desc)
+      render json: @posts, status: :ok, scope: {params: create_params}
     else
       Rails.logger.debug "ERROR: 서비스 타입을 지정해주세요."
       render json: {error: "서비스 타입을 지정해주세요."}, status: :not_found

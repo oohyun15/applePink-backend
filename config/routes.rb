@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   # put 'bookings/:id', to: 'bookings#complete'
   
-  resources :users, only: %i(index show edit update) do
+  resources :users, only: %i(index show update) do
     resources :likes, only: %i(index)
     collection do
       get :mypage
@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   resources :locations, only: %i(index show) do
     put :certificate, on: :collection
   end
-  resources :bookings, only: %i(index show create destroy) do
+  resources :bookings, only: %i(index new show create destroy) do
     put :complete, on: :member
     put :accept, on: :member
   end

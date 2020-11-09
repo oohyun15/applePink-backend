@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_113330) do
+ActiveRecord::Schema.define(version: 2020_11_08_054414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,13 +67,14 @@ ActiveRecord::Schema.define(version: 2020_11_05_113330) do
     t.bigint "post_id"
     t.string "title"
     t.text "body"
-    t.integer "price"
+    t.bigint "price"
     t.integer "acceptance", default: 0
     t.datetime "start_at"
     t.datetime "end_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "lent_day"
+    t.text "contract"
     t.index ["post_id"], name: "index_bookings_on_post_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
@@ -200,12 +201,13 @@ ActiveRecord::Schema.define(version: 2020_11_05_113330) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
     t.bigint "category_id"
-    t.integer "price"
+    t.bigint "price"
     t.string "image"
     t.integer "post_type"
     t.bigint "location_id"
     t.integer "reports_count", default: 0
     t.integer "likes_count", default: 0
+    t.text "contract"
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["location_id"], name: "index_posts_on_location_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
