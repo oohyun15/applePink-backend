@@ -5,6 +5,7 @@ class BookingSerializer < ActiveModel::Serializer
     booking_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :booking_info))
     {
       id: object.id,
+      post_id: object.post_id,
       title: object.title,
       body: object.body,
       price: object.price,
