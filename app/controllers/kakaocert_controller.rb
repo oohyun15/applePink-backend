@@ -36,13 +36,13 @@ class KakaocertController < ApplicationController
       "Expires_in" => 300,
 
       # 수신자 생년월일, 형식 : YYYYMMDD
-      "ReceiverBirthDay" => '19960809',#params[:birth],
+      "ReceiverBirthDay" => kakaocert_params[:birthday],
 
       # 수신자 휴대폰번호
-      "ReceiverHP" => '01029921668',#params[:phone_number],
+      "ReceiverHP" => kakaocert_params[:number],
 
       # 수신자 성명
-      "ReceiverName" => '마성호',#params[:name],
+      "ReceiverName" => kakaocert_params[:name],
 
       # 별칭코드, 이용기관이 생성한 별칭코드 (파트너 사이트에서 확인가능)
       # 카카오톡 인증메시지 중 "요청기관" 항목에 표시
@@ -69,10 +69,10 @@ class KakaocertController < ApplicationController
 
       # 전자서명할 토큰 원문
       # 계약서 내용
-      "Token" => '토큰토큰',#params[:token],
+      "Token" => kakaocert_params[:token],
 
       # PayLoad, 이용기관이 생성한 payload(메모) 값
-      "PayLoad" => '모두나눔 전자서명',
+      "PayLoad" => '모두나눔 - 계약서 전자서명',
     }
 
     begin
@@ -80,13 +80,12 @@ class KakaocertController < ApplicationController
         KakaocertController::ClientCode,
         requestInfo,
       )
-
-
-      render json: @value
-    rescue KakaocertException => pe
-      @code = pe.code
-      @message = pe.message
-      render "kakaocert/requestESign"
+      return render json: @value
+    rescue KakaocertException => e
+      @code = e.code
+      @message = e.message
+      Rails.logger.debug "인증 에러 코드: #{@code}, 메세지: #{@message}"
+      return render json: {code: @code, message: @message}
     end
   end
 
@@ -100,10 +99,11 @@ class KakaocertController < ApplicationController
         @receiptId,
       )
       return render json: @response
-    rescue KakaocertException => pe
-      @code = pe.code
-      @message = pe.message
-      render json: {code: @code, message: @message}
+    rescue KakaocertException => e
+      @code = e.code
+      @message = e.message
+      Rails.logger.debug "인증 에러 코드: #{@code}, 메세지: #{@message}"
+      return render json: {code: @code, message: @message}
     end
   end
 
@@ -126,15 +126,17 @@ class KakaocertController < ApplicationController
     begin
       @response = KCService.verifyESign(KakaocertController::ClientCode, @receiptId, signture)
       render json: @response
-    rescue KakaocertException => pe
-      @Response = pe
-      render json: {error: "전자서명 검증 오류"}
+    rescue KakaocertException => e
+      @code = e.code
+      @message = e.message
+      Rails.logger.debug "인증 에러 코드: #{@code}, 메세지: #{@message}"
+      return render json: {code: @code, message: @message}
     end
   end
 
   private
 
   def kakaocert_params
-    params.require(:kakaocert).permit(:birthday, :number, :name)
+    params.require(:kakaocert).permit(:birthday, :number, :name, :token)
   end
 end
