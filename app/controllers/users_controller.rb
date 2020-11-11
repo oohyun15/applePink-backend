@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: %i(show edit update list add_device)
-  before_action :authenticate_user!, except: %i(index create)
+  before_action :authenticate_user!, except: %i(create)
 
   # 유저 목록 보기
   def index
@@ -125,7 +125,8 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(User::USER_COLUMNS)
+    is_heic?(:image) ? params.require(:user).permit(User::USER_COLUMNS).merge(image: heic2png(params[:user][:image].path)) 
+    : params.require(:user).permit(User::USER_COLUMNS)
   end
 
   def email_params
