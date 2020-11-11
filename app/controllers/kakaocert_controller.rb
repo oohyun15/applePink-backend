@@ -30,7 +30,7 @@ class KakaocertController < ApplicationController
       "isAppUseYN" => false,
 
       # 고객센터 전화번호, 카카오톡 인증메시지 중 "고객센터" 항목에 표시
-      "CallCenterNum" => '01029921668',
+      "CallCenterNum" => ENV["KAKAO_CERT_CALL_CERNTER_NUM"],
 
       # 인증요청 만료시간(초), 최대값 : 1000  인증요청 만료시간(초) 내에 미인증시, 만료 상태로 처리됨 (권장 : 300)
       "Expires_in" => 300,
@@ -48,7 +48,7 @@ class KakaocertController < ApplicationController
       # 카카오톡 인증메시지 중 "요청기관" 항목에 표시
       # 별칭코드 미 기재시 이용기관의 이용기관명이 "요청기관" 항목에 표시
       # '모두나눔'이라는 별칭의 별칭코드
-      "SubClientID" => '020110000001',
+      "SubClientID" => ENV["KAKAO_CERT_SUB_CLIENT_ID"],
 
       # 인증요청 메시지 부가내용, 카카오톡 인증메시지 중 상단에 표시
       "TMSMessage" => '모두나눔 계약서 서명을 위해 인증해주세요',
