@@ -1,7 +1,7 @@
 require 'kakaocert'
 
 class KakaocertController < ApplicationController
-  #before_action :authenticate_user!
+  before_action :authenticate_user!
   
   # 링크아이디
   LinkID = ENV["KAKAO_CERT_LINK_ID"]
@@ -27,7 +27,7 @@ class KakaocertController < ApplicationController
 
       # App to App 방식 이용 여부
       # true - AppToApp 인증, false - TalkMessage 인증
-      "isAppUseYN" => true,
+      "isAppUseYN" => false,
 
       # 고객센터 전화번호, 카카오톡 인증메시지 중 "고객센터" 항목에 표시
       "CallCenterNum" => '01029921668',
@@ -51,7 +51,7 @@ class KakaocertController < ApplicationController
       "SubClientID" => '020110000001',
 
       # 인증요청 메시지 부가내용, 카카오톡 인증메시지 중 상단에 표시
-      "TMSMessage" => '인증 요청이 도착했습니다.',
+      "TMSMessage" => '모두나눔 계약서 서명을 위해 인증해주세요',
 
       # 인증요청 메시지 제목, 카카오톡 인증메시지 중 "요청구분" 항목에 표시
       "TMSTitle" => '모두나눔 - 전자서명',
@@ -72,7 +72,7 @@ class KakaocertController < ApplicationController
       "Token" => '토큰토큰',#params[:token],
 
       # PayLoad, 이용기관이 생성한 payload(메모) 값
-      "PayLoad" => 'Payload123',
+      "PayLoad" => '모두나눔 전자서명',
     }
 
     begin
@@ -80,6 +80,8 @@ class KakaocertController < ApplicationController
         KakaocertController::ClientCode,
         requestInfo,
       )
+
+
       render json: @value
     rescue KakaocertException => pe
       @code = pe.code
@@ -89,14 +91,15 @@ class KakaocertController < ApplicationController
   end
 
   # 본인인증 요청시 반환 받은 접수 아이디를 통해 서명 상태를 확인합니다
-  def getVerifyAuthState
+  def getESignState
     @receiptId = params[:receiptId]
+
     begin
-      @value = KCService.verifyAuth(
+      @response = KCService.getESignState(
         KakaocertController::ClientCode,
         @receiptId,
       )
-      return render json: @value
+      return render json: @response
     rescue KakaocertException => pe
       @code = pe.code
       @message = pe.message
@@ -106,8 +109,32 @@ class KakaocertController < ApplicationController
 
   # 본인인증 요청시 반환 받은 접수아이디에 해당하는 전자서명값을 검증하며, 전자서명 데이터 전문('signedData')을 반환 받습니다
   # 반환 받은 전자서명 데이터 전문('signedData')와 RequestVerifyAuth 함수 호출시 입력한 Token의 동일 여부를 
-  # 확인하여 본인인증 검증을 완료합니다
-  def verifyAuth
+  # 확인하여 전자서명 검증을 완료합니다
+  def verifyESign
+    @receiptId = params[:receiptId]
 
+    # AppToApp 앱스킴 성공처리시 반환되는 서명값(iOS-sig, Android-signature)
+    # Talk Message 인증시 공백
+    if params[:sig].present? # iOS일 경우
+      signture = params[:sig]
+    elsif params[:signature].present? # Android일 경우
+      signture = params[:signature]
+    else #App-to-App 방식이 아닌 Talk Message 방식일 경우
+      signture = ""
+    end
+
+    begin
+      @response = KCService.verifyESign(KakaocertController::ClientCode, @receiptId, signture)
+      render json: @response
+    rescue KakaocertException => pe
+      @Response = pe
+      render json: {error: "전자서명 검증 오류"}
+    end
+  end
+
+  private
+
+  def kakaocert_params
+    params.require(:kakaocert).permit(:birthday, :number, :name)
   end
 end

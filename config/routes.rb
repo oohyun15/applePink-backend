@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   post 'users/sign_in', to: 'authentication#create'
   post 'users/sign_up', to: 'users#create'
   post 'users/like', to: 'likes#toggle'
-  get "/requestESign", to: 'kakaocert#requestESign', via: [:get]
-  get "/verifyAuth", to: 'kakaocert#verifyAuth'
+  get "/kakaocert/requestESign", to: 'kakaocert#requestESign', via: [:get]
+  get "/kakaocert/getESignState", to: 'kakaocert#getESignState'
+  get "/kakaocert/verifyESign", to: 'kakaocert#verifyESign'
 
   # put 'bookings/:id', to: 'bookings#complete'
   
