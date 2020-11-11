@@ -12,7 +12,8 @@ class SnsLogin
     if user.nil?
       begin
         user = User.new get_auth_params
-        user.remote_image_url = @auth.info.image
+        #user.remote_image_url = @auth.info.image
+        user.remote_image_url = @auth.info.image if @auth.info.image.present?
         user.save!
       rescue => e
         Rails.logger.debug "ERROR: #{e}"
