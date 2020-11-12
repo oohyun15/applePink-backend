@@ -161,6 +161,7 @@ class UsersController < ApplicationController
   end
 
   def find_device_type
+    Rails.logger.debug "USER_AGENT: #{request.user_agent}"
     case request.user_agent
     when /mac|iOS/i
       :ios
