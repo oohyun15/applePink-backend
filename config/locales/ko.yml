@@ -42,6 +42,7 @@ ko:
         location: 지역
         location_range: 지역 검색 범위
         expire_time: 지역 인증 만료 시간
+        group_id: 소속
       post:
         title: 제목
         body: 내용
