@@ -6,39 +6,4 @@ class PushNotificationDevice < ApplicationRecord
   has_many :users, through: :user_push_notification_devices
 
   enum device_type: %i(android ios)
-    
-  # @param devices [Array] Array of devices
-  # @param data [Hash] Data to be passes with the notification
-  def self.push_notification(devices, data)
-    ios_device_tokens = get_device_tokens(devices, :ios)
-    android_device_tokens = get_device_tokens(devices, :android)
-
-    # android
-    # FCM settings
-    if android_device_tokens.present?
-      options = { registration_ids: android_device_tokens, notification: data }
-      PushNotify.push(
-        PushNotify::APP_NAME[:android],
-        options
-      )
-    end
-
-    # ios
-    # APNS settings
-    ios_device_tokens.each do |token|
-      options = { device_token: token, data: data, alert: data[:body] }
-      PushNotify.push(
-        PushNotify::APP_NAME[:ios],
-        options
-      )
-    end
-  end
-
-  # @param devices [Array] Array of devices
-  # @param device_type [Symbol] type of device. Ex. :ios, :android
-  # @return [Array] Array of device tokens
-  def self.get_device_tokens(devices, device_type)
-    devices.select { |d| d.device_type.to_sym.eql?(device_type) }
-    .map(&:device_token).uniq
-  end
 end

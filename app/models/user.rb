@@ -77,19 +77,33 @@ class User < ApplicationRecord
     begin
       devices = self.push_notification_devices
 
+      # check devices
       if devices.blank?
         Rails.logger.debug "ERROR: No available devices."
         return nil
       end
-      data = {
-        title: title,
-        body: body
-      }
+
+      # initialize FCM
+      app = FCM.new(ENV['FCM_SERVER_KEY'])
       
-      PushNotificationDevice.push_notification(devices, data)
+      # registration_ids
+      registration_ids = devices.pluck(:device_token)
+      p registration_ids
+
+      # options
+      options = {
+        "notification": {
+          "title": "#{title}",
+          "body": "#{body}"
+        }
+      }
+
+      # send notification
+      app.send(registration_ids, options)
+
     rescue => e
       Rails.logger.debug "ERROR: #{e}"
-      render json: {error: e}, status: :internal_server_error
+      return nil
     end
   end
 end
