@@ -70,12 +70,22 @@ class UsersController < ApplicationController
   end
 
   def email_auth
+    # 이메일에서 소속 부분을 나타내는 문자열
+    @email = email_params[:email].split("@")[1].split(".")[0]
+
     # 이메일, 코드 2개 다 있을 경우
     if email_params[:code].present? && email_params[:email].present?
       if email_certification = EmailCertification.find_by(email: email_params[:email])
         
         if email_certification.check_code(email_params[:code])
-          return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
+          begin
+            group = Group.find_by(email: @email)
+            current_user.update!(group_id: group.id) 
+            return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
+          rescue => e
+            Rails.logger.debug "잘못된 소속입니다. 다시 인증해주세요."
+            return render json: {error: "잘못된 소속입니다. 다시 인증해주세요."}, status: :not_acceptable
+          end
         else
           Rails.logger.debug "ERROR: 인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."
           return render json: {error: "인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."}, status: :not_acceptable
@@ -83,6 +93,18 @@ class UsersController < ApplicationController
       end
     # 이메일만 있을 경우
     elsif email_params[:email].present?
+      # 이메일에 @가 포함되지 않을 경우
+      unless email_params[:email].include? "@"
+        Rails.logger.debug "ERROR: 올바르지 않은 형태의 이메일입니다."
+        return render json: {error: "올바르지 않은 형태의 이메일입니다."}, status: :bad_request
+      end
+
+      # 이메일이 등록된 소속들의 이메일이 아닐 때
+      unless Group.all.pluck(:email).include? @email
+        Rails.logger.debug "등록되지 않은 소속의 이메일입니다. 메일 주소를 확인해 주세요"
+        return render json: {error: "등록되지 않은 소속의 이메일입니다. 메일 주소를 확인해 주세요"}, status: :bad_request
+      end
+
       if EmailCertification.generate_code(email_params[:email])
         return render json: {message: "소속 인증 메일을 발송했습니다. 메일을 확인해 주세요."}, status: :ok
       else
