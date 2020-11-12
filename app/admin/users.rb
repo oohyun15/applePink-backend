@@ -13,6 +13,7 @@ ActiveAdmin.register User do
     column :image do |user| image_tag(user&.image_path ,class: 'admin-index-image') end
     column :nickname
     column :email
+    column :group_id do |user| user.group_id.nil? ? "소속 없음" : user.group&.display_name end
     column :location do |user| user.is_location_auth? ? user.location : "지역인증 필요" end
     column :expire_time do |user|  user.is_location_auth? ? long_time(user.expire_time) : "지역인증 필요" end
     column :gender do |user| I18n.t("enum.user.gender.#{user.gender}") end
