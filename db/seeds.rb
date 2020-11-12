@@ -106,4 +106,4 @@ generate_locations unless Location.exists?
 generate_user 5 unless User.exists?
 generate_post 5 unless Post.exists?
 generate_rpush_gcm unless Rpush::Gcm::App.exists?
-gernerate_groups unless Group.exists?
+generate_groups unless Group.exists?
