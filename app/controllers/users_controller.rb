@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :load_user, only: %i(show edit update list add_device)
+  before_action :load_user, only: %i(show edit update list)
   before_action :authenticate_user!, except: %i(create)
   before_action :check_email, only: %i(email_auth)
 
@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     @user.normal!
+    @user.add_device_info(device_info_params)
     redirect_to users_sign_in_path, notice: "회원가입 완료"
   end
 
@@ -128,8 +129,11 @@ class UsersController < ApplicationController
 
   def add_device
     if current_user.add_device_info(device_info_params)
-      current_user.push_notification("정상적으로 등록되었습니다.", "모두나눔")
-      return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
+      if current_user.push_notification("정상적으로 등록되었습니다.", "모두나눔")
+        return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
+      else
+        return render json: {message: "메시지 전송 실패"}, status: :bad_request
+      end
     else
       Rails.logger.debug "ERROR: Unknown device token."
       return render json: {error: "Unknown device token."}, status: :bad_request

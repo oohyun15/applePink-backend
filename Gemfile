@@ -58,7 +58,7 @@ gem 'omniauth-oauth2', '<= 1.3.1'
 gem 'omniauth-kakao', :git => 'git://github.com/insomenia/omniauth-kakao'
 
 # fcm
-gem 'rpush'
+gem 'fcm'
 
 # kakao-cert
 gem 'kakaocert'
