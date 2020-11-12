@@ -47,7 +47,7 @@ ActiveAdmin.register Company do
     f.inputs do
       f.input :name
       f.input :phone
-      f.input :location
+      f.input :location, as: :select, collection: Location.all.map{|type| [type.title, type.position]}
       f.input :message
       f.input :description
       f.input :image, as: :file, hint: image_tag(f.object&.image_path, class: 'admin-show-image')
