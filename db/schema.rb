@@ -137,6 +137,8 @@ ActiveRecord::Schema.define(version: 2020_11_12_142614) do
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email"
+    t.integer "users_count", default: 0
   end
 
   create_table "identities", force: :cascade do |t|

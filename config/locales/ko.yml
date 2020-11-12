@@ -42,6 +42,7 @@ ko:
         location: 지역
         location_range: 지역 검색 범위
         expire_time: 지역 인증 만료 시간
+        group_id: 소속
       post:
         title: 제목
         body: 내용
@@ -92,6 +93,11 @@ ko:
       question:
         contact: 연락처
         user: 사용자
+      group:
+        title: 소속명
+        email: 소속 이메일 도메인
+        users_count: 소속 사용자 수
+
 
     models:
       dashboard: 대시보드
@@ -106,6 +112,7 @@ ko:
       company: 광고주
       report: 신고
       question: 문의
+      group: 소속
 
     errors:
       models:

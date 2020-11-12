@@ -48,13 +48,13 @@ describe "Post test", type: :request do
 
     get "/posts", headers: {Authorization: @token}
     # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들의 id를 비교함.
-    posts = Post.where(post_type: :provide, location_id: location_positions).ids
+    posts_location = Post.where(post_type: :provide, location_id: location_positions).ids
 
-    ids = []
+    ids_location = []
     JSON.parse(response.body).each do |post| 
-      ids << post["post_info"]["id"]
+      ids_location << post["post_info"]["id"]
     end
-    expect(posts).to eq(ids)
+    expect(posts_location).to eq(ids_location)
     
     get "/posts", params: {post_type: :ask}, headers: {Authorization: @token}
     # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들의 id를 비교함.

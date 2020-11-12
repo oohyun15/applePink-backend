@@ -74,9 +74,22 @@ def generate_locations
   end
 end
 
+def generate_groups
+  CSV.foreach("public/GroupEmail.csv", headers: true) do |row|
+    begin
+      group = Group.create!(row.to_hash)
+
+      p "Group '#{group.title}' created"
+    rescue => e
+      p e.message
+    end
+  end
+end
+
 # seed functions
 generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exists?
 generate_categories unless Category.exists?
 generate_locations unless Location.exists?
 generate_user 5 unless User.exists?
 generate_post 5 unless Post.exists?
+generate_groups unless Group.exists?

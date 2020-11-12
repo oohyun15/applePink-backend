@@ -58,7 +58,7 @@ describe "User test", type: :request do
 
   #전체 유저 목록을 불러오는지 확인
   it 'user index test' do
-    get "/users"
+    get "/users", headers: {Authorization: @token}
     expect(JSON.parse(response.body).size).to eq(User.all.size)
   end
 
