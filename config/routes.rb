@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post 'users/sign_in', to: 'authentication#create'
   post 'users/sign_up', to: 'users#create'
   post 'users/like', to: 'likes#toggle'
-  get "/kakaocert/requestESign", to: 'kakaocert#requestESign'
+  post "/kakaocert/requestESign", to: 'kakaocert#requestESign'
   get "/kakaocert/getESignState", to: 'kakaocert#getESignState'
   get "/kakaocert/verifyESign", to: 'kakaocert#verifyESign'
 
