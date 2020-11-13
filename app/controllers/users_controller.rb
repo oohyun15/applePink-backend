@@ -137,6 +137,7 @@ class UsersController < ApplicationController
     # 이미 등록된 토큰일 경우 
     elsif (current_user.device_list.include?(device_info_params[:device_token]))
       if current_user.push_notification("이미 등록된 토큰입니다.", "디바이스 등록 실패")
+        Rails.logger.debug "ERROR: 이미 등록된 토큰입니다."
         return render json: {error: "이미 등록된 토큰입니다."}, status: :ok
       
         # 푸시 알림이 보내지지 않은 경우
@@ -153,6 +154,7 @@ class UsersController < ApplicationController
 
         # 토큰 등록 이후 푸시 알림이 보내진 경우
         if current_user.push_notification("정상적으로 등록되었습니다.", "디바이스 등록 완료")
+          p "FCM device token: #{device_info_params[:device_token]}"
           return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
         
         # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
@@ -218,9 +220,5 @@ class UsersController < ApplicationController
       Rails.logger.debug "ERROR: 입력된 이메일이 없습니다."
       render json: {error: "입력된 이메일이 없습니다."}, status: :bad_request
     end
-  end
-
-  def add_device_info(user, attributes)
-
   end
 end

@@ -56,16 +56,6 @@ class User < ApplicationRecord
     self.expire_time.present? && (self.expire_time > Time.current rescue false)
   end
 
-  # To add device info: type & token
-  # @param attributes [Hash] device informations
-  # 수정수정수정수정수정 저 그지같은 push notification 관련 다 지워라 씨이발
-  def add_device_info(attributes)
-    return unless attributes.present? && attributes[:device_type].present? && attributes[:device_token].present?
-    self.device_Type = attributes[:device_type]
-    self.device_list.add(attributes[:device_token])
-    self.save!
-  end
-
   def push_notification(body, title)
     begin
       registration_ids = self.device_list
