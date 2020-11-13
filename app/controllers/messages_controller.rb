@@ -25,10 +25,18 @@ class MessagesController < ApplicationController
 
     # push notification
     rids = []
-    @chat.users.each do |user| rids += user.device_list end
+    users = []
+    @chat.users.each do |user|
+      rids += user.device_list
+      users << user.nickname
+    end
+    
     rids -= current_user.device_list
+    users.delete(current_user.nickname)
 
-    push_notification(@message.body, current_user.body, rids)
+    Rails.logger.info "From #{current_user.nickname} To #{users}"
+    Rails.logger.info "registration ids: #{rids}"
+    push_notification(@message.body, current_user.nickname, rids)
 
     render json: @message, status: :ok, scope: {params: create_params}
   end
