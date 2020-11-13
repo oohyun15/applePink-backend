@@ -46,13 +46,13 @@ class LocationsController < ApplicationController
       begin
         @location = Location.find(params[:id])   
       rescue => e
-        Rails.logger.debug "ERROR: 존재하지 않는 지역입니다."
+        Rails.logger.error "ERROR: 존재하지 않는 지역입니다."
         render json: {error: "존재하지 않는 지역입니다."}, status: :bad_request
       end
     elsif params[:location][:title].present?
       #카카오 맵 API를 사용해 넘어온 법정동 이름으로 location을 load함.
       #unless @location = Location.find_by(title: params[:location][:title])
-      #  Rails.logger.debug "ERROR: 존재하지 않는 지역입니다."
+      #  Rails.logger.error "ERROR: 존재하지 않는 지역입니다."
       #  return render json: {error: "존재하지 않는 지역입니다."}, status: :not_found
       #end
 
@@ -60,11 +60,11 @@ class LocationsController < ApplicationController
       begin
         @location = Location.find_or_create_by!(title: params[:location][:title])
       rescue => e
-        Rails.logger.debug "ERROR: #{e}"
+        Rails.logger.error "ERROR: #{e}"
         render json: {error: e}, status: :bad_request
       end
     else
-      Rails.logger.debug "ERROR: 비정상적인 요청"
+      Rails.logger.error "ERROR: 비정상적인 요청"
       render json: {error: "비정상적인 요청"}, status: :bad_request
     end
   end

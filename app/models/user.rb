@@ -62,7 +62,7 @@ class User < ApplicationRecord
 
       # check devices
       if registration_ids.blank?
-        Rails.logger.debug "ERROR: No available devices."
+        Rails.logger.error "ERROR: No available devices."
         return nil
       end
 
@@ -81,7 +81,7 @@ class User < ApplicationRecord
       app.send(registration_ids, options)
 
     rescue => e
-      Rails.logger.debug "ERROR: #{e}"
+      Rails.logger.error "ERROR: #{e}"
       return nil
     end
   end

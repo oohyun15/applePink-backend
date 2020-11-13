@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
     ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
     unless user_id_in_token?
       # redirect_to users_sign_in_path
-      Rails.logger.debug "ERROR: Unauthorized"
+      Rails.logger.error "ERROR: Unauthorized"
       return render json: { error: "Unauthorized" }, status: :unauthorized
     end
 
@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
     @current_user = User.find(auth_token[:user_id])
     rescue JWT::VerificationError, JWT::DecodeError
       # redirect_to users_sign_in_path
-      Rails.logger.debug "ERROR: Unauthorized"
+      Rails.logger.error "ERROR: Unauthorized"
       return render json: { error: "unauthorized" }, status: :unauthorized
   end
 
@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     begin
       input_file = File.new(image_path)  
     rescue => e
-      Rails.logger.debug "ERROR: #{e}"
+      Rails.logger.error "ERROR: #{e}"
       return render json: {error: e}, status: :bad_request
     end
 
@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
       # image.write "output.png"
       return image
     rescue CloudmersiveConvertApiClient::ApiError => e
-      Rails.logger.debug "ERROR: Exception when calling ConvertImageApi->convert_image_image_format_convert: #{e}"
+      Rails.logger.error "ERROR: Exception when calling ConvertImageApi->convert_image_image_format_convert: #{e}"
     end
   end
 
@@ -89,14 +89,14 @@ class ApplicationController < ActionController::Base
     http_token ||= if request.headers["Authorization"].present?
         request.headers["Authorization"].split(" ").last
       end
-      Rails.logger.debug "http_token: #{http_token}"
+      Rails.logger.error "http_token: #{http_token}"
       return http_token
   end
 
   ## 토큰 해석 : 토큰 해석은 lib/json_web_token.rb 내의 decode 메소드에서 진행됩니다.
   def auth_token
     auth_token ||= JsonWebToken.decode(http_token)
-    Rails.logger.debug "auth_token: #{auth_token}"
+    Rails.logger.error "auth_token: #{auth_token}"
     return auth_token
   end
 

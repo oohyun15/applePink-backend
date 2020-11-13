@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
       render json: {notice: "회원 탈퇴되었습니다."}, status: :ok
     rescue => e
-      Rails.logger.debug "ERROR: #{e}"
+      Rails.logger.error "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
     end
   end
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
       @posts = @posts.order(created_at: :desc)
       render json: @posts, status: :ok, scope: {params: create_params}
     else
-      Rails.logger.debug "ERROR: 서비스 타입을 지정해주세요."
+      Rails.logger.error "ERROR: 서비스 타입을 지정해주세요."
       render json: {error: "서비스 타입을 지정해주세요."}, status: :not_found
     end
   end
@@ -82,11 +82,11 @@ class UsersController < ApplicationController
             current_user.update!(group_id: group.id) 
             return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
           rescue => e
-            Rails.logger.debug "잘못된 소속입니다. 다시 인증해주세요."
+            Rails.logger.error "잘못된 소속입니다. 다시 인증해주세요."
             return render json: {error: "잘못된 소속입니다. 다시 인증해주세요."}, status: :not_acceptable
           end
         else
-          Rails.logger.debug "ERROR: 인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."
+          Rails.logger.error "ERROR: 인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."
           return render json: {error: "인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."}, status: :not_acceptable
         end
       end
@@ -94,25 +94,25 @@ class UsersController < ApplicationController
     # 이메일만 있을 경우
     # 이메일이 등록된 소속들의 이메일이 아닐 때
     unless Group.all.pluck(:email).include? @email
-      Rails.logger.debug "등록되지 않은 소속의 이메일입니다. 메일 주소를 확인해 주세요"
+      Rails.logger.error "등록되지 않은 소속의 이메일입니다. 메일 주소를 확인해 주세요"
       return render json: {error: "등록되지 않은 소속의 이메일입니다. 메일 주소를 확인해 주세요"}, status: :bad_request
     end
 
     if EmailCertification.generate_code(email_params[:email])
       return render json: {message: "소속 인증 메일을 발송했습니다. 메일을 확인해 주세요."}, status: :ok
     else
-      Rails.logger.debug "ERROR: 정상적으로 메일을 발송하지 못했습니다. 메일 주소를 확인해 주세요."
+      Rails.logger.error "ERROR: 정상적으로 메일을 발송하지 못했습니다. 메일 주소를 확인해 주세요."
       return render json: {error: "정상적으로 메일을 발송하지 못했습니다. 메일 주소를 확인해 주세요."}, status: :not_acceptable
     end
 
-    Rails.logger.debug "ERROR: 이메일 인증 오류"
+    Rails.logger.error "ERROR: 이메일 인증 오류"
     return render json: {error: "unauthorized"}, status: :unauthorized
   end
 
   # 지역범위 수정
   def range
     unless User.location_ranges.keys.include? params[:user][:location_range]
-      Rails.logger.debug "ERROR: Unpermitted parameter."
+      Rails.logger.error "ERROR: Unpermitted parameter."
       return render json: {error: "Unpermitted parameter."}, status: :bad_request
     end
 
@@ -123,7 +123,7 @@ class UsersController < ApplicationController
         nickname: current_user.nickname
       }, status: :ok
     rescue => e
-      Rails.logger.debug "ERROR: #{e}"
+      Rails.logger.error "ERROR: #{e}"
       render json: {error: e}, status: :bad_request
     end
   end
@@ -131,18 +131,18 @@ class UsersController < ApplicationController
   def add_device
     # 파라미터에 디바이스 토큰이 없을 경우
     if !(params[:user][:device_token])
-      Rails.logger.debug "ERROR: FCM 토큰이 없습니다."
+      Rails.logger.error "ERROR: FCM 토큰이 없습니다."
       return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
     
     # 이미 등록된 토큰일 경우 
     elsif (current_user.device_list.include?(device_info_params[:device_token]))
       if current_user.push_notification("이미 등록된 토큰입니다.", "디바이스 등록 실패")
-        Rails.logger.debug "ERROR: 이미 등록된 토큰입니다."
+        Rails.logger.error "ERROR: 이미 등록된 토큰입니다."
         return render json: {error: "이미 등록된 토큰입니다."}, status: :ok
       
         # 푸시 알림이 보내지지 않은 경우
       else
-        Rails.logger.debug "ERROR: 푸시 알림 전송 실패(case: 1)"
+        Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 1)"
         return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
       end
     else
@@ -159,13 +159,13 @@ class UsersController < ApplicationController
         
         # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
         else
-          Rails.logger.debug "ERROR: 푸시 알림 전송 실패(case: 0)"
+          Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 0)"
           return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
         end
       
       # 토큰 저장이 되지 않았을 경우
       else
-        Rails.logger.debug "ERROR: 토큰 저장 실패"
+        Rails.logger.error "ERROR: 토큰 저장 실패"
         return render json: {message: "토큰 저장 실패"}, status: :bad_request
       end
     end
@@ -190,13 +190,13 @@ class UsersController < ApplicationController
     begin
       @user = User.find(params[:id])
     rescue => e
-      Rails.logger.debug "ERROR: 없는 유저입니다."
+      Rails.logger.error "ERROR: 없는 유저입니다."
       render json: {error: "없는 유저입니다."}, status: :bad_request
     end
   end
 
   def find_device_type
-    Rails.logger.debug "USER_AGENT: #{request.user_agent}"
+    Rails.logger.error "USER_AGENT: #{request.user_agent}"
     case request.user_agent
     when /mac|iOS/i
       :ios
@@ -213,11 +213,11 @@ class UsersController < ApplicationController
       begin
         @email = email_params[:email].split("@")[1].split(".")[0]
       rescue => e
-        Rails.logger.debug "ERROR: 올바르지 않은 형태의 이메일입니다."
+        Rails.logger.error "ERROR: 올바르지 않은 형태의 이메일입니다."
         render json: {error: "올바르지 않은 형태의 이메일입니다."}, status: :bad_request
       end
     else
-      Rails.logger.debug "ERROR: 입력된 이메일이 없습니다."
+      Rails.logger.error "ERROR: 입력된 이메일이 없습니다."
       render json: {error: "입력된 이메일이 없습니다."}, status: :bad_request
     end
   end

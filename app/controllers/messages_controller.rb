@@ -33,7 +33,7 @@ class MessagesController < ApplicationController
     begin
       @chat = Chat.find(params[:chat_id])
     rescue => e
-      Rails.logger.debug "ERROR: 없는 채팅입니다."
+      Rails.logger.error "ERROR: 없는 채팅입니다."
       render json: {error: "없는 채팅입니다."}, status: :bad_request
     end
   end
@@ -44,7 +44,7 @@ class MessagesController < ApplicationController
 
   def check_owner
     unless @chat.users.include? current_user
-      Rails.logger.debug "ERROR: 메시지 권한이 없습니다."
+      Rails.logger.error "ERROR: 메시지 권한이 없습니다."
       render json: { error: "unauthorized" }, status: :unauthorized
     end
   end

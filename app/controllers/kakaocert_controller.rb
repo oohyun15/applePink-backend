@@ -84,7 +84,7 @@ class KakaocertController < ApplicationController
     rescue KakaocertException => e
       @code = e.code
       @message = e.message
-      Rails.logger.debug "인증 에러 코드: #{@code}, 메세지: #{@message}"
+      Rails.logger.error "인증 에러 코드: #{@code}, 메시지: #{@message}"
       return render json: {code: @code, message: @message}
     end
   end
@@ -102,7 +102,7 @@ class KakaocertController < ApplicationController
     rescue KakaocertException => e
       @code = e.code
       @message = e.message
-      Rails.logger.debug "인증 에러 코드: #{@code}, 메세지: #{@message}"
+      Rails.logger.error "인증 에러 코드: #{@code}, 메세지: #{@message}"
       return render json: {code: @code, message: @message}
     end
   end
@@ -129,7 +129,7 @@ class KakaocertController < ApplicationController
     rescue KakaocertException => e
       @code = e.code
       @message = e.message
-      Rails.logger.debug "인증 에러 코드: #{@code}, 메세지: #{@message}"
+      Rails.logger.error "인증 에러 코드: #{@code}, 메세지: #{@message}"
       return render json: {code: @code, message: @message}
     end
   end
