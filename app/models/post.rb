@@ -11,9 +11,9 @@ class Post < ApplicationRecord
 
   has_one_attached :image
   
-  has_many :chats
+  has_many :chats, dependent: :destroy
   has_many :chat_users, through: :chats, source: :users
-  has_many :bookings
+  has_many :bookings, dependent: :destroy
   has_many :likes, as: :target, class_name: "Like", dependent: :destroy
   has_many :reports, class_name: "Report", as: :target, dependent: :destroy
 
