@@ -27,12 +27,10 @@ class MessagesController < ApplicationController
     rids = []
     users = []
     @chat.users.each do |user|
+      next if user == @current_user
       rids += user.device_list
       users << user.nickname
     end
-    
-    rids -= current_user.device_list
-    users.delete(current_user.nickname)
 
     Rails.logger.info "From #{current_user.nickname} To #{users}"
     Rails.logger.info "registration ids: #{rids}"
