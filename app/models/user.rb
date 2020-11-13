@@ -42,6 +42,7 @@ class User < ApplicationRecord
   enum gender: %i(no_select man woman)
   enum user_type: %i(normal company)
   enum location_range: %i(location_alone location_near location_normal location_far)
+  enum device_type: %i(ios android unknown)
 
   def display_name
     self.nickname
@@ -67,20 +68,16 @@ class User < ApplicationRecord
 
   def push_notification(body, title)
     begin
-      devices = self.device_list
+      registration_ids = self.device_list
 
       # check devices
-      if devices.blank?
+      if registration_ids.blank?
         Rails.logger.debug "ERROR: No available devices."
         return nil
       end
 
       # initialize FCM
       app = FCM.new(ENV['FCM_SERVER_KEY'])
-      
-      # registration_ids
-      registration_ids = devices.pluck(:device_token)
-      # p registration_ids
 
       # options
       options = {

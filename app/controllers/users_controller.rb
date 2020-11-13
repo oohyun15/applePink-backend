@@ -109,6 +109,7 @@ class UsersController < ApplicationController
     return render json: {error: "unauthorized"}, status: :unauthorized
   end
 
+  # 지역범위 수정
   def range
     unless User.location_ranges.keys.include? params[:user][:location_range]
       Rails.logger.debug "ERROR: Unpermitted parameter."
@@ -134,15 +135,15 @@ class UsersController < ApplicationController
       return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
     
     # 이미 등록된 토큰일 경우 
-    elsif (user.device_list.include?(attributes[:device_token]))
+    elsif (current_user.device_list.include?(device_info_params[:device_token]))
       Rails.logger.debug "ERROR: 이미 등록된 토큰입니다."
       return render json: {error: "이미 등록된 토큰입니다."}, status: :bad_request
     else
-      user.device_type = attributes[:device_type]
-      user.device_list.add(attributes[:device_token])
+      current_user.device_type = device_info_params[:device_type]
+      current_user.device_list.add(device_info_params[:device_token])
       
       # 정상적으로 토큰이 등록된 경우
-      if user.save
+      if current_user.save
 
         # 토큰 등록 이후 푸시 알림이 보내진 경우
         if current_user.push_notification("정상적으로 등록되었습니다.", "모두나눔")
