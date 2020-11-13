@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true
   validates :nickname, presence: true
+
+  acts_as_taggable_on :devices
   
   validates_uniqueness_of :email
   validates_uniqueness_of :nickname
@@ -31,8 +33,6 @@ class User < ApplicationRecord
   has_many :received_reports, class_name: "Report", as: :target, dependent: :destroy
   has_many :schedules
   has_many :questions
-  has_many :user_push_notification_devices, dependent: :destroy
-  has_many :push_notification_devices, through: :user_push_notification_devices
 
   accepts_nested_attributes_for :likes
 
@@ -57,25 +57,17 @@ class User < ApplicationRecord
 
   # To add device info: type & token
   # @param attributes [Hash] device informations
+  # 수정수정수정수정수정 저 그지같은 push notification 관련 다 지워라 씨이발
   def add_device_info(attributes)
     return unless attributes.present? && attributes[:device_type].present? && attributes[:device_token].present?
-
-    device_attr = attributes.slice(:device_type, :device_token)
-    device_params = {
-      device_type: PushNotificationDevice.device_types[device_attr[:device_type]],
-      device_token: device_attr[:device_token]
-    }
-
-    device = PushNotificationDevice.where(device_params).first_or_initialize
-
-    devices = push_notification_devices
-    return if devices.include?(device)
-    self.push_notification_devices << device
+    self.device_Type = attributes[:device_type]
+    self.device_list.add(attributes[:device_token])
+    self.save!
   end
 
   def push_notification(body, title)
     begin
-      devices = self.push_notification_devices
+      devices = self.device_list
 
       # check devices
       if devices.blank?
@@ -88,7 +80,7 @@ class User < ApplicationRecord
       
       # registration_ids
       registration_ids = devices.pluck(:device_token)
-      p registration_ids
+      # p registration_ids
 
       # options
       options = {

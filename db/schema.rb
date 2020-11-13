@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_142614) do
+ActiveRecord::Schema.define(version: 2020_11_13_015209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,14 +215,6 @@ ActiveRecord::Schema.define(version: 2020_11_12_142614) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "push_notification_devices", force: :cascade do |t|
-    t.integer "device_type"
-    t.string "device_token"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["device_type"], name: "index_push_notification_devices_on_device_type"
-  end
-
   create_table "questions", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -254,6 +246,33 @@ ActiveRecord::Schema.define(version: 2020_11_12_142614) do
     t.index ["user_id"], name: "index_schedules_on_user_id"
   end
 
+  create_table "taggings", id: :serial, force: :cascade do |t|
+    t.integer "tag_id"
+    t.string "taggable_type"
+    t.integer "taggable_id"
+    t.string "tagger_type"
+    t.integer "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+  end
+
+  create_table "tags", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
   create_table "user_chats", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "chat_id"
@@ -261,14 +280,6 @@ ActiveRecord::Schema.define(version: 2020_11_12_142614) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["chat_id"], name: "index_user_chats_on_chat_id"
     t.index ["user_id"], name: "index_user_chats_on_user_id"
-  end
-
-  create_table "user_push_notification_devices", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "push_notification_device_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_user_push_notification_devices_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -290,6 +301,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_142614) do
     t.datetime "expire_time"
     t.integer "likes_count", default: 0
     t.integer "reports_count", default: 0
+    t.integer "device_type"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["location_id"], name: "index_users_on_location_id"
@@ -302,4 +314,5 @@ ActiveRecord::Schema.define(version: 2020_11_12_142614) do
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "taggings", "tags"
 end
