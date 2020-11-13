@@ -23,8 +23,6 @@ class MessagesController < ApplicationController
     @message.check_id << current_user.id
     @message.save!
 
-    @chat.update!(has_message: :true) unless @chat.has_message
-
     render json: @message, status: :ok, scope: {params: create_params}
   end
 

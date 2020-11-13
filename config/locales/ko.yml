@@ -75,7 +75,7 @@ ko:
       chat:
         has_message: 메시지 여부
         user_list: 채팅방 내 유저 목록
-        message_count: 메시지 수
+        messages_count: 메시지 수
         last_message: 마지막 메시지
       company:
         name: 이름
