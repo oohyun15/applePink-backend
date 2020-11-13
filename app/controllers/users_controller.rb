@@ -109,6 +109,7 @@ class UsersController < ApplicationController
     return render json: {error: "unauthorized"}, status: :unauthorized
   end
 
+  # 지역범위 수정
   def range
     unless User.location_ranges.keys.include? params[:user][:location_range]
       Rails.logger.debug "ERROR: Unpermitted parameter."
@@ -128,15 +129,37 @@ class UsersController < ApplicationController
   end
 
   def add_device
-    if current_user.add_device_info(device_info_params)
-      if current_user.push_notification("정상적으로 등록되었습니다.", "모두나눔")
-        return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
-      else
-        return render json: {message: "메시지 전송 실패"}, status: :bad_request
-      end
+    # 파라미터에 디바이스 토큰이 없을 경우
+    if !(params[:user][:device_token])
+      Rails.logger.debug "ERROR: FCM 토큰이 없습니다."
+      return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
+    
+    # 이미 등록된 토큰일 경우 
+    elsif (current_user.device_list.include?(device_info_params[:device_token]))
+      Rails.logger.debug "ERROR: 이미 등록된 토큰입니다."
+      return render json: {error: "이미 등록된 토큰입니다."}, status: :bad_request
     else
-      Rails.logger.debug "ERROR: Unknown device token."
-      return render json: {error: "Unknown device token."}, status: :bad_request
+      current_user.device_type = device_info_params[:device_type]
+      current_user.device_list.add(device_info_params[:device_token])
+      
+      # 정상적으로 토큰이 등록된 경우
+      if current_user.save
+
+        # 토큰 등록 이후 푸시 알림이 보내진 경우
+        if current_user.push_notification("정상적으로 등록되었습니다.", "모두나눔")
+          return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
+        
+        # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
+        else
+          Rails.logger.debug "ERROR: 푸시 알림 전송 실패"
+          return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
+        end
+      
+      # 토큰 저장이 되지 않았을 경우
+      else
+        Rails.logger.debug "ERROR: 토큰 저장 실패"
+        return render json: {message: "토큰 저장 실패"}, status: :bad_request
+      end
     end
   end
 
@@ -172,7 +195,7 @@ class UsersController < ApplicationController
     when /android/i
       :android
     else
-      nil
+      :unknown
     end
   end
 
@@ -189,5 +212,9 @@ class UsersController < ApplicationController
       Rails.logger.debug "ERROR: 입력된 이메일이 없습니다."
       render json: {error: "입력된 이메일이 없습니다."}, status: :bad_request
     end
+  end
+
+  def add_device_info(user, attributes)
+
   end
 end

@@ -123,7 +123,7 @@ fieldset.inputs {
   background: darkred;  
 }
 
-.status_tag.normal, .status_tag.waiting {
+.status_tag.normal, .status_tag.waiting .status_tag.unknown{
   background: darkslategray;
 }
 

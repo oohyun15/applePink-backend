@@ -30,7 +30,7 @@ ko:
   activerecord:
     attributes:
       user:
-        account_type: 계정타입
+        account_type: 계정 타입
         name: 사용자명
         nickname: 닉네임
         email: 이메일
@@ -43,6 +43,7 @@ ko:
         location_range: 지역 검색 범위
         expire_time: 지역 인증 만료 시간
         group_id: 소속
+        device_type: 기기 타입
       post:
         title: 제목
         body: 내용
@@ -152,6 +153,11 @@ ko:
         location_near: 가까운 동네
         location_normal: 중간 동네
         location_far: 먼 동네
+      device_type:
+        ios: 아이폰
+        android: 안드로이드
+        unknown: 알 수 없음
+
     report:
       reason:
         fake_item: 허위매물
