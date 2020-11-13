@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get :mypage
       post :email_auth
       post :add_device
+      post :remove_device
       delete :withdrawal
       put :range
     end
