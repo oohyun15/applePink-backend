@@ -56,33 +56,5 @@ class User < ApplicationRecord
     self.expire_time.present? && (self.expire_time > Time.current rescue false)
   end
 
-  def push_notification(body, title)
-    begin
-      registration_ids = self.device_list
-
-      # check devices
-      if registration_ids.blank?
-        Rails.logger.error "ERROR: No available devices."
-        return nil
-      end
-
-      # initialize FCM
-      app = FCM.new(ENV['FCM_SERVER_KEY'])
-
-      # options
-      options = {
-        "notification": {
-          "title": "#{title}",
-          "body": "#{body}"
-        }
-      }
-
-      # send notification
-      app.send(registration_ids, options)
-
-    rescue => e
-      Rails.logger.error "ERROR: #{e}"
-      return nil
-    end
-  end
+ 
 end

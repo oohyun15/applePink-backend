@@ -23,7 +23,12 @@ class MessagesController < ApplicationController
     @message.check_id << current_user.id
     @message.save!
 
-    @chat.update!(has_message: :true) unless @chat.has_message
+    # push notification
+    rids = []
+    @chat.users.each do |user| rids += user.device_list end
+    rids -= current_user.device_list
+
+    push_notification(@message.body, current_user.body, rids)
 
     render json: @message, status: :ok, scope: {params: create_params}
   end

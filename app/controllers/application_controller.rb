@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   attr_reader :current_user
 
-  helper_method :money, :short_time, :long_time, :short_date
+  helper_method :money, :short_time, :long_time, :short_date, :push_notification
   
   public
   
@@ -21,6 +21,34 @@ class ApplicationController < ActionController::Base
   
   def short_date date
     date.methods.include?(:strftime) ? date.strftime("%Y년 %m월 %d일") : nil
+  end
+
+  def push_notification body, title, registration_ids
+    begin
+      # check devices
+      if registration_ids.blank?
+        Rails.logger.error "ERROR: No available devices."
+        return nil
+      end
+
+      # initialize FCM
+      app = FCM.new(ENV['FCM_SERVER_KEY'])
+
+      # options
+      options = {
+        "notification": {
+          "title": "#{title}",
+          "body": "#{body}"
+        }
+      }
+
+      # send notification
+      app.send(registration_ids, options)
+
+    rescue => e
+      Rails.logger.error "ERROR: #{e}"
+      return nil
+    end
   end
   
   protected

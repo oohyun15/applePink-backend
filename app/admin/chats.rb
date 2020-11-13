@@ -6,8 +6,8 @@ ActiveAdmin.register Chat do
     id_column
     column :post
     column :user_list do |chat| chat.users end
-    column :message_count do |chat| "#{number_with_delimiter chat.messages.size}개" end
-    column :last_message do |chat| chat.has_message ? chat.messages.last&.body&.truncate(27) : "메시지가 없습니다." end
+    column :messages_count do |chat| "#{number_with_delimiter chat.messages_count}개" end
+    column :last_message do |chat| chat.messages_count > 0 ? chat.messages.last&.body&.truncate(27) : "메시지가 없습니다." end
     
     actions
   end
@@ -16,7 +16,7 @@ ActiveAdmin.register Chat do
     attributes_table do
       row :post
       row :user_list do |chat| chat.users end
-      row :message_count do |chat| "#{number_with_delimiter chat.messages.size}개" end
+      row :messages_count do |chat| "#{number_with_delimiter chat.messages_count}개" end
     end
     panel '메시지 목록' do
       paginated_collection(chat.messages.order(created_at: :desc).page(params[:page]).per(5), download_links: false) do
