@@ -35,6 +35,9 @@ class ApplicationController < ActionController::Base
 
     ## Token 안에 있는 user_id 값을 받아와서 User 모델의 유저 정보 탐색
     @current_user = User.find(auth_token[:user_id])
+    Rails.logger.info "JWT: #{http_token}"
+    Rails.logger.info "Expired Time: #{Time.at(auth_token[:exp])}"
+    Rails.logger.info "User ID: #{@current_user.id}, nickname: #{@current_user.nickname}"
     rescue JWT::VerificationError, JWT::DecodeError
       # redirect_to users_sign_in_path
       Rails.logger.error "ERROR: Unauthorized"
@@ -89,14 +92,14 @@ class ApplicationController < ActionController::Base
     http_token ||= if request.headers["Authorization"].present?
         request.headers["Authorization"].split(" ").last
       end
-      Rails.logger.error "http_token: #{http_token}"
+      # Rails.logger.info "http_token: #{http_token}"
       return http_token
   end
 
   ## 토큰 해석 : 토큰 해석은 lib/json_web_token.rb 내의 decode 메소드에서 진행됩니다.
   def auth_token
     auth_token ||= JsonWebToken.decode(http_token)
-    Rails.logger.error "auth_token: #{auth_token}"
+    # Rails.logger.info "auth_token: #{auth_token}"
     return auth_token
   end
 
