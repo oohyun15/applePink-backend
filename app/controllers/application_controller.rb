@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     "\tURL:        #{request.original_url}\n" +
     "\tMETHOD:     #{request.method}\n" +
     "\tJWT:        #{http_token.present? ? http_token : "Null"}\n" +
-    "\tExpired:    #{http_token.present? ? Time.at(auth_token[:exp]) : "Null"}\n" +
+    "\tExpired:    #{auth_token.present? ? Time.at(auth_token[:exp]) : "Null"}\n" +
     "\tUser:       #{@current_user&.nickname} (id: #{@current_user&.id})\n" +
     "\tParams:     #{params.present? ? params : "Null"}\n"
   end
