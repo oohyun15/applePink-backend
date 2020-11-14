@@ -6,7 +6,8 @@ class MessagesController < ApplicationController
   def index
     # 현재 유저가 읽지 않은 메시지 가져오기
     @messages = @chat.messages.where.not("check_id @> ?", "{#{current_user.id}}")
-    
+    @messages.order(created_at: :asc)
+
     # 메시지에 현재 유저가 읽었다고 추가
     @messages.each do |message|
       message.check_id << current_user.id
@@ -31,10 +32,10 @@ class MessagesController < ApplicationController
       rids += user.device_list
       users << user.nickname
     end
-
+    
     Rails.logger.error "From #{current_user.nickname} To #{users}"
     Rails.logger.error "registration ids: #{rids}"
-    push_notification(@message.body, current_user.nickname, rids)
+    push_notification("#{current_user.nickname} : #{@message.body}", "", rids)
 
     render json: @message, status: :ok, scope: {params: create_params}
   end

@@ -25,6 +25,7 @@ class PostSerializer < ActiveModel::Serializer
       status: object.status,
       likes_count: object.likes_count,
       like_check: object.likes&.pluck(:user_id).include?(@instance_options[:user_id]),
+      rent_count: object.rent_count,
       contract: object.contract,
       created_at: object.created_at.strftime("%Y-%m-%d %H:%M"),
       updated_at: object.updated_at.strftime("%Y-%m-%d %H:%M"),
