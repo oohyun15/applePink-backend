@@ -34,7 +34,7 @@ class MessagesController < ApplicationController
 
     Rails.logger.info "From #{current_user.nickname} To #{users}"
     Rails.logger.info "registration ids: #{rids}"
-    push_notification(@message.body, current_user.nickname, rids)
+    push_notification("#{current_user.nickname} : #{@message.body}", "[모두나눔] #{@chat.post.title.truncate(10)}", rids)
 
     render json: @message, status: :ok, scope: {params: create_params}
   end
