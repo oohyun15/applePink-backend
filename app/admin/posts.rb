@@ -76,7 +76,7 @@ ActiveAdmin.register Post do
       f.input :category_id, as: :select, collection: Category.all.map{|category| [category.title, category.id]}
       f.input :location_id, as: :select, collection: Location.all.map{|location| [location.title, location.id]}
       f.input :status, as: :select, collection: Post.enum_selectors(:status)
-
+      f.input :contract
       f.input :image, as: :file, hint: image_tag(f.object&.image_path, class: 'admin-show-image')
       f.has_many :images, allow_destroy: true do |p|
         #p.object.image = image_tag(p.object.image_path)
