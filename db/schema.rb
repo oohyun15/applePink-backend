@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_14_095142) do
+ActiveRecord::Schema.define(version: 2020_11_14_111506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(version: 2020_11_14_095142) do
     t.text "contract"
     t.datetime "provider_sign_datetime"
     t.datetime "consumer_sign_datetime"
+    t.string "provider_name"
+    t.string "consumer_name"
     t.index ["post_id"], name: "index_bookings_on_post_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
@@ -305,6 +307,9 @@ ActiveRecord::Schema.define(version: 2020_11_14_095142) do
     t.integer "likes_count", default: 0
     t.integer "reports_count", default: 0
     t.integer "device_type"
+    t.string "name"
+    t.string "birthday"
+    t.string "number"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["location_id"], name: "index_users_on_location_id"
