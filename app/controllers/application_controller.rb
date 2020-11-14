@@ -6,6 +6,11 @@ class ApplicationController < ActionController::Base
   helper_method :money, :short_time, :long_time, :short_date, :push_notification, :log_info
   
   public
+
+  def route_not_found
+    Rails.logger.fatal(log_info)
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
+  end
   
   def money num
     number_to_currency num.to_i rescue ""
