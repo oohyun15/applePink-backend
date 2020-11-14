@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :omniauthable
   include ImageUrl
 
-  USER_COLUMNS = %i(email nickname password password_confirmation image)
+  USER_COLUMNS = %i(email nickname password password_confirmation image name birthday number)
 
   has_secure_password
 
