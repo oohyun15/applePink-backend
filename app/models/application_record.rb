@@ -9,7 +9,7 @@ class ApplicationRecord < ActiveRecord::Base
     begin
       # check devices
       if registration_ids.blank?
-        Rails.logger.error "ERROR: No available devices."
+        Rails.logger.error "ERROR: No available devices. #{log_info}"
         return nil
       end
 
@@ -29,7 +29,7 @@ class ApplicationRecord < ActiveRecord::Base
       app.send(registration_ids, options)
 
     rescue => e
-      Rails.logger.error "ERROR: #{e}"
+      Rails.logger.error "ERROR: #{e} #{log_info}"
       return nil
     end
   end

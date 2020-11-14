@@ -16,7 +16,7 @@ class LikesController < ApplicationController
 
   def toggle
     # 좋아요 대상이 자신인 경우
-    Rails.logger.error "ERROR: 자기 자신은 좋아요를 할 수 없습니다."
+    Rails.logger.error "ERROR: 자기 자신은 좋아요를 할 수 없습니다. #{log_info}"
     return render json: {error: "자기 자신은 좋아요를 할 수 없습니다."}, status: :bad_request if (@target.user rescue @target) == current_user 
 
     begin
@@ -31,7 +31,7 @@ class LikesController < ApplicationController
         result = "true"
       end
     rescue => e
-      Rails.logger.error "ERROR: #{e}"
+      Rails.logger.error "ERROR: #{e} #{log_info}"
       return render json: {error: e}, status: :bad_request
     end
 
@@ -53,7 +53,7 @@ class LikesController < ApplicationController
     params[:like][:target_type] = params[:like][:target_type].capitalize
     
     if Like::LIKE_MODELS.exclude? like_params[:target_type].capitalize
-      Rails.logger.error "ERROR: 좋아요를 할 수 없는 객체입니다."
+      Rails.logger.error "ERROR: 좋아요를 할 수 없는 객체입니다. #{log_info}"
       return render json: {error: "좋아요를 할 수 없는 객체입니다."}, status: :bad_request 
     end
   end
@@ -63,7 +63,7 @@ class LikesController < ApplicationController
       model = like_params[:target_type].capitalize
       @target = model.constantize.find(like_params[:target_id])
     rescue => e
-      Rails.logger.error "ERROR: #{e}"
+      Rails.logger.error "ERROR: #{e} #{log_info}"
       render json: {error: e}, status: :bad_request
     end
   end
@@ -76,7 +76,7 @@ class LikesController < ApplicationController
     begin
       @user = User.find(params[:user_id])
     rescue => e
-      Rails.logger.error "ERROR: 없는 유저입니다."
+      Rails.logger.error "ERROR: 없는 유저입니다. #{log_info}"
       render json: {error: "없는 유저입니다."}, status: :bad_request
     end
   end

@@ -17,7 +17,7 @@ class CompaniesController < ApplicationController
         @company.update!(approve: false)
         return render json: {message: "광고주 신청이 완료돠었습니다."}, status: :ok
       rescue => e
-        Rails.logger.error "ERROR: #{e}"
+        Rails.logger.error "ERROR: #{e} #{log_info}"
         render json: {error: e}, status: :bad_request
       end
     end
@@ -28,7 +28,7 @@ class CompaniesController < ApplicationController
       @company.destroy!
       return render json: {message: "광고주 신청이 취소되었습니다."}, status: :ok
     rescue => e
-      Rails.logger.error "ERROR: #{e}"
+      Rails.logger.error "ERROR: #{e} #{log_info}"
       render json: {error: e}, status: :bad_request
     end
   end
@@ -57,7 +57,7 @@ class CompaniesController < ApplicationController
 
   def check_owner
     if @company.user != current_user
-      Rails.logger.error "ERROR: 광고주 관련 권한이 없습니다."
+      Rails.logger.error "ERROR: 광고주 관련 권한이 없습니다. #{log_info}"
       render json: { error: "unauthorized" }, status: :unauthorized
     end
   end

@@ -16,7 +16,7 @@ class SnsLogin
         user.remote_image_url = @auth.info.image if @auth.info.image.present?
         user.save!
       rescue => e
-        Rails.logger.error "ERROR: #{e}"
+        Rails.logger.error "ERROR: #{e} #{log_info}"
         render json: {error: e}, status: :bad_request
       end
     end

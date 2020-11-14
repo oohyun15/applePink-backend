@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   attr_reader :current_user
 
-  helper_method :money, :short_time, :long_time, :short_date, :push_notification
+  helper_method :money, :short_time, :long_time, :short_date, :push_notification, :log_info
   
   public
   
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     begin
       # check devices
       if registration_ids.blank?
-        Rails.logger.error "ERROR: No available devices."
+        Rails.logger.error "ERROR: No available devices. #{log_info}"
         return nil
       end
 
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
       app.send(registration_ids, options)
 
     rescue => e
-      Rails.logger.error "ERROR: #{e}"
+      Rails.logger.error "ERROR: #{e} #{log_info}"
       return nil
     end
   end
@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
     ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
     unless user_id_in_token?
       # redirect_to users_sign_in_path
-      Rails.logger.error "ERROR: Unauthorized"
+      Rails.logger.error "ERROR: Unauthorized #{log_info}"
       return render json: { error: "Unauthorized" }, status: :unauthorized
     end
 
@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
     Rails.logger.info "User ID: #{@current_user.id}, nickname: #{@current_user.nickname}"
     rescue JWT::VerificationError, JWT::DecodeError
       # redirect_to users_sign_in_path
-      Rails.logger.error "ERROR: Unauthorized"
+      Rails.logger.error "ERROR: Unauthorized #{log_info}"
       return render json: { error: "unauthorized" }, status: :unauthorized
   end
 
@@ -103,7 +103,7 @@ class ApplicationController < ActionController::Base
     begin
       input_file = File.new(image_path)  
     rescue => e
-      Rails.logger.error "ERROR: #{e}"
+      Rails.logger.error "ERROR: #{e} #{log_info}"
       return render json: {error: e}, status: :bad_request
     end
 
@@ -116,7 +116,7 @@ class ApplicationController < ActionController::Base
       # image.write "output.png"
       return image
     rescue CloudmersiveConvertApiClient::ApiError => e
-      Rails.logger.error "ERROR: Exception when calling ConvertImageApi->convert_image_image_format_convert: #{e}"
+      Rails.logger.error "ERROR: Exception when calling ConvertImageApi->convert_image_image_format_convert: #{e} #{log_info}"
     end
   end
 
