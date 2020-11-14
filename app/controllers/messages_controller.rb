@@ -32,8 +32,8 @@ class MessagesController < ApplicationController
       users << user.nickname
     end
 
-    Rails.logger.info "From #{current_user.nickname} To #{users}"
-    Rails.logger.info "registration ids: #{rids}"
+    Rails.logger.error "From #{current_user.nickname} To #{users}"
+    Rails.logger.error "registration ids: #{rids}"
     push_notification(@message.body, current_user.nickname, rids)
 
     render json: @message, status: :ok, scope: {params: create_params}
