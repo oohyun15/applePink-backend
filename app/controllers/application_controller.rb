@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   public
 
   def route_not_found
-    Rails.logger.fatal(log_info)
+    Rails.logger.error(log_info)
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
   
