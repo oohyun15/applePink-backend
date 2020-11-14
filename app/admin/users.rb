@@ -13,6 +13,9 @@ ActiveAdmin.register User do
     column :image do |user| image_tag(user&.image_path ,class: 'admin-index-image') end
     column :nickname
     column :email
+    column :name
+    column :birthday
+    column :number
     column :group_id do |user| user.group_id.nil? ? "소속 없음" : user.group&.display_name end
     column :location do |user| user.is_location_auth? ? user.location : "지역인증 필요" end
     column :expire_time do |user|  user.is_location_auth? ? long_time(user.expire_time) : "지역인증 필요" end
@@ -40,6 +43,9 @@ ActiveAdmin.register User do
       row :image do |user| image_tag(user&.image_path ,class: 'admin-show-image') end
       row :nickname
       row :email
+      row :name
+      row :birthday
+      row :number
       row :location do |user| user.is_location_auth? ? user.location : "지역인증 필요" end
       row :expire_time do |user|  user.is_location_auth? ? long_time(user.expire_time) : "지역인증 필요" end
       tag_row :gender
@@ -50,7 +56,7 @@ ActiveAdmin.register User do
       row "좋아요한 유저" do |user| User.where(id: user.received_likes.pluck(:user_id)).limit(10) end
       row :reports_count do |user| "#{number_with_delimiter user.reports_count}개" end
       # tag_row :user_type do |user| user.user_type.present? ? user.user_type : "미지정" end
-      tag_column :device_type
+      tag_row :device_type
       row :user_type do |user|
         if user.is_company?
           link_to "광고주", admin_company_path(user.company), class: "status_tag company"

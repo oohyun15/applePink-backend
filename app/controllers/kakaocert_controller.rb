@@ -2,6 +2,7 @@ require 'kakaocert'
 
 class KakaocertController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_booking, only: %i(verifyESign)
   
   # 링크아이디
   LinkID = ENV["KAKAO_CERT_LINK_ID"]
@@ -98,7 +99,20 @@ class KakaocertController < ApplicationController
         KakaocertController::ClientCode,
         @receiptId,
       )
-      return render json: @response
+      # 전자서명이 완료되었을 때
+      if @response["state"] == 1
+        return redirect_to kakaocert_verifyESign_path(receiptId: params[:receiptId], booking_id: params[:booking_id])
+      # 전자서명이 미완료되었을 때
+      elsif @response["state"] == 0
+        Rails.logger.error "전자서명이 완료되지 않았습니다. #{log_info}" 
+        return render json: {error: "전자서명이 완료되지 않았습니다."}, status: :bad_request
+      # 전자서명이 만료되었을 때
+      else
+        Rails.logger.error "전자서명이 만료됐습니다. #{log_info}" 
+        return render json: {error: "전자서명이 만료됐습니다."}, status: :bad_request
+      end
+
+      return render json: @response["state"]
     rescue KakaocertException => e
       @code = e.code
       @message = e.message
@@ -112,7 +126,7 @@ class KakaocertController < ApplicationController
   # 확인하여 전자서명 검증을 완료합니다
   def verifyESign
     @receiptId = params[:receiptId]
-
+    
     # AppToApp 앱스킴 성공처리시 반환되는 서명값(iOS-sig, Android-signature)
     # Talk Message 인증시 공백
     if params[:sig].present? # iOS일 경우
@@ -125,7 +139,14 @@ class KakaocertController < ApplicationController
 
     begin
       @response = KCService.verifyESign(KakaocertController::ClientCode, @receiptId, signture)
-      render json: @response
+      # current_user가 소비자인 경우
+      if @booking.user_id == current_user.id
+        @booking.update!(consumer_sign_datetime: Time.current)
+      # current_user가 제공자인 경우
+      else
+        @booking.update!(consumer_sign_datetime: Time.current)
+      end
+      render json: @booking, status: :ok, scope: {params: create_params}
     rescue KakaocertException => e
       @code = e.code
       @message = e.message
@@ -138,5 +159,14 @@ class KakaocertController < ApplicationController
 
   def kakaocert_params
     params.require(:kakaocert).permit(:birthday, :number, :name, :token)
+  end
+
+  def load_booking
+    begin
+      @booking = Booking.find(params[:booking_id])
+    rescue => e
+      Rails.logger.error "ERROR: 없는 예약입니다. #{log_info}"
+      render json: {error: "없는 예약입니다."}, status: :bad_request
+    end
   end
 end
