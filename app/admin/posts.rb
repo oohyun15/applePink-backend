@@ -48,7 +48,7 @@ ActiveAdmin.register Post do
       row :likes_count do |post| "#{number_with_delimiter post.likes_count}개" end
       row "좋아요한 유저" do |post| User.where(id: post.likes.pluck(:user_id)).limit(10) end
       row :reports_count do |post| "#{number_with_delimiter post.reports_count}개" end
-      row :contract
+      row :contract do |post| simple_format(post.contract) end
       row :image do |post| image_tag(post.image_path ,class: 'admin-show-image') end
       row :created_at do |post| long_time post.created_at end
       row :updated_at do |post| long_time post.updated_at end
