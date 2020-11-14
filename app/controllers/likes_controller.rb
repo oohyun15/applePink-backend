@@ -16,8 +16,10 @@ class LikesController < ApplicationController
 
   def toggle
     # 좋아요 대상이 자신인 경우
-    Rails.logger.error "ERROR: 자기 자신은 좋아요를 할 수 없습니다. #{log_info}"
-    return render json: {error: "자기 자신은 좋아요를 할 수 없습니다."}, status: :bad_request if (@target.user rescue @target) == current_user 
+    if (@target.user rescue @target) == current_user 
+      Rails.logger.error "ERROR: 자기 자신은 좋아요를 할 수 없습니다. #{log_info}"
+      return render json: {error: "자기 자신은 좋아요를 할 수 없습니다."}, status: :bad_request 
+    end
 
     begin
       # 기존에 좋아요를 했을 경우
