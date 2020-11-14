@@ -27,7 +27,9 @@ class BookingSerializer < ActiveModel::Serializer
         end,
       contract: object.contract,
       csd: object.consumer_sign_datetime,
-      psd: object.provider_sign_datetime
+      psd: object.provider_sign_datetime,
+      cn: object.consumer_name,
+      pn: object.provider_name
     }
   end
 end

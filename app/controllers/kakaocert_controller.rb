@@ -139,7 +139,6 @@ class KakaocertController < ApplicationController
 
     begin
       @response = KCService.verifyESign(KakaocertController::ClientCode, @receiptId, signture)
-      byebug
       # current_user가 소비자인 경우
       if @booking.user_id == current_user.id
         @booking.update!(consumer_sign_datetime: Time.current)

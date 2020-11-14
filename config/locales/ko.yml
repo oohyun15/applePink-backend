@@ -44,6 +44,8 @@ ko:
         expire_time: 지역 인증 만료 시간
         group_id: 소속
         device_type: 기기 타입
+        birthday: 생년월일
+        number: 전화번호
       post:
         title: 제목
         body: 내용
@@ -65,6 +67,11 @@ ko:
         user: 소비자
         provider: 제공자
         price: 가격
+        provider_sign_datetime: 제공자 서명 시간
+        consumer_sign_datetime: 소비자 서명 시간
+        provider_name: 제공자 이름
+        consumer_name: 소비자 이름
+
       location:
         title: 법정동
         lat: 위도
