@@ -23,7 +23,7 @@ class LocationsController < ApplicationController
     expire_time = 1.week.from_now
 
     # 유저의 지역을 업데이트 함.
-    current_user.update!(location_id: @location.position, expire_time: expire_time)
+    current_user.update!(location_id: @location.position, location_range: params[:location][:range].to_i, expire_time: expire_time)
 
     current_user.posts.each do |post| post.update!(location_id: @location.position) end
     
@@ -33,7 +33,7 @@ class LocationsController < ApplicationController
     # 기존 schedule이 있을 경우 제거
     Delayed::Job.find_by_id(schedule.delayed_job_id)&.delete unless schedule.new_record?
 
-    delayed_job = current_user.delay(run_at: expire_time).update!(location_id: nil, expire_time: nil)
+    delayed_job = current_user.delay(run_at: expire_time).update!(location_id: nil, location_range: :location_alone, expire_time: nil)
 
     # job id 업데이트
     schedule.update!(delayed_job_id: delayed_job.id)
@@ -44,7 +44,6 @@ class LocationsController < ApplicationController
   private
 
   def load_location
-    
     #url 파라미터에 id가 있을 경우에는 id로 location을 load함.
     if params[:id].present?
       begin
@@ -72,10 +71,10 @@ class LocationsController < ApplicationController
       #  return render json: {error: "존재하지 않는 지역입니다."}, status: :not_found
       #end
 
-      # 법정동 이름으로 location을 load하거나 등록된 location이 없으면 새로운 location을 생성함.
-      begin
-        @location = Location.find(title: params[:location][:title])
-      rescue => e
+      # 법정동 이름으로 location을 load함.  
+      @location = Location.find_by(title: params[:location][:title])
+
+      if @location.nil?
         Rails.logger.error "존재하지 않는 지역입니다. #{log_info}"
         render json: {error: "존재하지 않는 지역입니다."}, status: :not_found
       end
