@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   
   resources :locations, only: %i(index show) do
     put :certificate, on: :collection
+    get :display, on: :collection
   end
   resources :bookings, only: %i(index new show create destroy) do
     put :complete, on: :member

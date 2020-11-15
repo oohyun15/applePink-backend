@@ -3,9 +3,9 @@ class LocationSerializer < ActiveModel::Serializer
  
   def location_info
     @alone = [object.title]
-    @near = Location.where(id: object.location_near).pluck(:title)
-    @normal = Location.where(id: object.location_normal).pluck(:title)
-    @far = Location.where(id: object.location_far).pluck(:title)
+    @near = Location.where(position: object.location_near).pluck(:title)
+    @normal = Location.where(position: object.location_normal).pluck(:title)
+    @far = Location.where(position: object.location_far).pluck(:title)
 
     location_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :location_info))
     {

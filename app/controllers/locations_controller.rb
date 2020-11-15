@@ -13,14 +13,9 @@ class LocationsController < ApplicationController
     render json: @location, status: :ok, scope: {params: create_params}
   end
 
-  #def display
-  #  if current_user.location.nil?
-  #    Rails.logger.error "ERROR: 지역 인증이 만료되었습니다. 지역 인증을 다시 실행해주세요. #{log_info}"
-  #    return render json: {error: "지역 인증이 만료되었습니다. 지역 인증을 다시 실행해주세요."}, status: :bad_request
-  #  end
-    
-  #  return render json: @location, scope: {params: create_params}
-  #end
+  def display    
+    return render json: @location, scope: {params: create_params}
+  end
 
   #처음 회원가입 시 지역인증
   def certificate
@@ -58,6 +53,18 @@ class LocationsController < ApplicationController
         Rails.logger.error "ERROR: 존재하지 않는 지역입니다. #{log_info}"
         render json: {error: "존재하지 않는 지역입니다."}, status: :bad_request
       end
+    elsif params[:title].present?
+      begin
+        #찾는 지역이 없을 시 새로 생김
+        if (@location = Location.find_by(title: params[:title])).nil?
+          position = Location.last.position + 1
+          @location = Location.create!(title: params[:title], position: position, location_near: [position], 
+            location_normal: [position], location_far: [position])
+        end
+      rescue => e
+        Rails.logger.error "#{e} #{log_info}"
+        render json: {error: e}, status: :bad_request
+      end
     elsif params[:location][:title].present?
       #카카오 맵 API를 사용해 넘어온 법정동 이름으로 location을 load함.
       #unless @location = Location.find_by(title: params[:location][:title])
@@ -67,10 +74,10 @@ class LocationsController < ApplicationController
 
       # 법정동 이름으로 location을 load하거나 등록된 location이 없으면 새로운 location을 생성함.
       begin
-        @location = Location.find_or_create_by!(title: params[:location][:title])
+        @location = Location.find(title: params[:location][:title])
       rescue => e
-        Rails.logger.error "ERROR: #{e} #{log_info}"
-        render json: {error: e}, status: :bad_request
+        Rails.logger.error "존재하지 않는 지역입니다. #{log_info}"
+        render json: {error: "존재하지 않는 지역입니다."}, status: :not_found
       end
     else
       Rails.logger.error "ERROR: 비정상적인 요청 #{log_info}"
