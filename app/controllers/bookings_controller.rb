@@ -128,7 +128,9 @@ class BookingsController < ApplicationController
       body: @post.body,
       lent_day: lent_day,
       price: @post.price * lent_day,
-      acceptance: :waiting
+      acceptance: :waiting,
+      provider_name: @post.user.name,
+      consumer_name: current_user.name
     }
     return book_params.merge(extra)
   end

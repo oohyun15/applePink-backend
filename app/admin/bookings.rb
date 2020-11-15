@@ -17,6 +17,10 @@ ActiveAdmin.register Booking do
     column :start_at do |booking| short_date booking&.start_at end
     column :end_at do |booking| short_date booking&.end_at end
     column :contract do |booking| booking.contract&.truncate(20) end
+    column :provider_sign_datetime do |booking| long_time booking.provider_sign_datetime end
+    column :consumer_sign_datetime do |booking| long_time booking.consumer_sign_datetime end
+    column :provider_name
+    column :consumer_name
     tag_column :acceptance
     actions
   end

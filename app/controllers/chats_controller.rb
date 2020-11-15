@@ -6,6 +6,7 @@ class ChatsController < ApplicationController
 
   def index
     @chats = current_user.chats.where("messages_count > 0")
+    @chats = @chats.includes(:messages).order("messages.created_at desc")
     render json: @chats, status: :ok, scope: {params: create_params}, user_id: current_user.id 
   end
 
