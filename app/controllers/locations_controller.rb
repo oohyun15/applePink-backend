@@ -5,16 +5,16 @@ class LocationsController < ApplicationController
   #모든 동네 목록
   def index
     @locations = Location.all
-    render json: @locations, status: :ok, scope: {params: create_params}
+    render json: @locations, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
 
   #특정 동네 정보 확인
   def show
-    render json: @location, status: :ok, scope: {params: create_params}
+    render json: @location, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
 
   def display    
-    return render json: @location, status: :ok, scope: {params: create_params}
+    return render json: @location, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
 
   #처음 회원가입 시 지역인증
