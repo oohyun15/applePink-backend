@@ -18,7 +18,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     @user.normal!
-    @user.add_device_info(device_info_params)
     redirect_to users_sign_in_path, notice: "회원가입 완료"
   end
 
