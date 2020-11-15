@@ -10,6 +10,17 @@ describe "Booking test", type: :request do
 
     post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
     @token =  JSON.parse(response.body)["token"]
+
+    # 다른 사용자로 로그인 함.
+    @other_user = User.all.where("id != #{@user.id}").sample
+    post "/users/sign_in", params: {user: {email: "#{@other_user.email}", password: "test123"}}
+    @other_token =  JSON.parse(response.body)["token"]
+
+    # 다른 사용자로 예약을 만듦.
+    post = @user.posts.sample
+    booking_info = {booking: {start_at: "2020-11-14", end_at: "2020-11-1", post_id: post.id}}
+    post "/bookings", params: booking_info, headers: {Authorization: @other_token}
+    @booking = Booking.find(JSON.parse(response.body)["booking_info"]["id"])
   end
   
   it "booking index test" do
@@ -29,9 +40,21 @@ describe "Booking test", type: :request do
     get "/bookings", headers: {Authorization: @token}
     ids = []
     JSON.parse(response.body).each do |booking| 
-      ids << post["booking_info"]["id"]
+      ids << booking["booking_info"]["id"]
     end
     expect(booking_list).to eq(ids)
+  end
+
+  it "booking new test" do
+    # post에 이미 현재 사용자의 booking이 있을 경우에는 그 booking을 반환하고
+    # 없는 경우에는 nil 값을 반환한다.
+    post = Post.all.sample
+    get "/bookings/new", params: {post_id: post.id}, headers: {Authorization: @token}
+    if post.bookings.find_by(user_id: @id, acceptance: :waiting).present?
+      expect(@user.bookings.ids.include? JSON.parse(response.body)["booking_info"]["id"]).to eq(true)
+    else
+      expect(JSON.parse(response.body)).to eq(nil)
+    end
   end
 
   it "booking create test" do
@@ -62,6 +85,36 @@ describe "Booking test", type: :request do
     id = Booking.last.id
     delete "/bookings/#{id}", headers: {Authorization: @token}
     expect(response).to have_http_status(:ok)
+  end
+
+  it "booking accept test" do
+    # 처음 생성했을 땐 대기 상태
+    expect(@booking.acceptance).to eq("waiting")
+
+    # 예약을 거절하는 경우
+    put "/bookings/#{@booking.id}/accept", params: {booking: {acceptance: "rejected"}}, headers: {Authorization: @token}
+    expect(Booking.find(@booking.id).acceptance).to eq("rejected")
+
+    # 예약을 승인하는 경우
+    put "/bookings/#{@booking.id}/accept", params: {booking: {acceptance: "accepted"}}, headers: {Authorization: @token}
+    expect(Booking.find(@booking.id).acceptance).to eq("accepted")
+  end
+
+  it "booking complete test" do
+    post = @booking.post
+    # 예약이 승인된 상태가 아니면 complete할 수 없음.
+    @booking = Booking.find(@booking.id)
+    unless @booking.accepted?
+      expect(response).to have_http_status(:bad_request)
+    else
+      put "/bookings/#{@booking.id}/complete", headers: {Authorization: @token}
+      # 예약 상태 completed로 업데이트
+      expect(Booking.find(@booking.id).acceptance).to eq("completed")
+      # rent 횟수 증가
+      expect(Post.find(post.id).rent_count).to eq(post.rent_count + 1)
+    end
+
+    delete "/bookings/#{@booking.id}", headers: {Authorization: @other_token}
   end
 
 end
