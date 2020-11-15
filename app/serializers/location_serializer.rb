@@ -9,22 +9,25 @@ class LocationSerializer < ActiveModel::Serializer
 
     location_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :location_info))
     {
-      alone: {
-        title: @alone,
-        count: @alone.size
-      },
-      near: {
-        title: @near,
-        count: @near.size
-      },
-      normal: {
-        title: @normal,
-        count: @normal.size
-      },
-      far: {
-        title: @far,
-        count: @far.size
-      }
+      id: object.id,
+      range: [
+        {
+          title: @alone,
+          count: @alone.size
+        },
+        {
+          title: @near,
+          count: @near.size
+        },
+        {
+          title: @normal,
+          count: @normal.size
+        },
+        {
+          title: @far,
+          count: @far.size
+        }
+      ]
     }
   end
 end
