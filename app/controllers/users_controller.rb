@@ -21,13 +21,13 @@ class UsersController < ApplicationController
       Rails.logger.error "ERROR: FCM 토큰이 없습니다. #{log_info}"
       # return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
       @user.normal!
-      
+
     else
       @user.device_type = device_info_params[:device_type]
       @user.device_list.add(device_info_params[:device_token])
       @user.normal!
       
-      if push_notification("정상적으로 등록되었습니다.", "디바이스 등록 완료", [ device_info_params[:device_token] ])
+      if push_notification("정상적으로 등록되었습니다.", "모두나눔 가입 완료", [ device_info_params[:device_token] ])
         Rails.logger.info "FCM device token: #{device_info_params[:device_token]}"
         return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
       

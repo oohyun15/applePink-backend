@@ -26,10 +26,18 @@ class BookingSerializer < ActiveModel::Serializer
           "대기 중"         
         end,
       contract: object.contract,
-      csd: object.consumer_sign_datetime,
-      psd: object.provider_sign_datetime,
-      cn: object.consumer_name,
-      pn: object.provider_name
+      consumer: {
+        birth: object.accepted? || object.completed? ? object.user&.birthday : nil,
+        name: object.accepted? || object.completed? ? object.user&.name : nil,
+        number: object.accepted? || object.completed? ? object.user&.number : nil,
+        sign_datetime: object.accepted? || object.completed? ? object.consumer_sign_datetime : nil
+      },
+      provider: {
+        birth: object.accepted? || object.completed? ? object.post&.user&.birthday : nil,
+        name: object.accepted? || object.completed? ? object.post&.user&.name : nil,
+        number: object.accepted? || object.completed? ? object.post&.user&.number : nil,
+        sign_datetime: object.accepted? || object.completed? ? object.provider_sign_datetime : nil
+      },
     }
   end
 end
