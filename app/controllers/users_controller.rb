@@ -27,9 +27,9 @@ class UsersController < ApplicationController
       @user.device_list.add(device_info_params[:device_token])
       @user.normal!
       
-      if push_notification("정상적으로 등록되었습니다.", "모두나눔 가입 완료", [ device_info_params[:device_token] ])
+      if push_notification("회원가입이 완료되었습니다.", "모두나눔 가입 완료", [ device_info_params[:device_token] ])
         Rails.logger.info "FCM device token: #{device_info_params[:device_token]}"
-        return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
+        return render json: {message: "회원가입이 완료되었습니다."}, status: :ok
       
       # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
       else
