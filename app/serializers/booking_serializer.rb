@@ -7,6 +7,7 @@ class BookingSerializer < ActiveModel::Serializer
       id: object.id,
       post_id: object.post_id,
       title: object.title,
+      product: object.product,
       body: object.body,
       price: object.price,
       acceptance: object.acceptance,
