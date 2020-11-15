@@ -19,8 +19,9 @@ class UsersController < ApplicationController
     @user = User.new user_params
     if !(params[:user][:device_token])
       Rails.logger.error "ERROR: FCM 토큰이 없습니다. #{log_info}"
-      return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
-
+      # return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
+      @user.normal!
+      
     else
       @user.device_type = device_info_params[:device_type]
       @user.device_list.add(device_info_params[:device_token])
