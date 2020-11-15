@@ -54,7 +54,7 @@ describe "Booking test", type: :request do
     # 마지막 Booking의 id가 위에서 생성된 booking임.
     id = Booking.last.id
     get "/bookings/#{id}", headers: {Authorization: @token}
-    expect(JSON.parse(response.body)["id"]).to eq(id)
+    expect(JSON.parse(response.body)["booking_info"]["id"]).to eq(id)
   end
 
   it "booking delete test" do
