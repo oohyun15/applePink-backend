@@ -13,7 +13,7 @@ class MessageSerializer < ActiveModel::Serializer
       post: {
         id: object.chat&.post_id,
         title: object.chat&.post&.title,
-        image: pbkect.chat&.post&.image_path
+        image: object.chat&.post&.image_path
       }
     }
   end
