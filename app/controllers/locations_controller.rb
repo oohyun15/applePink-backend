@@ -1,17 +1,26 @@
 class LocationsController < ApplicationController
-  before_action :load_location, only: %i(show certificate)
+  before_action :load_location, only: %i(show display certificate)
   before_action :authenticate_user!
 
   #모든 동네 목록
   def index
     @locations = Location.all
-    render json: @locations, status: :ok
+    render json: @locations, status: :ok, scope: {params: create_params}
   end
 
   #특정 동네 정보 확인
   def show
-    render json: @location, status: :ok
+    render json: @location, status: :ok, scope: {params: create_params}
   end
+
+  #def display
+  #  if current_user.location.nil?
+  #    Rails.logger.error "ERROR: 지역 인증이 만료되었습니다. 지역 인증을 다시 실행해주세요. #{log_info}"
+  #    return render json: {error: "지역 인증이 만료되었습니다. 지역 인증을 다시 실행해주세요."}, status: :bad_request
+  #  end
+    
+  #  return render json: @location, scope: {params: create_params}
+  #end
 
   #처음 회원가입 시 지역인증
   def certificate
