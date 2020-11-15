@@ -44,6 +44,7 @@ def generate_post num
     post = user.posts.create!(
       title: "맥북 프로 13인치 대여합니다!",
       body: "맥북 프로 13인치 2020년형 싸게 대여합니다. 관심있으신 분들 연락주세요.",
+      product: "맥북 프로 13인치",
       price: "10000",
       image: File.open("#{Rails.root}/public/image/mac_1.jpeg"),
       post_type: :provide,
