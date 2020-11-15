@@ -14,7 +14,7 @@ class LocationsController < ApplicationController
   end
 
   def display    
-    return render json: @location, scope: {params: create_params}
+    return render json: @location, status: :ok, scope: {params: create_params}
   end
 
   #처음 회원가입 시 지역인증
