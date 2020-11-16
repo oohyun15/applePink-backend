@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
   def index
     # 현재 유저가 읽지 않은 메시지 가져오기
     @messages = @chat.messages.where.not("check_id @> ?", "{#{current_user.id}}")
-    @messages.order(created_at: :asc)
+    @messages.order(created_at: :desc)
 
     # 메시지에 현재 유저가 읽었다고 추가
     @messages.each do |message|
