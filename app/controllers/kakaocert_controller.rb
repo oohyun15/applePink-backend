@@ -105,7 +105,7 @@ class KakaocertController < ApplicationController
       # 전자서명이 미완료되었을 때
       elsif @response["state"] == 0
         Rails.logger.error "전자서명이 완료되지 않았습니다. #{log_info}" 
-        return render json: @response, status: :bad_request
+        return render json: @response
       # 전자서명이 만료되었을 때
       else
         Rails.logger.error "전자서명이 만료됐습니다. #{log_info}" 
