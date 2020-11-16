@@ -12,7 +12,7 @@ class MessageSerializer < ActiveModel::Serializer
       sender: {
         id: object.user_id,
         image: object.user&.image_path,
-      }
+      },
       post: {
         id: object.chat&.post_id,
         title: object.chat&.post&.title,
