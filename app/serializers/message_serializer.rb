@@ -9,7 +9,12 @@ class MessageSerializer < ActiveModel::Serializer
       created_time: object.created_at,
       chat_id: object.chat&.id,
       body: object.body,
-      sender: object.user_id
+      sender: object.user_id,
+      post: {
+        id: object.chat&.post_id,
+        title: object.chat&.post&.title,
+        image: object.chat&.post&.image_path
+      }
     }
   end
 

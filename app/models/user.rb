@@ -24,7 +24,7 @@ class User < ApplicationRecord
   has_many :posts
   has_many :user_chats
   has_many :chats, through: :user_chats
-  has_many :messages
+  has_many :messages, dependent: :destroy
   has_many :bookings
   has_many :received_bookings, through: :posts, source: :bookings
   has_many :likes

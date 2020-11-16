@@ -14,7 +14,18 @@ class UserSerializer < ActiveModel::Serializer
       image: object.image.present? ? object.image.url : "",
       name: object.name,
       birthday: object.birthday,
-      number: object.number
+      number: object.number,
+      range: 
+        case object.location_range
+        when "location_alone"
+          "자기 동네만"
+        when "location_near"
+          "가까운 동네까지"
+        when "location_normal"
+          "중간 동네까지"
+        when "location_far"
+          "먼 동네까지"         
+        end
     }
   end
 

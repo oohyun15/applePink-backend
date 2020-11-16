@@ -1,6 +1,7 @@
 CATEGORIES = %w(잡화 의류 뷰티 전자제품 레져용품 생활용품 요리 자동차)
 
 def generate_user num
+  names = ["김영희", "이철수", "박영수", "정동구", "최주공"]
   num.times do |index|
     user = User.create!(
       email: "tester#{index+1}@test.com",
@@ -11,7 +12,10 @@ def generate_user num
       user_type: :normal,
       location_id: Location.all[index].position,
       location_range: :location_alone,
-      body: "tester#{index+1} account."
+      body: "tester#{index+1} account.",
+      name: names.sample,
+      birthday: Faker::Date.between(from: '1990-01-01', to: '1999-12-31').strftime("%Y%m%d"),
+      number: Faker::Base.numerify('010########')
     )
     p "User 'tester#{index+1}' created."
   end
@@ -40,6 +44,7 @@ def generate_post num
     post = user.posts.create!(
       title: "맥북 프로 13인치 대여합니다!",
       body: "맥북 프로 13인치 2020년형 싸게 대여합니다. 관심있으신 분들 연락주세요.",
+      product: "맥북 프로 13인치",
       price: "10000",
       image: File.open("#{Rails.root}/public/image/mac_1.jpeg"),
       post_type: :provide,

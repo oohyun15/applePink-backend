@@ -16,6 +16,7 @@ class PostSerializer < ActiveModel::Serializer
       #user_id: object.user_id,
       title: object.title,
       body: object.body,
+      product: object.product,
       price: object.price, 
       post_type: object.post_type,
       category: object.category&.title,

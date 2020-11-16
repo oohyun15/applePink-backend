@@ -16,11 +16,42 @@ class UsersController < ApplicationController
 
   # 유저 생성 POST sign_up
   def create
+<<<<<<< HEAD
     @user = User.new user_params
     @user.normal!
     #@user.add_device_info(device_info_params)
     @user.device_list.add(device_info_params[:device_token])
     redirect_to users_sign_in_path, notice: "회원가입 완료"
+=======
+    begin
+      @user = User.new user_params
+      if !(params[:user][:device_token])
+        Rails.logger.error "ERROR: FCM 토큰이 없습니다. #{log_info}"
+        # return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
+        @user.normal!
+  
+      else
+        @user.device_type = device_info_params[:device_type]
+        @user.device_list.add(device_info_params[:device_token])
+        @user.normal!
+        
+        if push_notification("회원가입이 완료되었습니다.", "모두나눔 가입 완료", [ device_info_params[:device_token] ])
+          Rails.logger.info "FCM device token: #{device_info_params[:device_token]}"
+          return render json: {message: "회원가입이 완료되었습니다."}, status: :ok
+        
+        # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
+        else
+          Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 0) #{log_info}"
+          return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
+        end
+  
+        redirect_to users_sign_in_path, notice: "회원가입 완료"
+      end
+    rescue => e
+      Rails.logger.error "ERROR: #{e} #{log_info}"
+      return render json: {error: e}, status: :bad_request
+    end
+>>>>>>> 9afd476c6a27c8821a6459d417559a055b33cabf
   end
 
   def update

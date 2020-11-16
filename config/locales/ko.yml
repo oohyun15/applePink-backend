@@ -57,6 +57,7 @@ ko:
         rent_count: 대여 횟수
         category: 카테고리
         category_id: 카테고리
+        product: 물품명
       category:
         title: 카테고리명
       booking:

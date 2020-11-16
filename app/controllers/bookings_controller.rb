@@ -126,6 +126,7 @@ class BookingsController < ApplicationController
       post_id: @post.id,
       title: @post.title,
       body: @post.body,
+      product: @post.product,
       lent_day: lent_day,
       price: @post.price * lent_day,
       acceptance: :waiting,
