@@ -13,11 +13,18 @@ describe "Report test", type: :request do
 
     # 테스트용 report 모델 생성
     num = range = Faker::Number.between(from: 5, to: 10)
+
     num.times do |index|
       target_type = Report::REPORT_MODELS.sample
       model = target_type.capitalize
-      report = Report.create!(
+      target_id = (model == "User") ? (model.constantize.all.ids - [@id]).sample : model.constantize.all.ids.sample
 
+      report = Report.create!(
+        user_id: @id,
+        target_id: target_id,
+        target_type: target_type,
+        detail: "테스트 신고",
+        reason: Faker::Number.between(from: 0, to: 7)
       )
     end
   end
