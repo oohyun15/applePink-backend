@@ -12,7 +12,7 @@ class ChatSerializer < ActiveModel::Serializer
       nickname: User.where(id: (object.user_ids - [@instance_options[:user_id]]) )&.pluck(:nickname),
       image: User.find_by(id: (object.user_ids - [@instance_options[:user_id]]) )&.image_path,
       created_time: chat_exist? ? time_ago_in_words(object.messages.last.created_at) : nil, 
-      num_unchecked: chat_exist? 0 ? object.messages.where.not("check_id @> ?", "{#{@instance_options[:user_id]}}").size : nil, 
+      num_unchecked: chat_exist? ? object.messages.where.not("check_id @> ?", "{#{@instance_options[:user_id]}}").size : nil, 
       message: chat_exist? ? object.messages.last.body : nil
     }
   end
