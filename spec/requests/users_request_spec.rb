@@ -84,7 +84,7 @@ describe "User test", type: :request do
     JSON.parse(response.body).each do |post|
       ids << post["post_info"]["id"]
     end
-    expect(posts).to eq(ids)
+    expect(posts - ids).to eq([])
   end
   
 end

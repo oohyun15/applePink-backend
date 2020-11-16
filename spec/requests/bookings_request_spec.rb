@@ -32,7 +32,7 @@ describe "Booking test", type: :request do
     JSON.parse(response.body).each do |booking| 
       ids << booking["booking_info"]["id"]
     end
-    expect(received_booking_list).to eq(ids)
+    expect(received_booking_list - ids).to eq([])
 
     # 유저의 booking 목록을 먼저 가져옴.
     booking_list = @user.bookings.pluck(:id)
@@ -42,7 +42,7 @@ describe "Booking test", type: :request do
     JSON.parse(response.body).each do |booking| 
       ids << booking["booking_info"]["id"]
     end
-    expect(booking_list).to eq(ids)
+    expect(booking_list - ids).to eq([])
   end
 
   it "booking new test" do
