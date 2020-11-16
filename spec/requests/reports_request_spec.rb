@@ -29,17 +29,27 @@ describe "Report test", type: :request do
     end
   end
 
-  it "question index test" do
+  it "report index test" do
     # target_type이 parameter로 들어오는 경우
-    target_types = Report::REPORT_MODELS.sample
-    get "/reports", params: {target_type: target_types}, headers: {Authorization: @token}
+    target_type = Report::REPORT_MODELS.sample
+    get "/reports", params: {target_type: target_type}, headers: {Authorization: @token}
     
-    # 조건에 맞는 report가 없을 때
-    if JSON.parse(response.body).empty?
-
-    else
-
+    # response로 넘어온 데이터와 직접 뽑아낸 데이터가 일치하는 지 확인함.
+    ids = []
+    JSON.parse(response.body).each do |report|
+      ids << report["id"]
     end
+    report_ids = Report.where(user_id: @id, target_type: target_type).ids
+    expect(report_ids - ids).to eq([])
     
+    # target_type이 parameter로 들어오지 않는 경우
+    get "/reports", headers: {Authorization: @token}
+
+    ids = []
+    JSON.parse(response.body).each do |report|
+      ids << report["id"]
+    end
+    report_ids = Report.where(user_id: @id).ids
+    expect(report_ids - ids).to eq([])
   end
 end
