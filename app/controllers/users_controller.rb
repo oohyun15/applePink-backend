@@ -168,6 +168,7 @@ class UsersController < ApplicationController
       # else
       #   Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 1) #{log_info}"
       #   return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
+      # end
     else
       current_user.device_type = device_info_params[:device_type]
       current_user.device_list.add(device_info_params[:device_token])
