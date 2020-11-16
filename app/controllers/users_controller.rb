@@ -16,13 +16,6 @@ class UsersController < ApplicationController
 
   # 유저 생성 POST sign_up
   def create
-<<<<<<< HEAD
-    @user = User.new user_params
-    @user.normal!
-    #@user.add_device_info(device_info_params)
-    @user.device_list.add(device_info_params[:device_token])
-    redirect_to users_sign_in_path, notice: "회원가입 완료"
-=======
     begin
       @user = User.new user_params
       if !(params[:user][:device_token])
@@ -51,7 +44,6 @@ class UsersController < ApplicationController
       Rails.logger.error "ERROR: #{e} #{log_info}"
       return render json: {error: e}, status: :bad_request
     end
->>>>>>> 9afd476c6a27c8821a6459d417559a055b33cabf
   end
 
   def update

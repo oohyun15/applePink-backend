@@ -16,7 +16,7 @@ describe "Post test", type: :request do
     # 존재하지 않는 지역으로 찾기
     # 404 (Not Found) error 발생
     get "/posts", params: {location_title: "삼성동"}, headers: {Authorization: @token}
-    expect(response).to have_http_status(404)
+    expect(response).to have_http_status(:not_found)
 
     # response로 넘어온 post들이 랜덤으로 선택된 지역의 post인지 확인
     title = Location.all.pluck(:title).sample
