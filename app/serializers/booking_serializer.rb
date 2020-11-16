@@ -11,8 +11,8 @@ class BookingSerializer < ActiveModel::Serializer
       body: object.body,
       price: object.price,
       acceptance: object.acceptance,
-      start_at: object.start_at.strftime('%Y년 %m월 %d일'),
-      end_at: object.end_at.strftime('%Y년 %m월 %d일'),
+      start_at: object.start_at,
+      end_at: object.end_at,
       lent_day: object.lent_day,
       image: object.user&.image_path,
       result:  
