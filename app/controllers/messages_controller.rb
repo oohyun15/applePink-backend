@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
     end
 
     # 메시지 렌더
-    render json: @messages, status: :ok, scope: {params: create_params}
+    render json: @messages, status: :ok, scope: {params: create_params}, post: @chat.post
   end
 
   def create

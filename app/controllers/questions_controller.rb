@@ -8,8 +8,8 @@ class QuestionsController < ApplicationController
       @question.save!
       return render json: @question, status: :ok
     rescue => e
-      Rails.logger.error "ERROR: #{e} #{log_info}"
-      return render json: {error: e}, status: :bad_request
+      Rails.logger.error "ERROR: #{@question.errors&.first&.last} #{log_info}"
+      return render json: {error: @question.errors&.first&.last}, status: :bad_request
     end
   end
 

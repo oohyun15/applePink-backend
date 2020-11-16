@@ -100,8 +100,8 @@ class PostsController < ApplicationController
       @post.able!
       render json: @post, status: :ok, scope: {params: create_params}, user_id: current_user.id
     rescue => e
-      Rails.logger.error "ERROR: #{e} #{log_info}"
-      render json: {error: e}, status: :bad_request
+      Rails.logger.error "ERROR: #{@post.errors&.first&.last} #{log_info}"
+      render json: {error: @post.errors&.first&.last}, status: :bad_request
     end
   end
 

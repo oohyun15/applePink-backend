@@ -30,8 +30,8 @@ class ReportsController < ApplicationController
       current_user.reports.create! report_params
       return render json: {message: "신고가 접수되었습니다."}, status: :ok
     rescue => e
-      Rails.logger.error "ERROR: #{e} #{log_info}"
-      return render json: {error: e}, status: :bad_request
+      Rails.logger.error "ERROR: #{@report.errors&.first&.last} #{log_info}"
+      return render json: {error: @report.errors&.first&.last}, status: :bad_request
     end
   end
 

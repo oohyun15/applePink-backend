@@ -32,8 +32,8 @@ class BookingsController < ApplicationController
         end
         return render json: @booking, status: :ok, scope: {params: create_params}
       rescue => e
-        Rails.logger.error "ERROR: #{e} #{log_info}"
-        return render json: {error: e}, status: :bad_request
+        Rails.logger.error "ERROR: #{@booking.errors&.first&.last} #{log_info}"
+        return render json: {error: @booking.errors&.first&.last}, status: :bad_request
       end
     end
   end
