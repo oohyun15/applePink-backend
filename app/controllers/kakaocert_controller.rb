@@ -101,7 +101,8 @@ class KakaocertController < ApplicationController
       )
       # 전자서명이 완료되었을 때
       if @response["state"] == 1
-        return redirect_to kakaocert_verifyESign_path(receiptId: params[:receiptId], booking_id: params[:booking_id]), headers: {Authorization: @token}
+        # return redirect_to kakaocert_verifyESign_path(receiptId: params[:receiptId], booking_id: params[:booking_id]), headers: {Authorization: @token}
+        return render json: @response
       # 전자서명이 미완료되었을 때
       elsif @response["state"] == 0
         Rails.logger.error "전자서명이 완료되지 않았습니다. #{log_info}" 
