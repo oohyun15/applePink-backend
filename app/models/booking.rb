@@ -4,5 +4,5 @@ class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :post
 
-  enum acceptance: %i(waiting accepted rejected completed)
+  enum acceptance: %i(waiting accepted rejected completed rent)
 end

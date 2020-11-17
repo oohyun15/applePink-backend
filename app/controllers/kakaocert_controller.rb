@@ -143,8 +143,11 @@ class KakaocertController < ApplicationController
         @booking.update!(consumer_sign_datetime: Time.current)
       # current_user가 제공자인 경우
       else
-        @booking.update!(consumer_sign_datetime: Time.current)
+        @booking.update!(provider_sign_datetime: Time.current)
       end
+
+      # 제공자, 소비자가 모두 서명했을 경우 대여중으로 변경
+      @booking.rent! if @booking.provider_sign_datetime.present? && @booking.consumer_sign_datetime.present?
       render json: @booking, status: :ok, scope: {params: create_params}
     rescue KakaocertException => e
       @code = e.code

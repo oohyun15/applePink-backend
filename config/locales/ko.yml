@@ -138,6 +138,7 @@ ko:
         accepted: 승인
         rejected: 거절
         completed: 종료
+        rent: 대여중
     post:
       status:
         able: 대여 가능

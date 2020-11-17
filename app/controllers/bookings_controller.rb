@@ -65,7 +65,7 @@ class BookingsController < ApplicationController
   def complete
     @post = @booking.post
 
-    unless @booking.accepted?
+    unless @booking.rent?
       Rails.logger.error "ERROR: Couldn't complete booking. booking acceptance: #{@booking.acceptance}. #{log_info}"
       return render json: {error: "Couldn't complete booking. booking acceptance: #{@booking.acceptance}."}, status: :bad_request
     end
