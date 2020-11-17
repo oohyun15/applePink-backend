@@ -1,7 +1,7 @@
 require 'kakaocert'
 
 class KakaocertController < ApplicationController
-  before_action :authenticate_user!, except: %i(verifyESign)
+  before_action :authenticate_user!
   before_action :load_booking, only: %i(verifyESign)
   
   # 링크아이디
