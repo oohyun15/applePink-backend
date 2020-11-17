@@ -52,6 +52,7 @@ ko:
       accepted: 승인
       rejected: 거절
       completed: 종료
+      rent: 대여중
       ios: 아이폰
       android: 안드로이드
       unknown: 알 수 없음
