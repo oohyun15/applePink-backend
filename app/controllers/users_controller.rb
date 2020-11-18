@@ -60,8 +60,8 @@ class UsersController < ApplicationController
         return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
       end
     rescue => e
-      Rails.logger.error "ERROR: #{@user.errors&.first&.last} #{log_info}"
-      return render json: {error: @user.errors&.first&.last}, status: :bad_request
+      Rails.logger.error "ERROR: #{e} #{log_info}"
+      return render json: {error: e}, status: :bad_request
     end
   end
 
