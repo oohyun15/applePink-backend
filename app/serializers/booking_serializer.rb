@@ -6,6 +6,7 @@ class BookingSerializer < ActiveModel::Serializer
     {
       id: object.id,
       post_id: object.post_id,
+      post_image: object.post&.image_path,
       title: object.title,
       product: object.product,
       body: object.body,
@@ -14,7 +15,7 @@ class BookingSerializer < ActiveModel::Serializer
       start_at: object.start_at,
       end_at: object.end_at,
       lent_day: object.lent_day,
-      image: object.user&.image_path,
+      consumer_image: object.user&.image_path,
       for: object.id == @instance_options[:user_id] ? "consumer" : "provider",
       result: 
         case object.acceptance
