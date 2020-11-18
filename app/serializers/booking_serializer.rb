@@ -15,8 +15,6 @@ class BookingSerializer < ActiveModel::Serializer
       start_at: object.start_at,
       end_at: object.end_at,
       lent_day: object.lent_day,
-      consumer_image: object.user&.image_path,
-      consumer_nickname: object.user&.nickname,
       for: object.id == @instance_options[:user_id] ? "consumer" : "provider",
       result: 
         case object.acceptance
@@ -31,12 +29,16 @@ class BookingSerializer < ActiveModel::Serializer
         end,
       contract: object.contract,
       consumer: {
+        nickname: object.user&.nickname,
+        image: object.user&.image_path,
         birth: object.accepted? || object.completed? ? object.user&.birthday : nil,
         name: object.accepted? || object.completed? ? object.user&.name : nil,
         number: object.accepted? || object.completed? ? object.user&.number : nil,
         sign_datetime: object.accepted? || object.completed? ? object.consumer_sign_datetime : nil
       },
       provider: {
+        nickname: object.post&.user&.nickname,
+        image: object.post&.user&.image_path,
         birth: object.accepted? || object.completed? ? object.post&.user&.birthday : nil,
         name: object.accepted? || object.completed? ? object.post&.user&.name : nil,
         number: object.accepted? || object.completed? ? object.post&.user&.number : nil,
