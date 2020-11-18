@@ -127,7 +127,7 @@ class ApplicationController < ActionController::Base
 
   def is_heic?(column)
     model = controller_name.singularize.to_sym
-    params.dig(model, column)&.content_type == "image/heic"
+    params.dig(model, column)&.content_type == "image/heic" rescue false
   end
 
   private
