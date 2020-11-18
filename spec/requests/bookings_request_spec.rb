@@ -107,7 +107,13 @@ describe "Booking test", type: :request do
     unless @booking.accepted?
       expect(response).to have_http_status(:bad_request)
     else
-      put "/bookings/#{@booking.id}/complete", headers: {Authorization: @token}
+      # booking의 상태가 rent(대여 중)가 아니면 complete할 수 없음.
+      put "/bookings/#{@booking.id}/complete", params: {booking: { post_id: post.id}}, headers: {Authorization: @token}
+      expect(response).to have_http_status(:bad_request)
+
+      # 예약 상태를 rent로 업데이트.
+      @booking.update!(acceptance: :rent)
+      put "/bookings/#{@booking.id}/complete", params: {booking: { post_id: post.id}}, headers: {Authorization: @token}
       # 예약 상태 completed로 업데이트
       expect(Booking.find(@booking.id).acceptance).to eq("completed")
       # rent 횟수 증가
