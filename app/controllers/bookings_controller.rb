@@ -38,7 +38,6 @@ class BookingsController < ApplicationController
         end
         if push_notification("\"#{@booking.post&.title}\"의 새로운 예약 신청이 왔습니다.", "[모두나눔] 새로운 예약 신청", @booking.post&.user&.device_list)
           Rails.logger.info "FCM device token: #{@booking.post&.user&.device_list}"
-          return render json: {message: "\"#{@booking.post&.title}\" 예약 신청이 왔습니다."}, status: :ok
         
         # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
         else
@@ -68,8 +67,7 @@ class BookingsController < ApplicationController
 
         if push_notification("\"#{@booking.post&.title}\" 예약이 승인되었습니다.", "[모두나눔] 예약 승인", @booking.user&.device_list)
           Rails.logger.info "FCM device token: #{@booking.post&.user&.device_list}"
-          return render json: {message: "\"#{@booking.post&.title}\" 예약이 승인되었습니다."}, status: :ok
-        
+          
         # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
         else
           Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 0) #{log_info}"
