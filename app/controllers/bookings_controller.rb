@@ -7,6 +7,12 @@ class BookingsController < ApplicationController
   def index
     @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
 
+    # status: before
+    @bookings = @bookings.where(acceptance: %i(waiting accepted rejected)) if params[:status] == "before"
+    
+    # status: after
+    @bookings = @bookings.where(acceptance: %i(completed rent)) if params[:status] == "after"
+
     render json: @bookings, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
 
