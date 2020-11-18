@@ -7,16 +7,16 @@ class BookingsController < ApplicationController
   def index
     @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
 
-    render json: @bookings, status: :ok, scope: {params: create_params}
+    render json: @bookings, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
 
   def new
     @booking = @post.bookings.find_by(user_id: current_user.id, acceptance: :waiting)
-    render json: @booking.present? ? @booking : nil, status: :ok, scope: {params: create_params}
+    render json: @booking.present? ? @booking : nil, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
 
   def show
-    render json: @booking, status: :ok, scope: {params: create_params}
+    render json: @booking, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
 
   def create
@@ -30,7 +30,7 @@ class BookingsController < ApplicationController
         else
           @booking = current_user.bookings.create! booking_params
         end
-        return render json: @booking, status: :ok, scope: {params: create_params}
+        return render json: @booking, status: :ok, scope: {params: create_params}, user_id: current_user.id
       rescue => e
         Rails.logger.error "ERROR: #{@booking.errors&.first&.last} #{log_info}"
         return render json: {error: @booking.errors&.first&.last}, status: :bad_request
@@ -55,7 +55,7 @@ class BookingsController < ApplicationController
         @post.able! if @post.unable?        
       end
 
-      return render json: @booking, status: :ok, scope: {params: create_params}
+      return render json: @booking, status: :ok, scope: {params: create_params}, user_id: current_user.id
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
       return render json: {error: e}, status: :bad_request
@@ -73,7 +73,7 @@ class BookingsController < ApplicationController
       @booking.update!(acceptance: :completed)
       @post.rent_count += 1
       @post.able!
-      return render json: @booking, status: :ok, scope: {params: create_params}
+      return render json: @booking, status: :ok, scope: {params: create_params}, user_id: current_user.id
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
       return render json: {error: e}, status: :bad_request
@@ -91,7 +91,7 @@ class BookingsController < ApplicationController
       return render json: {error: "올바르지 않은 파라미터입니다."}, status: :bad_request
     end
 
-    return render json: @bookings, status: :ok, scope: {params: create_params}
+    return render json: @bookings, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
 
   # booking 모델을 삭제하므로 일반적인 경우가 아닐 시 사용하지 않습니다.
