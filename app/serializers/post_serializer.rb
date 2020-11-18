@@ -10,6 +10,14 @@ class PostSerializer < ActiveModel::Serializer
   
   #조건문이 없으니 default가 됨
   def post_info
+    # 현재 사용자가 해당 게시물에 예약(상태가 대기 중인 것만)을 한 상태인지 확인하는 것
+    begin
+      user = User.find(@instance_options[:user_id])
+      is_booked = user.bookings&.where(["post_id = :id and acceptance = :acceptance", { id: object.id, acceptance: 0 }]).empty?
+    rescue => e
+      Rails.logger.error "ERROR: 없는 사용자입니다. #{log_info}"
+      render json: {error: "없는 사용자입니다."}, status: :bad_request
+    end
     post_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :post_info))
     {
       id: object.id,
@@ -31,7 +39,8 @@ class PostSerializer < ActiveModel::Serializer
       created_at: object.created_at.strftime("%Y-%m-%d %H:%M"),
       updated_at: object.updated_at.strftime("%Y-%m-%d %H:%M"),
       created_at_ago: time_ago_in_words(object.created_at)+" 전",
-      updated_at_ago: time_ago_in_words(object.updated_at)+" 전"
+      updated_at_ago: time_ago_in_words(object.updated_at)+" 전",
+      is_booked: !is_booked
     }
   end
 
