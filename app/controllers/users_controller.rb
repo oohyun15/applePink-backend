@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :load_user, only: %i(show edit update list)
+  before_action :load_user, only: %i(show update list)
   before_action :authenticate_user!, except: %i(create)
   before_action :check_email, only: %i(email_auth)
 
@@ -47,8 +47,22 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update! user_params
-    render json: @user, status: :ok, scope: {params: create_params}
+    begin
+      @user.update! user_params
+
+      if push_notification("회원정보 수정이 완료되었습니다.", "회원정보 수정 완료", @user.device_list)
+        Rails.logger.info "FCM device token: #{@user.device_list}"
+        return render json: @user, status: :ok
+      
+      # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
+      else
+        Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 0) #{log_info}"
+        return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
+      end
+    rescue => e
+      Rails.logger.error "ERROR: #{e} #{log_info}"
+      return render json: {error: e}, status: :bad_request
+    end
   end
 
   # 회원 탈퇴

@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   resources :bookings, only: %i(index new show create destroy) do
     put :complete, on: :member
     put :accept, on: :member
+    # get :list, on: :collection
   end
 
   resources :companies, only: %i(create destroy) do
