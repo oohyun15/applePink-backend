@@ -11,7 +11,7 @@ class PostSerializer < ActiveModel::Serializer
   #조건문이 없으니 default가 됨
   def post_info
     # 현재 사용자가 해당 게시물에 예약(상태가 대기 중인 것만)을 한 상태인지 확인하는 것
-    is_booked = object.bookings.where(user_id: @instance_options[:user_id]).waiting.present?
+    is_booked = object.bookings&.where(user_id: @instance_options[:user_id])&.waiting.present?
     post_scope = ActiveModel::Type::Boolean.new.cast(scope.dig(:params, :post_info))
     {
       id: object.id,
