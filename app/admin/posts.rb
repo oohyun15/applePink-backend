@@ -17,6 +17,7 @@ ActiveAdmin.register Post do
     a link_to ("모두 보기"), "/admin/posts", class: "button small"
     
     column :title
+    column :product
     column :post_type do |post| post.post_type.present? ? I18n.t("enum.post.post_type.#{post.post_type}") : "게시글 타입 없음<br>비정상적인 게시글".html_safe end
     column :image do |post| image_tag(post&.image_path ,class: 'admin-index-image') end
     column :user do |post| post.user end
@@ -38,6 +39,7 @@ ActiveAdmin.register Post do
     attributes_table do
       # row :id
       row :title
+      row :product
       row :post_type do |post| post.post_type.present? ? I18n.t("enum.post.post_type.#{post.post_type}") : "게시글 타입 없음<br>비정상적인 게시글".html_safe end
       row :user do |post| post.user end
       row :price do |post| money post.price end
@@ -70,6 +72,7 @@ ActiveAdmin.register Post do
     f.inputs do
 
       f.input :title
+      f.input :product
       f.input :post_type, as: :select, collection: Post.enum_selectors(:post_type)
       f.input :price
       f.input :body
