@@ -15,7 +15,7 @@ class CompaniesController < ApplicationController
       begin
         @company = current_user.build_company company_params
         @company.update!(approve: false)
-        return render json: {message: "광고주 신청이 완료돠었습니다."}, status: :ok
+        return render json: {message: "광고주 신청이 완료되었습니다."}, status: :ok
       rescue => e
         Rails.logger.error "ERROR: #{@company.errors&.first&.last} #{log_info}"
         render json: {error: @company.errors&.first&.last}, status: :bad_request

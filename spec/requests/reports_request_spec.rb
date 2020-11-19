@@ -4,9 +4,9 @@ require 'active_support'
 describe "Report test", type: :request do
   before(:all) do
     # 유저 중 임의의 유저를 선택함.
-    user = User.all.sample
-    @id = user.id
-    @email = user.email
+    @user = User.all.sample
+    @id = @user.id
+    @email = @user.email
 
     post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
     @token = JSON.parse(response.body)["token"]
@@ -80,13 +80,15 @@ describe "Report test", type: :request do
         reason: "fraud"
       }
     }
-    post "/reports", params: report_info, headers: {Authorization: @token}
-    expect(response).to have_http_status(:ok)
-    
-    # 이미 신고한 대상을 다시 신고할 때 오류가 발생함.
-    post "/reports", params: report_info, headers: {Authorization: @token}
-    expect(response).to have_http_status(:bad_request)
-
-    Report.first.delete
+    # 이미 신고한 대상일 때
+    if @user.reports.find_by(target_type: report_info[:report][:target_type], target_id: report_info[:report][:target_id]).present?
+      post "/reports", params: report_info, headers: {Authorization: @token}
+      expect(response).to have_http_status(:bad_request)
+    else
+      post "/reports", params: report_info, headers: {Authorization: @token}
+      expect(response).to have_http_status(:ok)
+    end
+  
+    Report.delete_all
   end
 end
