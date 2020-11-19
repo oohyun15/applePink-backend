@@ -15,9 +15,9 @@ describe "Company test", type: :request do
   it "Company create test" do
     company_info = {
       company: {
-        name: ,
-        phone: ,
-        message: ,
+        name: Faker::Name.first_name,
+        phone: Faker::Base.numerify('010########'),
+        message: "광고주 신청합니다.",
         description: ,
         image: File.open("#{Rails.root}/public/image/default.png"),
         location_id: ,
