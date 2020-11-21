@@ -33,6 +33,7 @@ class User < ApplicationRecord
   has_many :received_reports, class_name: "Report", as: :target, dependent: :destroy
   has_many :schedules
   has_many :questions
+  has_many :reviews, through: :bookings, dependent: :destroy
 
   accepts_nested_attributes_for :likes
 

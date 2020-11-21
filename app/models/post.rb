@@ -17,6 +17,7 @@ class Post < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :likes, as: :target, class_name: "Like", dependent: :destroy
   has_many :reports, class_name: "Report", as: :target, dependent: :destroy
+  has_many :reviews, through: :bookings, dependent: :destroy
 
   belongs_to :user
   belongs_to :location, foreign_key: :location_id, primary_key: :position
