@@ -9,9 +9,11 @@ class ReviewsController < ApplicationController
       return render json: {error: "예약이 완료되지 않으면 리뷰를 할 수 없습니다."}, status: :not_acceptable 
     end
 
-    @review = @booking.review.build review_params
     begin
+      @review = Review.create! review_params
       @review.save!
+      @booking.review = @review
+      
       @post = @booking.post
       # 새로운 평균 평점 계산
       avg = (@post.rating_avg * (@post.reviews_count - 1)) / @post.reviews_count
@@ -30,7 +32,7 @@ class ReviewsController < ApplicationController
       @review.update! review_params
 
       @post = @booking.post
-      avg = (@post.rating_avg - before_rating + @review.rating) / @post.reviews_count
+      avg = (@post.rating_avg * @post.reviews_count - before_rating + @review.rating) / @post.reviews_count
       @post.update!(rating_avg: avg)
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
@@ -44,7 +46,7 @@ class ReviewsController < ApplicationController
 
       @post = @booking.post
       # 새로운 평균 평점 계산 
-      if @post.reviews_count == 0:
+      if @post.reviews_count == 0
         avg = 0
       else
         avg = (@post.rating_avg * (@post.reviews_count + 1)) / @post.reviews_count
