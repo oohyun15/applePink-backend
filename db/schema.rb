@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_21_110505) do
+ActiveRecord::Schema.define(version: 2020_11_21_113228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -252,7 +252,11 @@ ActiveRecord::Schema.define(version: 2020_11_21_110505) do
     t.float "rating"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.bigint "post_id"
     t.index ["booking_id"], name: "index_reviews_on_booking_id"
+    t.index ["post_id"], name: "index_reviews_on_post_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "schedules", force: :cascade do |t|
@@ -336,5 +340,7 @@ ActiveRecord::Schema.define(version: 2020_11_21_110505) do
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "reviews", "posts"
+  add_foreign_key "reviews", "users"
   add_foreign_key "taggings", "tags"
 end

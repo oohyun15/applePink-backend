@@ -1,7 +1,23 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_booking, only: %i(create destroy)
+  before_action :load_booking, only: %i(create update destroy)
   before_action :load_review, only: %i(update destroy)
+  before_action :check_owner, only: %i(update destroy)
+
+  def index
+    begin
+      if params[:post_id].present?
+        @reviews = Post.find(params[:post_id]).reviews
+      else
+        @reviews = current_user.reviews
+      end
+    rescue => e
+      Rails.logger.error "ERROR: #{e} #{log_info}"
+      return render json: {error: e}, status: :bad_request
+    end
+
+    return render json: @reviews, status: :ok
+  end
 
   def create
     unless @booking.acceptance == "completed"
@@ -10,14 +26,13 @@ class ReviewsController < ApplicationController
     end
 
     begin
-      @review = Review.create! review_params
-      @review.save!
-      @booking.review = @review
-      
+      @review = @booking.create_review review_params
       @post = @booking.post
       # 새로운 평균 평점 계산
-      avg = (@post.rating_avg * (@post.reviews_count - 1)) / @post.reviews_count
+      avg = (@post.rating_avg * @post.reviews_count + @review.rating) / (@post.reviews_count + 1)
       @post.update!(rating_avg: avg)
+
+      return render json: @review, status: :ok
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
       render json: {error: e}, status: :bad_request
@@ -34,6 +49,8 @@ class ReviewsController < ApplicationController
       @post = @booking.post
       avg = (@post.rating_avg * @post.reviews_count - before_rating + @review.rating) / @post.reviews_count
       @post.update!(rating_avg: avg)
+
+      return render json: @review, status: :ok
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
       render json: {error: e}, status: :bad_request
@@ -49,7 +66,7 @@ class ReviewsController < ApplicationController
       if @post.reviews_count == 0
         avg = 0
       else
-        avg = (@post.rating_avg * (@post.reviews_count + 1)) / @post.reviews_count
+        avg = (@post.rating_avg * (@post.reviews_count + 1) - @review.rating) / (@post.reviews_count)
       end  
       @post.update!(rating_avg: avg)
 
@@ -63,7 +80,12 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    params.require(:review).permit(:detail, :rating, :booking_id)
+    review_param = params.require(:review).permit(:detail, :rating, :booking_id)
+    extra = {
+      user_id: current_user.id,
+      post_id: @booking.post.id
+    }
+    return review_param.merge(extra)
   end
 
   def load_booking
@@ -81,6 +103,13 @@ class ReviewsController < ApplicationController
     rescue => e
       Rails.logger.error "ERROR: 없는 리뷰입니다. #{log_info}"
       render json: {error: "없는 리뷰입니다."}, status: :bad_request
+    end
+  end
+
+  def check_owner
+    if @review.user != current_user
+      Rails.logger.error "ERROR: 리뷰 관리 권한이 없습니다. #{log_info}"
+      render json: { error: "리뷰 관리 권한이 없습니다." }, status: :unauthorized
     end
   end
 end
