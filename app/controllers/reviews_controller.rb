@@ -32,8 +32,9 @@ class ReviewsController < ApplicationController
       @review = @booking.create_review review_params
       @post = @booking.post
       # 새로운 평균 평점 계산
-      avg = (@post.rating_avg * @post.reviews_count + @review.rating) / (@post.reviews_count + 1)
-      @post.update!(rating_avg: avg)
+      #avg = (@post.rating_avg * @post.reviews_count + @review.rating) / (@post.reviews_count + 1)
+      @post.send(:calculate_avg)
+      #@post.update!(rating_avg: avg)
 
       return render json: @review, status: :ok
     rescue => e
@@ -50,8 +51,9 @@ class ReviewsController < ApplicationController
       @review.update! review_params
 
       @post = @booking.post
-      avg = (@post.rating_avg * @post.reviews_count - before_rating + @review.rating) / @post.reviews_count
-      @post.update!(rating_avg: avg)
+      @post.send(:calculate_avg)
+      #avg = (@post.rating_avg * @post.reviews_count - before_rating + @review.rating) / @post.reviews_count
+      #@post.update!(rating_avg: avg)
 
       return render json: @review, status: :ok
     rescue => e
@@ -66,12 +68,7 @@ class ReviewsController < ApplicationController
 
       @post = @booking.post
       # 새로운 평균 평점 계산 
-      if @post.reviews_count == 0
-        avg = 0
-      else
-        avg = (@post.rating_avg * (@post.reviews_count + 1) - @review.rating) / (@post.reviews_count)
-      end  
-      @post.update!(rating_avg: avg)
+      @post.send(:calculate_avg)
 
       render json: {notice: "리뷰를 삭제하셨습니다."}, status: :ok
     rescue => e
