@@ -17,6 +17,7 @@ class Post < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :likes, as: :target, class_name: "Like", dependent: :destroy
   has_many :reports, class_name: "Report", as: :target, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   belongs_to :user
   belongs_to :location, foreign_key: :location_id, primary_key: :position
@@ -27,5 +28,10 @@ class Post < ApplicationRecord
 
   def display_name
     self.title
+  end
+
+  private
+  def calculate_avg
+    update_attribute(:rating_avg, self.reviews.average(:rating).to_f)
   end
 end
