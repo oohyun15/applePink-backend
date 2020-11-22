@@ -118,7 +118,7 @@ ko:
       image: 이미지
       chat: 채팅
       location: 지역
-      company: 광고주
+      company: 파트너
       report: 신고
       question: 문의
       group: 소속
@@ -153,7 +153,7 @@ ko:
         no_select: 선택안함
       user_type:
         normal: 일반
-        company: 광고주
+        company: 파트너
       account_type:
         normal: 일반
         kakao: 카카오

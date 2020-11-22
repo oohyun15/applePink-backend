@@ -30,7 +30,7 @@ ActiveAdmin.register User do
     tag_column :account_type
     column :user_type do |user|
       if user.is_company?
-        link_to "광고주", admin_company_path(user.company), class: "status_tag company"
+        link_to "파트너", admin_company_path(user.company), class: "status_tag company"
       else
         span "일반", class: "status_tag normal"
       end
@@ -59,7 +59,7 @@ ActiveAdmin.register User do
       tag_row :device_type
       row :user_type do |user|
         if user.is_company?
-          link_to "광고주", admin_company_path(user.company), class: "status_tag company"
+          link_to "파트너", admin_company_path(user.company), class: "status_tag company"
         else
           span "일반", class: "status_tag normal"
         end
