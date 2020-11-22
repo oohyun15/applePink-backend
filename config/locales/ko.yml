@@ -94,7 +94,7 @@ ko:
         location: 지역
         approve: 승인여부
       report:
-        target_type: 신고대상
+        target_type: 신고종류
         target: 신고대상
         reason: 신고사유
         detail: 상세내용

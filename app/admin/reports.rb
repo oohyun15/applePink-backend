@@ -11,6 +11,7 @@ ActiveAdmin.register Report do
     br
     column :user
     #  column :target_type do |report| report.target_type == "User" ? User.find(report.target_id).nickname : Post.find(report.target_id).title end
+    tag_column :target_type
     column :target
     column :reason do |report| I18n.t("enum.report.reason.#{report.reason}") end
     column :detail do |report| report.detail&.truncate(20) end
