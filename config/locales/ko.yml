@@ -86,7 +86,12 @@ ko:
         messages_count: 메시지 수
         last_message: 마지막 메시지
       company:
-        name: 이름
+        name: 대표자
+        title: 회사명
+        business_registration: 사업자번호
+        business_address: 사업자주소
+        biz_type: 업태
+        category: 종목
         phone: 연락처
         message: 한줄소개
         image: 이미지
