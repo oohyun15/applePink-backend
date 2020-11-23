@@ -14,7 +14,7 @@ class EmailCertification < ApplicationRecord
       # 코드 업데이트
       certification_code.update(code: generate_code)
 
-      Rails.logger.error "generate_code: #{generate_code}, email: #{email} #{log_info}"
+      Rails.logger.error "generate_code: #{generate_code}, email: #{email}"
 
       UserMailer.generate_code(email, generate_code).deliver_now!
       result = true
