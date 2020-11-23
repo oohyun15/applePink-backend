@@ -34,6 +34,7 @@ class User < ApplicationRecord
   has_many :schedules
   has_many :questions
   has_many :reviews, dependent: :destroy
+  has_many :received_reviews, through: :posts, source: :reviews
 
   accepts_nested_attributes_for :likes
 

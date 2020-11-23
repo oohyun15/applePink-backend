@@ -9,7 +9,7 @@ class ReviewsController < ApplicationController
       if params[:post_id].present?
         @reviews = Post.find(params[:post_id]).reviews
       elsif params[:user_id].present?
-        @reviews = User.find(params[:user_id]).reviews
+        @reviews = params[:received] == "true" ? User.find(params[:user_id]).received_reviews : User.find(params[:user_id]).reviews
       else
         Rails.logger.error "ERROR: 리뷰를 볼 대상을 정하세요"
         return render json: {error: "ERROR: 리뷰를 볼 대상을 정하세요"}, status: :bad_request
