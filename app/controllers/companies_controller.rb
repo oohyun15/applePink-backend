@@ -14,6 +14,7 @@ class CompaniesController < ApplicationController
     else
       begin
         @company = current_user.build_company company_params
+        @company.location = current_user.location
         @company.update!(approve: false)
         return render json: {message: "파트너 신청이 완료돠었습니다."}, status: :ok
       rescue => e
