@@ -16,7 +16,7 @@ class MessagesController < ApplicationController
 
     # 메시지 렌더
     # render json: @messages, status: :ok, scope: {params: create_params}
-    return render status: :ok
+    return render json: nil, status: :ok
   end
 
   def create
@@ -39,7 +39,7 @@ class MessagesController < ApplicationController
     push_notification("#{current_user.nickname} : #{@message.body}", "", rids)
 
     # render json: @message, status: :ok, scope: {params: create_params}
-    return render status: :ok
+    return render json: nil, status: :ok
   end
 
   private
