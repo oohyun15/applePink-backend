@@ -15,7 +15,8 @@ class MessagesController < ApplicationController
     end
 
     # 메시지 렌더
-    render json: @messages, status: :ok, scope: {params: create_params}
+    # render json: @messages, status: :ok, scope: {params: create_params}
+    return render status: :ok
   end
 
   def create
@@ -37,7 +38,8 @@ class MessagesController < ApplicationController
     Rails.logger.error "registration ids: #{rids}"
     push_notification("#{current_user.nickname} : #{@message.body}", "", rids)
 
-    render json: @message, status: :ok, scope: {params: create_params}
+    # render json: @message, status: :ok, scope: {params: create_params}
+    return render status: :ok
   end
 
   private

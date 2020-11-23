@@ -118,7 +118,7 @@ class UsersController < ApplicationController
           begin
             group = Group.find_by(email: @email)
             current_user.update!(group_id: group.id) 
-            return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
+            return render json: {message: "정상적으로 인증되었습니다.", group_title: group.title}, status: :ok
           rescue => e
             Rails.logger.error "잘못된 소속입니다. 다시 인증해주세요. #{log_info}"
             return render json: {error: "잘못된 소속입니다. 다시 인증해주세요."}, status: :not_acceptable
@@ -132,15 +132,15 @@ class UsersController < ApplicationController
     # 이메일만 있을 경우
     # 이메일이 등록된 소속들의 이메일이 아닐 때
     unless Group.all.pluck(:email).include? @email
-      Rails.logger.error "등록되지 않은 소속의 이메일입니다. 메일 주소를 확인해 주세요 #{log_info}"
-      return render json: {error: "등록되지 않은 소속의 이메일입니다. 메일 주소를 확인해 주세요"}, status: :bad_request
+      Rails.logger.error "등록되지 않은 소속의 이메일입니다. 메일 주소를 확인해 주세요. #{log_info}"
+      return render json: {error: "등록되지 않은 소속의 이메일입니다. 메일 주소를 확인해 주세요."}, status: :bad_request
     end
 
     if EmailCertification.generate_code(email_params[:email])
       return render json: {message: "소속 인증 메일을 발송했습니다. 메일을 확인해 주세요."}, status: :ok
     else
-      Rails.logger.error "ERROR: 정상적으로 메일을 발송하지 못했습니다. 메일 주소를 확인해 주세요. #{log_info}"
-      return render json: {error: "정상적으로 메일을 발송하지 못했습니다. 메일 주소를 확인해 주세요."}, status: :not_acceptable
+      Rails.logger.error "ERROR: 이미 등록된 메일 주소입니다. 다른 메일 주소를 입력해 주세요. #{log_info}"
+      return render json: {error: "이미 등록된 메일 주소입니다. 다른 메일 주소를 입력해 주세요."}, status: :not_acceptable
     end
 
     Rails.logger.error "ERROR: 이메일 인증 오류 #{log_info}"
