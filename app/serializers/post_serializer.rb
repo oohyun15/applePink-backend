@@ -34,7 +34,8 @@ class PostSerializer < ActiveModel::Serializer
       updated_at: object.updated_at.strftime("%Y-%m-%d %H:%M"),
       created_at_ago: time_ago_in_words(object.created_at)+" 전",
       updated_at_ago: time_ago_in_words(object.updated_at)+" 전",
-      is_booked: is_booked
+      is_booked: is_booked,
+      rating: object.rating_avg
     }
   end
 

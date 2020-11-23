@@ -9,7 +9,7 @@ class ReviewsController < ApplicationController
       if params[:post_id].present?
         @reviews = Post.find(params[:post_id]).reviews
       elsif params[:user_id].present?
-        @reviews = User.find(params[:user_id]).reviews
+        @reviews = params[:received] == "true" ? User.find(params[:user_id]).received_reviews : User.find(params[:user_id]).reviews
       else
         Rails.logger.error "ERROR: 리뷰를 볼 대상을 정하세요"
         return render json: {error: "ERROR: 리뷰를 볼 대상을 정하세요"}, status: :bad_request
@@ -19,7 +19,7 @@ class ReviewsController < ApplicationController
       return render json: {error: e}, status: :bad_request
     end
 
-    return render json: @reviews, status: :ok
+    return render json: @reviews, status: :ok, scope: {params: create_params}
   end
 
   def create
@@ -36,7 +36,7 @@ class ReviewsController < ApplicationController
       @post.send(:calculate_avg)
       #@post.update!(rating_avg: avg)
 
-      return render json: @review, status: :ok
+      return render json: @review, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
       render json: {error: e}, status: :bad_request
@@ -55,7 +55,7 @@ class ReviewsController < ApplicationController
       #avg = (@post.rating_avg * @post.reviews_count - before_rating + @review.rating) / @post.reviews_count
       #@post.update!(rating_avg: avg)
 
-      return render json: @review, status: :ok
+      return render json: @review, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
       render json: {error: e}, status: :bad_request
@@ -80,7 +80,7 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    review_param = params.require(:review).permit(:title, :body, :rating, :booking_id)
+    review_param = params.require(:review).permit(:body, :rating, :booking_id)
     extra = {
       user_id: current_user.id,
       post_id: @booking.post.id

@@ -259,7 +259,6 @@ ActiveRecord::Schema.define(version: 2020_11_23_122422) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
     t.bigint "post_id"
-    t.string "title"
     t.index ["booking_id"], name: "index_reviews_on_booking_id"
     t.index ["post_id"], name: "index_reviews_on_post_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
