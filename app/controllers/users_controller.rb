@@ -230,14 +230,34 @@ class UsersController < ApplicationController
 
   # 키워드 알림
   def keyword
-    if request.get?
-      render json: {keywords: current_user.keyword_list}, status: :ok
-    elsif request.post?
-      
-    elsif request.delete?
-    else
-      Rails.logger.error "ERROR: 비정상적인 접근입니다. #{log_info}"
-      render json: {error: "비정상적인 접근입니다."}, status: :bad_request
+    begin
+      if request.get?
+        return render json: {keywords: current_user.keyword_list}, status: :ok
+      elsif request.post?
+        if current_user.keyword_list.include?(keyword_params[:keyword])
+          Rails.logger.error "ERROR: 이미 등록된 키워드입니다. #{log_info}"
+          return render json: {error: "이미 등록된 키워드입니다."}, status: :bad_request  
+        else
+          current_user.keyword_list.add(keyword_params[:keyword])
+          current_user.save!
+          return render json: {message: "\"#{keyword_params[:keyword]}\"(이)가 키워드 알림에 등록되었습니다."}, status: :ok
+        end
+      elsif request.delete?
+        unless current_user.keyword_list.include?(keyword_params[:keyword])
+          Rails.logger.error "ERROR: 등록되지 않은 키워드입니다. #{log_info}"
+          return render json: {error: "등록되지 않은 키워드입니다"}, status: :bad_request  
+        else
+          current_user.keyword_list.remove(keyword_params[:keyword])
+          current_user.save!
+          return render json: {message: "\"#{keyword_params[:keyword]}\"(이)가 정상적으로 삭제되었습니다."}, status: :ok
+        end
+      else
+        Rails.logger.error "ERROR: 비정상적인 접근입니다. #{log_info}"
+        render json: {error: "비정상적인 접근입니다."}, status: :bad_request
+      end
+    rescue => e
+      Rails.logger.error "ERROR: #{e} #{log_info}"
+      render json: {error: e}, status: :bad_request
     end
   end
 
@@ -254,6 +274,10 @@ class UsersController < ApplicationController
 
   def device_info_params
     { device_type: find_device_type, device_token: params[:user][:device_token] }
+  end
+
+  def keyword_params
+    params.require(:user).permit(:keyword)
   end
 
   def load_user

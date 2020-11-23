@@ -20,10 +20,13 @@ Rails.application.routes.draw do
     resources :likes, only: %i(index)
     collection do
       get :mypage
+      get :keyword
+      post :keyword
       post :email_auth
       post :add_device
       post :remove_device
       delete :withdrawal
+      delete :keyword
       put :range
     end
     member do

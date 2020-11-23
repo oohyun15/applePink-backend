@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  acts_as_taggable_on :keywords
+
   validates :email, presence: true
   validates :nickname, presence: true
 
