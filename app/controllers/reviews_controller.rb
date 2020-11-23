@@ -80,7 +80,7 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    review_param = params.require(:review).permit(:title, :body, :rating, :booking_id)
+    review_param = params.require(:review).permit(:body, :rating, :booking_id)
     extra = {
       user_id: current_user.id,
       post_id: @booking.post.id
