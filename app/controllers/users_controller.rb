@@ -174,15 +174,15 @@ class UsersController < ApplicationController
     
     # 이미 등록된 토큰일 경우 
     elsif (current_user.device_list.include?(device_info_params[:device_token]))
-      # if push_notification("카카오 로그인이 성공적으로.", "카카오 로그인 완료", [ device_info_params[:device_token] ])
-      Rails.logger.error "ERROR: 이미 등록된 토큰입니다. #{log_info}"
-      return render json: {error: "이미 등록된 토큰입니다."}, status: :ok
+      if push_notification("카카오 로그인이 성공적으로.", "카카오 로그인 완료", [ device_info_params[:device_token] ])
+        Rails.logger.error "ERROR: 이미 등록된 토큰입니다. #{log_info}"
+        return render json: {error: "이미 등록된 토큰입니다."}, status: :ok
     
-      #   # 푸시 알림이 보내지지 않은 경우
-      # else
-      #   Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 1) #{log_info}"
-      #   return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
-      # end
+         # 푸시 알림이 보내지지 않은 경우
+       else
+         Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 1) #{log_info}"
+         return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
+       end
     else
       current_user.device_type = device_info_params[:device_type]
       current_user.device_list.add(device_info_params[:device_token])
