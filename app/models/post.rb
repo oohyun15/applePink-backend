@@ -42,7 +42,7 @@ class Post < ApplicationRecord
     tags = tags.select{ |tag| self.title.include?(tag) }
 
     User.tagged_with(tags, any: true).each do |user|
-      user.push_notification("등록하신 키워드 알림에 해당하는 물품이 게시되었습니다. \"#{self.title}\"", "[모두나눔] 키워드 알림")
+      user.push_notification("등록하신 키워드 알림에 해당하는 물품이 게시되었습니다. \"#{self.title}\"", "[모두나눔] 키워드 알림") if user != self.user
     end
   end
 end
