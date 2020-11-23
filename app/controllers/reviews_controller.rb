@@ -19,7 +19,7 @@ class ReviewsController < ApplicationController
       return render json: {error: e}, status: :bad_request
     end
 
-    return render json: @reviews, status: :ok
+    return render json: @reviews, status: :ok, scope: {params: create_params}
   end
 
   def create
@@ -36,7 +36,7 @@ class ReviewsController < ApplicationController
       @post.send(:calculate_avg)
       #@post.update!(rating_avg: avg)
 
-      return render json: @review, status: :ok
+      return render json: @review, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
       render json: {error: e}, status: :bad_request
@@ -55,7 +55,7 @@ class ReviewsController < ApplicationController
       #avg = (@post.rating_avg * @post.reviews_count - before_rating + @review.rating) / @post.reviews_count
       #@post.update!(rating_avg: avg)
 
-      return render json: @review, status: :ok
+      return render json: @review, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
       render json: {error: e}, status: :bad_request
