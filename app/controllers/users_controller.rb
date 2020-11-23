@@ -240,7 +240,7 @@ class UsersController < ApplicationController
         else
           current_user.keyword_list.add(keyword_params[:keyword])
           current_user.save!
-          return render json: {error: "이미 등록된 키워드입니다."}, status: :ok
+          return render json: {message: "\"#{keyword_params[:keyword]}\"(이)가 키워드 알림에 등록되었습니다."}, status: :ok
         end
       elsif request.delete?
         unless current_user.keyword_list.include?(keyword_params[:keyword])
@@ -249,7 +249,7 @@ class UsersController < ApplicationController
         else
           current_user.keyword_list.remove(keyword_params[:keyword])
           current_user.save!
-          return render json: {error: "정상적으로 삭제되었습니다."}, status: :ok
+          return render json: {message: "\"#{keyword_params[:keyword]}\"(이)가 정상적으로 삭제되었습니다."}, status: :ok
         end
       else
         Rails.logger.error "ERROR: 비정상적인 접근입니다. #{log_info}"
