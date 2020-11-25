@@ -72,7 +72,6 @@ ko:
         consumer_sign_datetime: 소비자 서명 시간
         provider_name: 제공자 이름
         consumer_name: 소비자 이름
-
       location:
         title: 법정동
         lat: 위도
@@ -115,6 +114,9 @@ ko:
         body: 리뷰 내용
         rating: 평점
         booking_id: 완료한 예약
+        user_id: 사용자
+        post_id: 게시글
+        images: 리뷰 이미지
 
     models:
       dashboard: 대시보드

@@ -64,7 +64,24 @@ ActiveAdmin.register Post do
           end
         end
       end
-
+      panel '리뷰 목록' do
+        table_for post.reviews do
+          column :id
+          column :body do |review| review.body&.truncate(20) end
+          column :rating
+          column :booking_id do |review| review.booking end
+          column :user_id do |review| review.user end
+          column :images do |review| 
+            table_for '이미지' do
+              review.images.each_with_index do |image, index|
+                column "상세이미지#{index + 1}" do
+                  image_tag(image.image_path ,class: 'admin-detail-image')
+                end
+              end
+            end
+          end
+        end
+      end
     end
   end
 
