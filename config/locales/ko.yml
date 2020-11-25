@@ -72,7 +72,6 @@ ko:
         consumer_sign_datetime: 소비자 서명 시간
         provider_name: 제공자 이름
         consumer_name: 소비자 이름
-
       location:
         title: 법정동
         lat: 위도
