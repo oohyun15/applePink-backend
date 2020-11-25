@@ -114,6 +114,9 @@ ko:
         body: 리뷰 내용
         rating: 평점
         booking_id: 완료한 예약
+        user_id: 사용자
+        post_id: 게시글
+        images: 리뷰 이미지
 
     models:
       dashboard: 대시보드
