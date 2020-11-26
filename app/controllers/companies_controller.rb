@@ -70,5 +70,6 @@ class CompaniesController < ApplicationController
   def company_params
     prms = params.require(:company).permit(Company::COMPANY_COLUMNS)
     is_heic?(prms, :image)
+    return prms
   end
 end
