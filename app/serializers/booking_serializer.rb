@@ -16,6 +16,7 @@ class BookingSerializer < ActiveModel::Serializer
       end_at: object.end_at,
       lent_day: object.lent_day,
       for: object.id == @instance_options[:user_id] ? "consumer" : "provider",
+      has_review: object.review.present?,
       result: 
         case object.acceptance
         when "accepted"
