@@ -56,7 +56,7 @@ Rails.application.routes.draw do
     # get :list, on: :collection
   end
 
-  resources :companies, only: %i(create destroy) do
+  resources :companies, only: %i(show create destroy) do
     patch :confirm, on: :member
   end
 
