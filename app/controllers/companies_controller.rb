@@ -4,6 +4,10 @@ class CompaniesController < ApplicationController
   before_action :load_company, only: %i(show destroy confirm)
   before_action :check_owner, only: %i(destroy)
 
+  def show
+    render json: @company, status: :ok, scope: {params: create_params}
+  end
+
   def create
     if current_user.company.present?
       if current_user.company&.approve
