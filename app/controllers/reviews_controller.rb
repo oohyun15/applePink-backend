@@ -29,7 +29,8 @@ class ReviewsController < ApplicationController
     end
 
     begin
-      @review = @booking.create_review review_params
+      @review = @booking.build_review review_params
+      @review.save!
       @post = @booking.post
       # 새로운 평균 평점 계산
       #avg = (@post.rating_avg * @post.reviews_count + @review.rating) / (@post.reviews_count + 1)
