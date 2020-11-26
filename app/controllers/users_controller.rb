@@ -174,7 +174,7 @@ class UsersController < ApplicationController
     
     # 이미 등록된 토큰일 경우 
     elsif (current_user.device_list.include?(device_info_params[:device_token]))
-      if push_notification("카카오 로그인이 성공적으로.", "카카오 로그인 완료", [ device_info_params[:device_token] ])
+      if push_notification("카카오 로그인이 성공적으로 완료되었습니다.", "카카오 로그인 완료", [ device_info_params[:device_token] ])
         Rails.logger.error "ERROR: 이미 등록된 토큰입니다. #{log_info}"
         return render json: {error: "이미 등록된 토큰입니다."}, status: :ok
     
