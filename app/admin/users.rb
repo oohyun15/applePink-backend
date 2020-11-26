@@ -30,7 +30,7 @@ ActiveAdmin.register User do
     tag_column :account_type
     column :user_type do |user|
       if user.is_company?
-        link_to "광고주", admin_company_path(user.company), class: "status_tag company"
+        link_to "파트너", admin_company_path(user.company), class: "status_tag company"
       else
         span "일반", class: "status_tag normal"
       end
@@ -59,12 +59,30 @@ ActiveAdmin.register User do
       tag_row :device_type
       row :user_type do |user|
         if user.is_company?
-          link_to "광고주", admin_company_path(user.company), class: "status_tag company"
+          link_to "파트너", admin_company_path(user.company), class: "status_tag company"
         else
           span "일반", class: "status_tag normal"
         end
       end
       tag_row :account_type do |user| I18n.t("enum.user.account_type.#{user.account_type}") end
+      panel '작성한 리뷰 목록' do
+        table_for user.reviews do
+          column :id
+          column :body do |review| review.body&.truncate(20) end
+          column :rating
+          column :booking_id do |review| review.booking end
+          column :post_id do |review| review.post end
+          column :images do |review| 
+            table_for '이미지' do
+              review.images.each_with_index do |image, index|
+                column "상세이미지#{index + 1}" do
+                  image_tag(image.image_path ,class: 'admin-detail-image')
+                end
+              end
+            end
+          end
+        end
+      end
     end
   end
 

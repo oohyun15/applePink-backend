@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  acts_as_taggable_on :keywords
+
   validates :email, presence: true
   validates :nickname, presence: true
 
@@ -33,6 +35,8 @@ class User < ApplicationRecord
   has_many :received_reports, class_name: "Report", as: :target, dependent: :destroy
   has_many :schedules
   has_many :questions
+  has_many :reviews, dependent: :destroy
+  has_many :received_reviews, through: :posts, source: :reviews
 
   accepts_nested_attributes_for :likes
 

@@ -41,7 +41,7 @@ ko:
         provider: 플랫폼
         location: 지역
         location_range: 지역 검색 범위
-        expire_time: 지역 인증 만료 시간
+        expire_time: 동네 인증 만료 시간
         group_id: 소속
         device_type: 기기 타입
         birthday: 생년월일
@@ -72,7 +72,6 @@ ko:
         consumer_sign_datetime: 소비자 서명 시간
         provider_name: 제공자 이름
         consumer_name: 소비자 이름
-
       location:
         title: 법정동
         lat: 위도
@@ -86,7 +85,12 @@ ko:
         messages_count: 메시지 수
         last_message: 마지막 메시지
       company:
-        name: 이름
+        name: 대표자
+        title: 회사명
+        business_registration: 사업자번호
+        business_address: 사업자주소
+        biz_type: 업태
+        category: 종목
         phone: 연락처
         message: 한줄소개
         image: 이미지
@@ -94,7 +98,7 @@ ko:
         location: 지역
         approve: 승인여부
       report:
-        target_type: 신고대상
+        target_type: 신고종류
         target: 신고대상
         reason: 신고사유
         detail: 상세내용
@@ -106,7 +110,13 @@ ko:
         title: 소속명
         email: 소속 이메일 도메인
         users_count: 소속 사용자 수
-
+      review:
+        body: 리뷰 내용
+        rating: 평점
+        booking_id: 완료한 예약
+        user_id: 사용자
+        post_id: 게시글
+        images: 리뷰 이미지
 
     models:
       dashboard: 대시보드
@@ -118,7 +128,7 @@ ko:
       image: 이미지
       chat: 채팅
       location: 지역
-      company: 광고주
+      company: 파트너
       report: 신고
       question: 문의
       group: 소속
@@ -153,7 +163,7 @@ ko:
         no_select: 선택안함
       user_type:
         normal: 일반
-        company: 광고주
+        company: 파트너
       account_type:
         normal: 일반
         kakao: 카카오

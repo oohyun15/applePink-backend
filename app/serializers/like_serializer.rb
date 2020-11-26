@@ -18,7 +18,9 @@ class LikeSerializer < ActiveModel::Serializer
       title: object.target&.title, 
       target_id: object.target_id,
       target_type: object.target_type,
-      user_id: object.user_id
+      user_id: object.user_id,
+      post_image: object.target_type == "Post" ? object.target&.image_path : nil,
+      price: object.target_type == "Post" ? object.target&.price : nil
     }
   end
 
