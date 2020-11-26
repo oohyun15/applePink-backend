@@ -53,7 +53,9 @@ class MessagesController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(Message::MESSAGE_COLUMNS)
+    prms = params.require(:message).permit(Message::MESSAGE_COLUMNS)
+    is_heic?(prms, :images_attributes, :image)
+    return prms
   end
 
   def check_owner

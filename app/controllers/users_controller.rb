@@ -264,8 +264,9 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    is_heic?(:image) ? params.require(:user).permit(User::USER_COLUMNS).merge(image: heic2png(params[:user][:image].path)) 
-    : params.require(:user).permit(User::USER_COLUMNS)
+    prms = params.require(:user).permit(User::USER_COLUMNS)
+    is_heic?(prms, :image)
+    return prms
   end
 
   def email_params

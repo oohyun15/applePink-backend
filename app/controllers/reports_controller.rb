@@ -38,7 +38,9 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit(Report::REPORT_COLUMNS)
+    prms = params.require(:report).permit(Report::REPORT_COLUMNS)
+    is_heic?(prms, :images_attributes, :image)
+    return prms
   end
 
   def load_target
