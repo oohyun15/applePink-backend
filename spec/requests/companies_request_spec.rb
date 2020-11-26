@@ -19,17 +19,21 @@ describe "Company test", type: :request do
         phone: Faker::Base.numerify('010########'),
         message: "광고주 신청합니다.",
         description: "모두나눔의 광고주가 되고 싶습니다. 연락주세요.",
+        title: "애플핑크",
+        business_registration: "0123456789",
+        business_address: "경기도 수원시",
+        biz_type: "전자소매업",
+        category: "애플리케이션",
         location_id: Location.all.pluck(:position).sample
       }
     }
-
     # 이미 현재 사용자가 이전에 광고주 신청을 했을 경우
     if @user.company.present?
       post "/companies", params: company_info, headers: {Authorization: @token}
       # 광고주 신청이 승인됐을 경우
       if @user.company&.approve
         # 이미 광고주라는 메세지를 출력함.
-        expect(JSON.parse(response.body)["message"]).to eq("#{@user.nickname}님은 광고주입니다.")
+        expect(JSON.parse(response.body)["message"]).to eq("#{@user.nickname}님은 파트너입니다.")
         expect(response).to have_http_status(:ok)
       else
         # 아직 승인 대기 상태일 경우
@@ -47,7 +51,7 @@ describe "Company test", type: :request do
       company_info[:company][:name] = Faker::Name.name
       # 신청됐다는 메세지와 함께 승인 대기 중(approve: false)으로 생성됨.
       post "/companies", params: company_info, headers: {Authorization: @token}
-      expect(JSON.parse(response.body)["message"]).to eq("광고주 신청이 완료되었습니다.")
+      expect(JSON.parse(response.body)["message"]).to eq("파트너 신청이 완료되었습니다.")
       expect(response).to have_http_status(:ok)
     end
   end

@@ -71,7 +71,7 @@ describe "Report test", type: :request do
     # 자기 자신이 아닌 대상을 신고함.
     target_type = Report::REPORT_MODELS.sample
     model = target_type.capitalize
-    target_id = (model == "User") ? (model.constantize.all.ids - [@id]).sample : model.constantize.all.ids.sample
+    target_id = (model == "User") ? (model.constantize.all.ids - [@id]).sample : (model.constantize.all.ids - [Post.where(user_id: @user.id)&.ids]).sample
     report_info = {
       report: { 
         target_id: target_id,
