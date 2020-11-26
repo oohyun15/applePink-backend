@@ -16,7 +16,9 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(Question::QUESTION_COLUMNS)
+    prms = params.require(:question).permit(Question::QUESTION_COLUMNS)
+    is_heic?(prms, :images_attributes, :image)
+    return prms
   end
 
 end
