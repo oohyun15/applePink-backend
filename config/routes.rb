@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       get :keyword
       post :keyword
       post :email_auth
+      post :sms_auth
       post :add_device
       post :remove_device
       delete :withdrawal
