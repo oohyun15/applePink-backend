@@ -270,9 +270,10 @@ class UsersController < ApplicationController
       unless @users.empty?
         emails = []
         @users.each do |user|
+          # 결과로 나온 이메일을 암호화
           email = user.email.split("@")
           len = email[0].length
-          filtered_email = email[0].gsub(email[0][len / 2..(len - 1)], '*' * (len - len / 2)) + "@" + email[1].gsub(/[A-Za-z]/, "*")
+          filtered_email = email[0].gsub(email[0][(len / 2 + 1)..(len - 1)], '*' * (len - len / 2 - 1)) + "@" + email[1].gsub(/[A-Za-z]/, "*")
           emails << filtered_email
         end
         return render json: {emails: emails}, status: :ok
