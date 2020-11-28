@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_booking, only: %i(create update destroy)
+  before_action :load_booking, only: %i(create update)
   before_action :load_review, only: %i(update destroy)
   before_action :check_owner, only: %i(update destroy)
 
