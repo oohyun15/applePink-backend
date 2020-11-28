@@ -5,7 +5,8 @@ class ChatsController < ApplicationController
   before_action :check_owner, only: %i(show destroy)
 
   def index
-    @chats = current_user.chats.where(has_message: true)
+    @chats = current_user.chats.where("messages_count > 0")
+    @chats = @chats.includes(:messages).order("messages.created_at desc")
     render json: @chats, status: :ok, scope: {params: create_params}, user_id: current_user.id 
   end
 
@@ -22,6 +23,7 @@ class ChatsController < ApplicationController
     if current_user == @post.user
       
       # 자기가 쓴 게시글에 채팅 생성 시
+      Rails.logger.error "ERROR: 자신의 게시글에 대한 채팅은 생성할 수 없습니다. #{log_info}"
       render json: {error: "자신의 게시글에 대한 채팅은 생성할 수 없습니다."}, status: :bad_request
     else
       # 기존에 생성한 채팅방 있으면 그걸로 불러옴
@@ -43,7 +45,8 @@ class ChatsController < ApplicationController
       @chat.destroy!
       render json: {notice: "채팅방에서 나오셨습니다."}, status: :ok
     rescue => e
-      render json: {error: e.errors.full_messages}, status: :bad_request
+      Rails.logger.error "ERROR: #{e} #{log_info}"
+      render json: {error: e}, status: :bad_request
     end
   end
 
@@ -52,6 +55,7 @@ class ChatsController < ApplicationController
     begin
       @chat = Chat.find(params[:id])
     rescue => e
+      Rails.logger.error "ERROR: 없는 채팅입니다. #{log_info}"
       render json: {error: "없는 채팅입니다."}, status: :bad_request
     end
   end
@@ -60,12 +64,14 @@ class ChatsController < ApplicationController
     begin
       @post = Post.find(params[:post_id])
     rescue => e
+      Rails.logger.error "ERROR: 없는 게시글입니다. #{log_info}"
       render json: {error: "없는 게시글입니다."}, status: :bad_request
     end
   end
 
   def check_owner
     unless @chat.users.include? current_user
+      Rails.logger.error "ERROR: 채팅을 볼 권한이 없습니다. #{log_info}"
       render json: { error: "unauthorized" }, status: :unauthorized
     end
   end

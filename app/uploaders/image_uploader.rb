@@ -22,7 +22,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    "#{secure_token}#{original_filename.truncate(200, omission: "")}.#{file.extension}" if original_filename.present?
+    "#{secure_token}#{original_filename.truncate(200, omission: "")}" if original_filename.present?
   end
 
   protected
@@ -32,14 +32,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   version :square do
-    process resize_to_fill: [1024,1024]
-  end
-
-  version :banner do
-    process resize_to_fill: [1024,768]
-  end
-
-  version :ratio do
-    process resize_to_fit: [1600,1600]
+    process resize_to_fill: [200, 200]
   end
 end

@@ -19,14 +19,18 @@ ko:
     status: "상태"
     post: 게시글
     chat: 채팅
+    report: 신고
     category: 카테고리
     lat: 위도
     lng: 경도
+    likes_count: 좋아요 수
+    reports_count: 신고 수
+    contract: 계약 내용
 
   activerecord:
     attributes:
       user:
-        account_type: 계정타입
+        account_type: 계정 타입
         name: 사용자명
         nickname: 닉네임
         email: 이메일
@@ -37,7 +41,11 @@ ko:
         provider: 플랫폼
         location: 지역
         location_range: 지역 검색 범위
-        expire_time: 지역 인증 만료 시간
+        expire_time: 동네 인증 만료 시간
+        group_id: 소속
+        device_type: 기기 타입
+        birthday: 생년월일
+        number: 전화번호
       post:
         title: 제목
         body: 내용
@@ -45,7 +53,11 @@ ko:
         user: 게시자
         price: 가격
         location: 지역
+        location_id: 지역
         rent_count: 대여 횟수
+        category: 카테고리
+        category_id: 카테고리
+        product: 물품명
       category:
         title: 카테고리명
       booking:
@@ -56,6 +68,10 @@ ko:
         user: 소비자
         provider: 제공자
         price: 가격
+        provider_sign_datetime: 제공자 서명 시간
+        consumer_sign_datetime: 소비자 서명 시간
+        provider_name: 제공자 이름
+        consumer_name: 소비자 이름
       location:
         title: 법정동
         lat: 위도
@@ -66,12 +82,45 @@ ko:
       chat:
         has_message: 메시지 여부
         user_list: 채팅방 내 유저 목록
-        message_count: 메시지 수
+        messages_count: 메시지 수
         last_message: 마지막 메시지
+      company:
+        name: 대표자
+        title: 회사명
+        business_registration: 사업자번호
+        business_address: 사업자주소
+        biz_type: 업태
+        category: 종목
+        phone: 연락처
+        message: 한줄소개
+        image: 이미지
+        description: 상세정보
+        location: 지역
+        approve: 승인여부
+      report:
+        target_type: 신고종류
+        target: 신고대상
+        reason: 신고사유
+        detail: 상세내용
+        user: 신고자
+      question:
+        contact: 연락처
+        user: 사용자
+      group:
+        title: 소속명
+        email: 소속 이메일 도메인
+        users_count: 소속 사용자 수
+      review:
+        body: 리뷰 내용
+        rating: 평점
+        booking_id: 완료한 예약
+        user_id: 사용자
+        post_id: 게시글
+        images: 리뷰 이미지
 
     models:
       dashboard: 대시보드
-      user: "사용자"
+      user: 사용자
       admin_user: 어드민
       category: 카테고리
       post: 게시글
@@ -79,6 +128,10 @@ ko:
       image: 이미지
       chat: 채팅
       location: 지역
+      company: 파트너
+      report: 신고
+      question: 문의
+      group: 소속
 
     errors:
       models:
@@ -88,7 +141,6 @@ ko:
               blank: "항목이 비어있습니다"
             gender: "성별"
 
-
   enum:
     booking:
       acceptance:
@@ -96,6 +148,7 @@ ko:
         accepted: 승인
         rejected: 거절
         completed: 종료
+        rent: 대여중
     post:
       status:
         able: 대여 가능
@@ -110,7 +163,7 @@ ko:
         no_select: 선택안함
       user_type:
         normal: 일반
-        company: 광고주
+        company: 파트너
       account_type:
         normal: 일반
         kakao: 카카오
@@ -119,3 +172,18 @@ ko:
         location_near: 가까운 동네
         location_normal: 중간 동네
         location_far: 먼 동네
+      device_type:
+        ios: 아이폰
+        android: 안드로이드
+        unknown: 알 수 없음
+
+    report:
+      reason:
+        fake_item: 허위매물
+        break_rule: 계약위반
+        lost_contact: 연락두절
+        impertinence: 부적절한 언어 사용
+        unsuitable_post: 적합하지 않은 게시글
+        fraud: 사기의심
+        threat_violence: 폭력 및 협박
+        etc: 기타사유

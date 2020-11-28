@@ -24,6 +24,7 @@ gem "acts_as_list"
 gem "activeadmin_reorderable"
 gem "array_enum"
 gem 'bcrypt' 
+gem 'cloudmersive-convert-api-client'
 
 # hashtag
 gem "acts-as-taggable-on", "~> 6.0"
@@ -47,11 +48,20 @@ gem "figaro"
 # 이메일
 gem 'sendgrid-actionmailer'
 
+# 검색
+gem 'ransack'
+
 # omniauth
 gem 'omniauth'
 gem 'omniauth-oauth2', '<= 1.3.1'
 # gem 'omniauth-kakao'
 gem 'omniauth-kakao', :git => 'git://github.com/insomenia/omniauth-kakao'
+
+# fcm
+gem 'fcm'
+
+# kakao-cert
+gem 'kakaocert'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -75,6 +85,13 @@ group :test do
   gem "webdrivers"
 end
 
+group :test, :development do
+  gem 'rspec-rails', '~> 4.0.1'
+  gem 'faker'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
+end
+
 gem 'capistrano', '~> 3.7', '>= 3.7.1'
 gem 'capistrano-rails'
 gem 'capistrano-passenger', '~> 0.2.0'
@@ -84,5 +101,6 @@ gem 'capistrano-rvm'
 gem 'capistrano-rails-collection'
 gem 'capistrano-figaro-yml'
 gem 'capistrano-database-yml'
+# gem 'capistrano-rpush'
 
 gem 'daemons'

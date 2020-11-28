@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="justify-content-center text-center">
+    <img src="/image/default.png" alt="" class="image">
+    <div class="title">소셜 로그인 취소</div>
+    <div class="body">잠시만 기다려주세요...</div>
+  </div>
+</div>
+
+<script>
+  setTimeout(() => {
+    window.ReactNativeWebView.postMessage("{\"error\" : \"소셜 로그인 취소\"}", "*");
+    console.log("Cancel social login.")
+  }, 1000);
+</script>
+
+<style>
+.container {
+  height:100vh;
+}
+
+.image {
+  padding-top: 25vh;
+  width: 23vh;
+}
+
+.title {
+  padding-top: 5vh;
+  font-size: 4em;
+  line-height: 1;
+  margin-bottom: 0.7em;
+  font-weight: 700;
+}
+
+.body {
+  font-size: 3em;
+  line-height: 1;
+  margin-bottom: 0.5em;
+}
+
+</style>

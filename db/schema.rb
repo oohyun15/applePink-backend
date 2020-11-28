@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_28_030529) do
+ActiveRecord::Schema.define(version: 2020_11_23_122422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,27 @@ ActiveRecord::Schema.define(version: 2020_10_28_030529) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
   create_table "admin_users", force: :cascade do |t|
@@ -46,13 +67,19 @@ ActiveRecord::Schema.define(version: 2020_10_28_030529) do
     t.bigint "post_id"
     t.string "title"
     t.text "body"
-    t.integer "price"
+    t.bigint "price"
     t.integer "acceptance", default: 0
     t.datetime "start_at"
     t.datetime "end_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "lent_day"
+    t.text "contract"
+    t.datetime "provider_sign_datetime"
+    t.datetime "consumer_sign_datetime"
+    t.string "provider_name"
+    t.string "consumer_name"
+    t.string "product"
     t.index ["post_id"], name: "index_bookings_on_post_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
@@ -69,7 +96,28 @@ ActiveRecord::Schema.define(version: 2020_10_28_030529) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "post_id"
     t.boolean "has_message", default: false
+    t.bigint "messages_count", default: 0
     t.index ["post_id"], name: "index_chats_on_post_id"
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.string "phone"
+    t.string "message"
+    t.string "image"
+    t.text "description"
+    t.bigint "location_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "approve"
+    t.bigint "user_id"
+    t.string "title"
+    t.string "business_registration"
+    t.string "business_address"
+    t.string "biz_type"
+    t.string "category"
+    t.index ["location_id"], name: "index_companies_on_location_id"
+    t.index ["user_id"], name: "index_companies_on_user_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -100,6 +148,8 @@ ActiveRecord::Schema.define(version: 2020_10_28_030529) do
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email"
+    t.integer "users_count", default: 0
   end
 
   create_table "identities", force: :cascade do |t|
@@ -139,6 +189,7 @@ ActiveRecord::Schema.define(version: 2020_10_28_030529) do
     t.integer "location_far", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "likes_count", default: 0
   end
 
   create_table "messages", force: :cascade do |t|
@@ -163,13 +214,54 @@ ActiveRecord::Schema.define(version: 2020_10_28_030529) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
     t.bigint "category_id"
-    t.integer "price"
+    t.bigint "price"
     t.string "image"
     t.integer "post_type"
     t.bigint "location_id"
+    t.integer "reports_count", default: 0
+    t.integer "likes_count", default: 0
+    t.text "contract"
+    t.string "product"
+    t.integer "reviews_count", default: 0
+    t.float "rating_avg", default: 0.0
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["location_id"], name: "index_posts_on_location_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.string "contact"
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.bigint "target_id"
+    t.string "target_type"
+    t.bigint "user_id"
+    t.integer "reason"
+    t.text "detail"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_reports_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "booking_id"
+    t.text "body"
+    t.float "rating"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.bigint "post_id"
+    t.index ["booking_id"], name: "index_reviews_on_booking_id"
+    t.index ["post_id"], name: "index_reviews_on_post_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "schedules", force: :cascade do |t|
@@ -179,6 +271,33 @@ ActiveRecord::Schema.define(version: 2020_10_28_030529) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "delayed_job_type"
     t.index ["user_id"], name: "index_schedules_on_user_id"
+  end
+
+  create_table "taggings", id: :serial, force: :cascade do |t|
+    t.integer "tag_id"
+    t.string "taggable_type"
+    t.integer "taggable_id"
+    t.string "tagger_type"
+    t.integer "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+  end
+
+  create_table "tags", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "user_chats", force: :cascade do |t|
@@ -207,15 +326,26 @@ ActiveRecord::Schema.define(version: 2020_10_28_030529) do
     t.bigint "location_id"
     t.integer "location_range", default: 0
     t.datetime "expire_time"
+    t.integer "likes_count", default: 0
+    t.integer "reports_count", default: 0
+    t.integer "device_type"
+    t.string "name"
+    t.string "birthday"
+    t.string "number"
+    t.integer "reviews_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["location_id"], name: "index_users_on_location_id"
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chats", "posts"
   add_foreign_key "identities", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "reviews", "posts"
+  add_foreign_key "reviews", "users"
+  add_foreign_key "taggings", "tags"
 end
