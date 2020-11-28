@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     collection do
       get :mypage
       get :keyword
+      get :find
       post :keyword
       post :email_auth
       post :add_device

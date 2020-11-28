@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: %i(show update list)
-  before_action :authenticate_user!, except: %i(create)
+  before_action :authenticate_user!, except: %i(create find)
   before_action :check_email, only: %i(email_auth)
 
   # 유저 목록 보기
@@ -258,6 +258,40 @@ class UsersController < ApplicationController
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
       render json: {error: e}, status: :bad_request
+    end
+  end
+
+  def find
+    # 찾는 정보가 이메일일 경우
+    if params[:for] == "email"
+      @users = User.where(name: params[:name], birthday: params[:birthday], number: params[:number])
+      
+      # 입력한 정보에 맞는 사용자가 있을 경우
+      unless @users.empty?
+        emails = []
+        @users.each do |user|
+          email = user.email.split("@")
+          len = email[0].length
+          filtered_email = email[0].gsub(email[0][len / 2..(len - 1)], '*' * (len - len / 2)) + "@" + email[1].gsub(/[A-Za-z]/, "*")
+          emails << filtered_email
+        end
+        return render json: {emails: emails}, status: :ok
+      else
+        # 정보와 일치하는 사용자가 없는 경우
+        Rails.logger.error "ERROR: 입력한 정보와 일치하는 사용자 정보가 없습니다. #{log_info}"
+        return render json: {error: "입력한 정보와 일치하는 사용자 정보가 없습니다."}, status: :bad_request
+      end
+    # 찾는 정보가 비밀번호일 경우
+    elsif params[:for] == "password"
+      if @user = User.find_by(email: params[:email])
+
+      else
+        Rails.logger.error "ERROR: 입력한 정보와 일치하는 사용자 정보가 없습니다. #{log_info}"
+        return render json: {error: "입력한 정보와 일치하는 사용자 정보가 없습니다."}, status: :bad_request
+      end
+    else
+      Rails.logger.error "ERROR: 이메일을 찾을 지 비밀번호를 찾을 지 정해주세요. #{log_info}"
+      return render json: {error: "이메일을 찾을 지 비밀번호를 찾을 지 정해주세요."}, status: :bad_request
     end
   end
 
