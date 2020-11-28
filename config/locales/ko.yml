@@ -167,6 +167,7 @@ ko:
       account_type:
         normal: 일반
         kakao: 카카오
+        apple: 애플
       location_range:
         location_alone: 자기 동네만
         location_near: 가까운 동네

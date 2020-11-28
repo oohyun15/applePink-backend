@@ -56,6 +56,7 @@ gem 'omniauth'
 gem 'omniauth-oauth2', '<= 1.3.1'
 # gem 'omniauth-kakao'
 gem 'omniauth-kakao', :git => 'git://github.com/insomenia/omniauth-kakao'
+gem 'omniauth-apple'
 
 # fcm
 gem 'fcm'
