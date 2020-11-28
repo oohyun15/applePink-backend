@@ -24,6 +24,7 @@ class PostSerializer < ActiveModel::Serializer
       category: object.category&.title,
       category_id: object.category_id,
       image: object.image_path,
+      image_detail: object.images.map{ |image| image.image_path },
       location: object.location&.title,
       status: object.status,
       likes_count: object.likes_count,
