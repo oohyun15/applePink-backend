@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: %i(show update list)
-  before_action :authenticate_user!, except: %i(create)
+  before_action :authenticate_user!, except: %i(create sms_auth)
   before_action :check_email, only: %i(email_auth)
 
   # 유저 목록 보기
