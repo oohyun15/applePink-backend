@@ -126,7 +126,8 @@ class ApplicationController < ActionController::Base
   end
 
   def is_heic?(prms, column, sub_column=nil)
-    # model = controller_name.singularize.to_sym
+    # 만약 해당 column이 없을 경우 종료
+    return if prms.dig(column).nil?
     # 다중 이미지일 때
     if sub_column.present?
       prms.dig(column).each do |p|
