@@ -125,9 +125,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def is_heic?(column)
-    model = controller_name.singularize.to_sym
-    params.dig(model, column)&.content_type == "image/heic" rescue false
+  def is_heic?(prms, column, sub_column=nil)
+    # model = controller_name.singularize.to_sym
+    # 다중 이미지일 때
+    if sub_column.present?
+      prms.dig(column).each do |p|
+        image = p.last.dig(sub_column)
+        prms[column][p.first][sub_column] = heic2png(image.path) if image.content_type == "image/heic"
+      end
+    # 단일 이미지일 때
+    else
+      prms[column] = heic2png(prms[column].path) if prms[column].content_type == "image/heic"
+    end
   end
 
   private
