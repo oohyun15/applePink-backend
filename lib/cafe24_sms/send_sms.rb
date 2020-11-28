@@ -15,12 +15,12 @@ module Cafe24Sms
     
     def _form_data(options)
       { :sms_url => Configuration::SMS_URL,
-        :user_id => Configuration::SMS_URER_ID,
+        :user_id => Configuration::SMS_USER_ID,
         :secure => Configuration::SMS_SECURE,
         :sphone1 => Configuration::SMS_SPHONE1,
         :sphone2 => Configuration::SMS_SPHONE2,
         :sphone3 => Configuration::SMS_SPHONE3
-      }.merge!(options)
+      }.merge(options)
     end
     
     def remaining_sms

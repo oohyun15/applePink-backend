@@ -161,7 +161,7 @@ class UsersController < ApplicationController
         end
       else
         # 전화번호만 입력됐을 때
-        SmsCertification.generate_code(email_params[:phone])
+        SmsCertification.generate_code(sms_params[:phone])
         return render json: {message: "소속 인증 SMS을 발송했습니다. SMS을 확인해 주세요."}, status: :ok
       end
 
@@ -299,7 +299,7 @@ class UsersController < ApplicationController
   end
 
   def sms_params
-    params.require(:user).permit(:code. :phone)
+    params.require(:user).permit(:code, :phone)
   end
 
   def device_info_params
