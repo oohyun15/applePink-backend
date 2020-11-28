@@ -116,7 +116,7 @@ class ApplicationController < ActionController::Base
       #Image format conversion
       result = api_instance.convert_image_image_format_convert("HEIC", "PNG", input_file)
       image = MiniMagick::Image.read(result)
-      image.resize "25%"
+      image.resize "5%"
       image.format "png"
       # image.write "output.png"
       return image
@@ -126,7 +126,8 @@ class ApplicationController < ActionController::Base
   end
 
   def is_heic?(prms, column, sub_column=nil)
-    # model = controller_name.singularize.to_sym
+    # 만약 해당 column이 없을 경우 종료
+    return if prms.dig(column).nil?
     # 다중 이미지일 때
     if sub_column.present?
       prms.dig(column).each do |p|
