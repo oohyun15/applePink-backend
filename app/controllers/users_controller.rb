@@ -159,6 +159,10 @@ class UsersController < ApplicationController
             return render json: {error: "인증번호가 틀렸습니다. 메세지를 다시 확인하세요."}, status: :not_acceptable
           end
         end
+      else
+        # 전화번호만 입력됐을 때
+        SmsCertification.generate_code(email_params[:phone])
+        return render json: {message: "소속 인증 SMS을 발송했습니다. SMS을 확인해 주세요."}, status: :ok
       end
 
     else
