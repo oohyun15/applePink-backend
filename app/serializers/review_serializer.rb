@@ -7,6 +7,7 @@ class ReviewSerializer < ActiveModel::Serializer
       id: object.id,
       body: object.body,
       booking_id: object.booking_id,
+      images: object.images.map{ |image| image.image_path },
       user_nickname: object.user&.nickname,
       user_image: object.user&.image_path,
       rating: object.rating,
