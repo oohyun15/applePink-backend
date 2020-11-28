@@ -232,7 +232,7 @@ class UsersController < ApplicationController
   def keyword
     begin
       if request.get?
-        return render json: {keywords: current_user.keyword_list}, status: :ok
+        return render json: {keywords: current_user.keyword_list, count: current_user.keyword_list.count}, status: :ok
       elsif request.post?
         if current_user.keyword_list.include?(keyword_params[:keyword])
           Rails.logger.error "ERROR: 이미 등록된 키워드입니다. #{log_info}"
