@@ -108,5 +108,7 @@ describe "Review test", type: :request do
     else
       expect(Review.find_by(id: review.id)).to eq(nil)
     end
+
+    Booking.find(@booking.id).delete
   end
 end
