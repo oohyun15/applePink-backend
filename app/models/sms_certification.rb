@@ -1,0 +1,3 @@
+class SmsCertification < ApplicationRecord
+  
+end

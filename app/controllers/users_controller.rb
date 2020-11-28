@@ -147,6 +147,10 @@ class UsersController < ApplicationController
     return render json: {error: "unauthorized"}, status: :unauthorized
   end
 
+  def sms_auth
+
+  end
+
   # 지역범위 수정
   def range
     unless User.location_ranges.keys.include? params[:user][:location_range]
@@ -271,6 +275,10 @@ class UsersController < ApplicationController
 
   def email_params
     params.require(:user).permit(:code, :email)
+  end
+
+  def sms_params
+    params.require(:user).permit(:code. :phone)
   end
 
   def device_info_params
