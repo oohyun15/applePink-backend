@@ -309,4 +309,20 @@ Devise.setup do |config|
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
   config.omniauth :kakao, ENV["KAKAO_CLIENT_ID"], :redirect_path => "/users/auth/kakao/callback"
+  config.omniauth :apple, ENV["APPLE_CLIENT_ID"], "", {
+    scope: "",
+    team_id: ENV["APPLE_TEAM_ID"],
+    key_id: ENV["APPLE_KEY"],
+    pem: ENV["APPLE_PEM"],
+    redirect_uri: ENV["APPLE_REDIRECT_URI"] 
+  }
 end
+# Rails.application.config.middleware.use OmniAuth::Builder do
+#   provider :apple, ENV["APPLE_CLIENT_ID"], "",
+#   {
+#   team_id: ENV["APPLE_TEAM_ID"],
+#   key_id: ENV["APPLE_KEY"],
+#   pem: ENV["APPLE_PEM"],
+#   # redirect_uri: ENV["APPLE_REDIRECT_URI"] 
+#   }
+# end
