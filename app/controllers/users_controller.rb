@@ -148,7 +148,24 @@ class UsersController < ApplicationController
   end
 
   def sms_auth
+    if sms_params[:phone].present?
+      # 전화번호와 코드 둘 다 입력됐을 때
+      if sms_params[:code].present?
+        if sms_certification = SmsCertification.find_by(phone: sms_params[:phone])
+          if sms_certification.check_code(sms_params[:code])
+            return render json: {message: "정삭적으로 인증되었습니다."}, status: :ok
+          else
+            Rails.logger.error "ERROR: 인증번호가 틀렸습니다. 메세지를 다시 확인하세요. #{log_info}"
+            return render json: {error: "인증번호가 틀렸습니다. 메세지를 다시 확인하세요."}, status: :not_acceptable
+          end
+        end
+      end
 
+    else
+      # 입력된 전화번호가 없으면 에러 발생
+      Rails.logger.error "ERROR: 입력된 번호가 없습니다 #{log_info}"
+      return render json: {error: "입력된 번호가 없습니다"}, status: :bad_request
+    end
   end
 
   # 지역범위 수정
