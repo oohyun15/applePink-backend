@@ -300,11 +300,6 @@ class UsersController < ApplicationController
   end
 
   def reset
-    unless find_params[:code].present?
-      Rails.logger.error "ERROR: 유효하지 않은 요청입니다 - 인증코드 없음. #{log_info}"
-      return render json: {error: "유효하지 않은 요청입니다 - 인증코드 없음."}, status: :bad_request
-    end
-
      # 코드 인증 시
     if find_params[:type] == "certificate"
      if email_certification = EmailCertification.find_by(email: user_params[:email])
@@ -318,7 +313,7 @@ class UsersController < ApplicationController
        Rails.logger.error "ERROR: 올바르지 않은 이메일입니다. #{log_info}"
        return render json: {error: "올바르지 않은 이메일입니다."}, status: :not_acceptable
      end
-    elsif find_params[:type] == "change"
+    elsif find_params[:type] == "reset"
       if email_certification = EmailCertification.find_by(email: user_params[:email])
         if email_certification.check_code(find_params[:code])
           # 이후에 다시 비밀번호 찾기를 할 수 있게 하기 위해 삭제
