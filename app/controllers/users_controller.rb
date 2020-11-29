@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   # 유저 마이페이지
   def show
-    render json: @user, status: :ok, scope: {params: create_params}
+    render json: @user, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
 
   # 유저 생성 POST sign_up
