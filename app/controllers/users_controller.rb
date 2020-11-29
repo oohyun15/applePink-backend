@@ -136,7 +136,7 @@ class UsersController < ApplicationController
       return render json: {error: "등록되지 않은 소속의 이메일입니다. 메일 주소를 확인해 주세요."}, status: :bad_request
     end
 
-    if EmailCertification.generate_code(email_params[:email])
+    if EmailCertification.generate_code(email_params[:email], "group")
       return render json: {message: "소속 인증 메일을 발송했습니다. 메일을 확인해 주세요."}, status: :ok
     else
       Rails.logger.error "ERROR: 이미 등록된 메일 주소입니다. 다른 메일 주소를 입력해 주세요. #{log_info}"
@@ -298,7 +298,7 @@ class UsersController < ApplicationController
       else
         @users = User.where(name: user_params[:name], birthday: user_params[:birthday], number: user_params[:number])
         if @user = @users.find_by(email: user_params[:email])
-          EmailCertification.generate_code(user_params[:email])
+          EmailCertification.generate_code(user_params[:email], "find")
           return render json: {message: "해당 이메일로 인증코드를 발송했습니다."}, status: :ok
         else
           Rails.logger.error "ERROR: 입력한 정보와 일치하는 사용자 정보가 없습니다. #{log_info}"
