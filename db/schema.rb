@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_23_122422) do
+ActiveRecord::Schema.define(version: 2020_11_29_172732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -259,6 +259,7 @@ ActiveRecord::Schema.define(version: 2020_11_23_122422) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
     t.bigint "post_id"
+    t.integer "reports_count", default: 0
     t.index ["booking_id"], name: "index_reviews_on_booking_id"
     t.index ["post_id"], name: "index_reviews_on_post_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
@@ -271,6 +272,15 @@ ActiveRecord::Schema.define(version: 2020_11_23_122422) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "delayed_job_type"
     t.index ["user_id"], name: "index_schedules_on_user_id"
+  end
+
+  create_table "sms_certifications", force: :cascade do |t|
+    t.string "phone"
+    t.string "code"
+    t.datetime "confirmed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["phone"], name: "index_sms_certifications_on_phone"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
