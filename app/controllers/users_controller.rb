@@ -52,7 +52,7 @@ class UsersController < ApplicationController
 
       if push_notification("회원정보 수정이 완료되었습니다.", "회원정보 수정 완료", @user.device_list)
         Rails.logger.info "FCM device token: #{@user.device_list}"
-        return render json: @user, status: :ok
+        return render json: @user, status: :ok, scope: {params: create_params}
       
       # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
       else
