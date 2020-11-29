@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
         "notification": {
           "title": "#{title}",
           "body": "#{body}",
-        }
+        },
         "data": data,
       }
 
