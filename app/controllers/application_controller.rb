@@ -72,22 +72,30 @@ class ApplicationController < ActionController::Base
   protected
   
   def authenticate_user!
-    ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
-    unless user_id_in_token?
-      # redirect_to users_sign_in_path
-      Rails.logger.error "ERROR: Unauthorized #{log_info}"
-      return render json: { error: "Unauthorized" }, status: :unauthorized
-    end
+    begin
+      ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
+      unless user_id_in_token?
+        if http_token.present? && auth_token.nil?
+          Rails.logger.error "ERROR: JWT is expired. #{log_info}"
+          return render json: { error: "JWT is expired." }, status: :unauthorized
+        else
+          # redirect_to users_sign_in_path
+          Rails.logger.error "ERROR: Unauthorized #{log_info}"
+          return render json: { error: "Unauthorized" }, status: :unauthorized
+        end
+      end
 
-    ## Token 안에 있는 user_id 값을 받아와서 User 모델의 유저 정보 탐색
-    @current_user = User.find(auth_token[:user_id])
-    Rails.logger.info "JWT: #{http_token}"
-    Rails.logger.info "Expired Time: #{Time.at(auth_token[:exp])}"
-    Rails.logger.info "User ID: #{@current_user.id}, nickname: #{@current_user.nickname}"
-    rescue JWT::VerificationError, JWT::DecodeError
+      ## Token 안에 있는 user_id 값을 받아와서 User 모델의 유저 정보 탐색
+      @current_user = User.find(auth_token[:user_id])
+      Rails.logger.info "JWT: #{http_token}"
+      Rails.logger.info "Expired Time: #{Time.at(auth_token[:exp])}"
+      Rails.logger.info "User ID: #{@current_user.id}, nickname: #{@current_user.nickname}"
+    
+    rescue e
       # redirect_to users_sign_in_path
-      Rails.logger.error "ERROR: Unauthorized #{log_info}"
-      return render json: { error: "unauthorized" }, status: :unauthorized
+      Rails.logger.error "ERROR: #{e} #{log_info}"
+      return render json: { error: "#{e}" }, status: :unauthorized
+    end
   end
 
   # 리다이렉트 기본 값
