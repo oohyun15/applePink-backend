@@ -17,15 +17,17 @@ describe "Report test", type: :request do
     num.times do |index|
       target_type = Report::REPORT_MODELS.sample
       model = target_type.capitalize
-      target_id = (model == "User") ? (model.constantize.all.ids - [@id]).sample : model.constantize.all.ids.sample
+      target_id = (model == "User") ? (User.all.ids - [@id]).sample : (model.constantize.all.ids - model.constantize.where(user_id: @id).ids).sample
 
-      report = Report.create!(
-        user_id: @id,
-        target_id: target_id,
-        target_type: target_type,
-        detail: "테스트 신고",
-        reason: Faker::Number.between(from: 0, to: 7)
-      )
+      unless target_id.nil?
+        report = Report.create!(
+          user_id: @id,
+          target_id: target_id,
+          target_type: model,
+          detail: "테스트 신고",
+          reason: Faker::Number.between(from: 0, to: 6)
+        )
+      end
     end
   end
 
