@@ -127,7 +127,7 @@ class ApplicationController < ActionController::Base
 
   def is_heic?(prms, column, sub_column=nil)
     # 만약 해당 column이 없을 경우 종료
-    return if prms.dig(column).nil?
+    return unless (prms.dig(column).present? rescue false)
     # 다중 이미지일 때
     if sub_column.present?
       prms.dig(column).each do |p|
