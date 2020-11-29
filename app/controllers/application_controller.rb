@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     date.methods.include?(:strftime) ? date.strftime("%Y년 %m월 %d일") : nil
   end
 
-  def push_notification body, title, registration_ids
+  def push_notification body, title, registration_ids, data=nil
     begin
       # check devices
       if registration_ids.blank?
@@ -43,7 +43,8 @@ class ApplicationController < ActionController::Base
       options = {
         "notification": {
           "title": "#{title}",
-          "body": "#{body}"
+          "body": "#{body}",
+          "data": data,
         }
       }
 
