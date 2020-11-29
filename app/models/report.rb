@@ -1,7 +1,7 @@
 class Report < ApplicationRecord
   include Imagable
 
-  REPORT_MODELS = %w(User Post)
+  REPORT_MODELS = %w(User Post Review)
   REPORT_COLUMNS = %i(target_id target_type detail reason) + [images_attributes: %i(imagable_type imagable_id image)]
 
   validates :reason, presence: true
