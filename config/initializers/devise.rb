@@ -310,7 +310,7 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
   config.omniauth :kakao, ENV["KAKAO_CLIENT_ID"], :redirect_path => "/users/auth/kakao/callback"
   config.omniauth :apple, ENV["APPLE_CLIENT_ID"], "", {
-    scope: "sakiss4774@gmail.com",
+    scope: "email name",
     team_id: ENV["APPLE_TEAM_ID"],
     key_id: ENV["APPLE_KEY"],
     pem: ENV["APPLE_PEM"],
