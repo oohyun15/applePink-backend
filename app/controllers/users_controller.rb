@@ -284,26 +284,14 @@ class UsersController < ApplicationController
       end
     # 찾는 정보가 비밀번호일 경우
     elsif find_params[:for] == "password"
-      # 코드 인증 시
-      if find_params[:code].present?
-        if email_certification = EmailCertification.find_by(email: user_params[:email])
-          if email_certification.check_code(find_params[:code])
-            return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
-          else
-            Rails.logger.error "ERROR: 인증번호가 틀렸습니다. 메일을 다시 확인해 주세요. #{log_info}"
-            return render json: {error: "인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."}, status: :not_acceptable
-          end
-        end
       # 인증 메일 발송  
+      @users = User.where(name: user_params[:name], birthday: user_params[:birthday], number: user_params[:number])
+      if @user = @users.find_by(email: user_params[:email])
+        EmailCertification.generate_code(user_params[:email], "find")
+        return render json: {message: "해당 이메일로 인증코드를 발송했습니다."}, status: :ok
       else
-        @users = User.where(name: user_params[:name], birthday: user_params[:birthday], number: user_params[:number])
-        if @user = @users.find_by(email: user_params[:email])
-          EmailCertification.generate_code(user_params[:email], "find")
-          return render json: {message: "해당 이메일로 인증코드를 발송했습니다."}, status: :ok
-        else
-          Rails.logger.error "ERROR: 입력한 정보와 일치하는 사용자 정보가 없습니다. #{log_info}"
-          return render json: {error: "입력한 정보와 일치하는 사용자 정보가 없습니다."}, status: :bad_request
-        end
+        Rails.logger.error "ERROR: 입력한 정보와 일치하는 사용자 정보가 없습니다. #{log_info}"
+        return render json: {error: "입력한 정보와 일치하는 사용자 정보가 없습니다."}, status: :bad_request
       end
     else
       Rails.logger.error "ERROR: 이메일을 찾을 지 비밀번호를 찾을 지 정해주세요. #{log_info}"
@@ -317,26 +305,49 @@ class UsersController < ApplicationController
       return render json: {error: "유효하지 않은 요청입니다 - 인증코드 없음."}, status: :bad_request
     end
 
-    if email_certification = EmailCertification.find_by(email: user_params[:email])
-      if email_certification.check_code(find_params[:code])
-        # 이후에 다시 비밀번호 찾기를 할 수 있게 하기 위해 삭제
-        @users = User.where(name: user_params[:name], birthday: user_params[:birthday], number: user_params[:number])
-        if @user = @users.find_by(email: user_params[:email])
-          email_certification.delete
-          # 비밀번호 재설정
-          @user.update! user_params
-          return render json: {message: "비밀번호가 변경되었습니다."}, status: :ok
+     # 코드 인증 시
+    if find_params[:type] == "certificate"
+     if email_certification = EmailCertification.find_by(email: user_params[:email])
+       if email_certification.check_code(find_params[:code])
+         return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
+       else
+         Rails.logger.error "ERROR: 인증번호가 틀렸습니다. 메일을 다시 확인해 주세요. #{log_info}"
+         return render json: {error: "인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."}, status: :not_acceptable
+       end
+     else
+       Rails.logger.error "ERROR: 올바르지 않은 이메일입니다. #{log_info}"
+       return render json: {error: "올바르지 않은 이메일입니다."}, status: :not_acceptable
+     end
+    elsif find_params[:type] == "change"
+      if email_certification = EmailCertification.find_by(email: user_params[:email])
+        if email_certification.check_code(find_params[:code])
+          # 이후에 다시 비밀번호 찾기를 할 수 있게 하기 위해 삭제
+          @users = User.where(name: user_params[:name], birthday: user_params[:birthday], number: user_params[:number])
+          if @user = @users.find_by(email: user_params[:email])
+            unless user_params[:password].present?
+              Rails.logger.error "ERROR: 입력된 비밀번호가 없습니다. #{log_info}"
+              return render json: {error: "입력된 비밀번호가 없습니다."}, status: :bad_request
+            end
+            # 비밀번호 재설정
+            @user.update! user_params
+
+            email_certification.delete
+            return render json: {message: "비밀번호가 변경되었습니다."}, status: :ok
+          else
+            Rails.logger.error "ERROR: 입력한 정보와 일치하는 사용자 정보가 없습니다. #{log_info}"
+            return render json: {error: "입력한 정보와 일치하는 사용자 정보가 없습니다."}, status: :bad_request
+          end
         else
-          Rails.logger.error "ERROR: 입력한 정보와 일치하는 사용자 정보가 없습니다. #{log_info}"
-          return render json: {error: "입력한 정보와 일치하는 사용자 정보가 없습니다."}, status: :bad_request
+          Rails.logger.error "ERROR: 잘못된 인증번호입니다. #{log_info}"
+          return render json: {error: "잘못된 인증번호입니다."}, status: :not_acceptable
         end
       else
-        Rails.logger.error "ERROR: 잘못된 인증번호입니다. #{log_info}"
-        return render json: {error: "잘못된 인증번호입니다."}, status: :not_acceptable
+        Rails.logger.error "ERROR: 잘못된 이메일입니다. #{log_info}"
+        return render json: {error: "잘못된 이메일입니다."}, status: :not_acceptable
       end
     else
-      Rails.logger.error "ERROR: 잘못된 이메일입니다. #{log_info}"
-      return render json: {error: "잘못된 이메일입니다."}, status: :not_acceptable
+      Rails.logger.error "ERROR: 올바르지 않은 요청입니다. #{log_info}"
+       return render json: {error: "올바르지 않은 요청입니다."}, status: :not_acceptable
     end
   end
 
@@ -361,7 +372,7 @@ class UsersController < ApplicationController
   end
 
   def find_params
-    params.require(:user).permit(:for, :code)
+    params.require(:user).permit(:for, :code, :type)
   end
 
   def load_user
