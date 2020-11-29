@@ -18,7 +18,7 @@ class UserSerializer < ActiveModel::Serializer
       is_company: object.is_company?,
       company_id: object.company&.present? ? object.company.id : nil,
       group: object.group&.title,
-      avg: object.received_reviews.average(:rating).to_f,
+      avg: object.received_reviews.average(:rating).to_f.round(1),
       range: 
         case object.location_range
         when "location_alone"
