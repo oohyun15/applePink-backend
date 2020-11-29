@@ -24,6 +24,7 @@ class PostSerializer < ActiveModel::Serializer
       category: object.category&.title,
       category_id: object.category_id,
       image: object.image_path,
+      image_detail: object.images.map{ |image| image.image_path },
       location: object.location&.title,
       status: object.status,
       likes_count: object.likes_count,
@@ -35,7 +36,7 @@ class PostSerializer < ActiveModel::Serializer
       created_at_ago: time_ago_in_words(object.created_at)+" 전",
       updated_at_ago: time_ago_in_words(object.updated_at)+" 전",
       is_booked: is_booked,
-      rating: object.rating_avg
+      rating: object.rating_avg.round(1)
     }
   end
 

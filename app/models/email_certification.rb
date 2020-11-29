@@ -1,5 +1,5 @@
 class EmailCertification < ApplicationRecord
-  def self.generate_code email = nil
+  def self.generate_code(email = nil, type = nil)
     result = false
     if self.find_by(email: email)&.confirmed_at&.present?
       # 등록된 사용자
@@ -16,7 +16,7 @@ class EmailCertification < ApplicationRecord
 
       Rails.logger.error "generate_code: #{generate_code}, email: #{email}"
 
-      UserMailer.generate_code(email, generate_code).deliver_now!
+      UserMailer.generate_code(email, generate_code, type).deliver_now!
       result = true
     end
     return result

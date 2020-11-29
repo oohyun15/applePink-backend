@@ -17,6 +17,11 @@ class UserSerializer < ActiveModel::Serializer
       number: object.number,
       is_company: object.is_company?,
       company_id: object.company&.present? ? object.company.id : nil,
+      group: object.group&.title,
+      avg: object.received_reviews.average(:rating).to_f.round(1),
+      reviews_count: object.reviews_count,
+      received_reviews_count: object.received_reviews.length,
+      like_check: @instance_options[:user_id].present? ? object.received_likes&.pluck(:user_id).include?(@instance_options[:user_id]) : nil,
       range: 
         case object.location_range
         when "location_alone"

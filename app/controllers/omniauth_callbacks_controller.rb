@@ -3,6 +3,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     auth_login("kakao")
   end
 
+  def apple
+    Rails.logger.error "SIGN IN WITH APPLE #{log_info}"
+    auth_login("apple")
+  end
+
   def after_sign_in_path_for(resource)
     auth = request.env['omniauth.auth']
     @identity = Identity.find_for_oauth(auth)
@@ -15,7 +20,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
   def auth_login(provider)
-    sns_login = SnsLogin.new(request.env["omniauth.auth"], current_user) # 서비스 레이어로 작업했습니다.
+    Rails.logger.error "request.env[\"omniauth.auth\"] = #{request.env["omniauth.auth"]} #{log_info}"
+    sns_login = SnsLogin.new(request.env["omniauth.auth"], current_user)
     @user = sns_login.find_user_oauth
 
     if @user.persisted?

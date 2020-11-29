@@ -65,9 +65,9 @@ class ReviewsController < ApplicationController
 
   def destroy
     begin
-      @review.destroy!
+      @post = @review.booking.post
 
-      @post = @booking.post
+      @review.destroy!
       # 새로운 평균 평점 계산 
       @post.send(:calculate_avg)
 

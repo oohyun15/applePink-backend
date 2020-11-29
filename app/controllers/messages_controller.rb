@@ -36,7 +36,13 @@ class MessagesController < ApplicationController
     
     Rails.logger.error "From #{current_user.nickname} To #{users}"
     Rails.logger.error "registration ids: #{rids}"
-    push_notification("#{current_user.nickname} : #{@message.body}", "", rids)
+    data = { 
+      "type": "message",
+      "post_id": "#{@chat.post_id}",
+      "chat_id": "#{@chat.id}",
+      "user_nickname": "#{users.first}"
+    }
+    push_notification("#{@message.body}", "#{current_user.nickname}님", rids, data)
 
     # render json: @message, status: :ok, scope: {params: create_params}
     return render json: nil, status: :ok
