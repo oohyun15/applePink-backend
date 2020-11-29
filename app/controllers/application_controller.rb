@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
 
   def payload(user)
     ## 해당 코드 예제에서 토큰 만료기간은 '30일' 로 설정
-    @token = JWT.encode({ user_id: user.id, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+    @token = JWT.encode({ user_id: user.id, exp: 3.minutes.from_now.to_i }, ENV["SECRET_KEY_BASE"])
     # @tree = { jwt: @token, userInfo: { id: user.id, email: user.email } }
 
     return @token
