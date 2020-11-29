@@ -42,7 +42,7 @@ class MessagesController < ApplicationController
       "chat_id": "#{@chat.id}",
       "user_nickname": "#{users.first}"
     }
-    push_notification("#{@message.body}", "#{current_user.nickname}님", rids, data)
+    push_notification("#{@message.body}", "[모두나눔] #{current_user.nickname} 님", rids, data)
 
     # render json: @message, status: :ok, scope: {params: create_params}
     return render json: nil, status: :ok
