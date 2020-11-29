@@ -133,11 +133,11 @@ class ApplicationController < ActionController::Base
     if sub_column.present?
       prms.dig(column).each do |p|
         image = p.last.dig(sub_column)
-        prms[column][p.first][sub_column] = heic2png(image.path) if image.content_type == "image/heic"
+        prms[column][p.first][sub_column] = heic2png(image.path) if (image.content_type == "image/heic" rescue false)
       end
     # 단일 이미지일 때
     else
-      prms[column] = heic2png(prms[column].path) if prms[column].content_type == "image/heic"
+      prms[column] = heic2png(prms[column].path) if (prms[column].content_type == "image/heic" rescue false)
     end
   end
 
