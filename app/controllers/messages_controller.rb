@@ -40,6 +40,7 @@ class MessagesController < ApplicationController
       "type": "message",
       "post_id": "#{@chat.post_id}",
       "chat_id": "#{@chat.id}",
+      "user_nickname": "#{users.first}"
     }
     push_notification("#{@message.body}", "#{current_user.nickname}님", rids, data)
 

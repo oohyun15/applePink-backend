@@ -314,7 +314,7 @@ Devise.setup do |config|
     team_id: ENV["APPLE_TEAM_ID"],
     key_id: ENV["APPLE_KEY"],
     pem: ENV["APPLE_PEM"],
-    redirect_uri: ENV["APPLE_REDIRECT_URI"] 
+    redirect_uri: "#{ENV["APPLE_REDIRECT_URI"]}", 
   }
 end
 # Rails.application.config.middleware.use OmniAuth::Builder do
