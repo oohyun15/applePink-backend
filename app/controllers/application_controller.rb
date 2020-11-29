@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
       unless user_id_in_token?
         if http_token.present? && auth_token.nil?
           Rails.logger.error "ERROR: JWT is expired. #{log_info}"
-          return render json: { error: "JWT is expired." }, status: :unauthorized
+          return render json: { error: "expired" }, status: :unauthorized
         else
           # redirect_to users_sign_in_path
           Rails.logger.error "ERROR: Unauthorized #{log_info}"
