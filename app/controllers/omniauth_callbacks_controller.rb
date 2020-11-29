@@ -4,7 +4,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def apple
-    Rails.logger.error "SIGN IN WITH APPLE #{log_info}"
     auth_login("apple")
   end
 
@@ -20,7 +19,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
   def auth_login(provider)
-    Rails.logger.error "request.env[\"omniauth.auth\"] = #{request.env["omniauth.auth"]} #{log_info}"
     sns_login = SnsLogin.new(request.env["omniauth.auth"], current_user)
     @user = sns_login.find_user_oauth
 
