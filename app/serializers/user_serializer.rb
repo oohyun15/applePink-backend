@@ -20,6 +20,7 @@ class UserSerializer < ActiveModel::Serializer
       group: object.group&.title,
       avg: object.received_reviews.average(:rating).to_f.round(1),
       reviews_count: object.reviews_count,
+      received_reviews_count: object.received_reviews.length,
       range: 
         case object.location_range
         when "location_alone"
