@@ -13,8 +13,9 @@ class SnsLogin
       begin
         user = User.new get_auth_params
         #user.remote_image_url = @auth.info.image
-        user.remote_image_url = @auth.extra.properties.profile_image if @auth.extra&.properties&.profile_image&.present?
         Rails.logger.error "OAUTH USER:\n#{user}"
+        Rails.logger.error "AUTH:\n#{@auth}"
+        user.remote_image_url = @auth.extra&.properties&.profile_image if @auth.extra&.properties&.profile_image&.present?
         user.save!
       rescue => e
         Rails.logger.error "ERROR: #{e}"
