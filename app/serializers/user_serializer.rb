@@ -17,6 +17,7 @@ class UserSerializer < ActiveModel::Serializer
       number: object.number,
       is_company: object.is_company?,
       company_id: object.company&.present? ? object.company.id : nil,
+      group: object.group&.title,
       range: 
         case object.location_range
         when "location_alone"
