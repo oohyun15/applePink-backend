@@ -21,13 +21,14 @@ Rails.application.routes.draw do
     collection do
       get :mypage
       get :keyword
-      get :find
       post :keyword
       post :email_auth
       post :add_device
       post :remove_device
+      post :find
       delete :withdrawal
       delete :keyword
+      put :reset
       put :range
     end
     member do
