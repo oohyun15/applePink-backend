@@ -28,7 +28,7 @@ class UsersController < ApplicationController
         @user.device_list.add(device_info_params[:device_token])
         @user.normal!
         
-        if push_notification("회원가입이 완료되었습니다.", "모두나눔 가입 완료", [ device_info_params[:device_token] ])
+        if push_notification("회원가입이 완료되었습니다.", "[모두나눔] 회원가입 완료", [ device_info_params[:device_token] ])
           Rails.logger.info "FCM device token: #{device_info_params[:device_token]}"
           return render json: {message: "회원가입이 완료되었습니다."}, status: :ok
         
@@ -49,16 +49,7 @@ class UsersController < ApplicationController
   def update
     begin
       @user.update! user_params
-
-      if push_notification("회원정보 수정이 완료되었습니다.", "회원정보 수정 완료", @user.device_list)
-        Rails.logger.info "FCM device token: #{@user.device_list}"
-        return render json: @user, status: :ok, scope: {params: create_params}
-      
-      # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
-      else
-        Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 0) #{log_info}"
-        return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
-      end
+      return render json: @user, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
       return render json: {error: e}, status: :bad_request
@@ -217,7 +208,7 @@ class UsersController < ApplicationController
 
         # 토큰 등록 이후 푸시 알림이 보내진 경우
         # 임시로 해당 유저의 디바이스 토큰 목록에 로그인한 디바이스 토큰이 없을 경우 회원가입으로 간주
-        if push_notification("회원가입이 완료되었습니다.", "모두나눔 가입 완료", [ device_info_params[:device_token] ])
+        if push_notification("회원가입이 완료되었습니다.", "[모두나눔] 회원가입 완료", [ device_info_params[:device_token] ])
           Rails.logger.info "FCM device token: #{device_info_params[:device_token]}"
           return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
         
