@@ -191,7 +191,7 @@ class UsersController < ApplicationController
     # 이미 등록된 토큰일 경우 
     elsif (current_user.device_list.include?(device_info_params[:device_token]))
       if push_notification("로그인이 성공적으로 완료되었습니다.", "[모두나눔] 로그인 완료", [ device_info_params[:device_token] ])
-        Rails.logger.error "ERROR: 이미 등록된 토큰입니다. #{log_info}"
+        Rails.logger.info "FCM device token: #{device_info_params[:device_token]}"
         return render json: {error: "이미 등록된 토큰입니다."}, status: :ok
     
         # 푸시 알림이 보내지지 않은 경우
@@ -208,7 +208,7 @@ class UsersController < ApplicationController
 
         # 토큰 등록 이후 푸시 알림이 보내진 경우
         # 임시로 해당 유저의 디바이스 토큰 목록에 로그인한 디바이스 토큰이 없을 경우 회원가입으로 간주
-        if push_notification("회원가입이 완료되었습니다.", "[모두나눔] 회원가입 완료", [ device_info_params[:device_token] ])
+        if push_notification("로그인이 성공적으로 완료되었습니다.", "[모두나눔] 로그인 완료", [ device_info_params[:device_token] ])
           Rails.logger.info "FCM device token: #{device_info_params[:device_token]}"
           return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
         
