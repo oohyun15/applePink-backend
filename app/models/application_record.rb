@@ -5,7 +5,7 @@ class ApplicationRecord < ActiveRecord::Base
     I18n.t("enum.#{self.name.underscore}.#{column_name}").invert rescue []
   end
 
-  def push_notification(body, title, registration_ids = (self.device_list rescue nil))
+  def push_notification(body, title, registration_ids = (self.device_list rescue nil), data=nil)
     begin
       # check devices
       if registration_ids.blank?
@@ -21,7 +21,8 @@ class ApplicationRecord < ActiveRecord::Base
       options = {
         "notification": {
           "title": "#{title}",
-          "body": "#{body}"
+          "body": "#{body}",
+          "data": data,
         }
       }
 

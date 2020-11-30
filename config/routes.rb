@@ -26,8 +26,10 @@ Rails.application.routes.draw do
       post :sms_auth
       post :add_device
       post :remove_device
+      post :find
       delete :withdrawal
       delete :keyword
+      put :reset
       put :range
     end
     member do

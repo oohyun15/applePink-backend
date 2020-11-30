@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     date.methods.include?(:strftime) ? date.strftime("%Y년 %m월 %d일") : nil
   end
 
-  def push_notification body, title, registration_ids
+  def push_notification body, title, registration_ids, data=nil
     begin
       # check devices
       if registration_ids.blank?
@@ -43,8 +43,9 @@ class ApplicationController < ActionController::Base
       options = {
         "notification": {
           "title": "#{title}",
-          "body": "#{body}"
-        }
+          "body": "#{body}",
+        },
+        "data": data,
       }
 
       # send notification
@@ -71,22 +72,30 @@ class ApplicationController < ActionController::Base
   protected
   
   def authenticate_user!
-    ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
-    unless user_id_in_token?
-      # redirect_to users_sign_in_path
-      Rails.logger.error "ERROR: Unauthorized #{log_info}"
-      return render json: { error: "Unauthorized" }, status: :unauthorized
-    end
+    begin
+      ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
+      unless user_id_in_token?
+        if http_token.present? && auth_token.nil?
+          Rails.logger.error "ERROR: JWT is expired. #{log_info}"
+          return render json: { error: "expired" }, status: :unauthorized
+        else
+          # redirect_to users_sign_in_path
+          Rails.logger.error "ERROR: Unauthorized #{log_info}"
+          return render json: { error: "Unauthorized" }, status: :unauthorized
+        end
+      end
 
-    ## Token 안에 있는 user_id 값을 받아와서 User 모델의 유저 정보 탐색
-    @current_user = User.find(auth_token[:user_id])
-    Rails.logger.info "JWT: #{http_token}"
-    Rails.logger.info "Expired Time: #{Time.at(auth_token[:exp])}"
-    Rails.logger.info "User ID: #{@current_user.id}, nickname: #{@current_user.nickname}"
-    rescue JWT::VerificationError, JWT::DecodeError
+      ## Token 안에 있는 user_id 값을 받아와서 User 모델의 유저 정보 탐색
+      @current_user = User.find(auth_token[:user_id])
+      Rails.logger.info "JWT: #{http_token}"
+      Rails.logger.info "Expired Time: #{Time.at(auth_token[:exp])}"
+      Rails.logger.info "User ID: #{@current_user.id}, nickname: #{@current_user.nickname}"
+    
+    rescue e
       # redirect_to users_sign_in_path
-      Rails.logger.error "ERROR: Unauthorized #{log_info}"
-      return render json: { error: "unauthorized" }, status: :unauthorized
+      Rails.logger.error "ERROR: #{e} #{log_info}"
+      return render json: { error: "#{e}" }, status: :unauthorized
+    end
   end
 
   # 리다이렉트 기본 값
@@ -127,16 +136,16 @@ class ApplicationController < ActionController::Base
 
   def is_heic?(prms, column, sub_column=nil)
     # 만약 해당 column이 없을 경우 종료
-    return if prms.dig(column).nil?
+    return unless (prms.dig(column).present? rescue false)
     # 다중 이미지일 때
     if sub_column.present?
       prms.dig(column).each do |p|
         image = p.last.dig(sub_column)
-        prms[column][p.first][sub_column] = heic2png(image.path) if image.content_type == "image/heic"
+        prms[column][p.first][sub_column] = heic2png(image.path) if (image.content_type == "image/heic" rescue false)
       end
     # 단일 이미지일 때
     else
-      prms[column] = heic2png(prms[column].path) if prms[column].content_type == "image/heic"
+      prms[column] = heic2png(prms[column].path) if (prms[column].content_type == "image/heic" rescue false)
     end
   end
 
