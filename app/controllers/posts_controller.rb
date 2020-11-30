@@ -64,7 +64,15 @@ class PostsController < ApplicationController
     end
 
     # 파트너 게시글 삽입
-    @posts
+    @posts = @posts.to_a
+    @posts.each_with_index do |post, index|
+      # 10개 마다 파트너 게시글 삽입
+      if index != 0 && index % 9 == 0
+        if company_post = Post.company_post.where(id: index / 9 - 1)
+          @posts << company_post
+        end
+      end
+    end
 
     render json: @posts, status: :ok, scope: { params: create_params, location: {info: true, title: @location.title, range: I18n.t("enum.user.location_range.#{current_user.location_range}")} }, user_id: current_user.id
   end
