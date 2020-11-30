@@ -87,8 +87,10 @@ describe "Report test", type: :request do
       post "/reports", params: report_info, headers: {Authorization: @token}
       expect(response).to have_http_status(:bad_request)
     else
-      post "/reports", params: report_info, headers: {Authorization: @token}
-      expect(response).to have_http_status(:ok)
+      unless target_id.nil?
+        post "/reports", params: report_info, headers: {Authorization: @token}
+        expect(response).to have_http_status(:ok)
+      end
     end
   
     Report.delete_all
