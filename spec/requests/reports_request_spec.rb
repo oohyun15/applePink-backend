@@ -4,9 +4,9 @@ require 'active_support'
 describe "Report test", type: :request do
   before(:all) do
     # 유저 중 임의의 유저를 선택함.
-    user = User.all.sample
-    @id = user.id
-    @email = user.email
+    @user = User.all.sample
+    @id = @user.id
+    @email = @user.email
 
     post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
     @token = JSON.parse(response.body)["token"]
@@ -17,15 +17,17 @@ describe "Report test", type: :request do
     num.times do |index|
       target_type = Report::REPORT_MODELS.sample
       model = target_type.capitalize
-      target_id = (model == "User") ? (model.constantize.all.ids - [@id]).sample : model.constantize.all.ids.sample
+      target_id = (model == "User") ? (User.all.ids - [@id]).sample : (model.constantize.all.ids - model.constantize.where(user_id: @id).ids).sample
 
-      report = Report.create!(
-        user_id: @id,
-        target_id: target_id,
-        target_type: target_type,
-        detail: "테스트 신고",
-        reason: Faker::Number.between(from: 0, to: 7)
-      )
+      unless target_id.nil?
+        report = Report.create!(
+          user_id: @id,
+          target_id: target_id,
+          target_type: model,
+          detail: "테스트 신고",
+          reason: Faker::Number.between(from: 0, to: 6)
+        )
+      end
     end
   end
 
@@ -71,7 +73,7 @@ describe "Report test", type: :request do
     # 자기 자신이 아닌 대상을 신고함.
     target_type = Report::REPORT_MODELS.sample
     model = target_type.capitalize
-    target_id = (model == "User") ? (model.constantize.all.ids - [@id]).sample : model.constantize.all.ids.sample
+    target_id = (model == "User") ? (model.constantize.all.ids - [@id]).sample : (model.constantize.all.ids - [@user.posts&.ids]).sample
     report_info = {
       report: { 
         target_id: target_id,
@@ -80,13 +82,17 @@ describe "Report test", type: :request do
         reason: "fraud"
       }
     }
-    post "/reports", params: report_info, headers: {Authorization: @token}
-    expect(response).to have_http_status(:ok)
-    
-    # 이미 신고한 대상을 다시 신고할 때 오류가 발생함.
-    post "/reports", params: report_info, headers: {Authorization: @token}
-    expect(response).to have_http_status(:bad_request)
-
-    Report.first.delete
+    # 이미 신고한 대상일 때
+    if @user.reports.find_by(target_type: report_info[:report][:target_type], target_id: report_info[:report][:target_id]).present?
+      post "/reports", params: report_info, headers: {Authorization: @token}
+      expect(response).to have_http_status(:bad_request)
+    else
+      unless target_id.nil?
+        post "/reports", params: report_info, headers: {Authorization: @token}
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  
+    Report.delete_all
   end
 end
