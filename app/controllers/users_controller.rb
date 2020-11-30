@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :load_user, only: %i(show update list)
-  before_action :authenticate_user!, except: %i(create find reset)
+  before_action :authenticate_user!, except: %i(create find reset sms_auth)
   before_action :check_email, only: %i(email_auth)
 
   # 유저 목록 보기
@@ -145,6 +145,31 @@ class UsersController < ApplicationController
 
     Rails.logger.error "ERROR: 이메일 인증 오류 #{log_info}"
     return render json: {error: "unauthorized"}, status: :unauthorized
+  end
+
+  def sms_auth
+    if sms_params[:phone].present?
+      # 전화번호와 코드 둘 다 입력됐을 때
+      if sms_params[:code].present?
+        if sms_certification = SmsCertification.find_by(phone: sms_params[:phone])
+          if sms_certification.check_code(sms_params[:code])
+            return render json: {message: "정삭적으로 인증되었습니다."}, status: :ok
+          else
+            Rails.logger.error "ERROR: 인증번호가 틀렸습니다. 메세지를 다시 확인하세요. #{log_info}"
+            return render json: {error: "인증번호가 틀렸습니다. 메세지를 다시 확인하세요."}, status: :not_acceptable
+          end
+        end
+      else
+        # 전화번호만 입력됐을 때
+        SmsCertification.generate_code(sms_params[:phone])
+        return render json: {message: "소속 인증 SMS을 발송했습니다. SMS을 확인해 주세요."}, status: :ok
+      end
+
+    else
+      # 입력된 전화번호가 없으면 에러 발생
+      Rails.logger.error "ERROR: 입력된 번호가 없습니다 #{log_info}"
+      return render json: {error: "입력된 번호가 없습니다"}, status: :bad_request
+    end
   end
 
   # 지역범위 수정
@@ -343,6 +368,10 @@ class UsersController < ApplicationController
 
   def email_params
     params.require(:user).permit(:code, :email)
+  end
+
+  def sms_params
+    params.require(:user).permit(:code, :phone)
   end
 
   def device_info_params
