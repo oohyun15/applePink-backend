@@ -229,7 +229,7 @@ class UsersController < ApplicationController
   def remove_device
     if !(params[:user][:device_token])
       Rails.logger.error "ERROR: FCM 토큰이 없습니다. #{log_info}"
-      return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
+      return render json: {error: "FCM 토큰이 없습니다."}, status: :ok
     
     # 이미 등록 토큰일 경우 
     elsif (current_user.device_list.include?(device_info_params[:device_token]))
@@ -240,7 +240,7 @@ class UsersController < ApplicationController
     # 디바이스 목록에 존재하지 않는 경우
     else
       Rails.logger.error "ERROR: 토큰이 디바이스 목록에 없습니다. #{log_info}"
-      return render json: {error: "토큰이 디바이스 목록에 없습니다."}, status: :bad_request
+      return render json: {error: "토큰이 디바이스 목록에 없습니다."}, status: :ok
     end
   end
 
