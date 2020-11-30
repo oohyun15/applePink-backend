@@ -48,9 +48,9 @@ class PostsController < ApplicationController
   
       # location_ids와 post_type에 따른 서비스 분류
       if params[:post_type] == "provide" || params[:post_type].nil?
-        @posts = Post.normal_post(post_type: :provide, location_id: location_positions)
+        @posts = Post.normal_post.where(post_type: :provide, location_id: location_positions)
       elsif params[:post_type] == "ask"
-        @posts = Post.normal_post(post_type: :ask, location_id: location_positions)
+        @posts = Post.normal_post.where(post_type: :ask, location_id: location_positions)
       end
       @posts = @posts.order(created_at: :desc)
     rescue => e
