@@ -20,24 +20,51 @@ describe "Booking test", type: :request do
     post = @user.posts.sample
     booking_info = {booking: {start_at: "2020-11-14", end_at: "2020-11-1", post_id: post.id}}
     post "/bookings", params: booking_info, headers: {Authorization: @other_token}
-    @booking = Booking.find(JSON.parse(response.body)["booking_info"]["id"])
+    
+    # 생성된 booking이 마지막 booking임.
+    @booking = Booking.last
   end
   
   it "booking index test" do
-    # 유저의 received_booking 목록을 먼저 가져옴.
-    received_booking_list = @user.received_bookings.pluck(:id)
+    # 유저의 received_booking 목록을 가져옴.
+    booking_list = @user.received_bookings.pluck(:id)
     
     get "/bookings", params: {received: "true"}, headers: {Authorization: @token}
     ids = []
     JSON.parse(response.body).each do |booking| 
       ids << booking["booking_info"]["id"]
     end
-    expect(received_booking_list - ids).to eq([])
+    expect(booking_list - ids).to eq([])
 
-    # 유저의 booking 목록을 먼저 가져옴.
+    # status를 임의로 설정함.
+    status = ["before", "after"].sample
+
+    # status에 따라 booking list를 다르게 가져옴.
+    booking_list = @user.received_bookings.where(acceptance: %i(waiting accepted rejected)).pluck(:id) if status == "before"
+    booking_list = @user.received_bookings.where(acceptance: %i(completed rent)).pluck(:id) if status == "after"
+
+    get "/bookings", params: {received: "true", status: status}, headers: {Authorization: @token}
+    ids = []
+    JSON.parse(response.body).each do |booking| 
+      ids << booking["booking_info"]["id"]
+    end
+    expect(booking_list - ids).to eq([])
+
+    # 유저의 booking 목록을 가져옴.
     booking_list = @user.bookings.pluck(:id)
     
     get "/bookings", headers: {Authorization: @token}
+    ids = []
+    JSON.parse(response.body).each do |booking| 
+      ids << booking["booking_info"]["id"]
+    end
+    expect(booking_list - ids).to eq([])
+
+    # status에 따라 booking list를 다르게 가져옴.
+    booking_list = @user.bookings.where(acceptance: %i(waiting accepted rejected)).pluck(:id) if status == "before"
+    booking_list = @user.bookings.where(acceptance: %i(completed rent)).pluck(:id) if status == "after"
+
+    get "/bookings", params: {received: "true", status: status}, headers: {Authorization: @token}
     ids = []
     JSON.parse(response.body).each do |booking| 
       ids << booking["booking_info"]["id"]
@@ -68,9 +95,15 @@ describe "Booking test", type: :request do
     post_ids = Post.all.ids - user_post_ids
     post_id = post_ids.sample
 
+    # create 요청을 보내기 전 Booking의 개수를 파악
+    before_num = Booking.all.size
     booking_info = {booking: {start_at: "2020-11-11", end_at: "2020-11-17", post_id: post_id}}
     post "/bookings", params: booking_info, headers: {Authorization: @token}
-    expect(response).to have_http_status(:ok)
+    #expect(response).to have_http_status(:ok)
+    
+    # 위에서 booking가 생성됐는지 확인함.
+    after_num = Booking.all.size
+    expect(after_num).to eq(before_num + 1)
   end
 
   it "booking show test" do
@@ -107,7 +140,14 @@ describe "Booking test", type: :request do
     unless @booking.accepted?
       expect(response).to have_http_status(:bad_request)
     else
-      put "/bookings/#{@booking.id}/complete", headers: {Authorization: @token}
+      # booking의 상태가 rent(대여 중)가 아니면 complete할 수 없음.
+      put "/bookings/#{@booking.id}/complete", params: {booking: { post_id: post.id}}, headers: {Authorization: @token}
+      expect(response).to have_http_status(:bad_request)
+
+      # 예약 상태를 rent로 업데이트.
+      @booking.update!(acceptance: :rent)
+      put "/bookings/#{@booking.id}/complete", params: {booking: { post_id: post.id}}, headers: {Authorization: @token}
+      
       # 예약 상태 completed로 업데이트
       expect(Booking.find(@booking.id).acceptance).to eq("completed")
       # rent 횟수 증가
