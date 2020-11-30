@@ -5,9 +5,9 @@ ActiveAdmin.register Company do
     selectable_column
     id_column
     br
+    column :image do |company| image_tag(company&.image_path ,class: 'admin-index-image') end
     column :user
     column :name
-    column :image do |company| image_tag(company&.image_path ,class: 'admin-index-image') end
     column :phone
     column :location
     column :message
