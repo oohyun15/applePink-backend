@@ -13,7 +13,7 @@ class UserSerializer < ActiveModel::Serializer
       likes_count: object.likes_count,
       image: object.image&.present? ? object.image.url : "",
       name: object.name&.present? ? object.name : nil,
-      birthday: object.birthday&.present? ? obejct.birthday : nil,
+      birthday: object.birthday&.present? ? object.birthday : nil,
       number: object.number&.present? ? object.number : nil,
       is_company: object.is_company?,
       company_id: object.company&.present? ? object.company.id : nil,
