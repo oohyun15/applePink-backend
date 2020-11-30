@@ -25,6 +25,9 @@ class Post < ApplicationRecord
   belongs_to :location, foreign_key: :location_id, primary_key: :position
   belongs_to :category
 
+  scope :normal_post, -> { joins(:user).where('users.user_type = 0') }
+  scope :company_post, -> { joins(:user).where('users.user_type = 1') }
+
   enum status: %i(able unable)
   enum post_type: %i(provide ask)
 

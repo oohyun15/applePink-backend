@@ -48,18 +48,10 @@ class PostsController < ApplicationController
   
       # location_ids와 post_type에 따른 서비스 분류
       if params[:post_type] == "provide" || params[:post_type].nil?
-        @posts = Post.where(post_type: :provide, location_id: location_positions)
+        @posts = Post.normal_post(post_type: :provide, location_id: location_positions)
       elsif params[:post_type] == "ask"
-        @posts = Post.where(post_type: :ask, location_id: location_positions)
+        @posts = Post.normal_post(post_type: :ask, location_id: location_positions)
       end
-      #render json: {
-      #  location: @location.title,
-      #  location_range: I18n.t("enum.user.location_range.#{current_user.location_range}"),
-      #  posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, scope: {params: create_params})
-         # scope 적용이 안됨. 수정 필요
-      #}#, status: :ok, scope: {params: create_params}
-  
-      # order: created_at desc
       @posts = @posts.order(created_at: :desc)
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
@@ -70,6 +62,9 @@ class PostsController < ApplicationController
     if params[:q].present?
       @posts = @posts.ransack(params[:q]).result(distinct: true)
     end
+
+    # 파트너 게시글 삽입
+    @posts
 
     render json: @posts, status: :ok, scope: { params: create_params, location: {info: true, title: @location.title, range: I18n.t("enum.user.location_range.#{current_user.location_range}")} }, user_id: current_user.id
   end
