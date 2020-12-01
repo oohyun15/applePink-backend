@@ -90,6 +90,9 @@ ActiveAdmin.register User do
     f.inputs do
       f.input :nickname
       f.input :email
+      f.input :name
+      f.input :birthday
+      f.input :number
       f.input :location, as: :select, collection: Location.all.map{|type| [type.title, type.position]}
       f.input :gender
       f.input :image, as: :file, hint: image_tag(f.object&.image_path, class: 'admin-show-image')

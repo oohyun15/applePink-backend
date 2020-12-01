@@ -16,10 +16,10 @@ ActiveAdmin.register Post do
     a link_to ("요청 서비스 보기"), "/admin/posts?q%5Bpost_type_in%5D%5B%5D=1", class: "button small"
     a link_to ("모두 보기"), "/admin/posts", class: "button small"
     
+    column :image do |post| image_tag(post&.image_path ,class: 'admin-index-image') end
     column :title
     column :product
     column :post_type do |post| post.post_type.present? ? I18n.t("enum.post.post_type.#{post.post_type}") : "게시글 타입 없음<br>비정상적인 게시글".html_safe end
-    column :image do |post| image_tag(post&.image_path ,class: 'admin-index-image') end
     column :user do |post| post.user end
     column :price do |post| money post.price end
     column :body do |post| post&.body&.truncate(27) end

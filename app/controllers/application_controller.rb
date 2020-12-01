@@ -91,7 +91,7 @@ class ApplicationController < ActionController::Base
       Rails.logger.info "Expired Time: #{Time.at(auth_token[:exp])}"
       Rails.logger.info "User ID: #{@current_user.id}, nickname: #{@current_user.nickname}"
     
-    rescue e
+    rescue => e
       # redirect_to users_sign_in_path
       Rails.logger.error "ERROR: #{e} #{log_info}"
       return render json: { error: "#{e}" }, status: :unauthorized
