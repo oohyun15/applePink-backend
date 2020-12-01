@@ -28,15 +28,7 @@ class UsersController < ApplicationController
         @user.device_list.add(device_info_params[:device_token])
         @user.normal!
         
-        if push_notification("회원가입이 완료되었습니다.", "[모두나눔] 회원가입 완료", [ device_info_params[:device_token] ])
-          Rails.logger.info "FCM device token: #{device_info_params[:device_token]}"
-          return render json: {message: "회원가입이 완료되었습니다."}, status: :ok
-        
-        # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
-        else
-          Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 0) #{log_info}"
-          return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
-        end
+        push_notification("회원가입이 완료되었습니다.", "[모두나눔] 회원가입 완료", [ device_info_params[:device_token] ])
   
         redirect_to users_sign_in_path, notice: "회원가입 완료"
       end
@@ -190,15 +182,7 @@ class UsersController < ApplicationController
     
     # 이미 등록된 토큰일 경우 
     elsif (current_user.device_list.include?(device_info_params[:device_token]))
-      if push_notification("로그인이 성공적으로 완료되었습니다.", "[모두나눔] 로그인 완료", [ device_info_params[:device_token] ])
-        Rails.logger.info "FCM device token: #{device_info_params[:device_token]}"
-        return render json: {error: "이미 등록된 토큰입니다."}, status: :ok
-    
-        # 푸시 알림이 보내지지 않은 경우
-      else
-        Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 1) #{log_info}"
-        return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
-      end
+      push_notification("로그인이 성공적으로 완료되었습니다.", "[모두나눔] 로그인 완료", [ device_info_params[:device_token] ])
     else
       current_user.device_type = device_info_params[:device_type]
       current_user.device_list.add(device_info_params[:device_token])
@@ -208,15 +192,7 @@ class UsersController < ApplicationController
 
         # 토큰 등록 이후 푸시 알림이 보내진 경우
         # 임시로 해당 유저의 디바이스 토큰 목록에 로그인한 디바이스 토큰이 없을 경우 회원가입으로 간주
-        if push_notification("로그인이 성공적으로 완료되었습니다.", "[모두나눔] 로그인 완료", [ device_info_params[:device_token] ])
-          Rails.logger.info "FCM device token: #{device_info_params[:device_token]}"
-          return render json: {message: "정상적으로 등록되었습니다."}, status: :ok
-        
-        # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
-        else
-          Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 0) #{log_info}"
-          return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
-        end
+        push_notification("로그인이 성공적으로 완료되었습니다.", "[모두나눔] 로그인 완료", [ device_info_params[:device_token] ])
       
       # 토큰 저장이 되지 않았을 경우
       else
@@ -224,6 +200,7 @@ class UsersController < ApplicationController
         return render json: {message: "토큰 저장 실패"}, status: :bad_request
       end
     end
+    return render json: {message: "로그인이 성공적으로 완료되었습니다."}, status: :ok
   end
 
   def remove_device

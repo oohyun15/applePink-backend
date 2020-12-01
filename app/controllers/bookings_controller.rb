@@ -36,14 +36,7 @@ class BookingsController < ApplicationController
         else
           @booking = current_user.bookings.create! booking_params
         end
-        if push_notification("\"#{@booking.post&.title}\"의 새로운 예약 신청이 왔습니다.", "[모두나눔] 새로운 예약 신청", @booking.post&.user&.device_list)
-          Rails.logger.info "FCM device token: #{@booking.post&.user&.device_list}"
-        
-        # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
-        else
-          Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 0) #{log_info}"
-          return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
-        end
+        push_notification("\"#{@booking.post&.title}\"의 새로운 예약 신청이 왔습니다.", "[모두나눔] 새로운 예약 신청", @booking.post&.user&.device_list)
         return render json: @booking, status: :ok, scope: {params: create_params}, user_id: current_user.id
       rescue => e
         Rails.logger.error "ERROR: #{@booking.errors&.first&.last} #{log_info}"
@@ -64,15 +57,7 @@ class BookingsController < ApplicationController
       when "accepted"
         @post.unable! if @post.able?
         @booking.update!(contract: @post.contract)
-
-        if push_notification("\"#{@booking.post&.title}\" 예약이 승인되었습니다.", "[모두나눔] 예약 승인", @booking.user&.device_list)
-          Rails.logger.info "FCM device token: #{@booking.post&.user&.device_list}"
-          
-        # 토큰 등록 이후 푸시 알림이 보내지지 않은 경우
-        else
-          Rails.logger.error "ERROR: 푸시 알림 전송 실패(case: 0) #{log_info}"
-          return render json: {message: "푸시 알림 전송 실패"}, status: :bad_request
-        end
+        push_notification("\"#{@booking.post&.title}\" 예약이 승인되었습니다.", "[모두나눔] 예약 승인", @booking.user&.device_list)
 
       when "rejected"
         @post.able! if @post.unable?        
