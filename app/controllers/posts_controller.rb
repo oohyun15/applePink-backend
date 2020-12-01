@@ -69,7 +69,7 @@ class PostsController < ApplicationController
       # 10개 마다 파트너 게시글 삽입
       if index != 0 && index % 9 == 0
         if company_post = Post.company_post[index / 9 - 1]
-          @posts << company_post
+          @posts.insert(index, company_post)
         end
       end
     end
