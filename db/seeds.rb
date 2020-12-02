@@ -1,4 +1,4 @@
-CATEGORIES = %w(잡화 의류 뷰티 전자제품 레져용품 생활용품 요리 자동차)
+CATEGORIES = %w(잡화 의류 뷰티 전자제품 레져용품 생활용품 요리 자동차 기타)
 
 def generate_user num
   names = ["김영희", "이철수", "박영수", "정동구", "최주공"]
