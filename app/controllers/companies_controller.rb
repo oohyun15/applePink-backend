@@ -20,6 +20,7 @@ class CompaniesController < ApplicationController
         @company = current_user.build_company company_params
         @company.location = current_user.location
         @company.update!(approve: false)
+        push_notification("파트너 신청이 완료되었습니다.", "[모두나눔] 파트너 신청 완료", @company.user&.device_list)
         return render json: {message: "파트너 신청이 완료되었습니다."}, status: :ok
       rescue => e
         Rails.logger.error "ERROR: #{@company.errors&.first&.last} #{log_info}"
@@ -44,9 +45,11 @@ class CompaniesController < ApplicationController
       if params[:approve] == "true"
         @company.update!(approve: true)
         @company.user.company!
+        push_notification("파트너 신청이 승인되었습니다.", "[모두나눔] 파트너 신청 승인", @company.user&.device_list)
       elsif params[:approve] == "false"
         @company.update!(approve: false)
         @company.user.normal!
+        push_notification("파트너 신청이 거절되었습니다.", "[모두나눔] 파트너 신청 거절", @company.user&.device_list)
       end
     rescue
       return false
