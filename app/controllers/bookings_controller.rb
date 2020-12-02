@@ -60,7 +60,8 @@ class BookingsController < ApplicationController
         push_notification("\"#{@booking.post&.title}\" 예약이 승인되었습니다.", "[모두나눔] 예약 승인", @booking.user&.device_list)
 
       when "rejected"
-        @post.able! if @post.unable?        
+        @post.able! if @post.unable?
+        push_notification("\"#{@booking.post&.title}\" 예약이 거절되었습니다.", "[모두나눔] 예약 거절", @booking.user&.device_list)     
       end
 
       return render json: @booking, status: :ok, scope: {params: create_params}, user_id: current_user.id
