@@ -136,7 +136,7 @@ class UsersController < ApplicationController
       if sms_params[:code].present?
         if sms_certification = SmsCertification.find_by(phone: sms_params[:phone])
           if sms_certification.check_code(sms_params[:code])
-            return render json: {message: "정삭적으로 인증되었습니다."}, status: :ok
+            return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
           else
             Rails.logger.error "ERROR: 인증번호가 틀렸습니다. 메세지를 다시 확인하세요. #{log_info}"
             return render json: {error: "인증번호가 틀렸습니다. 메세지를 다시 확인하세요."}, status: :not_acceptable
