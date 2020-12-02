@@ -60,7 +60,12 @@ class CompaniesController < ApplicationController
   private
 
   def load_company
-    @company = Company.find(params[:id])
+    begin
+      @company = Company.find(params[:id])
+    rescue => e
+      Rails.logger.error "ERROR: 등록되지 않은 파트너입니다. #{log_info}"
+      render json: {error: "등록되지 않은 파트너입니다."}, status: :bad_request
+    end
   end
 
   def check_owner
