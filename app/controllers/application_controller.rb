@@ -125,7 +125,7 @@ class ApplicationController < ActionController::Base
       #Image format conversion
       result = api_instance.convert_image_image_format_convert("HEIC", "PNG", input_file)
       image = MiniMagick::Image.read(result)
-      image.resize "5%"
+      image.resize "20%"
       image.format "png"
       # image.write "output.png"
       return image
