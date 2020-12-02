@@ -30,9 +30,13 @@ class SnsLogin
   end
 
   def get_auth_params
+    loop do
+      nickname = @auth.provider+"_"+rand(9999).to_s.rjust(4, "0")
+      break unless User.find_by(nickname: nickname).present?
+    end
     auth_params = {
       password: Devise.friendly_token[0, 20],
-      nickname: @auth.info.name,
+      nickname: nickname,
       account_type: @auth.provider,
       gender: :no_select
     }
