@@ -67,8 +67,8 @@ class PostsController < ApplicationController
     @posts = @posts.to_a
     @posts.each_with_index do |post, index|
       # 10개 마다 파트너 게시글 삽입
-      if index != 0 && index % 9 == 0
-        if company_post = Post.company_post[index / 9 - 1]
+      if index != 0 && index % 7 == 0
+        if company_post = Post.company_post[index / 7 - 1]
           @posts.insert(index, company_post)
         end
       end
