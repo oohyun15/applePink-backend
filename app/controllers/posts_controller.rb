@@ -73,6 +73,11 @@ class PostsController < ApplicationController
         end
       end
     end
+    
+    # 아직 파트너 게시물이 남아있을 경우
+    if (Post.company_post.length - 1) > (@posts.length - 1) / 9 - 1
+      @posts << Post.company_post[(@posts.length - 1) / 9 - 1..]
+    end
 
     render json: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer, 
       scope: { params: create_params, location: {info: true, title: @location.title, 
