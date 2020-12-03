@@ -17,7 +17,6 @@ class SnsLogin
         user.save!
       rescue => e
         Rails.logger.error "ERROR: #{e}"
-        render json: {error: e}, status: :bad_request
       end
     end
     update_identity_user(identity, user)
@@ -30,6 +29,7 @@ class SnsLogin
   end
 
   def get_auth_params
+    nickname = nil
     loop do
       nickname = @auth.provider+"_"+rand(9999).to_s.rjust(4, "0")
       break unless User.find_by(nickname: nickname).present?
