@@ -23,18 +23,18 @@ class User < ApplicationRecord
 
   has_one_attached :image
   
-  has_many :posts
-  has_many :user_chats
+  has_many :posts, dependent: :destroy
+  has_many :user_chats, dependent: :destroy
   has_many :chats, through: :user_chats
   has_many :messages, dependent: :destroy
-  has_many :bookings
+  has_many :bookings, dependent: :destroy
   has_many :received_bookings, through: :posts, source: :bookings
-  has_many :likes
+  has_many :likes, dependent: :nullify
   has_many :received_likes, class_name: "Like", as: :target, dependent: :destroy
   has_many :reports, dependent: :destroy
   has_many :received_reports, class_name: "Report", as: :target, dependent: :destroy
-  has_many :schedules
-  has_many :questions
+  has_many :schedules, dependent: :destroy
+  has_many :questions, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :received_reviews, through: :posts, source: :reviews
 
