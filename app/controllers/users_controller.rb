@@ -138,8 +138,8 @@ class UsersController < ApplicationController
           if sms_certification.check_code(sms_params[:code])
             return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
           else
-            Rails.logger.error "ERROR: 인증번호가 틀렸습니다. 메세지를 다시 확인하세요. #{log_info}"
-            return render json: {error: "인증번호가 틀렸습니다. 메세지를 다시 확인하세요."}, status: :not_acceptable
+            Rails.logger.error "ERROR: 인증번호가 일치하지 않습니다.\n메세지를 다시 확인하세요. #{log_info}"
+            return render json: {error: "인증번호가 일치하지 않습니다.\n메세지를 다시 확인하세요."}, status: :not_acceptable
           end
         end
       else
@@ -317,8 +317,8 @@ class UsersController < ApplicationController
           return render json: {message: "정상적으로 인증되었습니다."}, status: :ok
         end
       else
-        Rails.logger.error "ERROR: 인증번호가 틀렸습니다. 메일을 다시 확인해 주세요. #{log_info}"
-        return render json: {error: "인증번호가 틀렸습니다. 메일을 다시 확인해 주세요."}, status: :not_acceptable
+        Rails.logger.error "ERROR: 인증번호가 일치하지 않습니다.\n메일을 다시 확인해 주세요. #{log_info}"
+        return render json: {error: "인증번호가 일치하지 않습니다.\n메일을 다시 확인해 주세요."}, status: :not_acceptable
       end
     else
       Rails.logger.error "ERROR: 올바르지 않은 이메일입니다. #{log_info}"
