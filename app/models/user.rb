@@ -25,10 +25,10 @@ class User < ApplicationRecord
   
   has_many :posts, dependent: :destroy
   has_many :user_chats, dependent: :destroy
-  has_many :chats, through: :user_chats
+  has_many :chats, through: :user_chats, dependent: :nullify
   has_many :messages, dependent: :destroy
   has_many :bookings, dependent: :destroy
-  has_many :received_bookings, through: :posts, source: :bookings
+  has_many :received_bookings, through: :posts, source: :bookings, dependent: :nullify
   has_many :likes, dependent: :nullify
   has_many :received_likes, class_name: "Like", as: :target, dependent: :destroy
   has_many :reports, dependent: :destroy
@@ -36,7 +36,7 @@ class User < ApplicationRecord
   has_many :schedules, dependent: :destroy
   has_many :questions, dependent: :destroy
   has_many :reviews, dependent: :destroy
-  has_many :received_reviews, through: :posts, source: :reviews
+  has_many :received_reviews, through: :posts, source: :reviews, dependent: :nullify
 
   accepts_nested_attributes_for :likes
 
