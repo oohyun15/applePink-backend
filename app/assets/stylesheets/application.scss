@@ -93,10 +93,19 @@ button {
 
   .fixed-title {
     position: absolute;
-    bottom: 19px;
+    bottom: 16px;
     left: 45px;
     color: #495057;
+    font-weight: 900;
+    font-size: 24px;
   }
+
+  .sub-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+  }
+
   a, a:link, a:visited {
     text-decoration: none;
   }
@@ -1060,6 +1069,11 @@ b {
   background-color: #E6F3E6;
 }
 
+/* line 271, app/assets/stylesheets/home/theme.scss */
+.background-pale-brown {
+  background-color: #f3eee6;
+}
+
 /* line 275, app/assets/stylesheets/home/theme.scss */
 .circle-image {
   -o-object-fit: cover;
@@ -1865,6 +1879,7 @@ auto - auto
   font-size: 4rem;
   line-height: 1.35;
   margin-bottom: 2.4rem;
+  color: #212529;
 }
 
 /* line 117, app/assets/stylesheets/home/home.scss */
@@ -1891,11 +1906,11 @@ auto - auto
 /* line 132, app/assets/stylesheets/home/home.scss */
 .home-main-section .home-main-image {
   display: inline-block;
+  text-align: center;
 }
 
 /* line 134, app/assets/stylesheets/home/home.scss */
 .home-main-section .home-main-image-01 {
-  background-image: url(/assets/home/main/3x/image-1-39ac203e8922f615aa3843337871cb654b81269e872494128bf08236157c5f6a.png);
   background-size: 532px 684px;
   width: 532px;
   height: 684px;
@@ -1903,7 +1918,6 @@ auto - auto
 
 /* line 140, app/assets/stylesheets/home/home.scss */
 .home-main-section .home-main-image-02 {
-  background-image: url(/assets/home/main/3x/image-2-f286322ab98acedf914a05bf77e84c67dcb897c8ccb543e66f6afea9d366d06d.png);
   background-size: 546px 740px;
   width: 546px;
   height: 740px;
@@ -1911,7 +1925,6 @@ auto - auto
 
 /* line 146, app/assets/stylesheets/home/home.scss */
 .home-main-section .home-main-image-03 {
-  background-image: url(/assets/home/main/3x/image-3-0c8b631ac2294ac5a3b3e7a3a5580c3e68a3303ad2aded1e84aa57a2e1442786.png);
   background-size: 526px 735px;
   width: 526px;
   height: 735px;
@@ -1978,7 +1991,7 @@ auto - auto
 /* line 192, app/assets/stylesheets/home/home.scss */
 #home-main-section-top {
   margin-top: 72px;
-  padding-top: 24px;
+  padding-bottom: 6rem;
   background-color: $mainBackground;
 }
 
@@ -1996,8 +2009,10 @@ auto - auto
   font-size: 4.8rem;
   line-height: 1.3;
   padding-top: 27rem;
+  margin-top: 0;
   margin-bottom: 3.2rem;
   letter-spacing: -0.4px;
+  color: #212529;
 }
 
 /* line 210, app/assets/stylesheets/home/home.scss */
@@ -2009,6 +2024,7 @@ auto - auto
   height: 685px;
   background: $mainBackground url(/assets/home/main/3x/image-top-4eb6b8642f61c5c012136597a25a7b72c705d6c6479a7270f3fb23726fddf585.png) no-repeat;
   background-size: 804px 685px;
+  text-align: center;
 }
 
 /* line 220, app/assets/stylesheets/home/home.scss */
@@ -2052,4 +2068,17 @@ auto - auto
 /* line 243, app/assets/stylesheets/home/home.scss */
 .home-keywords-content .top-keywords-list .keyword-item:hover {
   text-decoration: underline;
+}
+
+.screenshot {
+  height: 100%;
+}
+
+.logo {
+  height: 1.4rem;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.footer {
 }
