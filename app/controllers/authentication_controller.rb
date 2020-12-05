@@ -1,10 +1,5 @@
 class AuthenticationController < ApplicationController
 
-  # 로그인 페이지
-  def new
-    render json: { message: "로그인 정보를 입력해주세요."}, status: :ok
-  end
-
   def create
     # json_params = JSON.parse(request.body.read)
 
