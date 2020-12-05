@@ -1889,18 +1889,18 @@ auto - auto
 
 /* line 119, app/assets/stylesheets/home/home.scss */
 .home-main-section .home-buttons .home-button {
-  background-color: #F1F3F5;
+  background-color: #fbda34;
   color: #212529;
   border: none;
   border-radius: 6px;
   text-decoration: none;
-  padding: 1.45rem 2.6rem;
+  padding: 1.16rem 2.08rem;
   display: inline-block;
 }
 
 /* line 127, app/assets/stylesheets/home/home.scss */
 .home-main-section .home-buttons .home-button:hover {
-  background-color: #E9ECEF;
+  background-color: rgb(214, 182, 2);
 }
 
 /* line 132, app/assets/stylesheets/home/home.scss */
@@ -1909,26 +1909,7 @@ auto - auto
   text-align: center;
 }
 
-/* line 134, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-main-image-01 {
-  background-size: 532px 684px;
-  width: 532px;
-  height: 684px;
-}
 
-/* line 140, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-main-image-02 {
-  background-size: 546px 740px;
-  width: 546px;
-  height: 740px;
-}
-
-/* line 146, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-main-image-03 {
-  background-size: 526px 735px;
-  width: 526px;
-  height: 735px;
-}
 
 /* line 153, app/assets/stylesheets/home/home.scss */
 .home-main-section .home-main-reverse {
@@ -1956,37 +1937,9 @@ auto - auto
   list-style-type: none;
 }
 
-/* line 170, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-story-list .home-story-list-item {
-  margin-right: 4.6rem;
-}
 
-/* line 172, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-story-list .home-story-list-item:last-child {
-  margin-right: 0;
-}
 
-/* line 176, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-story-list .icon-story {
-  width: 56px;
-  height: 56px;
-  background-size: 56px 56px;
-}
 
-/* line 180, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-story-list .icon-story-01 {
-  background-image: url(/assets/home/main/icon-story-1-9226479b836cdc960291ffda91ace46c90a632f6cc868aa8983b3624e662a924.svg);
-}
-
-/* line 183, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-story-list .icon-story-02 {
-  background-image: url(/assets/home/main/icon-story-2-208bb88cad31e335b40bc8ac5b7684dcf8a36d77ac50770a497a9c967a3bfc4f.svg);
-}
-
-/* line 186, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-story-list .icon-story-03 {
-  background-image: url(/assets/home/main/icon-story-3-0a14d64c6101a7271655747d8401b9f71506578f8a4c0640608074e977bbc7c0.svg);
-}
 
 /* line 192, app/assets/stylesheets/home/home.scss */
 #home-main-section-top {
@@ -2078,6 +2031,12 @@ auto - auto
   height: 1.4rem;
   margin-right: 4px;
   margin-bottom: 4px;
+}
+
+.home-button .logo {
+  height: 1.4rem;
+  margin-right: 4px;
+  margin-bottom: 3px;
 }
 
 .footer {
