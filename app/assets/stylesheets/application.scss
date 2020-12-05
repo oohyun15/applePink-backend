@@ -229,6 +229,7 @@ button {
   fill: #495057;
   vertical-align: middle;
   display: inline-block;
+  margin-bottom: 3px;
 }
 
 /* line 150, app/assets/stylesheets/home/header.scss */
@@ -270,8 +271,8 @@ button {
 
 /* line 7, app/assets/stylesheets/home/footer.scss */
 footer {
-  background-color: #495057;
-  color: #fff;
+  background-color: #fff;
+  color: black;
   padding: 8rem 0;
 }
 
@@ -2043,7 +2044,4 @@ auto - auto
   height: 1.4rem;
   margin-right: 4px;
   margin-bottom: 3px;
-}
-
-.footer {
 }
