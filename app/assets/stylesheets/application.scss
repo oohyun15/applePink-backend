@@ -1,0 +1,2055 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ @charset "UTF-8";
+
+ $mainBackground: #fff1f6;
+
+/* line 18, app/assets/stylesheets/home/header.scss */
+::-moz-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #868e96;
+  opacity: 1;
+  /* Firefox */
+}
+:-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #868e96;
+  opacity: 1;
+  /* Firefox */
+}
+::-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #868e96;
+  opacity: 1;
+  /* Firefox */
+}
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #868e96;
+  opacity: 1;
+  /* Firefox */
+}
+
+/* line 23, app/assets/stylesheets/home/header.scss */
+input {
+  font-family: "Noto Sans KR", AppleSDGothicNeo, "Apple SD Gothic Neo", AppleSDGothicNeo-Light, HelveticaNeue-Light, "Malgun Gothic", "맑은 고딕", sans-serif;
+}
+
+/* line 27, app/assets/stylesheets/home/header.scss */
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+/* line 37, app/assets/stylesheets/home/header.scss */
+#fixed-bar {
+  width: 100%;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+/* line 45, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap {
+  width: 1024px;
+  margin: 0 auto;
+  padding: 16px 0;
+  position: relative;
+}
+
+#fixed-bar #fixed-bar-logo-title {
+  margin: 0;
+}
+
+/* line 50, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap {
+    
+  .fixed-logo {
+    width: 34px;
+    vertical-align: text-bottom;
+  }
+
+  .fixed-title {
+    position: absolute;
+    bottom: 19px;
+    left: 45px;
+    color: #495057;
+  }
+  a, a:link, a:visited {
+    text-decoration: none;
+  }
+}
+
+/* line 55, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search {
+  position: absolute;
+  left: 152px;
+  top: 16px;
+  border-radius: 5px;
+  border: solid 1px #e9ecef;
+  text-decoration: none;
+  padding: 0 1.6rem;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+/* line 67, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search:focus-within {
+  border: solid 1px #212529;
+}
+
+/* line 70, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-input-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* line 73, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-input-wrap .fixed-search-input {
+  display: block;
+  width: 340px;
+  border: none;
+  font-size: 16px;
+  color: #212529;
+  background-color: transparent;
+}
+
+/* line 80, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-input-wrap .fixed-search-input:focus {
+  outline: none;
+}
+
+/* line 84, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-input-wrap .fixed-search-icon {
+  width: 19px;
+  height: 19px;
+  fill: #868e96;
+  padding: 1rem 0;
+}
+
+/* line 91, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-keyword-wrap {
+  position: absolute;
+  left: 20px;
+  top: 40px;
+  border: 1px solid #FF8A3D;
+  width: 448px;
+  padding: 10px;
+  background: #fff;
+  z-index: 101;
+  line-height: 2;
+  display: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* line 104, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-keyword-wrap .search-keyword-text {
+  color: #FF8A3D;
+}
+
+/* line 107, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-keyword-wrap .search-keyword-list {
+  white-space: normal;
+  word-break: normal;
+}
+
+/* line 110, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-keyword-wrap .search-keyword-list .search-keyword {
+  text-decoration: none;
+  color: #212529;
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+/* line 120, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-download {
+  position: absolute;
+  right: 0;
+  top: 16px;
+}
+
+/* line 124, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-download .fixed-download-button {
+  width: 140px;
+  border-radius: 5px;
+  border: solid 1px #e9ecef;
+  box-sizing: border-box;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0.9rem 0;
+}
+
+/* line 136, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-download .fixed-download-button .fixed-download-text {
+  display: inline-block;
+  color: #495057;
+  font-size: 14px;
+  margin-left: 8px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+/* line 144, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-download .fixed-download-button .fixed-google-play,
+#fixed-bar #fixed-bar-wrap #fixed-bar-download .fixed-download-button .fixed-apple-store {
+  fill: #495057;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+/* line 150, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-download .fixed-download-button:hover {
+  border: solid 1px #CED4DA;
+}
+
+/* line 154, app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-download #header-download-button-ios {
+  margin-right: 8px;
+}
+
+/* line 161, app/assets/stylesheets/home/header.scss */
+.fixed-bar-box-shadow {
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* line 167, app/assets/stylesheets/home/header.scss */
+.hoian-gb #fixed-bar #fixed-bar-wrap #fixed-bar-download .fixed-download-button {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+/* line 171, app/assets/stylesheets/home/header.scss */
+.hoian-gb #fixed-bar #fixed-bar-wrap #fixed-bar-download .fixed-download-button:hover {
+  background-color: #17191D;
+}
+
+/* line 175, app/assets/stylesheets/home/header.scss */
+.hoian-gb #fixed-bar #fixed-bar-wrap #fixed-bar-download .fixed-download-button:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* line 179, app/assets/stylesheets/home/header.scss */
+.hoian-gb #fixed-bar #fixed-bar-wrap #fixed-bar-download .fixed-download-button .fixed-download-text {
+  color: #fff;
+}
+
+/* line 7, app/assets/stylesheets/home/footer.scss */
+footer {
+  background-color: #495057;
+  color: #fff;
+  padding: 8rem 0;
+}
+
+/* line 11, app/assets/stylesheets/home/footer.scss */
+footer .footer-container {
+  width: 1024px;
+  margin: 0 auto;
+}
+
+/* line 14, app/assets/stylesheets/home/footer.scss */
+footer .footer-container .footer-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4rem;
+}
+
+/* line 18, app/assets/stylesheets/home/footer.scss */
+footer .footer-container .footer-top .footer-logo {
+  width: 130px;
+  height: 37px;
+  background-image: url(/assets/home/base/footer/logo-a4f4848ffd1d5fcb13d1d3ecf82ffbc77c31ebe226f67097386497a34638c059.svg);
+  background-size: 130px 37px;
+}
+
+/* line 24, app/assets/stylesheets/home/footer.scss */
+footer .footer-container .footer-top .footer-list {
+  list-style-type: none;
+}
+
+/* line 26, app/assets/stylesheets/home/footer.scss */
+footer .footer-container .footer-top .footer-list .footer-list-item {
+  display: block;
+  font-size: 1.6rem;
+  margin-bottom: 1.6rem;
+}
+
+/* line 30, app/assets/stylesheets/home/footer.scss */
+footer .footer-container .footer-top .footer-list .footer-list-item a {
+  color: #ADB5BD;
+  text-decoration: none;
+}
+
+/* line 33, app/assets/stylesheets/home/footer.scss */
+footer .footer-container .footer-top .footer-list .footer-list-item a:hover {
+  text-decoration: underline;
+}
+
+/* line 37, app/assets/stylesheets/home/footer.scss */
+footer .footer-container .footer-top .footer-list .footer-list-item .link-highlight {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* line 44, app/assets/stylesheets/home/footer.scss */
+footer .footer-container .footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 3.2rem;
+}
+
+/* line 50, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #copyright {
+  color: #ADB5BD;
+  margin-top: 3.2rem;
+}
+
+/* line 53, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #copyright .copyright-list {
+  list-style-type: none;
+  margin-bottom: 0.4rem;
+}
+
+/* line 56, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #copyright .copyright-list .copyright-list-item {
+  display: inline-block;
+  font-size: 1.4rem;
+  margin-right: 0.8rem;
+}
+
+/* line 60, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #copyright .copyright-list .copyright-list-item address {
+  font-style: normal;
+}
+
+/* line 63, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #copyright .copyright-list .copyright-list-item a {
+  color: inherit;
+  text-decoration: none;
+  color: #868e96;
+}
+
+/* line 67, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #copyright .copyright-list .copyright-list-item a:hover {
+  text-decoration: underline;
+}
+
+/* line 73, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #copyright .copyright-list-light {
+  margin-top: 1.6rem;
+  color: #868e96;
+}
+
+/* line 77, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #copyright .copyright-text {
+  font-size: 1.4rem;
+  margin: 0.4rem 0;
+  color: #868e96;
+}
+
+/* line 83, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #social {
+  margin-top: 3.2rem;
+}
+
+/* line 85, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #social .social-list {
+  list-style-type: none;
+}
+
+/* line 87, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #social .social-list .social-list-item {
+  display: inline-block;
+  margin-right: 2.4rem;
+}
+
+/* line 90, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #social .social-list .social-list-item .footer-social-link {
+  display: block;
+}
+
+/* line 93, app/assets/stylesheets/home/footer.scss */
+footer .footer-container #social .social-list .social-list-item:last-child {
+  margin-right: 0;
+}
+
+/* Slider */
+/* line 2, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* line 21, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 31, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-list:focus {
+  outline: none;
+}
+
+/* line 35, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-list.dragging {
+  cursor: pointer;
+  cursor: hand;
+}
+
+/* line 41, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  transform: translate3d(0, 0, 0);
+}
+
+/* line 51, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-track {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 61, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-track:before,
+.slick-track:after {
+  display: table;
+  content: '';
+}
+
+/* line 68, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-track:after {
+  clear: both;
+}
+
+/* line 72, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-loading .slick-track {
+  visibility: hidden;
+}
+
+/* line 77, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-slide {
+  display: none;
+  float: left;
+  height: 100%;
+  min-height: 1px;
+}
+
+/* line 85, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+[dir='rtl'] .slick-slide {
+  float: right;
+}
+
+/* line 89, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-slide img {
+  display: block;
+}
+
+/* line 93, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-slide.slick-loading img {
+  display: none;
+}
+
+/* line 97, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-slide.dragging img {
+  pointer-events: none;
+}
+
+/* line 101, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-initialized .slick-slide {
+  display: block;
+}
+
+/* line 105, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-loading .slick-slide {
+  visibility: hidden;
+}
+
+/* line 109, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-vertical .slick-slide {
+  display: block;
+  height: auto;
+  border: 1px solid transparent;
+}
+
+/* line 117, ../usr/local/bundle/gems/jquery-slick-rails-1.9.0/app/assets/stylesheets/slick.css */
+.slick-arrow.slick-hidden {
+  display: none;
+}
+
+/*
+*= require 'slick'
+*/
+/* line 9, app/assets/stylesheets/home/articles/image_slider.scss */
+.slick-slide:focus, .slick-slide a {
+  outline: none;
+}
+
+/* line 15, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap {
+  position: relative;
+}
+
+/* line 17, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slider {
+  border: none;
+}
+
+/* line 20, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slick-arrow {
+  outline: none;
+  width: 11px;
+  height: 21px;
+  text-indent: -9999px;
+}
+
+/* line 26, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slick-prev {
+  position: absolute;
+  left: 0;
+  top: 240px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  z-index: 99;
+  background: url(/assets/home/articles/icon-slider-left-4c0e713bfa2cd12bd959e6dd9ef456cd6fc094953c41e605f6b9a59bc1680686.svg) no-repeat;
+}
+
+/* line 36, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slick-prev:hover {
+  background: url(/assets/home/articles/icon-slider-left-hover-bbda49cc160e798261c2dd4894cc623d0118a701fbb705546fc06de658ce3996.svg) no-repeat;
+}
+
+/* line 39, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slick-next {
+  position: absolute;
+  right: 0;
+  top: 240px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  background: url(/assets/home/articles/icon-slider-right-134c53f44716c3bef227ec30da385b4b09c9c068d339a617a23093718f379d02.svg) no-repeat;
+}
+
+/* line 48, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slick-next:hover {
+  background: url(/assets/home/articles/icon-slider-right-hover-c71a5a4d1745bf59f056660eadc57e451f619b5bddaff0c9fdf2f8e3b4d955f8.svg) no-repeat;
+}
+
+/* line 51, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slick-dots {
+  position: absolute;
+  bottom: 3px;
+  left: 26px;
+  right: 26px;
+  width: 677px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-radius: 8px;
+  list-style: none;
+  text-align: center;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  background-blend-mode: multiply;
+}
+
+/* line 66, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slick-dots li {
+  position: relative;
+  bottom: 0;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* line 71, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slick-dots li button {
+  display: block;
+  cursor: pointer;
+  color: transparent;
+  border: 0;
+  outline: none;
+  background: transparent;
+  margin: 0 4px;
+  width: 8px;
+}
+
+/* line 81, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slick-dots li button:before {
+  content: ' ';
+  background-color: #fff;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  opacity: 0.3;
+}
+
+/* line 94, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .slick-dots .slick-active button:before {
+  background-color: #fff;
+  opacity: 0.8;
+}
+
+/* line 100, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .image-wrap {
+  position: relative;
+  width: 677px;
+  margin: 0 auto;
+  height: 500px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* line 109, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .image-wrap img {
+  border-radius: 8px;
+  position: relative;
+  min-width: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: transparent;
+}
+
+/* line 122, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .image-wrap .landscape {
+  height: 100%;
+  width: auto;
+}
+
+/* line 126, app/assets/stylesheets/home/articles/image_slider.scss */
+#image-slider .slider-wrap .image-wrap .portrait {
+  width: 100%;
+  height: auto;
+}
+
+/* line 6, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* line 12, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-link {
+  text-decoration: none;
+  color: #212529;
+}
+
+/* line 16, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top,
+.cards-wrap .card {
+  width: calc(25% - 44px);
+  margin-right: 44px;
+  margin-bottom: 56px;
+}
+
+/* line 21, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-photo,
+.cards-wrap .card .card-photo {
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: #F8F9FA;
+  box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+}
+
+/* line 32, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-photo img,
+.cards-wrap .card .card-photo img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid transparent;
+}
+
+/* line 44, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-category,
+.cards-wrap .card .card-category {
+  position: relative;
+}
+
+/* line 46, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-category .category-image,
+.cards-wrap .card .card-category .category-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 130px;
+  height: 130px;
+  transform: translate(-50%, -50%);
+}
+
+/* line 57, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-desc,
+.cards-wrap .card .card-desc {
+  margin-top: 12px;
+}
+
+/* line 59, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-desc .card-title,
+.cards-wrap .card .card-desc .card-title {
+  font-size: 16px;
+  letter-spacing: -0.02px;
+  color: #212529;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  line-height: 1.5;
+  font-weight: normal;
+}
+
+/* line 70, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-desc .card-region-name,
+.cards-wrap .card .card-desc .card-region-name {
+  font-size: 13px;
+  color: #212529;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+/* line 79, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-desc .card-price,
+.cards-wrap .card .card-desc .card-price {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+/* line 85, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-desc .card-price.blank-price,
+.cards-wrap .card .card-desc .card-price.blank-price {
+  color: #212529;
+}
+
+/* line 88, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-desc .card-counts,
+.cards-wrap .card .card-desc .card-counts {
+  color: #868e96;
+  font-size: 13px;
+}
+
+/* line 94, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card {
+  width: calc(33% - 16px);
+  margin-right: 16px;
+}
+
+/* line 98, app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top:nth-child(4n),
+.cards-wrap .card:nth-child(3n) {
+  margin-right: 0;
+}
+
+/* line 58, app/assets/stylesheets/home/theme.scss */
+* {
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+/* line 64, app/assets/stylesheets/home/theme.scss */
+section,
+article,
+aside,
+footer,
+header,
+nav,
+hgroup {
+  display: block;
+}
+
+/* line 74, app/assets/stylesheets/home/theme.scss */
+a {
+  -webkit-tap-highlight-color: rgba(73, 80, 87, 0.05);
+}
+
+/* line 80, app/assets/stylesheets/home/theme.scss */
+html {
+  font-size: 62.5%;
+  height: 100%;
+}
+
+/* line 85, app/assets/stylesheets/home/theme.scss */
+body {
+  position: relative;
+  color: #212529;
+  font-family: "Noto Sans KR", AppleSDGothicNeo, "Apple SD Gothic Neo", AppleSDGothicNeo-Light, HelveticaNeue-Light, "Malgun Gothic", "맑은 고딕", sans-serif;
+  font-weight: 400;
+  min-height: 100%;
+}
+
+/* line 93, app/assets/stylesheets/home/theme.scss */
+h1,
+h2,
+h3,
+h4,
+h5,
+h5 {
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* line 103, app/assets/stylesheets/home/theme.scss */
+h1 {
+  font-size: 2rem;
+}
+
+/* line 107, app/assets/stylesheets/home/theme.scss */
+h2 {
+  font-size: 1.8rem;
+}
+
+/* line 111, app/assets/stylesheets/home/theme.scss */
+h3 {
+  font-size: 1.6rem;
+}
+
+/* line 115, app/assets/stylesheets/home/theme.scss */
+h4 {
+  font-size: 1.4rem;
+}
+
+/* line 119, app/assets/stylesheets/home/theme.scss */
+h5 {
+  font-size: 1.3rem;
+}
+
+/* line 123, app/assets/stylesheets/home/theme.scss */
+h6 {
+  font-size: 1.2rem;
+}
+
+/* line 127, app/assets/stylesheets/home/theme.scss */
+strong,
+b {
+  font-weight: 700;
+}
+
+/* line 132, app/assets/stylesheets/home/theme.scss */
+::-moz-selection {
+  color: #212529;
+  background: #FFB98B;
+}
+
+/* line 136, app/assets/stylesheets/home/theme.scss */
+::-moz-selection {
+  color: #212529;
+  background: #FFB98B;
+}
+::selection {
+  color: #212529;
+  background: #FFB98B;
+}
+
+/* line 141, app/assets/stylesheets/home/theme.scss */
+.clear {
+  clear: both;
+}
+
+/* line 145, app/assets/stylesheets/home/theme.scss */
+.hide {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 0;
+}
+
+/* line 152, app/assets/stylesheets/home/theme.scss */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+}
+
+/* line 163, app/assets/stylesheets/home/theme.scss */
+.text-normal {
+  font-weight: normal;
+}
+
+/* line 167, app/assets/stylesheets/home/theme.scss */
+.text-bold {
+  font-weight: bold;
+}
+
+/* line 171, app/assets/stylesheets/home/theme.scss */
+.text-black {
+  color: #212529;
+}
+
+/* line 175, app/assets/stylesheets/home/theme.scss */
+.text-carrot {
+  color: #FF8A3D;
+}
+
+/* line 179, app/assets/stylesheets/home/theme.scss */
+.text-tomato {
+  color: #FF3E46;
+}
+
+/* line 183, app/assets/stylesheets/home/theme.scss */
+.text-green {
+  color: #56C271;
+}
+
+/* line 187, app/assets/stylesheets/home/theme.scss */
+.text-gray {
+  color: #868e96;
+}
+
+/* line 191, app/assets/stylesheets/home/theme.scss */
+.text-light-gray {
+  color: #ADB5BD;
+}
+
+/* line 195, app/assets/stylesheets/home/theme.scss */
+.text-dark-gray {
+  color: #495057;
+}
+
+/* line 198, app/assets/stylesheets/home/theme.scss */
+.text-white {
+  color: #fff;
+}
+
+/* line 202, app/assets/stylesheets/home/theme.scss */
+.text-center {
+  text-align: center;
+}
+
+/* line 206, app/assets/stylesheets/home/theme.scss */
+.text-xxl {
+  font-size: 2.4rem !important;
+  line-height: 1.54;
+  letter-spacing: -0.8px;
+}
+
+/* line 212, app/assets/stylesheets/home/theme.scss */
+.text-xl {
+  font-size: 2rem !important;
+  line-height: 1.55;
+  letter-spacing: -0.3px;
+}
+
+/* line 218, app/assets/stylesheets/home/theme.scss */
+.text-l {
+  font-size: 1.8rem !important;
+  line-height: 1.47;
+  letter-spacing: -0.3px;
+}
+
+/* line 224, app/assets/stylesheets/home/theme.scss */
+.text-m {
+  font-size: 1.6rem !important;
+  line-height: 1.5;
+  letter-spacing: -0.3px;
+}
+
+/* line 230, app/assets/stylesheets/home/theme.scss */
+.text-s {
+  font-size: 1.4rem !important;
+  line-height: 1.5;
+}
+
+/* line 235, app/assets/stylesheets/home/theme.scss */
+.text-xs {
+  font-size: 1.3rem !important;
+  line-height: 1.5;
+}
+
+/* line 240, app/assets/stylesheets/home/theme.scss */
+.text-xxs {
+  font-size: 1.2rem !important;
+  line-height: 1.5;
+}
+
+/* line 245, app/assets/stylesheets/home/theme.scss */
+.text-no-decoration {
+  text-decoration: none;
+}
+
+/* line 249, app/assets/stylesheets/home/theme.scss */
+.overflow-hidden {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* line 255, app/assets/stylesheets/home/theme.scss */
+.background-gray {
+  background-color: #F8F9FA;
+}
+
+/* line 259, app/assets/stylesheets/home/theme.scss */
+.background-dark-gray {
+  background-color: #E9ECEF;
+}
+
+/* line 263, app/assets/stylesheets/home/theme.scss */
+.background-white {
+  background-color: #fff;
+}
+
+/* line 267, app/assets/stylesheets/home/theme.scss */
+.background-green {
+  background-color: #56C271;
+}
+
+/* line 271, app/assets/stylesheets/home/theme.scss */
+.background-pale-green {
+  background-color: #E6F3E6;
+}
+
+/* line 275, app/assets/stylesheets/home/theme.scss */
+.circle-image {
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
+/* line 282, app/assets/stylesheets/home/theme.scss */
+.circle-image-s {
+  width: 40px;
+  height: 40px;
+}
+
+/* line 287, app/assets/stylesheets/home/theme.scss */
+.circle-image-m {
+  width: 48px;
+  height: 48px;
+}
+
+/* line 292, app/assets/stylesheets/home/theme.scss */
+.circle-image-l {
+  width: 60px;
+  height: 60px;
+}
+
+/* line 297, app/assets/stylesheets/home/theme.scss */
+.rounded {
+  border-radius: 4px;
+}
+
+/* line 302, app/assets/stylesheets/home/theme.scss */
+.center-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* line 306, app/assets/stylesheets/home/theme.scss */
+.center-image img {
+  width: 100%;
+}
+
+/* line 312, app/assets/stylesheets/home/theme.scss */
+.image-s img {
+  width: 48px;
+  height: 48px;
+}
+
+/* line 318, app/assets/stylesheets/home/theme.scss */
+.article-thumbnail {
+  width: 180px;
+  height: 180px;
+}
+
+/* line 323, app/assets/stylesheets/home/theme.scss */
+.article-thumbnail-text {
+  width: 180px;
+}
+
+/* line 327, app/assets/stylesheets/home/theme.scss */
+.inline-block {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* line 332, app/assets/stylesheets/home/theme.scss */
+.space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* line 338, app/assets/stylesheets/home/theme.scss */
+.block {
+  display: block;
+}
+
+/* line 342, app/assets/stylesheets/home/theme.scss */
+.flex {
+  display: flex;
+}
+
+/* line 347, app/assets/stylesheets/home/theme.scss */
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+/* line 352, app/assets/stylesheets/home/theme.scss */
+.flex-1 {
+  flex: 1;
+}
+
+/* line 356, app/assets/stylesheets/home/theme.scss */
+.relative {
+  position: relative;
+}
+
+/* line 360, app/assets/stylesheets/home/theme.scss */
+.vertical-top {
+  vertical-align: top;
+}
+
+/* line 364, app/assets/stylesheets/home/theme.scss */
+.vertical-text-top {
+  vertical-align: text-top;
+}
+
+/* line 368, app/assets/stylesheets/home/theme.scss */
+.width-full {
+  width: 100%;
+}
+
+/* line 372, app/assets/stylesheets/home/theme.scss */
+.list-unstyled {
+  list-style-type: none;
+}
+
+/* line 376, app/assets/stylesheets/home/theme.scss */
+.shadow-bottom {
+  box-shadow: 0 1px 0 0 #E9ECEF;
+}
+
+/* line 380, app/assets/stylesheets/home/theme.scss */
+.border-bottom {
+  border-bottom: 1px solid #E9ECEF;
+}
+
+/* line 384, app/assets/stylesheets/home/theme.scss */
+.border-top {
+  border-top: 1px solid #E9ECEF;
+}
+
+/* line 388, app/assets/stylesheets/home/theme.scss */
+.border-none {
+  border: none;
+}
+
+/* line 392, app/assets/stylesheets/home/theme.scss */
+.tag {
+  padding: 0.2rem 0.4rem;
+  margin-right: 0.2rem;
+  margin-top: 0.4rem;
+  background-color: #F8F9FA;
+  color: #212529;
+  font-size: 1.3rem;
+}
+
+/* line 401, app/assets/stylesheets/home/theme.scss */
+.button {
+  -webkit-appearance: none;
+  border-radius: 3px;
+  box-sizing: border-box;
+  border: 1px solid #ADB5BD;
+  color: #212529;
+}
+
+/* line 413, app/assets/stylesheets/home/theme.scss */
+.button-rounded {
+  border-radius: 100px;
+}
+
+/* line 419, app/assets/stylesheets/home/theme.scss */
+.button-s {
+  padding: 0.4rem 1rem;
+}
+
+/* line 423, app/assets/stylesheets/home/theme.scss */
+.button-m {
+  padding: 0.8rem;
+}
+
+/* line 427, app/assets/stylesheets/home/theme.scss */
+.button-full {
+  display: block;
+  width: 100%;
+}
+
+/* line 432, app/assets/stylesheets/home/theme.scss */
+.button-carrot {
+  background-color: #fff;
+  color: #FF8A3D;
+  border: 1px solid #FF8A3D;
+}
+
+/* line 438, app/assets/stylesheets/home/theme.scss */
+.button-green {
+  background-color: #fff;
+  color: #56C271;
+  border: none;
+}
+
+/* line 444, app/assets/stylesheets/home/theme.scss */
+.button-black {
+  background-color: #fff;
+  color: #212529;
+  border: 1px solid #212529;
+}
+
+/* line 450, app/assets/stylesheets/home/theme.scss */
+.button-black:hover {
+  border: 1px solid #868e96;
+  color: #868e96;
+}
+
+/* line 455, app/assets/stylesheets/home/theme.scss */
+.right-arrow {
+  background: #fff url(/assets/wv/smbs/icon-small-rignt-arrow-c84f1abd85c1f283b11c7605514833e464cd93cf5b309c62477ab4a299fc63f0.svg) no-repeat right 0 center;
+}
+
+/* line 458, app/assets/stylesheets/home/theme.scss */
+.right-arrow-disabled {
+  background: #fff url(/assets/wv/smbs/icon-small-rignt-arrow-disabled-f9761ec61d7893eba985673575d5dfdf56ddcfe1392261e035dd4840c71270c7.svg) no-repeat right 0 center;
+}
+
+/*
+m - margin
+p - padding
+
+t - margin-top or padding-top
+b - margin-bottom or padding-bottom
+l - margin-left or padding-left
+r - margin-right or padding-right
+x - both *-left and *-right
+y - both *-top and *-bottom
+
+0   - $spacer * 0
+1   - $spacer * .25
+2   - $spacer * .5
+25  - $spacer * .75
+3   - $spacer
+4   - $spacer * 1.5
+5   - $spacer * 2
+auto - auto
+*/
+/* line 486, app/assets/stylesheets/home/theme.scss */
+.m-3 {
+  margin: 1.6rem;
+}
+
+/* line 488, app/assets/stylesheets/home/theme.scss */
+.ml-0_5 {
+  margin-left: 0.2rem;
+}
+
+/* line 489, app/assets/stylesheets/home/theme.scss */
+.ml-1 {
+  margin-left: 0.4rem;
+}
+
+/* line 490, app/assets/stylesheets/home/theme.scss */
+.ml-2 {
+  margin-left: 0.8rem;
+}
+
+/* line 491, app/assets/stylesheets/home/theme.scss */
+.ml-3 {
+  margin-left: 1.6rem;
+}
+
+/* line 493, app/assets/stylesheets/home/theme.scss */
+.mr-2 {
+  margin-right: 0.8rem;
+}
+
+/* line 495, app/assets/stylesheets/home/theme.scss */
+.mt-0_5 {
+  margin-top: 0.2rem;
+}
+
+/* line 496, app/assets/stylesheets/home/theme.scss */
+.mt-1 {
+  margin-top: 0.4rem;
+}
+
+/* line 497, app/assets/stylesheets/home/theme.scss */
+.mt-2 {
+  margin-top: 0.8rem;
+}
+
+/* line 498, app/assets/stylesheets/home/theme.scss */
+.mt-3 {
+  margin-top: 1.6rem;
+}
+
+/* line 499, app/assets/stylesheets/home/theme.scss */
+.mt-4 {
+  margin-top: 2.4rem;
+}
+
+/* line 500, app/assets/stylesheets/home/theme.scss */
+.mt-5 {
+  margin-top: 3.2rem;
+}
+
+/* line 502, app/assets/stylesheets/home/theme.scss */
+.mb-1 {
+  margin-bottom: 0.4rem;
+}
+
+/* line 503, app/assets/stylesheets/home/theme.scss */
+.mb-2 {
+  margin-bottom: 0.8rem;
+}
+
+/* line 504, app/assets/stylesheets/home/theme.scss */
+.mb-3 {
+  margin-bottom: 1.6rem;
+}
+
+/* line 505, app/assets/stylesheets/home/theme.scss */
+.mb-4 {
+  margin-bottom: 2.4rem;
+}
+
+/* line 506, app/assets/stylesheets/home/theme.scss */
+.mb-5 {
+  margin-bottom: 3.2rem;
+}
+
+/* line 508, app/assets/stylesheets/home/theme.scss */
+.mx-1 {
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
+}
+
+/* line 512, app/assets/stylesheets/home/theme.scss */
+.mx-3 {
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+}
+
+/* line 516, app/assets/stylesheets/home/theme.scss */
+.mx-4 {
+  margin-left: 2.4rem;
+  margin-right: 2.4rem;
+}
+
+/* line 521, app/assets/stylesheets/home/theme.scss */
+.my-1 {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+/* line 526, app/assets/stylesheets/home/theme.scss */
+.my-2 {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+/* line 531, app/assets/stylesheets/home/theme.scss */
+.my-3 {
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+}
+
+/* line 536, app/assets/stylesheets/home/theme.scss */
+.my-4 {
+  margin-top: 2.4rem;
+  margin-bottom: 2.4rem;
+}
+
+/* line 541, app/assets/stylesheets/home/theme.scss */
+.pt-1 {
+  padding-top: 0.4rem;
+}
+
+/* line 542, app/assets/stylesheets/home/theme.scss */
+.pt-2 {
+  padding-top: 0.8rem;
+}
+
+/* line 543, app/assets/stylesheets/home/theme.scss */
+.pt-3 {
+  padding-top: 1.6rem;
+}
+
+/* line 544, app/assets/stylesheets/home/theme.scss */
+.pt-4 {
+  padding-top: 2.4rem;
+}
+
+/* line 546, app/assets/stylesheets/home/theme.scss */
+.pb-2 {
+  padding-bottom: 0.8rem;
+}
+
+/* line 547, app/assets/stylesheets/home/theme.scss */
+.pb-3 {
+  padding-bottom: 1.6rem;
+}
+
+/* line 548, app/assets/stylesheets/home/theme.scss */
+.pb-4 {
+  padding-bottom: 2.4rem;
+}
+
+/* line 549, app/assets/stylesheets/home/theme.scss */
+.pb-5 {
+  padding-bottom: 3.2rem;
+}
+
+/* line 551, app/assets/stylesheets/home/theme.scss */
+.py-1 {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+/* line 556, app/assets/stylesheets/home/theme.scss */
+.py-2 {
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+
+/* line 561, app/assets/stylesheets/home/theme.scss */
+.py-2_5 {
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+}
+
+/* line 566, app/assets/stylesheets/home/theme.scss */
+.py-3 {
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+}
+
+/* line 571, app/assets/stylesheets/home/theme.scss */
+.py-4 {
+  padding-top: 2.4rem;
+  padding-bottom: 2.4rem;
+}
+
+/* line 576, app/assets/stylesheets/home/theme.scss */
+.py-5 {
+  padding-top: 3.2rem;
+  padding-bottom: 3.2rem;
+}
+
+/* line 581, app/assets/stylesheets/home/theme.scss */
+.px-1 {
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+}
+
+/* line 585, app/assets/stylesheets/home/theme.scss */
+.px-3 {
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+}
+
+/* line 590, app/assets/stylesheets/home/theme.scss */
+.p-1 {
+  padding: 0.4rem;
+}
+
+/* line 592, app/assets/stylesheets/home/theme.scss */
+.p-3 {
+  padding: 1.6rem;
+}
+
+/* line 593, app/assets/stylesheets/home/theme.scss */
+.p-4 {
+  padding: 2.4rem;
+}
+
+/* line 595, app/assets/stylesheets/home/theme.scss */
+.mb-0 {
+  margin-bottom: 0;
+}
+
+/* line 596, app/assets/stylesheets/home/theme.scss */
+.pb-0 {
+  padding-bottom: 0;
+}
+
+/* line 2, app/assets/stylesheets/home/trust.scss */
+.trust-header {
+  margin-top: 7.7rem;
+  background-color: #F8F9FA;
+  padding-top: 9.6rem;
+}
+
+/* line 6, app/assets/stylesheets/home/trust.scss */
+.trust-header .title {
+  font-size: 4.8rem;
+  text-align: center;
+  margin-bottom: 2.4rem;
+}
+
+/* line 11, app/assets/stylesheets/home/trust.scss */
+.trust-header .description {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 5.6rem;
+}
+
+/* line 16, app/assets/stylesheets/home/trust.scss */
+.trust-header .trust-header-image {
+  background-image: url(/assets/home/trust/3x/img-trust-top-9311b8d953145ff88e5951f372dc9bb72837b476559f12f31bc4606a693c893c.png);
+  background-size: 760px 363px;
+  width: 760px;
+  height: 363px;
+  margin: 0 auto;
+}
+
+/* line 25, app/assets/stylesheets/home/trust.scss */
+.trust-top {
+  width: 980px;
+  margin: 0 auto;
+}
+
+/* line 30, app/assets/stylesheets/home/trust.scss */
+.trust-bottom,
+.trust-top {
+  padding-top: 10rem;
+}
+
+/* line 33, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .main-title,
+.trust-top .main-title {
+  font-size: 3.4rem;
+  width: 980px;
+  margin: 0 auto;
+}
+
+/* line 38, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-image,
+.trust-top .trust-image {
+  display: inline-block;
+  margin: 0 6rem;
+  width: 340px;
+  height: 254px;
+  background-size: 340px 254px;
+  vertical-align: middle;
+}
+
+/* line 45, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-image-01,
+.trust-top .trust-image-01 {
+  background-image: url(/assets/home/trust/3x/img-trust-1-08564a68dc6a07f9f05a35b2308a288ace19158318c3412960a257b4ffa2d9f8.png);
+}
+
+/* line 48, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-image-02,
+.trust-top .trust-image-02 {
+  background-image: url(/assets/home/trust/3x/img-trust-2-c6c12bebd3e9dfca05c66eefa0705981e3f4442256dcd9ec365e7704d549faf6.png);
+}
+
+/* line 51, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-image-03,
+.trust-top .trust-image-03 {
+  background-image: url(/assets/home/trust/3x/img-trust-3-09bd31cba4a5bbf730fa26059aeaf08c24e425747343700d42cd7ffc28adf649.png);
+}
+
+/* line 54, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-image-04,
+.trust-top .trust-image-04 {
+  background-image: url(/assets/home/trust/3x/img-trust-4-40a7a99a51eec3025cc5a7a29b1a240564cd39bcc7c9f4d1c54ac4b36110ec2b.png);
+}
+
+/* line 58, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-detail,
+.trust-top .trust-detail {
+  display: inline-block;
+  width: calc(100% - 340px - 120px - 60px - 6px);
+  vertical-align: middle;
+  margin-left: 6rem;
+}
+
+/* line 63, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-detail .title,
+.trust-top .trust-detail .title {
+  display: block;
+  font-size: 2.4rem;
+  text-align: left;
+  margin-bottom: 1.6rem;
+}
+
+/* line 69, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-detail .description,
+.trust-top .trust-detail .description {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+/* line 74, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-detail-left,
+.trust-top .trust-detail-left {
+  margin-left: 0;
+  margin-right: 6rem;
+}
+
+/* line 79, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-section,
+.trust-top .trust-section {
+  margin: 8rem 0;
+}
+
+/* line 82, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-section-reverse,
+.trust-top .trust-section-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+/* line 89, app/assets/stylesheets/home/trust.scss */
+.trust-bottom {
+  background-color: #F8F9FA;
+}
+
+/* line 91, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-container {
+  width: 980px;
+  margin: 8rem auto 0 auto;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+/* line 98, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-container .trust-section {
+  max-width: 330px;
+  margin-top: 0;
+  margin-bottom: 8rem;
+}
+
+/* line 102, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-container .trust-section .trust-detail {
+  width: 100%;
+  margin: 1.6rem 0 0 0;
+}
+
+/* line 106, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-container .trust-section-left {
+  margin-left: 19rem;
+}
+
+/* line 111, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-image {
+  display: block;
+  width: 250px;
+  height: 250px;
+  background-size: 250px 250px;
+  vertical-align: middle;
+  margin: 0;
+}
+
+/* line 118, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-image-01 {
+  background-image: url(/assets/home/trust/3x/img-trust-5-9b0bb1401ef34ea10b1dbbf34d4b8efa56609c5d69f8916a2a9eb942513f09a3.png);
+}
+
+/* line 121, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-image-02 {
+  background-image: url(/assets/home/trust/3x/img-trust-6-dfda3618d665719e09e20386b6b82efc400e45b48ddaf0178b82debaa6d7be7b.png);
+}
+
+/* line 124, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-image-03 {
+  background-image: url(/assets/home/trust/3x/img-trust-7-e6b37bc404aeddde1810544c4cf05db9141b49b4d65aea6887493d3d31df8a5d.png);
+}
+
+/* line 127, app/assets/stylesheets/home/trust.scss */
+.trust-bottom .trust-image-04 {
+  background-image: url(/assets/home/trust/3x/img-trust-8-7bb8b91a94c04b7103db580fa2fee6ecadbe0ea6284c6c917cb035bb1a0229ef.png);
+}
+
+/* line 9, app/assets/stylesheets/home/home.scss */
+#content {
+  width: 677px;
+  margin: 100px auto 0 auto;
+}
+
+/* line 12, app/assets/stylesheets/home/home.scss */
+#content #smb-images {
+  width: 729px;
+  margin-left: -26px;
+}
+
+/* line 18, app/assets/stylesheets/home/home.scss */
+#no-data {
+  height: 300px;
+}
+
+/* line 22, app/assets/stylesheets/home/home.scss */
+.smb-info-list-text {
+  width: calc(100% - 1.6rem - 18px - 4px);
+}
+
+/* line 24, app/assets/stylesheets/home/home.scss */
+.smb-info-list-text .url-link {
+  word-break: break-all;
+}
+
+/* line 29, app/assets/stylesheets/home/home.scss */
+.smb-detail-info-list li:first-child {
+  margin-top: 0;
+}
+
+/* line 32, app/assets/stylesheets/home/home.scss */
+.smb-detail-info-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* line 39, app/assets/stylesheets/home/home.scss */
+#smb-detail-map {
+  width: 100%;
+  height: 46vw;
+  max-height: 370px;
+  border: solid 1px #dee2e6;
+}
+
+/* line 44, app/assets/stylesheets/home/home.scss */
+#smb-detail-map .customoverlay {
+  position: relative;
+  bottom: -32px;
+  border-radius: 3px;
+  border: 1px solid #E9ECEF;
+  border-bottom: 2px solid #888;
+  float: left;
+}
+
+/* line 51, app/assets/stylesheets/home/home.scss */
+#smb-detail-map .customoverlay a {
+  display: block;
+  text-decoration: none;
+  color: #212529;
+  text-align: center;
+  border-radius: 3px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  overflow: hidden;
+  background: #FF8A3D;
+  background: #FF8A3D url(/assets/wv/smbs/icon_arrow_right_white-c5dce226f58f0913364e0838e50fe6654a7b6b1411d5186b588c8607891c2eb9.png) no-repeat right 10px center;
+}
+
+/* line 63, app/assets/stylesheets/home/home.scss */
+#smb-detail-map .customoverlay .text-wrap {
+  display: block;
+  text-decoration: none;
+  color: #212529;
+  text-align: center;
+  border-radius: 3px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+/* line 72, app/assets/stylesheets/home/home.scss */
+#smb-detail-map .customoverlay .text-wrap .title {
+  margin-right: 0;
+}
+
+/* line 76, app/assets/stylesheets/home/home.scss */
+#smb-detail-map .customoverlay .title {
+  display: block;
+  text-align: center;
+  background: #fff;
+  margin-right: 30px;
+  padding: 0.8rem 0.7rem 0.5rem 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* line 86, app/assets/stylesheets/home/home.scss */
+#smb-detail-map .customoverlay:nth-of-type(n) {
+  border: 0;
+  box-shadow: 0 1px 2px #888;
+}
+
+/* line 90, app/assets/stylesheets/home/home.scss */
+#smb-detail-map .customoverlay:after {
+  content: '';
+  position: absolute;
+  margin-left: -12px;
+  left: 50%;
+  bottom: -12px;
+  width: 22px;
+  height: 12px;
+}
+
+/* line 103, app/assets/stylesheets/home/home.scss */
+.home-main-section {
+  padding: 6rem 0;
+}
+
+/* line 105, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-main-content {
+  width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* line 112, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-main-title {
+  font-size: 4rem;
+  line-height: 1.35;
+  margin-bottom: 2.4rem;
+}
+
+/* line 117, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-buttons {
+  margin-top: 3.2rem;
+}
+
+/* line 119, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-buttons .home-button {
+  background-color: #F1F3F5;
+  color: #212529;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  padding: 1.45rem 2.6rem;
+  display: inline-block;
+}
+
+/* line 127, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-buttons .home-button:hover {
+  background-color: #E9ECEF;
+}
+
+/* line 132, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-main-image {
+  display: inline-block;
+}
+
+/* line 134, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-main-image-01 {
+  background-image: url(/assets/home/main/3x/image-1-39ac203e8922f615aa3843337871cb654b81269e872494128bf08236157c5f6a.png);
+  background-size: 532px 684px;
+  width: 532px;
+  height: 684px;
+}
+
+/* line 140, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-main-image-02 {
+  background-image: url(/assets/home/main/3x/image-2-f286322ab98acedf914a05bf77e84c67dcb897c8ccb543e66f6afea9d366d06d.png);
+  background-size: 546px 740px;
+  width: 546px;
+  height: 740px;
+}
+
+/* line 146, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-main-image-03 {
+  background-image: url(/assets/home/main/3x/image-3-0c8b631ac2294ac5a3b3e7a3a5580c3e68a3303ad2aded1e84aa57a2e1442786.png);
+  background-size: 526px 735px;
+  width: 526px;
+  height: 735px;
+}
+
+/* line 153, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-main-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+/* line 158, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-hot-title {
+  margin-bottom: 8rem;
+}
+
+/* line 161, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-hot-content {
+  width: 1024px;
+  margin: 6rem auto 12rem auto;
+}
+
+/* line 165, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-story-list {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+/* line 170, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-story-list .home-story-list-item {
+  margin-right: 4.6rem;
+}
+
+/* line 172, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-story-list .home-story-list-item:last-child {
+  margin-right: 0;
+}
+
+/* line 176, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-story-list .icon-story {
+  width: 56px;
+  height: 56px;
+  background-size: 56px 56px;
+}
+
+/* line 180, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-story-list .icon-story-01 {
+  background-image: url(/assets/home/main/icon-story-1-9226479b836cdc960291ffda91ace46c90a632f6cc868aa8983b3624e662a924.svg);
+}
+
+/* line 183, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-story-list .icon-story-02 {
+  background-image: url(/assets/home/main/icon-story-2-208bb88cad31e335b40bc8ac5b7684dcf8a36d77ac50770a497a9c967a3bfc4f.svg);
+}
+
+/* line 186, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-story-list .icon-story-03 {
+  background-image: url(/assets/home/main/icon-story-3-0a14d64c6101a7271655747d8401b9f71506578f8a4c0640608074e977bbc7c0.svg);
+}
+
+/* line 192, app/assets/stylesheets/home/home.scss */
+#home-main-section-top {
+  margin-top: 72px;
+  padding-top: 24px;
+  background-color: $mainBackground;
+}
+
+/* line 196, app/assets/stylesheets/home/home.scss */
+#home-main-section-top #home-main-top {
+  width: 1024px;
+  height: 760px;
+  margin: 0 auto;
+  position: relative;
+  background-color: $mainBackground;
+}
+
+/* line 203, app/assets/stylesheets/home/home.scss */
+#home-main-section-top .home-main-title {
+  font-size: 4.8rem;
+  line-height: 1.3;
+  padding-top: 27rem;
+  margin-bottom: 3.2rem;
+  letter-spacing: -0.4px;
+}
+
+/* line 210, app/assets/stylesheets/home/home.scss */
+#home-main-section-top .home-main-image-top {
+  position: absolute;
+  right: -84px;
+  bottom: 0;
+  width: 804px;
+  height: 685px;
+  background: $mainBackground url(/assets/home/main/3x/image-top-4eb6b8642f61c5c012136597a25a7b72c705d6c6479a7270f3fb23726fddf585.png) no-repeat;
+  background-size: 804px 685px;
+}
+
+/* line 220, app/assets/stylesheets/home/home.scss */
+.home-keywords-content {
+  width: 1024px;
+  margin: 4rem auto;
+}
+
+/* line 223, app/assets/stylesheets/home/home.scss */
+.home-keywords-content .home-main-title {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* line 227, app/assets/stylesheets/home/home.scss */
+.home-keywords-content .top-keywords-list {
+  display: inline-block;
+  list-style-type: none;
+  vertical-align: middle;
+  margin-left: 4rem;
+}
+
+/* line 232, app/assets/stylesheets/home/home.scss */
+.home-keywords-content .top-keywords-list .keyword-item {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 3.2rem;
+}
+
+/* line 236, app/assets/stylesheets/home/home.scss */
+.home-keywords-content .top-keywords-list .keyword-item .keyword-link {
+  text-decoration: none;
+  color: #212529;
+}
+
+/* line 240, app/assets/stylesheets/home/home.scss */
+.home-keywords-content .top-keywords-list .keyword-item:last-child {
+  margin-right: 0;
+}
+
+/* line 243, app/assets/stylesheets/home/home.scss */
+.home-keywords-content .top-keywords-list .keyword-item:hover {
+  text-decoration: underline;
+}

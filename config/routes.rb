@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   #ActiveAdmin 관련 오류로 수정함
   ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
   # match '*path', to: 'application#route_not_found', via: :all
-  root "authentication#new"
+  root "home#index"
   get 'users/sign_in', to: 'authentication#new'
   post 'users/sign_in', to: 'authentication#create'
   post 'users/sign_up', to: 'users#create'
