@@ -15,6 +15,7 @@
  */
 
  $mainBackground: #fff1f6;
+ $container: 1024px;
 
 /* line 18, app/assets/stylesheets/home/header.scss */
 ::-moz-placeholder {
@@ -71,7 +72,7 @@ button {
 
 /* line 45, app/assets/stylesheets/home/header.scss */
 #fixed-bar #fixed-bar-wrap {
-  width: 1024px;
+  width: $container;
   margin: 0 auto;
   padding: 16px 0;
   position: relative;
@@ -276,7 +277,7 @@ footer {
 
 /* line 11, app/assets/stylesheets/home/footer.scss */
 footer .footer-container {
-  width: 1024px;
+  width: $container;
   margin: 0 auto;
 }
 
@@ -1269,7 +1270,7 @@ auto - auto
 
 /* line 105, app/assets/stylesheets/home/home.scss */
 .home-main-section .home-main-content {
-  width: 1024px;
+  width: $container;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -1333,7 +1334,7 @@ auto - auto
 
 /* line 161, app/assets/stylesheets/home/home.scss */
 .home-main-section .home-hot-content {
-  width: 1024px;
+  width: $container;
   margin: 6rem auto 12rem auto;
 }
 
@@ -1358,7 +1359,7 @@ auto - auto
 
 /* line 196, app/assets/stylesheets/home/home.scss */
 #home-main-section-top #home-main-top {
-  width: 1024px;
+  width: $container;
   height: 760px;
   margin: 0 auto;
   position: relative;
@@ -1389,7 +1390,7 @@ auto - auto
 
 /* line 220, app/assets/stylesheets/home/home.scss */
 .home-keywords-content {
-  width: 1024px;
+  width: $container;
   margin: 4rem auto;
 }
 
