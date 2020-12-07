@@ -10,7 +10,7 @@
     </h1>
 
     <section id="fixed-bar-download">
-      <a class="fixed-download-button" id="header-download-button-ios" href="#">
+      <a class="fixed-download-button" id="header-download-button-ios" href="#" onclick="return false;">
         <img class="fixed-apple-store" alt="App Store" src="/image/icon/app-store-brands.svg">
         <div class="fixed-download-text">App Store</div>
       </a>
@@ -153,14 +153,14 @@
 
 <!-- modal-page 시작 -->
 <div class="modal fade" id="modal-page" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-video" role="document">
+  <div class="modal-dialog modal-page" role="document">
     <div class="modal-content" style="border-radius: 1rem;">
       <div class="modal-header" style="padding: 1.5rem 1.5rem;">
+        <!-- 약관 제목 -->
         <div class="text-xl text-bold page-title"></div>
       </div>
-      <div class="modal-body page-body text-center" style="padding: 1.5rem 1rem;">
-        
-      </div>
+        <!-- 약관 내용 -->
+      <div class="modal-body page-body text-xs text-dark-gray" style="padding: 1.5rem 1.5rem;"></div>
     </div>
   </div>
 </div>
@@ -186,6 +186,8 @@ $(".btn-modal").on("click", function() {
         url: `/pages/${$(this).data("type")}`,
         dataType: "json",
         success: (data) => {
+          modal_page.find(".page-title").html(data.title)
+          modal_page.find(".page-body").html(simpleFormat(data.body))
         },
         error: () => {
           alert("비정상적인 요청입니다.")
