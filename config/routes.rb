@@ -64,4 +64,5 @@ Rails.application.routes.draw do
   resources :reports, only: %i(index create)
   resources :questions, only: %i(create)
   resources :reviews, only: %i(index create update destroy)
+  resources :pages, only: %i(show)
 end
