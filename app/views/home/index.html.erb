@@ -196,12 +196,12 @@ $(".btn-modal").on("click", function() {
           modal_page.find(".page-body").html(simpleFormat(data.body))
           modal_page.find(".page-updated_at").html(getFormatDate(new Date(data.updated_at)))
           modal_page.find(".page-effective_date").html(getFormatDate(new Date(data.effective_date)))
+          modal_page.modal("show");
         },
         error: () => {
           alert("비정상적인 요청입니다.")
         }
       });
-      modal_page.modal("show");
       break;
   }
 })
