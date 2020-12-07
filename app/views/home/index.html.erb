@@ -156,8 +156,12 @@
   <div class="modal-dialog modal-page" role="document">
     <div class="modal-content" style="border-radius: 1rem;">
       <div class="modal-header" style="padding: 1.5rem 1.5rem;">
-        <!-- 약관 제목 -->
-        <div class="text-xl text-bold page-title"></div>
+        <div class="text-bold">
+          <!-- 약관 제목 -->
+          <span class="page-title text-xl"></span>
+          <!-- 약관 발행일 -->
+          <span class="ml-1 text-s">(발행일: <span class="page-updated_at"></span>)</span>
+        </div>
       </div>
         <!-- 약관 내용 -->
       <div class="modal-body page-body text-xs text-dark-gray" style="padding: 1.5rem 1.5rem;"></div>
@@ -188,6 +192,7 @@ $(".btn-modal").on("click", function() {
         success: (data) => {
           modal_page.find(".page-title").html(data.title)
           modal_page.find(".page-body").html(simpleFormat(data.body))
+          modal_page.find(".page-updated_at").html(getFormatDate(new Date(data.updated_at)))
         },
         error: () => {
           alert("비정상적인 요청입니다.")

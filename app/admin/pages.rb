@@ -8,6 +8,8 @@ ActiveAdmin.register Page do
     column :page_type do |page| page.page_type.present? ? I18n.t("enum.page.page_type.#{page.page_type}") : ""  end
     column :body do |page| page.body&.truncate(27) end
     column :created_at
+    column :updated_at
+    actions
   end
 
   show do
@@ -16,6 +18,7 @@ ActiveAdmin.register Page do
       row :page_type do |page| page.page_type.present? ? I18n.t("enum.page.page_type.#{page.page_type}") : ""  end
       row :body do |page| simple_format page.body end
       row :created_at
+      row :updated_at
     end
   end
 
