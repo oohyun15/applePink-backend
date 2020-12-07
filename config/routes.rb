@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
   # match '*path', to: 'application#route_not_found', via: :all
   root "home#index"
-  get 'users/sign_in', to: 'authentication#new'
   post 'users/sign_in', to: 'authentication#create'
   post 'users/sign_up', to: 'users#create'
   post 'users/like', to: 'likes#toggle'

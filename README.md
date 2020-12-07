@@ -1,4 +1,10 @@
-# applePink-backend
+<p align="center"><a href="https://www.applepink.ml" target="_blank" rel="noopener noreferrer"><img width="150" src="https://www.applepink.ml/image/default.png" alt="Framework7"></a></p>
+
+<h1 align="center">모두나눔</h1>
+
+<p align="center">
+  <a href="https://www.applepink.ml" target="_blank">위치 기반 C2C 공유 플랫폼</a>
+</p>
 
 **Collaborator**
 
