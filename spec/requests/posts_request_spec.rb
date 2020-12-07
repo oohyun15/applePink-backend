@@ -122,7 +122,8 @@ describe "Post test", type: :request do
     user_list = JSON.parse(response.body)["user_list"]
     
     # 데이터베이스에서 직접 찾은 내용과 일치하는지 확인
-    user_nicknames = Post.find(id).likes.pluck(:user_id)
+    user_ids = Post.find(id).likes.pluck(:user_id)
+    user_nicknames = User.where(id: user_ids).pluck(:nickname)
     expect(user_list).to eq(user_nicknames)
   end
 end

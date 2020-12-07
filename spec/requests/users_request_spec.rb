@@ -50,6 +50,7 @@ describe "User test", type: :request do
   end
 
   it 'user withdrawal test' do
+    byebug
     user = User.find_by(email: "change123@naver.com")
     post "/users/sign_in", params: {user: {email: user.email, password: "change123"}} 
     delete '/users/withdrawal', headers: {Authorization: JSON.parse(response.body)["token"]}
