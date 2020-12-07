@@ -4,8 +4,8 @@ def generate_user num
   names = ["김영희", "이철수", "박영수", "정동구", "최주공"]
   num.times do |index|
     user = User.create!(
-      email: "tester#{index+1}@test.com",
-      password: "test123",
+      email: "#{ENV["TEST_EMAIL_FRONT"]}#{index+1}#{ENV["TEST_EMAIL_BACK"]}",
+      password: "#{ENV["TEST_PASSWORD"]}",
       nickname: "tester#{index+1}",
       image: File.open("#{Rails.root}/public/image/default.png"),
       gender: :no_select,
