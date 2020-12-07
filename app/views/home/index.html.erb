@@ -41,7 +41,7 @@
 <section class="home-main-section">
   <div class="home-main-content">
     <div class="home-main-image text-left">
-      <img class="screenshot ml-5 ml-xl-0" style="width: 90%; padding: 10% 0;" alt="screenshot" src="/image/screenshot/main_2.png">
+      <img class="screenshot ml-5 ml-xl-0" style="width: 580px; padding: 10% 0;" alt="screenshot" src="/image/screenshot/main_2.png">
     </div>
     <div class="mr-5 mr-xl-0" style="width:360px;">
       <h1 class="home-main-title pl-2">쉽고 빠른,<br>중고 대여 프로세스</h1>
@@ -75,7 +75,7 @@
 <section class="home-main-section background-pale-brown">
   <div class="home-main-content home-main-reverse">
     <div class="home-main-image text-right">
-      <img class="screenshot mr-5 mr-xl-0" alt="screenshot" src="/image/screenshot/main_3.png">
+      <img class="screenshot mr-5 mr-xl-0" style="padding: 5% 0;" alt="screenshot" src="/image/screenshot/main_3.png">
     </div>
     <div class="ml-5 ml-xl-0">
       <h1 class="home-main-title">전자서명으로,<br>더욱 안전하게</h1>
@@ -84,22 +84,24 @@
         편리하고 안전한 예약 시스템
       </p>
       <div class="home-buttons">
-        <a class="home-button text-m text-bold" href="https://www.kakaocert.com/"><img class="logo" alt="screenshot" src="/image/logo/kakaocert_logo.png">란?</a>
+        <a class="kakao-button text-m text-bold" href="https://www.kakaocert.com/"><img class="logo" alt="screenshot" src="/image/logo/kakaocert_logo.png">란?</a>
       </div>
-        
     </div>
   </div>
 </section>
 <section class="home-main-section">
   <div class="home-main-content">
-    <div class="home-main-video ml-5 ml-xl-0">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/Stbh5KFHQaY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="home-main-image ml-5 ml-xl-0">
+      <img class="screenshot ml-5 ml-xl-0" style="width: 630px; padding: 5% 0;" alt="screenshot" src="/image/screenshot/main_4.png">
     </div>
     <div class="mr-5 mr-xl-0">
-      <h1 class="home-main-title">위치 기반의<br>C2C 공유 플랫폼</h1>
+      <h1 class="home-main-title">위치 기반<br>C2C 공유 플랫폼</h1>
       <p class="text-m">
-        모두나눔과 함께 이웃들과 다양한 물품을 공유해 보세요!
+        모두나눔의 여러 기능과 함께 <br>이웃들과 다양한 물품을 공유해 보세요!
       </p>
+      <div class="home-buttons">
+        <a class="home-button more-info text-m text-bold" href="#/">소개 영상 보기</a>
+      </div>
     </div>
   </div>
 </section>
@@ -111,7 +113,7 @@
         <hr class="mb-4">
       </div>
     </div>
-    <div class="container pt-3 pb-5">
+    <div class="container pb-5">
       <div class="row mt-3">
         <div class="col-lg-6 col-md-12 text-xs text-secondary text-center text-lg-left">
           <ul class="list-inline pb-2 text-xxs">
@@ -133,9 +135,31 @@
   </div>
 </div>
 
+<!-- modal-info 시작 -->
+<div class="modal fade" id="modal-info" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-video" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="text-xl text-bold ml-3">모두나눔 소개 영상</div>
+      </div>
+      <div class="modal-body text-center">
+        <iframe width="1000" height="562.5" src="https://www.youtube.com/embed/Stbh5KFHQaY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal-info 끝 -->
+
 <script>
+const modal_info = $("#modal-info")
+
 $("#header-download-button-ios").on("click", function() {
   alert("12월 출시 예정입니다. 잠시만 기다려 주세요.");
+})
+
+$(".more-info").on("click", function() {
+  
+  modal_info.modal("show");
 })
 
 </script>

@@ -17,6 +17,37 @@
  $mainBackground: #fff1f6;
  $container: 1024px;
 
+.modal-video {
+  max-width: 1024px;
+  margin: 10vh auto;
+}
+
+/* line 18, app/assets/stylesheets/home/header.scss */
+::-moz-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #868e96;
+  opacity: 1;
+  /* Firefox */
+}
+:-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #868e96;
+  opacity: 1;
+  /* Firefox */
+}
+::-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #868e96;
+  opacity: 1;
+  /* Firefox */
+}
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #868e96;
+  opacity: 1;
+  /* Firefox */
+}
+
 /* line 23, app/assets/stylesheets/home/header.scss */
 input {
   font-family: "Noto Sans KR", AppleSDGothicNeo, "Apple SD Gothic Neo", AppleSDGothicNeo-Light, HelveticaNeue-Light, "Malgun Gothic", "맑은 고딕", sans-serif;
@@ -67,7 +98,7 @@ button {
   .fixed-title {
     position: absolute;
     bottom: 16px;
-    left: 45px;
+    left: 43px;
     color: #495057;
     font-weight: 900;
     font-size: 24px;
@@ -728,7 +759,7 @@ b {
 }
 
 /* line 119, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-buttons .home-button {
+.home-main-section .home-buttons .kakao-button {
   background-color: #fbda34;
   color: #212529;
   border: none;
@@ -739,8 +770,24 @@ b {
 }
 
 /* line 127, app/assets/stylesheets/home/home.scss */
-.home-main-section .home-buttons .home-button:hover {
+.home-main-section .home-buttons .kakao-button:hover {
   background-color: rgb(214, 182, 2);
+}
+
+/* line 119, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-buttons .home-button {
+  background-color: #eee;
+  color: #212529;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  padding: 1.16rem 2.08rem;
+  display: inline-block;
+}
+
+/* line 127, app/assets/stylesheets/home/home.scss */
+.home-main-section .home-buttons .home-button:hover {
+  background-color: #ccc;
 }
 
 /* line 132, app/assets/stylesheets/home/home.scss */
@@ -782,10 +829,6 @@ b {
   list-style-type: none;
 }
 
-
-
-
-
 /* line 192, app/assets/stylesheets/home/home.scss */
 #home-main-section-top {
   margin-top: 72px;
@@ -816,11 +859,11 @@ b {
 /* line 210, app/assets/stylesheets/home/home.scss */
 #home-main-section-top .home-main-image-top {
   position: absolute;
-  right: -84px;
+  right: 0;
   bottom: 0;
-  width: 804px;
+  width: 680px;
   height: 685px;
-  background-size: 804px 685px;
+  background-size: 680px 685px;
   text-align: center;
 }
 
@@ -895,7 +938,7 @@ b {
   
   .title {
     padding-top: 3vh;
-    font-size: 8em;
+    font-size: 6.8em;
     line-height: 1;
     margin-bottom: 0.5em;
     font-weight: 700;
