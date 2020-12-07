@@ -57,9 +57,9 @@ class UsersController < ApplicationController
       end
 
       # 게시글 삭제
-      current_user.posts.each do |post|
-        post.destroy!
-      end
+      #current_user.posts.each do |post|
+      #  post.destroy!
+      #end
 
       # 유저 삭제
       current_user.destroy!
