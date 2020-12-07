@@ -882,3 +882,28 @@ b {
   margin-right: 4px;
   margin-bottom: 3px;
 }
+
+.callback {
+  .container {
+    height:100vh;
+  }
+  
+  .image {
+    padding-top: 25vh;
+    width: 23vh;
+  }
+  
+  .title {
+    padding-top: 5vh;
+    font-size: 8em;
+    line-height: 1;
+    margin-bottom: 0.5em;
+    font-weight: 700;
+  }
+  
+  .body {
+    font-size: 6em;
+    line-height: 1;
+    margin-bottom: 0.5em;
+  }
+}
