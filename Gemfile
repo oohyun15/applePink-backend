@@ -5,7 +5,6 @@ ruby "2.6.5"
 
 gem "rails", "6.0.0"
 gem "rails-i18n"
-gem "actionpack"
 gem "activesupport"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 3.11"

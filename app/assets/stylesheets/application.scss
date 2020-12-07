@@ -22,6 +22,11 @@
   margin: 10vh auto;
 }
 
+.modal-page {
+  max-width: 1024px;
+  margin: 2vh auto;
+}
+
 /* line 18, app/assets/stylesheets/home/header.scss */
 ::-moz-placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -397,13 +402,8 @@ b {
 }
 
 /* line 175, app/assets/stylesheets/home/theme.scss */
-.text-carrot {
-  color: #FF8A3D;
-}
-
-/* line 179, app/assets/stylesheets/home/theme.scss */
-.text-tomato {
-  color: #FF3E46;
+.text-apple {
+  color: #FF3377;
 }
 
 /* line 183, app/assets/stylesheets/home/theme.scss */
@@ -429,11 +429,6 @@ b {
 /* line 198, app/assets/stylesheets/home/theme.scss */
 .text-white {
   color: #fff;
-}
-
-/* line 202, app/assets/stylesheets/home/theme.scss */
-.text-center {
-  text-align: center;
 }
 
 /* line 206, app/assets/stylesheets/home/theme.scss */
@@ -765,7 +760,7 @@ b {
   border: none;
   border-radius: 6px;
   text-decoration: none;
-  padding: 1.16rem 2.08rem;
+  padding: 1rem 2rem;
   display: inline-block;
 }
 
@@ -917,13 +912,13 @@ b {
 .logo {
   height: 1.4rem;
   margin-right: 4px;
-  margin-bottom: 4px;
+  margin-bottom: 4.5px;
 }
 
-.home-button .logo {
+.kakao-button .logo {
   height: 1.4rem;
   margin-right: 4px;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
 }
 
 .callback {
