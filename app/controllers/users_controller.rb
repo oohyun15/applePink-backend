@@ -289,7 +289,7 @@ class UsersController < ApplicationController
           return render json: {error: "입력한 정보와 일치하는 사용자 정보가 없습니다."}, status: :bad_request
         end
       # 인증코드를 sms로 받을 시
-      elsif find_params[:by] == "sms"
+      else
         if @user = @users.find_by(email: user_params[:email])
           SmsCertification.generate_code(user_params[:number])
           return render json: {message: "입력한 번호로 SMS을 발송했습니다. SMS을 확인해 주세요."}, status: :ok
@@ -297,9 +297,6 @@ class UsersController < ApplicationController
           Rails.logger.error "ERROR: 입력한 정보와 일치하는 사용자 정보가 없습니다. #{log_info}"
           return render json: {error: "입력한 정보와 일치하는 사용자 정보가 없습니다."}, status: :bad_request
         end
-      else
-        Rails.logger.error "ERROR: 인증메일을 받을 방법을 정해주세요. #{log_info}"
-        return render json: {error: "인증메일을 받을 방법을 정해주세요."}, status: :bad_request
       end
     else
       Rails.logger.error "ERROR: 이메일을 찾을 지 비밀번호를 찾을 지 정해주세요. #{log_info}"
@@ -318,13 +315,10 @@ class UsersController < ApplicationController
     certification = nil
     if find_params[:by] == "email"
       certification = EmailCertification.find_by(email: user_params[:email])
-    elsif find_params[:by] == "sms"
-      certification = SmsCertification.find_by(phone: user_params[:number])
     else
-      Rails.logger.error "ERROR: 인증메일을 받을 방법을 정해주세요. #{log_info}"
-      return render json: {error: "인증메일을 받을 방법을 정해주세요."}, status: :bad_request
+      certification = SmsCertification.find_by(phone: user_params[:number])
     end
-
+    
     if certification      
       if certification.check_code(find_params[:code])
         unless user_params[:password].nil?
