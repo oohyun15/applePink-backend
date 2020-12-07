@@ -859,11 +859,11 @@ b {
 /* line 210, app/assets/stylesheets/home/home.scss */
 #home-main-section-top .home-main-image-top {
   position: absolute;
-  right: -84px;
+  right: 0;
   bottom: 0;
-  width: 804px;
+  width: 680px;
   height: 685px;
-  background-size: 804px 685px;
+  background-size: 680px 685px;
   text-align: center;
 }
 
@@ -938,7 +938,7 @@ b {
   
   .title {
     padding-top: 3vh;
-    font-size: 8em;
+    font-size: 6.8em;
     line-height: 1;
     margin-bottom: 0.5em;
     font-weight: 700;
