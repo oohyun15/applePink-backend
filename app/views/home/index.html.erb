@@ -159,8 +159,10 @@
         <div class="text-bold">
           <!-- 약관 제목 -->
           <span class="page-title text-xl"></span>
-          <!-- 약관 발행일 -->
-          <span class="ml-1 text-s">(발행일: <span class="page-updated_at"></span>)</span>
+          <!-- 약관 발행일 & 발효일 -->
+          <span class="ml-1 text-xs">
+            (발행일: <span class="page-updated_at"></span> | 발효일: <span class="page-effective_date"></span>)
+          </span>
         </div>
       </div>
         <!-- 약관 내용 -->
@@ -193,6 +195,7 @@ $(".btn-modal").on("click", function() {
           modal_page.find(".page-title").html(data.title)
           modal_page.find(".page-body").html(simpleFormat(data.body))
           modal_page.find(".page-updated_at").html(getFormatDate(new Date(data.updated_at)))
+          modal_page.find(".page-effective_date").html(getFormatDate(new Date(data.effective_date)))
         },
         error: () => {
           alert("비정상적인 요청입니다.")
