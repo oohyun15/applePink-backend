@@ -22,24 +22,20 @@ class UsersController < ApplicationController
       if !(params[:user][:device_token])
         Rails.logger.error "ERROR: FCM 토큰이 없습니다. #{log_info}"
         # return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
-        @user.normal!
-  
       else
         @user.device_type = device_info_params[:device_type]
         @user.device_list.add(device_info_params[:device_token])
-        @user.normal!
-        
         push_notification("회원가입이 완료되었습니다.", "[모두나눔] 회원가입 완료", [ device_info_params[:device_token] ])
-  
-        redirect_to users_sign_in_path, notice: "회원가입 완료"
       end
+      # 유저 정보 저장
+      @user.normal!
 
+      # 개인정보 저장 기간: 6개월
       expire_time = 6.months.from_now
       schedule = @user.schedules.new(delayed_job_type: "Privacy")
-
       delayed_job = @user.delay(run_at: expire_time).update!(name: nil, birthday: nil, number: nil)
       schedule.update!(delayed_job_id: delayed_job.id)
-
+    rescue => e
       Rails.logger.error "ERROR: #{@user.errors&.first&.last} #{log_info}"
       return render json: {error: @user.errors&.first&.last}, status: :bad_request
     end
