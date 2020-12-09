@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   def create
     begin
       @user = User.new user_params
+
       if !(params[:user][:device_token])
         Rails.logger.error "ERROR: FCM 토큰이 없습니다. #{log_info}"
         # return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
@@ -32,7 +33,13 @@ class UsersController < ApplicationController
   
         redirect_to users_sign_in_path, notice: "회원가입 완료"
       end
-    rescue => e
+
+      expire_time = 6.months.from_now
+      schedule = @user.schedules.new(delayed_job_type: "Privacy")
+
+      delayed_job = @user.delay(run_at: expire_time).update!(name: nil, birthday: nil, number: nil)
+      schedule.update!(delayed_job_id: delayed_job.id)
+
       Rails.logger.error "ERROR: #{@user.errors&.first&.last} #{log_info}"
       return render json: {error: @user.errors&.first&.last}, status: :bad_request
     end
@@ -41,6 +48,20 @@ class UsersController < ApplicationController
   def update
     begin
       @user.update! user_params
+
+      # 개인정보 업데이트 시 delayed_job 생성
+      if user_params[:name].present? || user_params[:birthday].present? ||  user_params[:number].present?
+        expire_time = 6.months.from_now
+        schedule = current_user.schedules.find_or_initialize_by(delayed_job_type: "Privacy")
+  
+        # 기존 스케줄이 있을 경우 제거
+        Delayed::Job.find_by_id(schedule.delayed_job_id)&.delete unless schedule.new_record?
+        delayed_job = current_user.delay(run_at: expire_time).update!(name: nil, birthday: nil, number: nil)
+  
+        # schedule의 job id 업데이트
+        schedule.update!(delayed_job_id: delayed_job.id) 
+      end
+
       return render json: @user, status: :ok, scope: {params: create_params}
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
