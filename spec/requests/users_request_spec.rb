@@ -27,7 +27,9 @@ describe "User test", type: :request do
 
   #앞선 테스트에서 생성한 유저의 정보를 수정하는 테스트
   it 'user update test' do
+    location = Location.all.sample
     user_before = User.find_by(email: "tonem123@naver.com")
+    user_before.update!(location_id: location.id)
     put "/users/#{user_before.id}", params: {user: {email: "change123@naver.com", nickname: "change123", 
       password: "change123", password_confirmation: "change123"}}, headers: {Authorization: @token}
 
@@ -50,7 +52,6 @@ describe "User test", type: :request do
   end
 
   it 'user withdrawal test' do
-    byebug
     user = User.find_by(email: "change123@naver.com")
     post "/users/sign_in", params: {user: {email: user.email, password: "change123"}} 
     delete '/users/withdrawal', headers: {Authorization: JSON.parse(response.body)["token"]}
