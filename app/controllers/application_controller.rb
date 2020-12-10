@@ -89,12 +89,6 @@ class ApplicationController < ActionController::Base
 
       ## Token 안에 있는 user_id 값을 받아와서 User 모델의 유저 정보 탐색
       @current_user = User.find(auth_token[:user_id])
-      
-      # location is nil
-      if @current_user.location.nil?
-        Rails.logger.error "ERROR: No location exists. #{log_info}"
-        return render json: {error: "No location exists", code: 2}, status: :not_found 
-      end
 
       Rails.logger.info "JWT: #{http_token}"
       Rails.logger.info "Expired Time: #{Time.at(auth_token[:exp])}"
@@ -104,6 +98,14 @@ class ApplicationController < ActionController::Base
       # redirect_to users_sign_in_path
       Rails.logger.error "ERROR: #{e} #{log_info}"
       return render json: { error: "#{e}" }, status: :unauthorized
+    end
+  end
+
+  def check_location
+    # location is nil
+    if @current_user.location.nil? || (@current_user.expire_time < Time.current rescue true)
+      Rails.logger.error "ERROR: No location exists. #{log_info}"
+      return render json: {error: "No location exists", code: 2}, status: :not_found 
     end
   end
 
