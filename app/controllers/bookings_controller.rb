@@ -42,8 +42,8 @@ class BookingsController < ApplicationController
         push_notification("\"#{@booking.post&.title}\"의 새로운 예약 신청이 왔습니다.", "[모두나눔] 새로운 예약 신청", @booking.post&.user&.device_list)
         return render json: @booking, status: :ok, scope: {params: create_params}, user_id: current_user.id
       rescue => e
-        Rails.logger.error "ERROR: #{@booking.errors&.first&.last} #{log_info}"
-        return render json: {error: @booking.errors&.first&.last}, status: :bad_request
+        Rails.logger.error "ERROR: #{e} #{log_info}"
+        return render json: {error: e}, status: :bad_request
       end
     end
   end
