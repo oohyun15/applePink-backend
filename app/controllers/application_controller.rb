@@ -103,7 +103,7 @@ class ApplicationController < ActionController::Base
 
   def check_location
     # location is nil
-    if @current_user.location.nil? || (@current_user.expire_time < Time.current rescue true)
+    unless @current_user.is_location_auth?
       Rails.logger.error "ERROR: No location exists. #{log_info}"
       return render json: {error: "No location exists", code: 2}, status: :not_found 
     end
