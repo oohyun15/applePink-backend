@@ -122,7 +122,7 @@ ko:
         body: 내용
         page_type: 약관 타입
         updated_at: 발행일
-        effective_date: 발효일
+        effective_date: 시행일
 
     models:
       dashboard: 대시보드
