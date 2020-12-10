@@ -1,5 +1,6 @@
 class ChatsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_location, only: %i(count)
   before_action :load_chat, only: %i(show destroy)
   before_action :load_post, only: %i(create)
   before_action :check_owner, only: %i(show destroy)

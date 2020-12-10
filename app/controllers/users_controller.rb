@@ -19,6 +19,9 @@ class UsersController < ApplicationController
     begin
       @user = User.new user_params
 
+      # 유저 정보 저장
+      @user.normal!
+      
       if !(params[:user][:device_token])
         Rails.logger.error "ERROR: FCM 토큰이 없습니다. #{log_info}"
         # return render json: {error: "FCM 토큰이 없습니다."}, status: :bad_request
@@ -27,8 +30,6 @@ class UsersController < ApplicationController
         @user.device_list.add(device_info_params[:device_token])
         push_notification("회원가입이 완료되었습니다.", "[모두나눔] 회원가입 완료", [ device_info_params[:device_token] ])
       end
-      # 유저 정보 저장
-      @user.normal!
 
       # 개인정보 저장 기간: 6개월
       expire_time = 6.months.from_now
@@ -283,7 +284,7 @@ class UsersController < ApplicationController
           # 결과로 나온 이메일을 암호화
           email = user.email.split("@")
           len = email[0].length
-          filtered_email = email[0].gsub(email[0][(len / 2 + 1)..(len - 1)], '*' * (len - len / 2 - 1)) + "@" + email[1].gsub(/[A-Za-z]/, "*")
+          filtered_email = email[0].gsub(email[0][(len / 2 + 1)..(len - 1)], '*' * (len - len / 2 - 1)) + "@" + email[1]
           emails << filtered_email
         end
         return render json: {emails: emails}, status: :ok
