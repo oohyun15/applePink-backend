@@ -44,6 +44,9 @@ Rails.application.routes.draw do
   
   resources :chats do
     resources :messages, only: %i(index create)  
+    collection do
+      get :count
+    end
   end
   
   resources :image, only: %i(create destroy)
