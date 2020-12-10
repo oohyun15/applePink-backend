@@ -10,8 +10,8 @@ class AuthenticationController < ApplicationController
     if @user&.authenticate(auth_params[:password]) 
       render json: { token: payload(@user), id: @user.id, location_auth: @user.is_location_auth? ? @user.location&.title : nil }, status: :ok
     else
-      Rails.logger.error "ERROR: 로그인 실패 #{log_info}"
-      render json: { error: "로그인 실패", code: 3 }, status: :unauthorized
+      Rails.logger.error "ERROR: 이메일 또는 패스워드를 확인해주세요. #{log_info}"
+      render json: { error: "이메일 또는 패스워드를 확인해주세요.", code: 3 }, status: :unauthorized
     end
   end
 
