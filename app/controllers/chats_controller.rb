@@ -50,6 +50,18 @@ class ChatsController < ApplicationController
     end
   end
 
+  def count 
+    total = 0
+
+    current_user.chats.each do |chat|
+      if chat.messages_count > 0
+        total += chat.messages.where.not("check_id @> ?", "{#{current_user.id}}").size
+      end
+    end
+
+    return render json: {total: total}, status: :ok
+  end
+
   private
   def load_chat
     begin

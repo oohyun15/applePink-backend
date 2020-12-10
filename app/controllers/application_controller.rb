@@ -75,18 +75,27 @@ class ApplicationController < ActionController::Base
     begin
       ## 토큰 안에 user id 정보가 있는지 확인 / 없을 시 error response 반환
       unless user_id_in_token?
+        # JWT is expired
         if http_token.present? && auth_token.nil?
           Rails.logger.error "ERROR: JWT is expired. #{log_info}"
-          return render json: { error: "expired" }, status: :unauthorized
+          return render json: { error: "JWT is expired.", code: 0 }, status: :unauthorized
+        
+        # no jwt
         else
-          # redirect_to users_sign_in_path
-          Rails.logger.error "ERROR: Unauthorized #{log_info}"
-          return render json: { error: "Unauthorized" }, status: :unauthorized
+          Rails.logger.error "ERROR: NO JWT exists. #{log_info}"
+          return render json: { error: "NO JWT exists.", code: 1 }, status: :unauthorized
         end
       end
 
       ## Token 안에 있는 user_id 값을 받아와서 User 모델의 유저 정보 탐색
       @current_user = User.find(auth_token[:user_id])
+      
+      # location is nil
+      if @current_user.location.nil?
+        Rails.logger.error "ERROR: No location exists. #{log_info}"
+        return render json: {error: "No location exists", code: 2}, status: :not_found 
+      end
+
       Rails.logger.info "JWT: #{http_token}"
       Rails.logger.info "Expired Time: #{Time.at(auth_token[:exp])}"
       Rails.logger.info "User ID: #{@current_user.id}, nickname: #{@current_user.nickname}"

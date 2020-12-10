@@ -15,8 +15,8 @@ class PostsController < ApplicationController
         
         # exception: 만약 없는 동네일 경우
         if @location.nil?
-          Rails.logger.error "ERROR: 존재하지 않는 동네입니다. #{log_info}"
-          return render json: {error: "존재하지 않는 동네입니다."}, status: :not_found 
+          Rails.logger.error "ERROR: No location exists. #{log_info}"
+          return render json: {error: "No location exists.", code: 2}, status: :not_found 
         end
   
         # 2. location_positions에 해당 position 추가
@@ -26,7 +26,7 @@ class PostsController < ApplicationController
       else
         # 1. 사용자의 지역을 변수로 받음
         @location = current_user.location
-  
+
         # 2. 사용자의 지역 검색 범위에 따라 location_positions 추가
         case current_user.location_range
         when "location_alone"

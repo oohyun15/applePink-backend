@@ -5,7 +5,7 @@ class BookingsController < ApplicationController
   before_action :check_owner, only: %i(show accept complete destroy)
 
   def index
-    @bookings = params[:received]=="true" ? current_user.received_bookings : current_user.bookings
+    @bookings = params[:received]=="true" ? current_user.received_bookings.order(created_at: :desc) : current_user.bookings.order(created_at: :desc)
 
     # status: before
     @bookings = @bookings.where(acceptance: %i(waiting accepted rejected)) if params[:status] == "before"
@@ -91,20 +91,6 @@ class BookingsController < ApplicationController
       return render json: {error: e}, status: :bad_request
     end
   end
-
-  # def list
-  #   booking_ids = current_user.bookings.ids + current_user.received_bookings.ids
-  #   if params[:type] == "rent"
-  #     @bookings = Booking.all.where(id: booking_ids)&.rent
-  #   elsif params[:type] == "completed"
-  #     @bookings = Booking.all.where(id: booking_ids)&.completed
-  #   else
-  #     Rails.logger.error "ERROR: 올바르지 않은 파라미터입니다. #{log_info}"
-  #     return render json: {error: "올바르지 않은 파라미터입니다."}, status: :bad_request
-  #   end
-
-  #   return render json: @bookings, status: :ok, scope: {params: create_params}, user_id: current_user.id
-  # end
 
   # booking 모델을 삭제하므로 일반적인 경우가 아닐 시 사용하지 않습니다.
   # 예약 기간이 종료되었을 경우 booking.acceptance를 변경해야합니다.

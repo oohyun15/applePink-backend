@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   
   resources :chats do
     resources :messages, only: %i(index create)  
+    get :count, on: :collection
   end
   
   resources :image, only: %i(create destroy)
@@ -55,7 +56,6 @@ Rails.application.routes.draw do
   resources :bookings, only: %i(index new show create destroy) do
     put :complete, on: :member
     put :accept, on: :member
-    # get :list, on: :collection
   end
 
   resources :companies, only: %i(show create destroy) do
@@ -65,4 +65,5 @@ Rails.application.routes.draw do
   resources :reports, only: %i(index create)
   resources :questions, only: %i(create)
   resources :reviews, only: %i(index create update destroy)
+  resources :pages, only: %i(show)
 end

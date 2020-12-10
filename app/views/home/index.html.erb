@@ -10,12 +10,12 @@
     </h1>
 
     <section id="fixed-bar-download">
-      <a class="fixed-download-button" id="header-download-button-ios" href="#">
+      <a class="fixed-download-button" id="header-download-button-ios" href="#" onclick="return false;">
         <img class="fixed-apple-store" alt="App Store" src="/image/icon/app-store-brands.svg">
         <div class="fixed-download-text">App Store</div>
       </a>
       <a class="fixed-download-button" id="header-download-button-android" href="https://softcon.ajou.ac.kr/works/works.asp?uid=332">
-        <img class="fixed-google-play m-0" style="width:85%;" alt="Google Play" src="/image/icon/softcon_icon.png">
+        <img class="fixed-google-play m-0" style="width:85%;" alt="softcon" src="/image/icon/softcon_icon.png">
         <!-- 
         <img class="fixed-google-play" alt="Google Play" src="/image/icon/google-play-brands.svg">
         <div class="fixed-download-text">Google Play</div>
@@ -41,7 +41,7 @@
 <section class="home-main-section">
   <div class="home-main-content">
     <div class="home-main-image text-left">
-      <img class="screenshot ml-5 ml-xl-0" style="width: 90%; padding: 10% 0;" alt="screenshot" src="/image/screenshot/main_2.png">
+      <img class="screenshot ml-5 ml-xl-0" style="width: 580px; padding: 10% 0;" alt="screenshot" src="/image/screenshot/main_2.png">
     </div>
     <div class="mr-5 mr-xl-0" style="width:360px;">
       <h1 class="home-main-title pl-2">쉽고 빠른,<br>중고 대여 프로세스</h1>
@@ -75,7 +75,7 @@
 <section class="home-main-section background-pale-brown">
   <div class="home-main-content home-main-reverse">
     <div class="home-main-image text-right">
-      <img class="screenshot mr-5 mr-xl-0" alt="screenshot" src="/image/screenshot/main_3.png">
+      <img class="screenshot mr-5 mr-xl-0" style="padding: 5% 0;" alt="screenshot" src="/image/screenshot/main_3.png">
     </div>
     <div class="ml-5 ml-xl-0">
       <h1 class="home-main-title">전자서명으로,<br>더욱 안전하게</h1>
@@ -84,22 +84,24 @@
         편리하고 안전한 예약 시스템
       </p>
       <div class="home-buttons">
-        <a class="home-button text-m text-bold" href="https://www.kakaocert.com/"><img class="logo" alt="screenshot" src="/image/logo/kakaocert_logo.png">란?</a>
+        <a class="kakao-button text-m text-bold" href="https://www.kakaocert.com/"><img class="logo" alt="screenshot" src="/image/logo/kakaocert_logo.png">란?</a>
       </div>
-        
     </div>
   </div>
 </section>
 <section class="home-main-section">
   <div class="home-main-content">
-    <div class="home-main-video ml-5 ml-xl-0">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/Stbh5KFHQaY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="home-main-image ml-5 ml-xl-0">
+      <img class="screenshot ml-5 ml-xl-0" style="width: 630px; padding: 5% 0;" alt="screenshot" src="/image/screenshot/main_4.png">
     </div>
     <div class="mr-5 mr-xl-0">
-      <h1 class="home-main-title">위치 기반의<br>C2C 공유 플랫폼</h1>
+      <h1 class="home-main-title">위치 기반<br>C2C 공유 플랫폼</h1>
       <p class="text-m">
-        모두나눔과 함께 이웃들과 다양한 물품을 공유해 보세요!
+        모두나눔의 여러 기능과 함께 <br>이웃들과 다양한 물품을 공유해 보세요!
       </p>
+      <div class="home-buttons">
+        <a class="home-button btn-modal text-m text-bold" href="#" onclick="return false;" data-name="info">소개 영상 보기</a>
+      </div>
     </div>
   </div>
 </section>
@@ -111,18 +113,19 @@
         <hr class="mb-4">
       </div>
     </div>
-    <div class="container pt-3 pb-5">
+    <div class="container pb-5">
       <div class="row mt-3">
-        <div class="col-lg-6 col-md-12 text-xs text-secondary text-center text-lg-left">
-          <ul class="list-inline pb-2 text-xxs">
+        <div class="col-12 col-md-6 text-xxs text-secondary text-center text-md-left">
+          <ul class="list-inline pb-2">
             <li class="list-inline-item text-secondary">
-              <a class="py-2 text-secondary" href="#">개인정보처리방침</a> |
-              <a class="py-2 text-secondary" href="#">이용약관</a> <br>
+              <a class="py-2 text-secondary btn-modal" href="#" onclick="return false;" data-name="page" data-type="tos">이용약관</a> |
+              <a class="py-2 text-secondary btn-modal" href="#" onclick="return false;" data-name="page" data-type="privacy">개인정보처리방침</a> |
+              <a class="py-2 text-secondary btn-modal" href="#" onclick="return false;" data-name="page" data-type="location">위치기반서비스 이용약관</a><br>
               applePink | 사업자등록번호: 601-11-92065
             </li>
           </ul>
         </div>
-        <div class="col-lg-6 col-md-12 text-xs text-center text-lg-right">
+        <div class="col-12 col-md-6 text-xxs text-center text-md-right">
           <p class="pb-2 text-secondary">
             파트너 문의: <a class="py-2 text-secondary" href="mailto:sakiss4774@gmail.com">sakiss4774@gmail.com</a><br>
             © 2020. applePink Co. all rights reserved.
@@ -133,9 +136,73 @@
   </div>
 </div>
 
+<!-- modal-info 시작 -->
+<div class="modal fade" id="modal-info" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-video" role="document">
+    <div class="modal-content" style="border-radius: 1rem;">
+      <div class="modal-header" style="padding: 1.5rem 1.5rem;">
+        <div class="text-xl text-bold">모두나눔 소개 영상</div>
+      </div>
+      <div class="modal-body text-center" style="padding: 1.5rem 1rem;">
+        <iframe width="1000" height="562.5" src="https://www.youtube.com/embed/Stbh5KFHQaY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal-info 끝 -->
+
+<!-- modal-page 시작 -->
+<div class="modal fade" id="modal-page" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-page" role="document">
+    <div class="modal-content" style="border-radius: 1rem;">
+      <div class="modal-header" style="padding: 1.5rem 1.5rem;">
+        <div class="text-bold">
+          <!-- 약관 제목 -->
+          <span class="page-title text-xl"></span>
+          <!-- 약관 발행일 & 발효일 -->
+          <span class="ml-1 text-xs">
+            (발행일: <span class="page-updated_at"></span> | 발효일: <span class="page-effective_date"></span>)
+          </span>
+        </div>
+      </div>
+        <!-- 약관 내용 -->
+      <div class="modal-body page-body text-xs text-dark-gray" style="padding: 1.5rem 1.5rem;"></div>
+    </div>
+  </div>
+</div>
+<!-- modal-page 끝 -->
+
 <script>
+const modal_info = $("#modal-info")
+const modal_page = $("#modal-page")
+
 $("#header-download-button-ios").on("click", function() {
   alert("12월 출시 예정입니다. 잠시만 기다려 주세요.");
 })
 
+$(".btn-modal").on("click", function() {
+  switch ($(this).data("name")) {
+    case "info":
+      modal_info.modal("show");
+      break;
+
+    case "page":
+      Rails.ajax({
+        type: "get",
+        url: `/pages/${$(this).data("type")}`,
+        dataType: "json",
+        success: (data) => {
+          modal_page.find(".page-title").html(data.title)
+          modal_page.find(".page-body").html(simpleFormat(data.body))
+          modal_page.find(".page-updated_at").html(getFormatDate(new Date(data.updated_at)))
+          modal_page.find(".page-effective_date").html(getFormatDate(new Date(data.effective_date)))
+          modal_page.modal("show");
+        },
+        error: () => {
+          alert("비정상적인 요청입니다.")
+        }
+      });
+      break;
+  }
+})
 </script>

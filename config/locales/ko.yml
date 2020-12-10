@@ -117,6 +117,12 @@ ko:
         user_id: 사용자
         post_id: 게시글
         images: 리뷰 이미지
+      page:
+        title: 제목
+        body: 내용
+        page_type: 약관 타입
+        updated_at: 발행일
+        effective_date: 발효일
 
     models:
       dashboard: 대시보드
@@ -132,6 +138,7 @@ ko:
       report: 신고
       question: 문의
       group: 소속
+      page: 약관
 
     errors:
       models:
@@ -177,7 +184,6 @@ ko:
         ios: 아이폰
         android: 안드로이드
         unknown: 알 수 없음
-
     report:
       reason:
         fake_item: 허위매물
@@ -188,3 +194,8 @@ ko:
         fraud: 사기의심
         threat_violence: 폭력 및 협박
         etc: 기타사유
+    page:
+      page_type:
+        privacy: 개인정보처리방침
+        tos: 이용약관
+        location: 위치기반서비스 이용약관
