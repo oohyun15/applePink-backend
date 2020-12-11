@@ -18,7 +18,7 @@ describe "User test", type: :request do
 
   # sign_up 이전에는 tonem123@naver.com 이메일을 가진 유저가 없음
   # sign_up 이후에는 유저가 생성됨.
-  it 'user sign_up test' do
+  it 'user create test' do
     expect(User.where(email: "tonem123@naver.com").present?).to eq(false)
     post "/users/sign_up", params: {user: {email: "tonem123@naver.com", nickname: "tonem123", 
       password: "test123", password_confirmation: "test123"}}
@@ -27,7 +27,9 @@ describe "User test", type: :request do
 
   #앞선 테스트에서 생성한 유저의 정보를 수정하는 테스트
   it 'user update test' do
+    location = Location.all.sample
     user_before = User.find_by(email: "tonem123@naver.com")
+    user_before.update!(location_id: location.id)
     put "/users/#{user_before.id}", params: {user: {email: "change123@naver.com", nickname: "change123", 
       password: "change123", password_confirmation: "change123"}}, headers: {Authorization: @token}
 
