@@ -1,5 +1,5 @@
 ActiveAdmin.register Question do
-  menu parent: "2. 서비스 관리", priority: 5, label: "#{I18n.t("activerecord.models.question")} 관리"
+  menu parent: "2. 서비스 관리", priority: 6, label: "#{I18n.t("activerecord.models.question")} 관리"
   
   filter :user, label: "#{I18n.t("attributes.user")} 필터"
   filter :title_cont, label: "#{I18n.t("attributes.title")} 필터"
