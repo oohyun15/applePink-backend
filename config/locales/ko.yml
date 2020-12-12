@@ -139,6 +139,7 @@ ko:
       question: 문의
       group: 소속
       page: 약관
+      review: 리뷰
 
     errors:
       models:

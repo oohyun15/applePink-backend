@@ -1,5 +1,5 @@
 ActiveAdmin.register Report do
-  menu parent: "2. 서비스 관리", priority: 4, label: "#{I18n.t("activerecord.models.report")} 관리"
+  menu parent: "2. 서비스 관리", priority: 5, label: "#{I18n.t("activerecord.models.report")} 관리"
   
   filter :user, label: "#{I18n.t("activerecord.attributes.report.user")} 필터"
   filter :reason, as: :select, multiple: true, collection: Report.reasons.map{|type| [I18n.t("enum.report.reason.#{type[0]}"), type[1]]}, label: "#{I18n.t("activerecord.attributes.report.reason")} 필터"
