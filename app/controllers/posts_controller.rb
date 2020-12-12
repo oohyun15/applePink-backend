@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :load_post, only: %i(show update destroy like)
+  before_action :load_post, only: %i(show update destroy like booking)
   before_action :authenticate_user!
   before_action :check_owner, only: %i(update destroy)
 
@@ -120,6 +120,11 @@ class PostsController < ApplicationController
     user_ids = @post.likes.pluck(:user_id)
     user_nicknames = User.where(id: user_ids).pluck(:nickname)
     return render json: { user_list: user_nicknames }, status: :ok
+  end
+
+  def booking
+    @bookings = @post.bookings.order(created_at: :desc)
+    return render json: @bookings, scope: {params: create_params}, status: :ok 
   end
 
   private
