@@ -33,6 +33,10 @@ class BookingsController < ApplicationController
       Rails.logger.error "ERROR: 이미 대여 중인 게시글입니다. #{log_info}"
       return render json: {error: "이미 대여 중인 게시글입니다."}, status: :bad_request
     else
+      unless params[:booking][:start_at].present?
+        Rails.logger.error "ERROR: 예약 날짜를 지정해주세요 #{log_info}"
+        return render json: {error: "예약 날짜를 지정해주세요"}, status: :bad_request
+      end
       begin
         if @booking = @post.bookings.find_by(user_id: current_user.id, acceptance: :waiting)
           @booking.update! booking_params
