@@ -36,7 +36,8 @@ class PostSerializer < ActiveModel::Serializer
       created_at_ago: time_ago_in_words(object.created_at)+" 전",
       updated_at_ago: time_ago_in_words(object.updated_at)+" 전",
       is_booked: is_booked,
-      rating: object.rating_avg.round(1)
+      rating: object.rating_avg.round(1),
+      expiration_date: object.unable? ? object.bookings&.rent&.first&.end_at : nil
     }
   end
 
