@@ -11,6 +11,7 @@ class ChatSerializer < ActiveModel::Serializer
       post_id: object.post_id,
       nickname: User.where(id: (object.user_ids - [@instance_options[:user_id]]) )&.pluck(:nickname),
       image: User.find_by(id: (object.user_ids - [@instance_options[:user_id]]) )&.image_path,
+      other_users: object.user_ids - [@instance_options[:user_id]],
       created_time: object.messages_count > 0 ? time_ago_in_words(last_message.created_at) : nil, 
       num_unchecked: object.messages_count > 0 ? object.messages.where.not("check_id @> ?", "{#{@instance_options[:user_id]}}").size : nil, 
       message: object.messages_count > 0 ? last_message.body : nil
