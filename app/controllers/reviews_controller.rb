@@ -87,7 +87,6 @@ class ReviewsController < ApplicationController
       post_id: @booking.post.id
     }
     result = review_param.merge!(extra)
-    Rails.logger.error result
     return result
   end
 
