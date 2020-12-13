@@ -50,6 +50,7 @@ class ReviewsController < ApplicationController
     before_rating = @review.rating
 
     begin
+      @review.images.delete_all
       @review.update! review_params
 
       @post = @booking.post

@@ -89,6 +89,7 @@ class PostsController < ApplicationController
   end
   
   def update
+    @post.images.delete_all
     @post.update(post_params)
     render json: @post, status: :ok, scope: {params: create_params}, user_id: current_user.id
   end
