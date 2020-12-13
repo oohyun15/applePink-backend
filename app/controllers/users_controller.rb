@@ -163,7 +163,7 @@ class UsersController < ApplicationController
       else
         # 전화번호만 입력됐을 때
         SmsCertification.generate_code(sms_params[:phone])
-        return render json: {message: "회원 가입을 위한 SMS을 발송했습니다. SMS을 확인해 주세요."}, status: :ok
+        return render json: {message: "회원가입을 위한 SMS을 발송했습니다.\nSMS을 확인해 주세요."}, status: :ok
       end
 
     else
