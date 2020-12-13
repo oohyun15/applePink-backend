@@ -50,7 +50,7 @@ class ReviewsController < ApplicationController
     before_rating = @review.rating
 
     begin
-      @review.images.delete_all
+      @review.images.delete_all if review_params[:images_attributes].present?
       @review.update! review_params
 
       @post = @booking.post
