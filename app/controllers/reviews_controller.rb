@@ -39,8 +39,8 @@ class ReviewsController < ApplicationController
 
       return render json: @review, status: :ok, scope: {params: create_params}
     rescue => e
-      Rails.logger.error "ERROR: #{e} #{log_info}"
       message = e.record.errors.first.last rescue e.message
+      Rails.logger.error "ERROR: #{message} #{log_info}"
       render json: {error: message}, status: :bad_request
     end
 
