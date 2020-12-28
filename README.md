@@ -17,7 +17,9 @@ This repository is Modunanum's Back-end API server built with **Ruby on Rails**.
 You can find our [Front-end repo](https://github.com/d-virusss/capstone_front_RN) built with **React Native**.
 
 This README would normally document whatever steps are necessary to get the
-application up and running.
+application up and running.  
+  
+*Updated: 2020.12.28*
 
 ## Version
 * Ruby version  
@@ -50,13 +52,67 @@ figaro install
 touch config/database.yml
 ```
 
-**2. Set application.yml**
+**2. Set application.yml**  
+Copy below scripts and fill in the values.
 ```yml
 # config/application.yml
 
-DB_NAME: "YOUR_DB_NAME"
-DB_USER_NAME: "YOUR_LOCAL_NAME"
-DB_USER_PASSWD: "YOUR_PASSWORD"
+DB_NAME: 
+SECRET_KEY_BASE: 
+
+# Activeadmin
+ACTIVEADMIN_EMAIL: 
+ACTIVEADMIN_PASSWD: 
+
+# seed
+TEST_EMAIL_FRONT: 
+TEST_EMAIL_BACK: 
+TEST_PASSWORD: 
+
+# KAKAO REST_API
+KAKAO_CLIENT_ID: 
+
+# Sendgrid API
+SENDGRID_API_KEY: 
+
+# FCM Server key
+FCM_SERVER_KEY: 
+
+# Kakaocert
+KAKAO_CERT_LINK_ID: 
+KAKAO_CERT_SERCRET_KEY: 
+KAKAO_CERT_CLIENT_CODE: 
+KAKAO_CERT_SUB_CLIENT_ID: 
+KAKAO_CERT_CALL_CERNTER_NUM: 
+
+# Cloudmersive
+CLOUDMERSIVE_API_KEY: 
+
+# Apple sign-in
+APPLE_CLIENT_ID: 
+APPLE_TEAM_ID: 
+APPLE_KEY: 
+APPLE_PEM: 
+APPLE_REDIRECT_URI: 
+
+# Cafe24Sms
+SMS_SECURE: 
+SMS_USER_ID: 
+SMS_SPHONE1: 
+SMS_SPHONE2: 
+SMS_SPHONE3: 
+
+production:
+  SERVER_DB_USER_NAME: 
+  SERVER_DB_USER_PASSWD: 
+  
+  #AWS S3
+  AWS_ACCESS_KEY_ID: 
+  AWS_SECRET_ACCESS_KEY: 
+
+development:
+  LOCAL_DB_USER_NAME: 
+  LOCAL_DB_USER_PASSWD: 
 
 ```
 
@@ -91,7 +147,7 @@ production:
   
 ```
 
-**4. run local server**
+**4. Run local server**
 
 ```zsh
 # DB setup
