@@ -70,7 +70,7 @@ application up and running.
 
 #### Belong Certification
 * University
-  * Support 108 universirtes in Korea
+  * Support 108 universities in Korea
 
 #### Converting from HEIC to PNG 
 * Cloudmersive
