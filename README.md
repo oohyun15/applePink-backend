@@ -1,9 +1,9 @@
 <p align="center"><a href="https://www.applepink.ml" target="_blank" rel="noopener noreferrer"><img width="150" src="https://www.applepink.ml/image/default.png" alt="Framework7"></a></p>
 
 <h1 align="center">모두나눔</h1>
-
+<h3 align="center">위치 기반 C2C 공유 플랫폼</h3> 
 <p align="center">
-  <a href="https://www.applepink.ml" target="_blank">위치 기반 C2C 공유 플랫폼</a>
+  <a href="https://www.applepink.ml" target="_blank">자세히 보기</a>
 </p>
 
 **Collaborator**
@@ -21,24 +21,39 @@ application up and running.
   
 *Updated: 2020.12.28*
 
-## Version
-* Ruby version  
-**ruby 2.6.5p114**
+## Requirements 
+* Linux / Mac OS
+* ruby 2.6.5p114
+* Rails 6.0.0
+* Bundler 2.1.4
+* PostgreSQL 9.5.23+
+* ImageMagick 7.0.10+
+* capistrano 3.14.1 *(optional)*
 
-* Ruby on Rails version  
-**Rails 6.0.0**
+## Features
+#### OAuth Social Sign-In
+* Kakao
+* Apple
 
-* Bundler version  
-**Bundler 2.1.4**
+#### Regional certification
+* Google Maps
+* Kakao Maps (for converting GPS coordinates to a legal county)
 
-* Database  
-**PostgreSQL 9.5.23**  
+#### Push Notification
+* FCM (Android & Apple)
+* APNS (Apple only)
 
-* Deployment instructions(optional)  
-**capistrano 3.14.1**
+#### Electronic Signature
+* Kakaocert
 
+#### Email & SMS Notification
+* Sendgrid (Email)
+* Cafe24 (SMS)
 
-## How to run
+#### Converting from HEIC to PNG 
+* Cloudmersive
+
+## Getting started
 **1. Create applcation.yml & database.yml**
 
 ```zsh
@@ -52,13 +67,21 @@ figaro install
 touch config/database.yml
 ```
 
-**2. Set application.yml**  
+**2. Set secret key**  
+
+```zsh
+# grant new secret key
+bundle exec rake secret
+
+```
+
+**3. Set application.yml**  
 Copy below scripts and fill in the values.
 ```yml
 # config/application.yml
 
 DB_NAME: 
-SECRET_KEY_BASE: 
+SECRET_KEY_BASE: # bundle exec rake secret
 
 # Activeadmin
 ACTIVEADMIN_EMAIL: 
@@ -116,7 +139,7 @@ development:
 
 ```
 
-**3. Set database.yml**
+**4. Set database.yml**
 ```yml
 # config/database.yml
 
@@ -124,14 +147,14 @@ default: &default
   adapter: postgresql
   host: localhost
   encoding: utf8
-  username: <%= ENV["DB_USER_NAME"] %>
-  password: <%= ENV["DB_USER_PASSWD"] %>
+  username: <%= ENV["LOCAL_DB_USER_NAME"] %>
+  password: <%= ENV["LOCAL_DB_USER_PASSWD"] %>
   pool: 5
 
 development:
   <<: *default
   database: <%= ENV["DB_NAME"] %>_<%= Rails.env %>
-  
+
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
@@ -139,15 +162,18 @@ test:
   <<: *default
   database: <%= ENV["DB_NAME"] %>_<%= Rails.env %>
 
-# IF YOU WANT TO DEPLOY, YOU MUST KNOW PUBLIC KEY TO ACCESS AWS EC2 SERVER.
-# It is recommended not to add this part unless it is a special case.
 production:
-  <<: *default
+  adapter: postgresql
+  host: localhost
+  encoding: utf8
+  username: <%= ENV["SERVER_DB_USER_NAME"] %>
+  password: <%= ENV["SERVER_DB_USER_PASSWD"] %>
+  pool: 5
   database: <%= ENV["DB_NAME"] %>_<%= Rails.env %>
   
 ```
 
-**4. Run local server**
+**5. Run local server**
 
 ```zsh
 # DB setup
@@ -161,12 +187,14 @@ rails s -p 8081 // localhost:8081
 
 ```
 
+You can access [localhost:3000](http://localhost:3000) to check the server.
+
 ## How to deploy
 I will not explain in detail in this part.  
 If you were in trouble, please contact us.
 
 ```zsh
-cap install   // you have to edit files: Capfile, production.rb deploy.rb
+cap install // you have to edit files: Capfile, production.rb deploy.rb
 cap production setup
 cap production deploy
 
