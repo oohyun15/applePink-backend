@@ -1,9 +1,9 @@
 <p align="center"><a href="https://www.applepink.ml" target="_blank" rel="noopener noreferrer"><img width="150" src="https://www.applepink.ml/image/default.png" alt="Framework7"></a></p>
 
 <h1 align="center">모두나눔</h1>
-<h3 align="center">위치 기반 C2C 공유 플랫폼</h3> 
+<h3 align="center">Location-Based C2C Shared Platform</h3> 
 <p align="center">
-  <a href="https://www.applepink.ml" target="_blank">자세히 보기</a>
+  <a href="https://www.applepink.ml" target="_blank">Learn more</a>
 </p>
 
 ## Collaborator
@@ -22,24 +22,42 @@ application up and running.
 *Updated: 2020.12.28*
 
 ## Requirements 
-* Linux / Mac OS
+* Linux Ubuntu 16.04 / MacOS Catalina (recommend MacOS)
 * ruby 2.6.5p114
 * Rails 6.0.0
 * Bundler 2.1.4
 * PostgreSQL 9.5.23+
 * ImageMagick 7.0.10+
-* capistrano 3.14.1 *(optional)*
+* Xcode 12.0+
+* Capistrano 3.14.1 *(optional)*
+
+#### 3rd-party API
+* Kakao Developer    *[(link)](https://developers.kakao.com/)*
+* Apple Developer    *[(link)](https://developer.apple.com/)*
+* Firebase           *[(link)](https://firebase.google.com/)*
+* Sendgrid           *[(link)](https://sendgrid.com/)*
+* Cafe24             *[(link)](https://hosting.cafe24.com/)*
+* Kakaocert          *[(link)](https://www.kakaocert.com/)*
+* Amazon Web Service *[(link)](https://aws.amazon.com/)*
 
 ## Features
-#### OAuth Social Sign-In
+#### OAuth Social Sign-in
 * Kakao
 * Apple
 
-#### Regional certification
+#### Regional Certification
 * Google Maps
 * Kakao Maps (for converting GPS coordinates to a legal county)
+  * Currently support Suwon only (57 counties)
 
-#### Push Notification
+#### Product Posting
+* to provide/request
+
+#### 1:1 Chatting
+* Firebase realtime database
+
+#### Keyword Notification
+* Up to 20 registered
 * FCM (Android & Apple)
 * APNS (Apple only)
 
@@ -50,8 +68,15 @@ application up and running.
 * Sendgrid (Email)
 * Cafe24 (SMS)
 
+#### Belong Certification
+* University
+  * Support 108 universirtes in Korea
+
 #### Converting from HEIC to PNG 
 * Cloudmersive
+
+#### Administrator Page
+* Activeadmin
 
 ## Getting started
 **1. Create applcation.yml & database.yml**
@@ -179,7 +204,7 @@ production:
 # DB setup
 rake db:create
 rake db:migrate
-rake db:seed    // optional
+rake db:seed
 
 # Start local server
 rails s         // localhost:3000
