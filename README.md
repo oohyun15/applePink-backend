@@ -6,7 +6,7 @@
   <a href="https://www.applepink.ml" target="_blank">자세히 보기</a>
 </p>
 
-**Collaborator**
+## Collaborator
 
 | [<img src="https://avatars2.githubusercontent.com/u/52606560?s=400&u=2a492fa6991fe8fe79db9e5bc6442131ab4d5259&v=4" width="200">](https://github.com/oohyun15) <br> oohyun15| [<img src="https://avatars2.githubusercontent.com/u/52434222?s=400&v=4" width="200">](https://github.com/MaSungHo) <br> MaSungHo | 
 | :-----------------------------------: | :---------------------------------------: |
