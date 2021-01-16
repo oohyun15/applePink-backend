@@ -1,4 +1,4 @@
-<p align="center"><a href="https://www.applepink.ml" target="_blank" rel="noopener noreferrer"><img width="150" src="https://www.applepink.ml/image/default.png" alt="Framework7"></a></p>
+<p align="center"><a href="https://www.applepink.ml" target="_blank" rel="noopener noreferrer"><img width="150" src="https://raw.githubusercontent.com/oohyun15/applePink-backend/master/public/image/default.png" alt="apple-pink"></a></p>
 
 <h1 align="center">모두나눔</h1>
 <h3 align="center">Location-Based C2C Shared Platform</h3> 
@@ -35,10 +35,11 @@ application up and running.
 * Kakao Developer    *[(link)](https://developers.kakao.com/)*
 * Apple Developer    *[(link)](https://developer.apple.com/)*
 * Firebase           *[(link)](https://firebase.google.com/)*
+* Amazon Web Service *[(link)](https://aws.amazon.com/)*
 * Sendgrid           *[(link)](https://sendgrid.com/)*
 * Cafe24             *[(link)](https://hosting.cafe24.com/)*
 * Kakaocert          *[(link)](https://www.kakaocert.com/)*
-* Amazon Web Service *[(link)](https://aws.amazon.com/)*
+* Cloudmersive       *[(link)](https://cloudmersive.com/)*
 
 ## Features
 #### OAuth Social Sign-in
