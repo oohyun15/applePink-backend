@@ -69,7 +69,7 @@ application up and running.
 * Sendgrid (Email)
 * Cafe24 (SMS)
 
-#### Belong Certification
+#### Association Certification
 * University
   * Support 108 universities in Korea
 
