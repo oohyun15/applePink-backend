@@ -6,6 +6,10 @@ require "capistrano/setup"
 # Include default deployment tasks
 require "capistrano/deploy"
 
+# Slack Bot
+require 'slackistrano/capistrano'
+require_relative 'lib/custom_messaging'
+
 # Load the SCM plugin appropriate to your project:
 #
 # require "capistrano/scm/hg"

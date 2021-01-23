@@ -64,6 +64,12 @@ set :default_env, {
   NODE_ENVIRONMENT: 'production'
 }
 
+set :slackistrano, {
+  klass: Slackistrano::CustomMessaging,
+  channel: '#backend',
+  webhook: 'https://hooks.slack.com/services/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',
+}
+
 set :delayed_job_server_role, :worker
 set :delayed_job_args, "-n 2"
 
