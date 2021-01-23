@@ -42,7 +42,7 @@ def generate_post num
     user = User.all[index]
     
     post = user.posts.create!(
-      title: "테스트용",
+      title: "테스트용 게시글",
       body: "맥북 프로 13인치 2020년형 싸게 대여합니다. 관심있으신 분들 연락주세요.",
       product: "맥북 프로 13인치",
       price: "10000",
