@@ -74,11 +74,6 @@ class UsersController < ApplicationController
         Delayed::Job.find_by_id(schedule.delayed_job_id)&.delete
       end
 
-      # 게시글 삭제
-      #current_user.posts.each do |post|
-      #  post.destroy!
-      #end
-
       # 유저 삭제
       current_user.destroy!
 
