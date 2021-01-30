@@ -3,8 +3,7 @@ module CommonSerializer
   included do
     def timestamp(val)
       time = time_ago_in_words(val)
-      time[2..] if time =~ /약 /
-      time
+      time =~ /약 / ? time[2..]+" 전" : time+" 전"
     end
   end
 end
