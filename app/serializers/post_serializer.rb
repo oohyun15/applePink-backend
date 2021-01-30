@@ -3,9 +3,10 @@ require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 
 class PostSerializer < ActiveModel::Serializer
-  #보여줄 attribute들을 설정함.
+  include CommonSerializer  
   
   has_one :user
+  
   attributes %i(post_info location_info)
   
   #조건문이 없으니 default가 됨
@@ -33,8 +34,8 @@ class PostSerializer < ActiveModel::Serializer
       contract: object.contract,
       created_at: object.created_at.strftime("%Y-%m-%d %H:%M"),
       updated_at: object.updated_at.strftime("%Y-%m-%d %H:%M"),
-      created_at_ago: time_ago_in_words(object.created_at)+" 전",
-      updated_at_ago: time_ago_in_words(object.updated_at)+" 전",
+      created_at_ago: timestamp(object.created_at)+" 전",
+      updated_at_ago: timestamp(object.updated_at)+" 전",
       is_booked: is_booked,
       rating: object.rating_avg.round(1),
       expiration_date: object.unable? ? object.bookings&.rent&.first&.end_at : nil

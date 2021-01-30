@@ -1,5 +1,6 @@
 class ChatSerializer < ActiveModel::Serializer
-  #has_many :messages  
+  include CommonSerializer
+
   attributes %i(chat_info)
 
   #채팅방 목록들
@@ -12,7 +13,7 @@ class ChatSerializer < ActiveModel::Serializer
       nickname: !is_alone? ? User.where(id: (object.user_ids - [current_user_id]) )&.pluck(:nickname) : "대화 상대 없음",
       image: !is_alone? ? User.find_by(id: (object.user_ids - [current_user_id]) )&.image_path : nil,
       other_users: object.user_ids - [current_user_id],
-      created_time: object.messages_count > 0 ? time_ago_in_words(last_message.created_at) : nil, 
+      created_time: object.messages_count > 0 ? timestamp(last_message.created_at) : nil, 
       num_unchecked: object.messages_count > 0 ? object.messages.where.not("check_id @> ?", "{#{current_user_id}}").size : nil, 
       message: object.messages_count > 0 ? last_message.body : nil
     }
