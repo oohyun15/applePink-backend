@@ -10,8 +10,8 @@ class MessageSerializer < ActiveModel::Serializer
       chat_id: object.chat&.id,
       body: object.body,
       sender: {
-        id: object.user_id,
-        image: object.user&.image_path,
+        id: object.user_id.present? ? object.user_id : nil,
+        image: object.user_id.present? ? object.user&.image_path : nil,
       },
     }
   end
