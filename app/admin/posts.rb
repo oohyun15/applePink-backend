@@ -7,7 +7,7 @@ ActiveAdmin.register Post do
   filter :location, as: :select, multiple: true, collection: Location.all.map{|type| [type.title, type.position]}, label: "#{I18n.t("activerecord.models.location")} 필터"
   filter :post_type, as: :select, multiple: true, collection: Post.post_types.map{|type| [I18n.t("enum.post.post_type.#{type[0]}"), type[1]]}, label: "#{I18n.t("activerecord.attributes.post.post_type")} 필터"
   filter :status, as: :select, multiple: true, collection: Post.statuses.map{|type| [I18n.t("enum.post.status.#{type[0]}"), type[1]]}, label: "상태 필터"
-
+  
   index do
     selectable_column
     id_column
@@ -15,6 +15,7 @@ ActiveAdmin.register Post do
     a link_to ("제공 서비스 보기"), "/admin/posts?q%5Bpost_type_in%5D%5B%5D=0", class: "button small"
     a link_to ("요청 서비스 보기"), "/admin/posts?q%5Bpost_type_in%5D%5B%5D=1", class: "button small"
     a link_to ("모두 보기"), "/admin/posts", class: "button small"
+    a link_to ("탈퇴한 사용자 게시글 보기"), "/admin/posts?q%5Buser_id_in%5D=false", class: "button small"
     
     column :image do |post| image_tag(post&.image_path ,class: 'admin-index-image') end
     column :title
