@@ -23,6 +23,6 @@ class ChatSerializer < ActiveModel::Serializer
   end
 
   def is_alone?
-    current_user_id.in? object.user_ids && object.user_ids.size == 1
+    current_user_id.in?(object.user_ids) && object.user_ids.size == 1
   end
 end
