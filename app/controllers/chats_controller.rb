@@ -43,7 +43,8 @@ class ChatsController < ApplicationController
 
   def destroy
     begin
-      @chat.destroy!
+      @chat.user_chats.where(user_id: current_user.id).destroy!
+      @chat.destroy! if @chat.users.empty?
       render json: {notice: "채팅방에서 나오셨습니다."}, status: :ok
     rescue => e
       Rails.logger.error "ERROR: #{e} #{log_info}"
