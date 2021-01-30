@@ -66,7 +66,8 @@ class ApplicationController < ActionController::Base
     "\tJWT:        #{http_token.present? ? http_token : "Null"}\n" +
     "\tExpired:    #{auth_token.present? ? Time.at(auth_token[:exp]) : "Null"}\n" +
     "\tUser:       #{@current_user&.nickname} (id: #{@current_user&.id})\n" +
-    "\tParams:     #{params.present? ? params : "Null"}\n"
+    "\tParams:     #{params.present? ? params : "Null"}\n" +
+    "\tBacktrace:\n\n\t#{$!.backtrace.join("\n\t")}\n"
   end
   
   protected
