@@ -15,9 +15,9 @@ class LikeSerializer < ActiveModel::Serializer
     } : 
     {
       id: object.id,
-      title: object.target&.title, 
-      target_id: object.target_id,
-      target_type: object.target_type,
+      title: !object.target.nil? ? object.target&.title : "탈퇴한 사용자거나 삭제된 게시글입니다.",
+      target_id: !object.target.nil? ? object.target_id : -1,
+      target_type: !object.target.nil? ? object.target_type : "탈퇴한 사용자거나 삭제된 게시글입니다.",
       user_id: object.user_id,
       post_image: object.target_type == "Post" ? object.target&.image_path : nil,
       price: object.target_type == "Post" ? object.target&.price : nil
