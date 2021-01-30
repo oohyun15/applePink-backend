@@ -6,6 +6,20 @@ class Post < ApplicationRecord
 
   after_create :check_keywords
   
+  scope :has_user, -> { where.not(user_id: nil) }
+  scope :has_not_user, -> { where(user_id: nil) }
+
+  formatter = -> value {
+    case value
+     when 'true'
+        Post.has_user.pluck(:id)
+      when 'false'
+        Post.has_not_user.pluck(:id)
+    end
+  }
+
+  ransacker(:user_id, formatter: formatter) { |parent| parent.table[:id] }
+
   validates :title, presence: true#, on: :create
   validates :product, presence: true
   validates :body, presence: true

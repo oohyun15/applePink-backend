@@ -30,7 +30,7 @@ class BookingSerializer < ActiveModel::Serializer
         end,
       contract: object.contract,
       consumer: {
-        nickname: object.user&.nickname,
+        nickname: !object.user.nil? ? object.user&.nickname : "탈퇴한 사용자입니다.",
         image: object.user&.image_path,
         birth: object.accepted? || object.completed? ? object.user&.birthday : nil,
         name: object.accepted? || object.completed? ? object.user&.name : nil,
@@ -38,7 +38,7 @@ class BookingSerializer < ActiveModel::Serializer
         sign_datetime: object.accepted? || object.completed? ? object.consumer_sign_datetime : nil
       },
       provider: {
-        nickname: object.post&.user&.nickname,
+        nickname: !object.post.nil? ?  !object.post&.user.nil? ? object.post&.user&.nickname : "탈퇴한 사용자입니다."  : "삭제된 게시글입니다.",
         image: object.post&.user&.image_path,
         birth: object.accepted? || object.completed? ? object.post&.user&.birthday : nil,
         name: object.accepted? || object.completed? ? object.post&.user&.name : nil,
