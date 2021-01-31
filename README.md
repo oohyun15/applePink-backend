@@ -80,7 +80,7 @@ application up and running.
 * Activeadmin
 
 ## Getting started
-**1. Create applcation.yml & database.yml**
+**1. Create application.yml & database.yml**
 
 ```zsh
 # install Gemfile
