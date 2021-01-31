@@ -22,27 +22,21 @@ if defined?(Slackistrano::Messaging)
         {
           attachments: [{
             color: 'good',
-            title: 'Deploying...',
+            title: "Deploying branch: #{branch}...",
             fields: [{
-              title: 'Environment',
-              value: stage,
-              short: true
-            }, {
               title: 'Deployer',
               value: deployer,
               short: true
             }, {
               title: 'Compare',
-              value: "<#{repo_url}/compare/#{prev_hash}...#{last_hash}>",
+              value: "<#{repo_url}/compare/#{prev_hash}...#{last_hash}|check :mag:>",
               short: true,
             }, {
               title: 'Commits',
-              value: update_commits,
-              short: true            
+              value: update_commits.join("\n")
             }],
             fallback: super[:text]
-          }],
-          text: "#{branch} 배포 중..."
+          }]
         }
       end
 
@@ -130,16 +124,21 @@ if defined?(Slackistrano::Messaging)
       end
 
       def update_commits
-        update_commits = []
-        return update_commits if @before.blank?
-        if (diff =`git log #{prev_hash}..#{last_hash} --format=format:'%s%x00%an%x00%ar%x00%h`) != ''
+        commits = []
+        if prev_hash != last_hash
+          diff =`git log #{prev_hash}..#{last_hash} --format=format:'%s%x00%an%x00%ar%x00%h'`
+          p diff
           diff.split("\n").each do |commit|
+            p commit
             subject, author, date, hash = commit.split("\u0000")
-            _commit = "<#{repo_url}/commit/#{hash[0..6]}>|`#{hash[0..6]}` #{subject} - #{author} (#{date})"
-            updated_commits << _commit
+            p subject, author, date, hash
+            cm = "<#{repo_url}/commit/#{hash[0..6]}>|`#{hash[0..6]}`"
+            cm +=  " #{subject} - #{author} (#{date})"
+            p cm
+            commits << cm
           end
         end
-        update_commits
+        commits
       end
 
       def repo_url
