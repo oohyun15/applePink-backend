@@ -19,25 +19,7 @@ if defined?(Slackistrano::Messaging)
 
       # Suppress updating message.
       def payload_for_updating
-        {
-          attachments: [{
-            color: 'good',
-            title: "Deploying branch: #{branch}...",
-            fields: [{
-              title: 'Deployer',
-              value: deployer,
-              short: true
-            }, {
-              title: 'Compare',
-              value: "<#{repo_url}/compare/#{prev_hash}...#{last_hash}|check :mag:>",
-              short: true,
-            }, {
-              title: 'Commits',
-              value: update_commits.join("\n")
-            }],
-            fallback: super[:text]
-          }]
-        }
+        nil
       end
 
       # Suppress reverting message.
@@ -53,10 +35,6 @@ if defined?(Slackistrano::Messaging)
             color: 'good',
             title: 'Success Deployed! :rocket:',
             fields: [{
-              title: 'Environment',
-              value: stage,
-              short: true
-            }, {
               title: 'Branch',
               value: branch,
               short: true
@@ -68,6 +46,13 @@ if defined?(Slackistrano::Messaging)
               title: 'Time',
               value: elapsed_time,
               short: true
+            }, {
+              title: 'Compare',
+              value: "<#{repo_url}/compare/#{prev_hash}...#{last_hash}|check :mag:>",
+              short: true,
+            }, {
+              title: 'Commits',
+              value: update_commits.join("\n")
             }],
             fallback: super[:text]
           }],
@@ -92,10 +77,6 @@ if defined?(Slackistrano::Messaging)
             color: 'danger',
             title: 'Fail Deployed :boom:',
             fields: [{
-              title: 'Environment',
-              value: stage,
-              short: true
-            }, {
               title: 'Branch',
               value: branch,
               short: true
@@ -104,9 +85,8 @@ if defined?(Slackistrano::Messaging)
               value: deployer,
               short: true
             }, {
-              title: 'Time',
-              value: elapsed_time,
-              short: true
+              title: 'Backtrace',
+              value: $!.backtrace.join("\n")
             }],
             fallback: super[:text]
           }],
