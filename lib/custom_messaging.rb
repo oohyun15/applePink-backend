@@ -19,7 +19,31 @@ if defined?(Slackistrano::Messaging)
 
       # Suppress updating message.
       def payload_for_updating
-        nil
+        {
+          attachments: [{
+            color: 'good',
+            title: 'Deploying...',
+            fields: [{
+              title: 'Environment',
+              value: stage,
+              short: true
+            }, {
+              title: 'Deployer',
+              value: deployer,
+              short: true
+            }, {
+              title: 'Compare',
+              value: "<#{repo_url}/compare/#{prev_hash}...#{last_hash}>",
+              short: true,
+            }, {
+              title: 'Commits',
+              value: update_commits,
+              short: true            
+            }],
+            fallback: super[:text]
+          }],
+          text: "#{branch} 배포 중..."
+        }
       end
 
       # Suppress reverting message.
@@ -33,7 +57,7 @@ if defined?(Slackistrano::Messaging)
         {
           attachments: [{
             color: 'good',
-            title: 'Success Deployed :rocket:',
+            title: 'Success Deployed! :rocket:',
             fields: [{
               title: 'Environment',
               value: stage,
@@ -53,7 +77,7 @@ if defined?(Slackistrano::Messaging)
             }],
             fallback: super[:text]
           }],
-          text: "<!here> 모두나눔 배포 완료!"
+          text: "모두나눔 배포 완료! <!here|here>"
         }
       end
 
@@ -92,7 +116,7 @@ if defined?(Slackistrano::Messaging)
             }],
             fallback: super[:text]
           }],
-          text: "<!here> 모두나눔 배포 실패!"
+          text: "모두나눔 배포 실패! <!here|here>"
         }
       end
 
@@ -103,6 +127,35 @@ if defined?(Slackistrano::Messaging)
         name = nil if name.empty?
         name ||= Etc.getpwnam(ENV['USER']).gecos || ENV['USER'] || ENV['USERNAME']
         name
+      end
+
+      def update_commits
+        update_commits = []
+        return update_commits if @before.blank?
+        if (diff =`git log #{prev_hash}..#{last_hash} --format=format:'%s%x00%an%x00%ar%x00%h`) != ''
+          diff.split("\n").each do |commit|
+            subject, author, date, hash = commit.split("\u0000")
+            _commit = "<#{repo_url}/commit/#{hash[0..6]}>|`#{hash[0..6]}` #{subject} - #{author} (#{date})"
+            updated_commits << _commit
+          end
+        end
+        update_commits
+      end
+
+      def repo_url
+        return @repo_url unless @repo_url.nil?
+
+        origin = fetch(:repo_url).split(":")[1].strip
+        origin = origin[0..-5] if origin.end_with?(".git")
+        @repo_url = origin.include("github.com") ? origin : "https://github.com/#{origin}"
+      end
+
+      def prev_hash
+        @prev_hash ||= fetch(:previous_revision) || ''
+      end
+
+      def last_hash
+        @last_hash ||= `git rev-parse origin/#{fetch(:branch)}`.strip!
       end
     end
   end
