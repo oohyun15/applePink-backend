@@ -147,7 +147,7 @@ if defined?(Slackistrano::Messaging)
 
         origin = fetch(:repo_url).split(":")[1].strip
         origin = origin[0..-5] if origin.end_with?(".git")
-        @repo_url = origin.include("github.com") ? origin : "https://github.com/#{origin}"
+        @repo_url = origin.include?("github.com") ? origin : "https://github.com/#{origin}"
       end
 
       def prev_hash
