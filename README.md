@@ -19,7 +19,7 @@ You can find our [Front-end repo](https://github.com/d-virusss/capstone_front_RN
 This README would normally document whatever steps are necessary to get the
 application up and running.  
   
-*Updated: 2020.12.28*
+*Updated: 2021.02.04*
 
 ## Requirements 
 * Linux Ubuntu 16.04 / MacOS Catalina (recommend MacOS)
@@ -95,8 +95,7 @@ touch config/database.yml
 
 **2. Set secret key**  
 
-```zsh
-# grant new secret key
+```zsh # grant new secret key
 bundle exec rake secret
 
 ```
