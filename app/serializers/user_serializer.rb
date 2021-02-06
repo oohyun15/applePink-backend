@@ -17,7 +17,7 @@ class UserSerializer < ActiveModel::Serializer
       number: object.number&.present? ? object.number : nil,
       is_company: object.is_company?,
       company_id: object.company&.present? ? object.company.id : nil,
-      group: object.group&.title,
+      group: object.groups.pluck(:title).join(", "),
       avg: object.received_reviews.average(:rating).to_f.round(1),
       reviews_count: object.reviews_count,
       received_reviews_count: object.received_reviews.length,

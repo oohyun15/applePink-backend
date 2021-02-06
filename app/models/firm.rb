@@ -1,2 +1,0 @@
-class Firm < Group
-end

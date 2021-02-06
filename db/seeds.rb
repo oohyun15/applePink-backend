@@ -82,7 +82,7 @@ end
 def generate_groups
   CSV.foreach("public/SchoolEmail.csv", headers: true) do |row|
     begin
-      group = School.create!(row.to_hash)
+      group = Group::School.create!(row.to_hash)
       p "School '#{group.title}' created"
     rescue => e
       p e.message
@@ -91,7 +91,7 @@ def generate_groups
 
   CSV.foreach("public/FirmEmail.csv", headers: true) do |row|
     begin
-      group = Firm.create!(row.to_hash)
+      group = Group::Firm.create!(row.to_hash)
       p "Firm '#{group.title}' created"
     rescue => e
       p e.message

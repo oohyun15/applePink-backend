@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 2021_02_06_072614) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "email"
     t.integer "users_count", default: 0
-    t.string "type"
+    t.boolean "type"
   end
 
   create_table "identities", force: :cascade do |t|
