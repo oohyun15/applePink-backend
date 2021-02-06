@@ -120,7 +120,7 @@ class UsersController < ApplicationController
               current_user.user_groups.create!(group_id: new_group.id)
             end
 
-            return render json: {message: "정상적으로 인증되었습니다.", group_title: group.title}, status: :ok
+            return render json: {message: "정상적으로 인증되었습니다.", group_title: new_group.title}, status: :ok
           rescue => e
             Rails.logger.error "잘못된 소속입니다. 다시 인증해주세요. #{log_info}"
             return render json: {error: "잘못된 소속입니다. 다시 인증해주세요."}, status: :not_acceptable
