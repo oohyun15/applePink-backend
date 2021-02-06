@@ -17,3 +17,11 @@ class Group < ApplicationRecord
     end
   end
 end
+
+class Firm < Group
+
+end
+
+class School < Group
+  
+end
