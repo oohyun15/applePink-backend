@@ -80,11 +80,19 @@ def generate_locations
 end
 
 def generate_groups
-  CSV.foreach("public/GroupEmail.csv", headers: true) do |row|
+  CSV.foreach("public/SchoolEmail.csv", headers: true) do |row|
     begin
-      group = Group.create!(row.to_hash)
+      group = School.create!(row.to_hash)
+      p "School '#{group.title}' created"
+    rescue => e
+      p e.message
+    end
+  end
 
-      p "Group '#{group.title}' created"
+  CSV.foreach("public/FirmEmail.csv", headers: true) do |row|
+    begin
+      group = Firm.create!(row.to_hash)
+      p "Firm '#{group.title}' created"
     rescue => e
       p e.message
     end
