@@ -55,11 +55,12 @@ class LocationsController < ApplicationController
     elsif params[:title].present?
       begin
         if (@location = Location.find_by(title: params[:title])).nil?
-          render json: {error: "#{params[:title]}은(는) 지원하지 않는 지역입니다."}, status: :bad_request
+          # 심사 전 임시로 지역락 해제
+          # render json: {error: "#{params[:title]}은(는) 지원하지 않는 지역입니다."}, status: :bad_request
           # legacy (21.01.23) 찾는 지역이 없을 시 새로 생김
-          # position = Location.last.position + 1
-          # @location = Location.create!(title: params[:title], position: position,location_near: [position], 
-          #                              location_normal: [position], location_far: [position])
+          position = Location.last.position + 1
+          @location = Location.create!(title: params[:title], position: position,location_near: [position], 
+                                       location_normal: [position], location_far: [position])
         end
       rescue => e
         Rails.logger.error "#{e} #{log_info}"
