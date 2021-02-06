@@ -1,14 +1,9 @@
 class Group < ApplicationRecord
   has_many :user_groups, dependent: :destroy
   has_many :users, through: :user_groups
-  self.inheritance_column = :_type_disabled
 
   def display_name
     self.title
-  end
-
-  def self.subclasses
-    [Firm, School]
   end
 
   def self.generate_groups
@@ -32,5 +27,5 @@ class Group < ApplicationRecord
   end
 end
 
-require_dependency "group/school"
 require_dependency "group/firm"
+require_dependency "group/school"
