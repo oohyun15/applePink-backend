@@ -42,7 +42,7 @@ ko:
         location: 지역
         location_range: 지역 검색 범위
         expire_time: 동네 인증 만료 시간
-        group_id: 소속
+        group: 소속
         device_type: 기기 타입
         birthday: 생년월일
         number: 전화번호
