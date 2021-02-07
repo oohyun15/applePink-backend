@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_07_191508) do
+ActiveRecord::Schema.define(version: 2021_02_06_135622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 2020_12_07_191508) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "email"
     t.integer "users_count", default: 0
+    t.string "type"
   end
 
   create_table "identities", force: :cascade do |t|
@@ -328,6 +329,15 @@ ActiveRecord::Schema.define(version: 2020_12_07_191508) do
     t.index ["user_id"], name: "index_user_chats_on_user_id"
   end
 
+  create_table "user_groups", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_user_groups_on_group_id"
+    t.index ["user_id"], name: "index_user_groups_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
@@ -337,7 +347,6 @@ ActiveRecord::Schema.define(version: 2020_12_07_191508) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_type", default: 0
-    t.bigint "group_id"
     t.string "image"
     t.string "uid"
     t.string "provider"
@@ -353,7 +362,6 @@ ActiveRecord::Schema.define(version: 2020_12_07_191508) do
     t.string "number"
     t.integer "reviews_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["location_id"], name: "index_users_on_location_id"
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end

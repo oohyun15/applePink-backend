@@ -26,6 +26,8 @@ class User < ApplicationRecord
   has_many :posts, dependent: :nullify
   has_many :user_chats, dependent: :nullify
   has_many :chats, through: :user_chats, dependent: :nullify
+  has_many :user_groups, dependent: :destroy
+  has_many :groups, through: :user_groups
   has_many :messages, dependent: :nullify
   has_many :bookings, dependent: :nullify
   has_many :received_bookings, through: :posts, source: :bookings#, dependent: :destroy
@@ -40,7 +42,6 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :likes
 
-  belongs_to :group, optional: true, counter_cache: true
   belongs_to :location, foreign_key: :location_id, primary_key: :position, optional: true
 
   enum gender: %i(no_select man woman)

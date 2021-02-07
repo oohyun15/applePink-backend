@@ -1,19 +1,31 @@
 class Group < ApplicationRecord
-  has_many :users
+  has_many :user_groups, dependent: :destroy
+  has_many :users, through: :user_groups
 
   def display_name
     self.title
   end
 
   def self.generate_groups
-    CSV.foreach("public/GroupEmail.csv", headers: true) do |row|
+    CSV.foreach("public/SchoolEmail.csv", headers: true) do |row|
       begin
-        group = Group.create!(row.to_hash)
+        group = Group::School.create!(row.to_hash)
+        p "School '#{group.title}' created"
+      rescue => e
+        p e.message
+      end
+    end
   
-        p "Group '#{group.title}' created"
+    CSV.foreach("public/FirmEmail.csv", headers: true) do |row|
+      begin
+        group = Group::Firm.create!(row.to_hash)
+        p "Firm '#{group.title}' created"
       rescue => e
         p e.message
       end
     end
   end
 end
+
+require_dependency "group/firm"
+require_dependency "group/school"
