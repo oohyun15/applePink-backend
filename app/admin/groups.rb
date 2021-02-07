@@ -11,7 +11,7 @@ ActiveAdmin.register Group do
     column :position  
     column :title  
     column :email
-    column :users_count do |group| "#{number_with_delimiter group.users_count}명" end
+    column :users_count do |group| "#{number_with_delimiter group.user_groups.size}명" end
     actions
   end
 end
