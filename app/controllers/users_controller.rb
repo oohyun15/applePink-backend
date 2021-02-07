@@ -114,7 +114,7 @@ class UsersController < ApplicationController
           begin
             new_group = Group.find_by(email: @email)
             # 기존에 인증된 소속이 있는 경우
-            if old_group = current_user.groups.find_by(type: new_group.type):
+            if old_group = current_user.groups.find_by(type: new_group.type)
               current_user.user_groups.where(group_id: old_group.id).take.update!(group_id: new_group.id)
             else
               current_user.user_groups.create!(group_id: new_group.id)
