@@ -91,7 +91,7 @@ group :test, :development do
   gem 'database_cleaner'
 end
 
-gem 'capistrano', '~> 3.7', '>= 3.7.1'
+gem 'capistrano', '3.14.1'
 gem 'capistrano-rails'
 gem 'capistrano-passenger', '~> 0.2.0'
 gem 'capistrano-webpacker-precompile', require: false
