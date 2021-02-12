@@ -114,7 +114,7 @@ if defined?(Slackistrano::Messaging)
             commits << cm
           end
         end
-        commits
+        commits.reverse
       end
 
       def repo_url
