@@ -408,6 +408,16 @@ GEM
       sendgrid-ruby (~> 6.0)
     sendgrid-ruby (6.3.7)
       ruby_http_client (~> 3.4)
+    sentry-rails (4.2.1)
+      rails (>= 5.0)
+      sentry-ruby-core (~> 4.2.0)
+    sentry-ruby (4.2.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      faraday (>= 1.0)
+      sentry-ruby-core (= 4.2.1)
+    sentry-ruby-core (4.2.1)
+      concurrent-ruby
+      faraday
     slackistrano (4.0.1)
       capistrano (>= 3.8.1)
     spring (2.1.1)
@@ -511,6 +521,8 @@ DEPENDENCIES
   sass-rails (~> 5)
   selenium-webdriver
   sendgrid-actionmailer
+  sentry-rails
+  sentry-ruby
   slackistrano
   spring
   spring-watcher-listen (~> 2.0.0)
