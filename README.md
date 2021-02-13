@@ -19,7 +19,7 @@ You can find our [Front-end repo](https://github.com/d-virusss/capstone_front_RN
 This README would normally document whatever steps are necessary to get the
 application up and running.  
   
-*Updated: 2021.02.04*
+*Updated: 2021.02.13*
 
 ## Requirements 
 * Linux Ubuntu 16.04 / MacOS Catalina (recommend MacOS)
@@ -40,6 +40,7 @@ application up and running.
 * Cafe24             *[(link)](https://hosting.cafe24.com/)*
 * Kakaocert          *[(link)](https://www.kakaocert.com/)*
 * Cloudmersive       *[(link)](https://cloudmersive.com/)*
+* Sentry             *[(link)](https://sentry.io/)*
 
 ## Features
 #### OAuth Social Sign-in
@@ -149,6 +150,9 @@ SMS_USER_ID:
 SMS_SPHONE1: 
 SMS_SPHONE2: 
 SMS_SPHONE3: 
+
+# setnry
+SENTRY_DSN: 
 
 production:
   SERVER_DB_USER_NAME: 
