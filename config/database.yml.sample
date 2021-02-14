@@ -1,0 +1,27 @@
+default: &default
+  adapter: postgresql
+  host: "127.0.0.1"
+  encoding: utf8
+  username: <%= ENV["LOCAL_DB_USER_NAME"] %>
+  password: <%= ENV["LOCAL_DB_USER_PASSWD"] %>
+  pool: 5
+
+development:
+  <<: *default
+  database: <%= ENV["DB_NAME"] %>_<%= Rails.env %>
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: <%= ENV["DB_NAME"] %>_<%= Rails.env %>
+
+production:
+  adapter: postgresql
+  host: localhost
+  encoding: utf8
+  username: <%= ENV["SERVER_DB_USER_NAME"] %>
+  password: <%= ENV["SERVER_DB_USER_PASSWD"] %>
+  pool: 5
+  database: <%= ENV["DB_NAME"] %>_<%= Rails.env %>
