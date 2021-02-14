@@ -2,14 +2,30 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@0.1.2 
 
+references:
+  postgresql: &postgresql
+    image: circleci/postgresql:9.5.23
+    environment:
+      POSTGRES_USER: mock_user
+      POSTGRES_DB: mock_database
+
 jobs:
   build:
     docker:
       - image: circleci/ruby:2.6.5
+      - *postgresql
     executor: ruby/default
     steps:
       - checkout
       - run:
-          name: Install Bundler
+          name: install bundler
           command: gem install bundler:2.1.4
       - ruby/bundle-install
+      - run:
+          name: database setup
+          command: bundle exec rake db:create \ bundle exec rake db:migrate \ bundle exec rake db:seed
+      - run:
+          name: check test code
+          command: bundle exec rspec
+
+
