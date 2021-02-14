@@ -1,0 +1,17 @@
+version: '3.6'
+
+services:
+  web:
+    build: .
+    volumes:
+      - ./:/applePink
+    working_dir: /applePink
+    command: puma
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres@db
+  db:
+    image: postgres:10.3-alpine
