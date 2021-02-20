@@ -28,8 +28,6 @@ jobs:
       - *default_docker_ruby_executor
       - *postgresql
 
-    working_directory: /git/applepink-backend
-
     steps:
       - checkout
       - run:
