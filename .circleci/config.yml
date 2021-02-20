@@ -10,8 +10,12 @@ references:
       RAILS_ENV: test
   postgresql: &postgresql
     image: circleci/postgres:9.6-alpine
+    auth:
+      username: oohyun15
+      password: $POSTGRESQL_PASSWORD
     environment:
       POSTGRES_USER: oohyun15
+      POSTGRES_DB: $DB_NAME
       POSTGRES_PASSWORD: $POSTGRESQL_PASSWORD
 
 jobs:
@@ -19,7 +23,7 @@ jobs:
     docker:
       - *default_docker_ruby_executor
       - *postgresql
-    executor: ruby/default
+    
     steps:
       - checkout
       - run:
