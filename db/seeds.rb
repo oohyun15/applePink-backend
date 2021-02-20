@@ -111,3 +111,9 @@ generate_locations unless Location.exists?
 generate_user 5 unless User.exists? || Rails.env.production?
 generate_post 5 unless Post.exists?
 generate_groups unless Group.exists?
+
+p "first User: #{User.first}"
+p "first Category: #{Category.first}"
+p "first Location: #{Location.first}"
+p "first Post: #{Post.first}"
+p "first Group: #{Group.first}"
