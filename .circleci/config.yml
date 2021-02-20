@@ -11,13 +11,14 @@ references:
       password: $DOCKERHUB_PASSWORD
     environment:
       RAILS_ENV: test
+      PGHOST: 127.0.0.1
+      PGUSER: oohyun15
   postgresql: &postgresql
     image: circleci/postgres:9.6-alpine
     auth:
       username: oohyun15
       password: $DOCKERHUB_PASSWORD
     environment:
-      PGUSER: oohyun15
       POSTGRES_USER: oohyun15
       POSTGRES_DB: $DB_NAME
       POSTGRES_PASSWORD: $POSTGRESQL_PASSWORD
