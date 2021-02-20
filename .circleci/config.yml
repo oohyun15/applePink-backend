@@ -44,9 +44,6 @@ jobs:
             bundle exec rake db:seed
       - run:
           name: check test code
-          command: | 
-            bundle exec rake db:seed
-            bundle exec rspec --format progress --format RspecJunitFormatter -o /tmp/test-results/rspec.xml
-            bundle exec rake db:seed
+          command: bundle exec rspec --format progress --format RspecJunitFormatter -o /tmp/test-results/rspec.xml
       - store_test_results:
           path: /tmp/test-results
