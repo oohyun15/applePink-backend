@@ -103,6 +103,6 @@ end
 generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exists? || Rails.env.test?
 generate_categories unless Category.exists?
 generate_locations unless Location.exists?
-generate_user 5 if User.blank? && !Rails.env.production?
+generate_user 5 unless User.exists? || Rails.env.production?
 generate_post 5 unless Post.exists?
 generate_groups unless Group.exists?
