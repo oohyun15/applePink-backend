@@ -17,7 +17,7 @@ def generate_user num
       birthday: Faker::Date.between(from: '1990-01-01', to: '1999-12-31').strftime("%Y%m%d"),
       number: Faker::Base.numerify('010########')
     )
-    if user.presisted?
+    if user.persisted?
       p "User 'tester#{index+1}' created."
     else
       p user.errors.messages
