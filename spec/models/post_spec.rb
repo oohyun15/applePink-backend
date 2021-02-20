@@ -6,6 +6,9 @@ RSpec.describe Post, type: :model do
     it "need title" do
       p "current environment: #{Rails.env}"
       p "first user in database: #{User.first}"
+      p "first location in database: #{Location.first}"
+      p "first post in database: #{Post.first}"
+      p "first category in database: #{Cateogry.first}"
       post = Post.new(title: "", body: "test", price: 15000, post_type: 0, user_id: User.first.id, location_id: Location.first.id).save
       expect(post).to eq(false)
     end
