@@ -37,14 +37,13 @@ jobs:
       - ruby/bundle-install
       - run: cp config/database.yml.sample config/database.yml
       - run:
-          name: check test code
+          name: database setup
           command: | 
             bundle exec rake db:create
             bundle exec rake db:migrate
             bundle exec rake db:seed
-            bundle exec rspec --format progress --format RspecJunitFormatter -o /tmp/test-results/rspec.xml
-      # - run:
-      #     name: check test code
-      #     command: bundle exec rspec --format progress --format RspecJunitFormatter -o /tmp/test-results/rspec.xml
+      - run:
+          name: check test code
+          command: bundle exec rspec --format progress --format RspecJunitFormatter -o /tmp/test-results/rspec.xml
       - store_test_results:
           path: /tmp/test-results
