@@ -100,6 +100,7 @@ def generate_groups
 end
 
 # seed functions
+p "current environment: #{Rails.env}"
 generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exists? || Rails.env.test?
 generate_categories unless Category.exists?
 generate_locations unless Location.exists?
