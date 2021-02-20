@@ -14,7 +14,6 @@ references:
       username: oohyun15
       password: $DOCKERHUB_PASSWORD
     environment:
-      PGHOST: localhost
       PGUSER: oohyun15
       POSTGRES_USER: oohyun15
       POSTGRES_DB: $DB_NAME
