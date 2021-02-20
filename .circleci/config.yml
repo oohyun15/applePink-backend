@@ -9,6 +9,9 @@ references:
       RAILS_ENV: test
   postgresql: &postgresql
     image: circleci/postgres:9.6-alpine
+    auth:
+      username: oohyun15
+      password: $POSTGRESQL_PASSWORD
 
 jobs:
   build:
@@ -33,4 +36,4 @@ jobs:
           name: check test code
           command: bundle exec rspec --format progress --format RspecJunitFormatter -o ~/rspec/rspec.xml
       - store_test_results:
-          path: test-results
+          path: /tmp/test-results
