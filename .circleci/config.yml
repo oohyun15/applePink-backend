@@ -2,17 +2,19 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@0.1.2 
 
+references:
+  default_docker_ruby_executor: &default_docker_ruby_executor
+    image: circleci/ruby:2.6.5
+    environment:
+      RAILS_ENV: test
+  postgresql: &postgresql
+    image: circleci/postgres:9.6-alpine
+
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.5
-      - image: circleci/postgres:9.6-alpine
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-        environment:
-          POSTGRES_USER: postgres
-          RAILS_ENV: test
+      - *default_docker_ruby_executor
+      - *postgresql
     executor: ruby/default
     steps:
       - checkout
