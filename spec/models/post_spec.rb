@@ -4,6 +4,8 @@ RSpec.describe Post, type: :model do
   #게시물 생성 관련 테스트
   context 'post creation test' do
     it "need title" do
+      p "current environment: #{Rails.env}"
+      p "first user in database: #{User.first}"
       post = Post.new(title: "", body: "test", price: 15000, post_type: 0, user_id: User.first.id, location_id: Location.first.id).save
       expect(post).to eq(false)
     end
