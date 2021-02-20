@@ -7,7 +7,7 @@ def generate_user num
       email: "tester#{index+1}@test.com",
       password: "test123",
       nickname: "tester#{index+1}",
-      image: File.open("#{Rails.root}/public/image/default.png"),
+      image: nil, # File.open("#{Rails.root}/public/image/default.png"),
       gender: :no_select,
       user_type: :normal,
       location_id: Location.all[index].position,
