@@ -25,5 +25,7 @@ RUN gem install bundler:2.1.4
 RUN bundle install
 # Copy over our application code
 ADD . $APP_HOME
-# Run our app
-CMD RAILS_ENV=production bundle exec rails db:create db:migrate db:seed && bundle exec rails s
+
+# Set Rails to run in production
+ENV RAILS_ENV production 
+ENV RACK_ENV production

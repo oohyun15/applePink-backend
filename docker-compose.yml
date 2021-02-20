@@ -1,17 +1,18 @@
-version: '3.6'
-
+version: '3'
 services:
+  db:
+    image: postgres:12.5-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: maam123
+      POSTGRES_PASSWORD: tjdgh960809!
   web:
     build: .
+    command: bash -c "bundle exec rails s -p 3000"
+      
     volumes:
-      - ./:/applePink
-    working_dir: /applePink
-    command: puma
+      - .:/applePink
     ports:
-      - 3000:3000
+      - "3000:3000"
     depends_on:
       - db
-    environment:
-      DATABASE_URL: postgres://postgres@db
-  db:
-    image: postgres:10.3-alpine
