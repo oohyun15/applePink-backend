@@ -2,7 +2,7 @@ module ImageUrl
   extend ActiveSupport::Concern
 
   included do
-    mount_uploader :image, ImageUploader if Rails.env.development?
+    mount_uploader :image, ImageUploader if Rails.env.development? || Rails.env.test?
     mount_uploader :image, S3Uploader if Rails.env.production?
   end
 
