@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2 
+  ruby: circleci/ruby@0.1.2
+  slack: circleci/slack@4.3.0
 
 references:
   default_docker_ruby_executor: &default_docker_ruby_executor
