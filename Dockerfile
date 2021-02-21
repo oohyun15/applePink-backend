@@ -34,6 +34,12 @@ RUN bundle install
 # Copy over our application code
 COPY . $APP_HOME
 
+# This script runs every time the container is created, necessary for rails
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+EXPOSE 3000
+
 # Set Rails to run in production
 #ENV RAILS_ENV production 
 #ENV RACK_ENV production

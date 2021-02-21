@@ -1,18 +1,22 @@
 version: '3'
+
 services:
   db:
     image: postgres:12.5-alpine
+    volumes:
+     - ./tmp/db:/var/lib/postgresql/data
     restart: always
-    environment:
-      POSTGRES_USER: maam123
-      POSTGRES_PASSWORD: tjdgh960809!
-  web:
+    env_file:
+      - .env
+  app:
     build: .
-    command: bash -c "bundle exec rails s -p 3000"
-      
+    command: bash -c "bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/applePink
     ports:
       - "3000:3000"
     depends_on:
       - db
+    # Allow us to start an interactive shell in a container
+    stdin_open: true
+    tty: true
