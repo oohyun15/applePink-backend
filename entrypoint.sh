@@ -7,7 +7,10 @@
 set -e
 
 rm -f /applePink/tmp/pids/server.pid
-rake db:setup
-RAILS_ENV=test rake db:setup
+bundle exec rake assets:precompile
+rake db:migrate
+rake db:seed
+RAILS_ENV=test rake db:create
+RAILS_ENV=test rake db:migrate
 
 exec "$@"

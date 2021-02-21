@@ -3,6 +3,11 @@ FROM ruby:2.6.5
 
 # Set directory name as environmental variable
 ENV APP_HOME /applePink
+# Set rails env to production
+ENV RAILS_ENV production
+ENV RACK_ENV production
+ENV RAILS_SERVE_STATIC_FILES true
+ENV RAILS_LOG_TO_STDOUT true
 
 # Installation of dependencies
 RUN apt-get update -qq \
