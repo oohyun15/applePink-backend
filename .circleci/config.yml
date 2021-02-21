@@ -1,0 +1,49 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
+  slack: circleci/slack@4.3.0
+
+references:
+  default_docker_ruby_executor: &default_docker_ruby_executor
+    image: circleci/ruby:2.6.5
+    auth:
+      username: oohyun15
+      password: $DOCKERHUB_PASSWORD
+    environment:
+      RAILS_ENV: test
+      PGHOST: 127.0.0.1
+      PGUSER: oohyun15
+  postgresql: &postgresql
+    image: circleci/postgres:9.6-alpine
+    auth:
+      username: oohyun15
+      password: $DOCKERHUB_PASSWORD
+    environment:
+      POSTGRES_USER: oohyun15
+      POSTGRES_DB: $DB_NAME
+      POSTGRES_PASSWORD: $POSTGRESQL_PASSWORD
+
+jobs:
+  build:
+    docker:
+      - *default_docker_ruby_executor
+      - *postgresql
+
+    steps:
+      - checkout
+      - run:
+          name: install bundler
+          command: gem install bundler:2.1.4
+      - ruby/bundle-install
+      - run: cp config/database.yml.sample config/database.yml
+      - run:
+          name: database setup
+          command: | 
+            bundle exec rake db:create
+            bundle exec rake db:migrate
+            bundle exec rake db:seed
+      - run:
+          name: check test code
+          command: bundle exec rspec --format progress --format RspecJunitFormatter -o /tmp/test-results/rspec.xml
+      - store_test_results:
+          path: /tmp/test-results

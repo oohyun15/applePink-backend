@@ -4,10 +4,10 @@ def generate_user num
   names = ["김영희", "이철수", "박영수", "정동구", "최주공"]
   num.times do |index|
     user = User.create!(
-      email: "#{ENV["TEST_EMAIL_FRONT"]}#{index+1}#{ENV["TEST_EMAIL_BACK"]}",
-      password: "#{ENV["TEST_PASSWORD"]}",
+      email: "tester#{index+1}@test.com",
+      password: "test123",
       nickname: "tester#{index+1}",
-      image: File.open("#{Rails.root}/public/image/default.png"),
+      image: nil, # File.open("#{Rails.root}/public/image/default.png"),
       gender: :no_select,
       user_type: :normal,
       location_id: Location.all[index].position,
@@ -17,7 +17,11 @@ def generate_user num
       birthday: Faker::Date.between(from: '1990-01-01', to: '1999-12-31').strftime("%Y%m%d"),
       number: Faker::Base.numerify('010########')
     )
-    p "User 'tester#{index+1}' created."
+    if user.persisted?
+      p "User 'tester#{index+1}' created."
+    else
+      p user.errors.messages
+    end
   end
 end
 
@@ -100,9 +104,9 @@ def generate_groups
 end
 
 # seed functions
-generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exists?
+generate_admin unless AdminUser.where(email: "#{ENV["ACTIVEADMIN_EMAIL"]}").exists? || Rails.env.test?
 generate_categories unless Category.exists?
 generate_locations unless Location.exists?
-generate_user 5 unless User.exists?
+generate_user 5 unless User.exists? || Rails.env.production?
 generate_post 5 unless Post.exists?
 generate_groups unless Group.exists?
