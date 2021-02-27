@@ -20,7 +20,7 @@ references:
       password: $DOCKERHUB_PASSWORD
     environment:
       POSTGRES_USER: oohyun15
-      POSTGRES_DB: $DB_NAME
+      POSTGRES_DB: applePink
       POSTGRES_PASSWORD: $POSTGRESQL_PASSWORD
 
 jobs:
