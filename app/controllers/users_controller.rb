@@ -36,6 +36,8 @@ class UsersController < ApplicationController
       schedule = @user.schedules.new(delayed_job_type: "Privacy")
       delayed_job = @user.delay(run_at: expire_time).update!(name: nil, birthday: nil, number: nil)
       schedule.update!(delayed_job_id: delayed_job.id)
+
+      return render json: nil, status: :ok
     rescue => e
       Rails.logger.error "ERROR: #{@user.errors&.first&.last} #{log_info}"
       return render json: {error: @user.errors&.first&.last}, status: :bad_request
