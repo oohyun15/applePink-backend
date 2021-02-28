@@ -12,18 +12,18 @@ describe "Location test", type: :request do
     @token =  JSON.parse(response.body)["token"]
   end
   
-  it "location index test" do 
+  xit "location index test" do 
     get "/locations", headers: {Authorization: @token}
     expect(JSON.parse(response.body).size).to eq(Location.all.size)
   end
 
-  it "location show test" do
+  xit "location show test" do
     id = Location.all.ids.sample
     get "/locations/#{id}", headers: {Authorization: @token}
     expect(JSON.parse(response.body)["location_info"]["id"]).to eq(id)
   end
 
-  it "location display test" do
+  xit "location display test" do
     # 기존에 등록되지 않은 지역일 때
     title = Faker::Address.city
     expect(Location.find_by(title: title).nil?).to eq(true)
@@ -59,7 +59,7 @@ describe "Location test", type: :request do
     expect([range[3]["title"], range[3]["count"]]).to eq([@far, @far.size])
   end
 
-  it "locatiton certificate test" do
+  xit "locatiton certificate test" do
     # 지역 이름 중 하나를 임의로 선택함.
     location = Location.all.sample
     # 지역 범위 중 임의로 하나를 선택함.

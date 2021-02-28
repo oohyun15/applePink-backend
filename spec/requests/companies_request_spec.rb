@@ -12,7 +12,7 @@ describe "Company test", type: :request do
     @token =  JSON.parse(response.body)["token"]
   end
 
-  it "Company create test" do
+  xit "Company create test" do
     company_info = {
       company: {
         name: Faker::Name.name,
@@ -56,7 +56,7 @@ describe "Company test", type: :request do
     end
   end
   
-  it "Company show test" do
+  xit "Company show test" do
     company = Company.all.sample
 
     get "/companies/#{company.id}", headers: {Authorization: @token}
@@ -64,7 +64,7 @@ describe "Company test", type: :request do
     expect(JSON.parse(response.body)["company_info"]["id"]).to eq(company.id)
   end
 
-  it "Company destroy test" do
+  xit "Company destroy test" do
     # 무작위로 광고주 신청을 선택함.
     company = Company.all.sample
 

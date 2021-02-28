@@ -12,7 +12,7 @@ describe "Like test", type: :request do
     @token =  JSON.parse(response.body)["token"]
   end
 
-  it "Like index test" do
+  xit "Like index test" do
     user = User.all.sample
 
     # 전체 좋아요 목록 보기
@@ -38,7 +38,7 @@ describe "Like test", type: :request do
     expect(likes - ids).to eq([])
   end
   
-  it "Like toggle test" do
+  xit "Like toggle test" do
     # 좋아요 할 수 없는 type 선택 시 에러 발생
     type = "company"
     id = Company.all.ids.sample

@@ -4,28 +4,28 @@ require 'active_support'
 describe "Booking test", type: :request do
   before(:all) do
     # 유저 중 임의의 유저를 선택함.
-    @user = User.all.sample
-    @id = @user.id
-    @email = @user.email
+    # @user = User.all.sample
+    # @id = @user.id
+    # @email = @user.email
 
-    post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
-    @token =  JSON.parse(response.body)["token"]
+    # post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
+    # @token =  JSON.parse(response.body)["token"]
 
-    # 다른 사용자로 로그인 함.
-    @other_user = User.all.where("id != #{@user.id}").sample
-    post "/users/sign_in", params: {user: {email: "#{@other_user.email}", password: "test123"}}
-    @other_token =  JSON.parse(response.body)["token"]
+    # # 다른 사용자로 로그인 함.
+    # @other_user = User.all.where("id != #{@user.id}").sample
+    # post "/users/sign_in", params: {user: {email: "#{@other_user.email}", password: "test123"}}
+    # @other_token =  JSON.parse(response.body)["token"]
 
-    # 다른 사용자로 예약을 만듦.
-    post = @user.posts.sample
-    booking_info = {booking: {start_at: "2020-11-14", end_at: "2020-11-1", post_id: post.id}}
-    post "/bookings", params: booking_info, headers: {Authorization: @other_token}
+    # # 다른 사용자로 예약을 만듦.
+    # post = @user.posts.sample
+    # booking_info = {booking: {start_at: "2020-11-14", end_at: "2020-11-1", post_id: post.id}}
+    # post "/bookings", params: booking_info, headers: {Authorization: @other_token}
     
-    # 생성된 booking이 마지막 booking임.
-    @booking = Booking.last
+    # # 생성된 booking이 마지막 booking임.
+    # @booking = Booking.last
   end
   
-  it "booking index test" do
+  xit "booking index test" do
     # 유저의 received_booking 목록을 가져옴.
     booking_list = @user.received_bookings.pluck(:id)
     
@@ -72,7 +72,7 @@ describe "Booking test", type: :request do
     expect(booking_list - ids).to eq([])
   end
 
-  it "booking new test" do
+  xit "booking new test" do
     # post에 이미 현재 사용자의 booking이 있을 경우에는 그 booking을 반환하고
     # 없는 경우에는 nil 값을 반환한다.
     post = Post.all.sample
@@ -84,7 +84,7 @@ describe "Booking test", type: :request do
     end
   end
 
-  it "booking create test" do
+  xit "booking create test" do
     # 자신의 게시글에 대해서는 예약을 생성할 수 없게 설정함.
     user_post_ids = @user.posts.ids
     post_id = user_post_ids.sample
@@ -106,21 +106,21 @@ describe "Booking test", type: :request do
     expect(after_num).to eq(before_num + 1)
   end
 
-  it "booking show test" do
+  xit "booking show test" do
     # 마지막 Booking의 id가 위에서 생성된 booking임.
     id = Booking.last.id
     get "/bookings/#{id}", headers: {Authorization: @token}
     expect(JSON.parse(response.body)["booking_info"]["id"]).to eq(id)
   end
 
-  it "booking delete test" do
+  xit "booking delete test" do
     # 마지막 Booking의 id가 위에서 생성된 booking임.
     id = Booking.last.id
     delete "/bookings/#{id}", headers: {Authorization: @token}
     expect(response).to have_http_status(:ok)
   end
 
-  it "booking accept test" do
+  xit "booking accept test" do
     # 처음 생성했을 땐 대기 상태
     expect(@booking.acceptance).to eq("waiting")
 
@@ -133,7 +133,7 @@ describe "Booking test", type: :request do
     expect(Booking.find(@booking.id).acceptance).to eq("accepted")
   end
 
-  it "booking complete test" do
+  xit "booking complete test" do
     post = @booking.post
     # 예약이 승인된 상태가 아니면 complete할 수 없음.
     @booking = Booking.find(@booking.id)

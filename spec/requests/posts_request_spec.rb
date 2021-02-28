@@ -12,7 +12,7 @@ describe "Post test", type: :request do
     @token =  JSON.parse(response.body)["token"]
   end
 
-  it 'post index test' do
+  xit 'post index test' do
     # 존재하지 않는 지역으로 찾기
     # 404 (Not Found) error 발생
     get "/posts", params: {location_title: "삼성동"}, headers: {Authorization: @token}
@@ -66,14 +66,14 @@ describe "Post test", type: :request do
     expect(posts - ids).to eq([])
   end
 
-  it "post show test" do
+  xit "post show test" do
     post_id = Post.all.ids.sample
     
     get "/posts/#{post_id}", headers: {Authorization: @token}
     expect(JSON.parse(response.body)["post_info"]["id"]).to eq(post_id)
   end
 
-  it "post create test" do
+  xit "post create test" do
     # 생성에 필요한 정보가 없을 때 bad request 상태가 뜸
     post_info = { post: {title: nil, body: "2일부터 8일까지 대여해줍니다.", product: "맥북 15인치", price: 21000,
       post_type: :provide, category_id: 4} }
@@ -88,7 +88,7 @@ describe "Post test", type: :request do
     expect(response).to have_http_status(200)
   end
 
-  it "post update test" do
+  xit "post update test" do
     post = Post.last
 
     update_info = { post: {title: "업데이트", body: "업데이트되어야 함", product: "업데이트 상품", price: 10000, 
@@ -106,7 +106,7 @@ describe "Post test", type: :request do
     expect(post.category_id).to eq(update_info[:post][:category_id])
   end
 
-  it "post delete test" do
+  xit "post delete test" do
     # last id가 위 테스트에서 생성한 post의 id임.
     post_id = Post.last.id
 
@@ -114,7 +114,7 @@ describe "Post test", type: :request do
     expect(response).to have_http_status(200)
   end
 
-  it "post like test" do
+  xit "post like test" do
     id = Post.all.ids.sample
 
     # post에 좋아요한 유저의 이름을 반환함
