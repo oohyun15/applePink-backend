@@ -34,7 +34,14 @@ jobs:
       - run:
           name: install bundler
           command: gem install bundler:2.1.4
+      - restore_cache:
+          keys:
+            - bundle-applepink-{{ checksum "Gemfile.lock" }}
       - ruby/bundle-install
+      - save_cache:
+          key: bundle-applepink-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
       - run: cp config/database.yml.sample config/database.yml
       - run:
           name: database setup
