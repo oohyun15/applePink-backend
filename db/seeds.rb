@@ -83,7 +83,7 @@ def generate_locations
   end
 end
 
-def generate_groups
+def generate_universites
   CSV.foreach("public/SchoolEmail.csv", headers: true) do |row|
     begin
       group = Group::School.create!(row.to_hash)
@@ -92,7 +92,9 @@ def generate_groups
       p e.message
     end
   end
+end
 
+def generate_firms
   CSV.foreach("public/FirmEmail.csv", headers: true) do |row|
     begin
       group = Group::Firm.create!(row.to_hash)
@@ -109,4 +111,5 @@ generate_categories unless Category.exists?
 generate_locations unless Location.exists?
 generate_user 5 unless User.exists? || Rails.env.production?
 generate_post 5 unless Post.exists?
-generate_groups unless Group.exists?
+generate_universites unless Group::School.exists?
+generate_firms unless Group::Firm.exists?
