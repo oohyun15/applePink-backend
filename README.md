@@ -14,12 +14,12 @@
 ## Intro
 This repository is Modunanum's Back-end API server built with **Ruby on Rails**.
   
-You can find our [Front-end repo](https://github.com/d-virusss/capstone_front_RN) built with **React Native**.
+You can find our Front-end repository built with **React Native**. *[(link)](https://github.com/d-virusss/capstone_front_RN)*
 
 This README would normally document whatever steps are necessary to get the
 application up and running.  
   
-*Updated: 2021.02.13*
+*Updated: 2021.02.28*
 
 ## Requirements 
 * Linux Ubuntu 16.04 / MacOS Catalina (recommend MacOS)
@@ -29,6 +29,7 @@ application up and running.
 * PostgreSQL 9.5.23+
 * ImageMagick 7.0.10+
 * Xcode 12.0+
+* Jenkins 2.263.3 *(optional)*
 * Capistrano 3.14.1 *(optional)*
 
 #### 3rd-party API
@@ -41,6 +42,7 @@ application up and running.
 * Kakaocert          *[(link)](https://www.kakaocert.com/)*
 * Cloudmersive       *[(link)](https://cloudmersive.com/)*
 * Sentry             *[(link)](https://sentry.io/)*
+* CircleCI           *[(link)](https://circleci.com/)*
 
 ## Features
 #### OAuth Social Sign-in
@@ -61,7 +63,6 @@ application up and running.
 #### Keyword Notification
 * Up to 20 registered
 * FCM (Android & Apple)
-* APNS (Apple only)
 
 #### Electronic Signature
 * Kakaocert
@@ -72,13 +73,21 @@ application up and running.
 
 #### Association Certification
 * University
-  * Support 108 universities in Korea
+  * Support 139 universities in Korea
+* Firm
+  * Support 25 firms in Korea
 
 #### Converting from HEIC to PNG 
 * Cloudmersive
 
 #### Administrator Page
 * Activeadmin
+
+#### Continuous Integration & Continuous Delivery
+* Jenkins
+* CircleCI
+* Capistrano
+* Sentry
 
 ## Getting started
 **1. Create application.yml & database.yml**
