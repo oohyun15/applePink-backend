@@ -92,6 +92,7 @@ end
 group :test, :development do
   gem 'rspec-rails', '~> 4.0.1'
   gem 'faker'
+  gem 'factory_girl'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
 end

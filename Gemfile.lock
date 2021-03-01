@@ -183,6 +183,8 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
+    factory_girl (4.9.0)
+      activesupport (>= 3.0.0)
     faker (2.15.1)
       i18n (>= 1.6, < 2)
     faraday (1.0.1)
@@ -498,6 +500,7 @@ DEPENDENCIES
   delayed_job_active_record
   devise
   factory_bot_rails
+  factory_girl
   faker
   fcm
   figaro
