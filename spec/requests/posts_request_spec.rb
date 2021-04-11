@@ -8,19 +8,19 @@ describe "Post test", type: :request do
     @id = user.id
     @email = user.email
 
-    post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
+    post "/api/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
     @token =  JSON.parse(response.body)["token"]
   end
 
   xit 'post index test' do
     # 존재하지 않는 지역으로 찾기
     # 404 (Not Found) error 발생
-    get "/posts", params: {location_title: "삼성동"}, headers: {Authorization: @token}
+    get "/api/posts", params: {location_title: "삼성동"}, headers: {Authorization: @token}
     expect(response).to have_http_status(:not_found)
 
     # response로 넘어온 post들이 랜덤으로 선택된 지역의 post인지 확인
     title = Location.all.pluck(:title).sample
-    get "/posts", params: {location_title: title}, headers: {Authorization: @token}
+    get "/api/posts", params: {location_title: title}, headers: {Authorization: @token}
 
     # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들을 id를 비교함.
     posts = Post.where(title: title).ids
@@ -45,7 +45,7 @@ describe "Post test", type: :request do
       location_positions = location.location_far
     end
 
-    get "/posts", headers: {Authorization: @token}
+    get "/api/posts", headers: {Authorization: @token}
     # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들의 id를 비교함.
     posts_location = Post.where(post_type: :provide, location_id: location_positions).ids
 
@@ -55,7 +55,7 @@ describe "Post test", type: :request do
     end
     expect(posts_location - ids_location).to eq([])
     
-    get "/posts", params: {post_type: :ask}, headers: {Authorization: @token}
+    get "/api/posts", params: {post_type: :ask}, headers: {Authorization: @token}
     # response에서 온 post들의 id와 db에서 query로 직접 뽑아낸 post들의 id를 비교함.
     posts = Post.where(post_type: :ask, location_id: location_positions).ids
 
@@ -69,7 +69,7 @@ describe "Post test", type: :request do
   xit "post show test" do
     post_id = Post.all.ids.sample
     
-    get "/posts/#{post_id}", headers: {Authorization: @token}
+    get "/api/posts/#{post_id}", headers: {Authorization: @token}
     expect(JSON.parse(response.body)["post_info"]["id"]).to eq(post_id)
   end
 
@@ -77,14 +77,14 @@ describe "Post test", type: :request do
     # 생성에 필요한 정보가 없을 때 bad request 상태가 뜸
     post_info = { post: {title: nil, body: "2일부터 8일까지 대여해줍니다.", product: "맥북 15인치", price: 21000,
       post_type: :provide, category_id: 4} }
-      post "/posts", params: post_info, headers: {Authorization: @token}
+      post "/api/posts", params: post_info, headers: {Authorization: @token}
     expect(response).to have_http_status(400)
 
     #생성할 post의 정보를 정의함
     post_info = { post: {title: "맥북 15인치 대여합니다.", body: "2일부터 8일까지 대여해줍니다.", product: "맥북 15인치", price: 21000,
       post_type: :provide, category_id: 4} }
     
-    post "/posts", params: post_info, headers: {Authorization: @token}
+    post "/api/posts", params: post_info, headers: {Authorization: @token}
     expect(response).to have_http_status(200)
   end
 
@@ -95,7 +95,7 @@ describe "Post test", type: :request do
       post_type: "ask", category_id: 2} }
     
     # 위의 내용대로 post를 update 함.
-    put "/posts/#{post.id}", params: update_info, headers: {Authorization: @token}
+    put "/api/posts/#{post.id}", params: update_info, headers: {Authorization: @token}
 
     post = Post.last
     expect(post.title).to eq(update_info[:post][:title])
@@ -110,7 +110,7 @@ describe "Post test", type: :request do
     # last id가 위 테스트에서 생성한 post의 id임.
     post_id = Post.last.id
 
-    delete "/posts/#{post_id}", headers: {Authorization: @token}
+    delete "/api/posts/#{post_id}", headers: {Authorization: @token}
     expect(response).to have_http_status(200)
   end
 
@@ -118,7 +118,7 @@ describe "Post test", type: :request do
     id = Post.all.ids.sample
 
     # post에 좋아요한 유저의 이름을 반환함
-    get "/posts/#{id}/like", headers: {Authorization: @token}
+    get "/api/posts/#{id}/like", headers: {Authorization: @token}
     user_list = JSON.parse(response.body)["user_list"]
     
     # 데이터베이스에서 직접 찾은 내용과 일치하는지 확인

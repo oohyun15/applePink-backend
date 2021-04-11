@@ -6,7 +6,7 @@ describe "User test", type: :request do
     @id = user.id
     @email = user.email
 
-    post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
+    post "/api/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
     @token =  JSON.parse(response.body)["token"]
   end
 
@@ -20,7 +20,7 @@ describe "User test", type: :request do
   # sign_up 이후에는 유저가 생성됨.
   xit 'user create test' do
     expect(User.where(email: "tonem123@naver.com").present?).to eq(false)
-    post "/users/sign_up", params: {user: {email: "tonem123@naver.com", nickname: "tonem123", 
+    post "/api/users/sign_up", params: {user: {email: "tonem123@naver.com", nickname: "tonem123", 
       password: "test123", password_confirmation: "test123"}}
       expect(User.where(email: "tonem123@naver.com").present?).to eq(true)
   end
@@ -30,7 +30,7 @@ describe "User test", type: :request do
     location = Location.all.sample
     user_before = User.find_by(email: "tonem123@naver.com")
     user_before.update!(location_id: location.id)
-    put "/users/#{user_before.id}", params: {user: {email: "change123@naver.com", nickname: "change123", 
+    put "/api/users/#{user_before.id}", params: {user: {email: "change123@naver.com", nickname: "change123", 
       password: "change123", password_confirmation: "change123"}}, headers: {Authorization: @token}
 
     #이전 user id로 객체의 정보가 업데이트 되었는지 확인함.
@@ -41,7 +41,7 @@ describe "User test", type: :request do
 
   xit 'user range test' do
     user_before = User.find_by(email: "change123@naver.com")
-    post "/users/sign_in", params: {user: {email: user_before.email, password: "change123"}}
+    post "/api/users/sign_in", params: {user: {email: user_before.email, password: "change123"}}
 
     before_range = user_before.location_range
     put range_users_path, params: {user: {location_range: "location_far"}}, headers: {Authorization: JSON.parse(response.body)["token"]}
@@ -53,20 +53,20 @@ describe "User test", type: :request do
 
   xit 'user withdrawal test' do
     user = User.find_by(email: "change123@naver.com")
-    post "/users/sign_in", params: {user: {email: user.email, password: "change123"}} 
-    delete '/users/withdrawal', headers: {Authorization: JSON.parse(response.body)["token"]}
+    post "/api/users/sign_in", params: {user: {email: user.email, password: "change123"}} 
+    delete '/api/users/withdrawal', headers: {Authorization: JSON.parse(response.body)["token"]}
     expect(User.where(id: user.id).present?).to eq(false)
   end
 
   #전체 유저 목록을 불러오는지 확인
   xit 'user index test' do
-    get "/users", headers: {Authorization: @token}
+    get "/api/users", headers: {Authorization: @token}
     expect(JSON.parse(response.body).size).to eq(User.all.size)
   end
 
   #선택한 유저 정보를 가져오는 확인
   xit 'user show test' do
-    get "/users/#{@id}", headers: {Authorization: @token}
+    get "/api/users/#{@id}", headers: {Authorization: @token}
     expect(JSON.parse(response.body)["user_info"]["id"]).to eq(@id)
   end
 

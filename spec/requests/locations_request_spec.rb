@@ -8,18 +8,18 @@ describe "Location test", type: :request do
     @id = @user.id
     @email = @user.email
 
-    post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
+    post "/api/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
     @token =  JSON.parse(response.body)["token"]
   end
   
   xit "location index test" do 
-    get "/locations", headers: {Authorization: @token}
+    get "/api/locations", headers: {Authorization: @token}
     expect(JSON.parse(response.body).size).to eq(Location.all.size)
   end
 
   xit "location show test" do
     id = Location.all.ids.sample
-    get "/locations/#{id}", headers: {Authorization: @token}
+    get "/api/locations/#{id}", headers: {Authorization: @token}
     expect(JSON.parse(response.body)["location_info"]["id"]).to eq(id)
   end
 
@@ -29,7 +29,7 @@ describe "Location test", type: :request do
     expect(Location.find_by(title: title).nil?).to eq(true)
 
     # 그 지역이 새로 생성되고 지역 범위에 상관없이 모두 자기 자신만 나옴
-    get "/locations/display", params: {title: title}, headers: {Authorization: @token}
+    get "/api/locations/display", params: {title: title}, headers: {Authorization: @token}
     expect(Location.find_by(title: title).nil?).to eq(false)
     JSON.parse(response.body)["location_info"]["range"].each do |range|
       # 그 범위에 속하는 동네 이름은 자기 자신만 있음.
@@ -42,7 +42,7 @@ describe "Location test", type: :request do
 
     # 이미 등록된 지역의 경우
     location = Location.all.sample
-    get "/locations/display", params: {title: location.title}, headers: {Authorization: @token}
+    get "/api/locations/display", params: {title: location.title}, headers: {Authorization: @token}
     expect(JSON.parse(response.body)["location_info"]["id"]).to eq(location.id)
     
     #기존에 등록되어 있는 데이터를 불러옴
@@ -67,7 +67,7 @@ describe "Location test", type: :request do
     range_list = ["location_alone", "location_near", "location_normal", "location_far"]
     expire_time = 1.week.from_now
     
-    put "/locations/certificate", params: {location: {title: location.title, range: range}}, headers: {Authorization: @token}
+    put "/api/locations/certificate", params: {location: {title: location.title, range: range}}, headers: {Authorization: @token}
 
     # 현재 유저가 제대로 업데이트 됐는지 확인
     @user = User.find(@user.id)

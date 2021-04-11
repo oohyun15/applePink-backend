@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe Api::UsersController, type: :controller do
   render_views
 
   describe "users_controller" do

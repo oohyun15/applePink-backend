@@ -8,7 +8,7 @@ describe "Company test", type: :request do
     @id = @user.id
     @email = @user.email
 
-    post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
+    post "/api/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
     @token =  JSON.parse(response.body)["token"]
   end
 
@@ -29,7 +29,7 @@ describe "Company test", type: :request do
     }
     # 이미 현재 사용자가 이전에 광고주 신청을 했을 경우
     if @user.company.present?
-      post "/companies", params: company_info, headers: {Authorization: @token}
+      post "/api/companies", params: company_info, headers: {Authorization: @token}
       # 광고주 신청이 승인됐을 경우
       if @user.company&.approve
         # 이미 광고주라는 메세지를 출력함.
@@ -44,13 +44,13 @@ describe "Company test", type: :request do
       # 이전에 광고주 신청을 하지 않았을 경우
       # 하나라도 nil 값이 들어오면 생성되지 않음.
       company_info[:company][:name] = nil
-      post "/companies", params: company_info, headers: {Authorization: @token}
+      post "/api/companies", params: company_info, headers: {Authorization: @token}
       expect(response).to have_http_status(:bad_request)
 
       # body에 모든 정보를 다 채워넣고 요청을 보냈을 때
       company_info[:company][:name] = Faker::Name.name
       # 신청됐다는 메세지와 함께 승인 대기 중(approve: false)으로 생성됨.
-      post "/companies", params: company_info, headers: {Authorization: @token}
+      post "/api/companies", params: company_info, headers: {Authorization: @token}
       expect(JSON.parse(response.body)["message"]).to eq("파트너 신청이 완료되었습니다.")
       expect(response).to have_http_status(:ok)
     end
@@ -59,7 +59,7 @@ describe "Company test", type: :request do
   xit "Company show test" do
     company = Company.all.sample
 
-    get "/companies/#{company.id}", headers: {Authorization: @token}
+    get "/api/companies/#{company.id}", headers: {Authorization: @token}
 
     expect(JSON.parse(response.body)["company_info"]["id"]).to eq(company.id)
   end
@@ -70,11 +70,11 @@ describe "Company test", type: :request do
 
     # 그 신청이 자신의 신청이 아닐 경우
     if company.user != @user
-      delete "/companies/#{company.id}", headers: {Authorization: @token}
+      delete "/api/companies/#{company.id}", headers: {Authorization: @token}
       expect(response).to have_http_status(:unauthorized)
     else
       # 본인이 신청한 광고주 신청일 경우
-      delete "/companies/#{company.id}", headers: {Authorization: @token}
+      delete "/api/companies/#{company.id}", headers: {Authorization: @token}
       expect(Company.find_by(id: company.id)).to eq(nil)
       expect(response).to have_http_status(:ok)
     end

@@ -8,7 +8,7 @@ describe "Question test", type: :request do
     @id = user.id
     @email = user.email
 
-    post "/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
+    post "/api/users/sign_in", params: {user: {email: "#{@email}", password: "test123"}}
     @token =  JSON.parse(response.body)["token"]
   end
 
@@ -16,7 +16,7 @@ describe "Question test", type: :request do
     # 문의 생성
     question_info = {question: {title: "문의합니다", body: "문의하겠습니다",
       contact: Faker::Base.numerify('010########')}}
-    post "/questions", params: question_info, headers: {Authorization: @token}
+    post "/api/questions", params: question_info, headers: {Authorization: @token}
     
     # 생성한 문의 삭제
     Question.last.delete
