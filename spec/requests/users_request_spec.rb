@@ -44,7 +44,7 @@ describe "User test", type: :request do
     post "/api/users/sign_in", params: {user: {email: user_before.email, password: "change123"}}
 
     before_range = user_before.location_range
-    put range_users_path, params: {user: {location_range: "location_far"}}, headers: {Authorization: JSON.parse(response.body)["token"]}
+    put range_api_users_path, params: {user: {location_range: "location_far"}}, headers: {Authorization: JSON.parse(response.body)["token"]}
 
     user_after = User.find(user_before.id)
     expect(before_range.eql? user_after.location_range).to eq(false)
@@ -71,13 +71,13 @@ describe "User test", type: :request do
   end
 
   xit 'user mypage test' do
-    get mypage_users_path, headers: {Authorization: @token}
+    get mypage_api_users_path, headers: {Authorization: @token}
     #결과로 나온 user 정보가 로그인한 유저의 정보인지 확인
     expect(JSON.parse(response.body)["user_info"]["id"]).to eq(@id)
   end
 
   xit 'user list test' do
-    get list_user_path(@id), params: {post_type: "provide"}, headers: {Authorization: @token}
+    get list_api_user_path(@id), params: {post_type: "provide"}, headers: {Authorization: @token}
 
     posts = Post.where(["user_id = :user_id and post_type = :post_type", { user_id: @id, post_type: 0 }]).ids
     

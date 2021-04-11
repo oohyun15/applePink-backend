@@ -15,9 +15,9 @@ ActiveAdmin.register Company do
     tag_column :approve do |company| company.approve ? "accepted" : "rejected" end
     column("승인관리") do |company|
       if company.approve
-        link_to "승인취소", confirm_company_path(company.id, approve: false), method: :patch
+        link_to "승인취소", confirm_api_company_path(company.id, approve: false), method: :patch
       else
-        link_to "승인하기", confirm_company_path(company.id, approve: true), method: :patch
+        link_to "승인하기", confirm_api_company_path(company.id, approve: true), method: :patch
       end
     end
     actions
@@ -35,9 +35,9 @@ ActiveAdmin.register Company do
       tag_row :approve do |company| company.approve ? "accepted" : "rejected" end
       row("승인관리") do |company|
         if company.approve
-          link_to "승인취소", confirm_company_path(company.id, approve: false), method: :patch
+          link_to "승인취소", confirm_api_company_path(company.id, approve: false), method: :patch
         else
-          link_to "승인하기", confirm_company_path(company.id, approve: true), method: :patch
+          link_to "승인하기", confirm_api_company_path(company.id, approve: true), method: :patch
         end
       end
     end
