@@ -12,10 +12,16 @@
  *
  *= require_tree .
  *= require_self
+ *= require sign_in
  */
 
  $mainBackground: #fff1f6;
  $container: 1024px;
+
+.modal-sign-in {
+  max-width: 512px;
+  margin: 10vh auto;
+}
 
 .modal-video {
   max-width: 1024px;

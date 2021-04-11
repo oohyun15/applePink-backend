@@ -10,16 +10,13 @@
     </h1>
 
     <section id="fixed-bar-download">
-      <a class="fixed-download-button" id="header-download-button-ios" href="#" onclick="return false;">
-        <img class="fixed-apple-store" alt="App Store" src="/image/icon/app-store-brands.svg">
-        <div class="fixed-download-text">App Store</div>
+      <a class="fixed-download-button btn-modal" id="header-download-button-ios" href="#" onclick="return false;" data-name="sign-in">
+        <i class="fas fa-lock fa-2x"></i>
+        <div class="fixed-download-text">로그인</div>
       </a>
-      <a class="fixed-download-button" id="header-download-button-android" href="https://softcon.ajou.ac.kr/works/works.asp?uid=332">
-        <img class="fixed-google-play m-0" style="width:85%;" alt="softcon" src="/image/icon/softcon_icon.png">
-        <!-- 
-        <img class="fixed-google-play" alt="Google Play" src="/image/icon/google-play-brands.svg">
-        <div class="fixed-download-text">Google Play</div>
-         -->
+      <a class="fixed-download-button" id="header-download-button-android" href="#" onclick="return false;">
+        <img class="fixed-apple-store" alt="App Store" src="/image/icon/app-store-brands.svg">
+        <div class="fixed-download-text">다운로드</div>
       </a>
     </section>
   </div>
@@ -136,6 +133,45 @@
   </div>
 </div>
 
+<!-- modal-sign-in 시작 -->
+<div class="modal fade" id="modal-sign-in" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sign-in" role="document">
+    <div class="modal-content" style="border-radius: 1rem;">
+      <div class="modal-header" style="padding: 1.5rem 1.5rem;">
+        <div class="text-xl text-bold">모두나눔 로그인</div>
+      </div>
+      <div class="modal-body text-center" style="padding: 1.5rem 1rem;">
+        <div class="card-body">
+          <%= form_for @user, url: api_users_sign_in_path(@user), method: "POST", remote: true do |f| %>
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              </div>
+              <%= f.email_field :email, placeholder: "email", class: "form-control" %>
+            </div>
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              </div>
+              <%= f.password_field :password, placeholder: "password", autocomplete: "off", class: "form-control" %>
+            </div>
+            <%= f.submit "로그인", class: "btn float-right login_btn" %>
+          <% end %>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex justify-content-center links">
+            Don't have an account?<a href="#">Sign Up</a>
+          </div>
+          <div class="d-flex justify-content-center">
+            <a href="#">Forgot your password?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal-sign-in 끝 -->
+
 <!-- modal-info 시작 -->
 <div class="modal fade" id="modal-info" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-video" role="document">
@@ -173,15 +209,16 @@
 <!-- modal-page 끝 -->
 
 <script>
+const modal_sign_in = $("#modal-sign-in")
 const modal_info = $("#modal-info")
 const modal_page = $("#modal-page")
 
-$("#header-download-button-ios").on("click", function() {
-  alert("2월 출시 예정입니다. 잠시만 기다려 주세요.");
-})
-
 $(".btn-modal").on("click", function() {
   switch ($(this).data("name")) {
+    case "sign-in":
+      modal_sign_in.modal("show");
+      break;
+
     case "info":
       modal_info.modal("show");
       break;

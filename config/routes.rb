@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   root "home#index"
-
+  resources :users
+  
   namespace :api do
     post 'users/sign_in', to: 'authentication#create'
     post 'users/sign_up', to: 'users#create'
