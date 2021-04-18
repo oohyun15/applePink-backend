@@ -33,6 +33,13 @@
   </head>
 
   <body>
+    <% if notice %>
+      <%= render 'shared/notice_banner' %>
+    <% end %>
+    <% if alert %>
+      <%= render 'shared/alert_banner' %>
+    <% end %>
+    <%= render 'shared/header' %>
     <%= yield %>
   </body>
 </html>

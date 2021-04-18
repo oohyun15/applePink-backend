@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :load_post, only: %i(show)
   def index
     # 내가 판매하는 상품
     if params[:type] == "selling"
@@ -21,6 +22,19 @@ class PostsController < ApplicationController
     #   @posts = @posts.order(impressions_count: :desc)
     # end
     @posts = @posts.page(params[:page]).per(20)
-    
+  end
+
+  def show
+
+  end
+
+  private
+  def load_post
+    begin
+      @post = Post.find(params[:id])
+    rescue => e
+      Rails.logger.error "ERROR: 없는 게시글입니다. #{log_info}"
+      render json: {error: "없는 게시글입니다."}, status: :bad_request
+    end
   end
 end
