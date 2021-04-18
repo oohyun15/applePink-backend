@@ -10,9 +10,10 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= stub active_admin
  *= require_tree .
  *= require_self
- *= require sign_in
+ *= require posts
  */
 
  $mainBackground: #fff1f6;
@@ -950,4 +951,12 @@ b {
     line-height: 1;
     margin-bottom: 0.5em;
   }
+}
+
+.alert {
+  position: fixed !important;
+  top: 1rem;
+  left: 1rem;
+  width: 90%;
+  z-index: 1000;
 }

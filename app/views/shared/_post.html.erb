@@ -1,0 +1,27 @@
+<div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+<%= link_to post do %>
+  <div class="card">
+      <img src="<%= post.image.url(:square) if post.image? %>" class="card-img-top img-thumbnail" alt="No Image">
+    <div class="card-body">
+      <div class="text-center">
+        <span class="text"><strong><%= number_with_delimiter post.price %></strong> 원</span>
+        <p class="card-title"><%= post.title.truncate(15) %></p>
+      </div>
+      <hr>
+      <small>
+        <p class="card-text post-description"><%= post.body %></p>
+        <hr>
+        <div class="card-subtitle text-right">
+          판매자: <%= post.user&.name %> <br>
+          조회수: <%= number_with_delimiter post.like_count %> 회
+        </div>
+      </small>
+    </div>
+    <% end %>
+    <div class="card-footer py-2 pr-3">
+      <small class="float-right">
+
+      </small>
+    </div>
+  </div>
+</div>
