@@ -202,7 +202,7 @@ $(".btn-modal").on("click", function() {
     case "page":
       Rails.ajax({
         type: "get",
-        url: `/pages/${$(this).data("type")}`,
+        url: `/api/pages/${$(this).data("type")}`,
         dataType: "json",
         success: (data) => {
           modal_page.find(".page-title").html(data.title)
