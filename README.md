@@ -1,7 +1,11 @@
 <p align="center"><a href="https://www.applepink.ml" target="_blank" rel="noopener noreferrer"><img width="150" src="https://raw.githubusercontent.com/oohyun15/applePink-backend/master/public/image/default.png" alt="apple-pink"></a></p>
 
 <h1 align="center">모두나눔</h1>
-<h3 align="center">Location-Based C2C Shared Platform</h3> 
+<p align="center">
+<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Foohyun15%2FapplePink-backend&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+<a href="https://circleci.com/gh/oohyun15/applePink-backend/tree/master"><img src="https://circleci.com/gh/oohyun15/applePink-backend/tree/master.svg?style=shield"></a>
+</p>
+<h3 align="center">Location-Based C2C Shared Platform</h3>
 <p align="center">
   <a href="https://www.applepink.ml" target="_blank">Learn more</a>
 </p>
@@ -14,15 +18,15 @@
 ## Intro
 This repository is Modunanum's Back-end API server built with **Ruby on Rails**.
   
-You can find our Front-end repository built with **React Native**. *[(link)](https://github.com/d-virusss/capstone_front_RN)*
+You can find our [FE repository](https://github.com/d-virusss/capstone_front_RN) built with **React Native**.
 
 This README would normally document whatever steps are necessary to get the
 application up and running.  
   
-*Updated: 2021.02.28*
+Latest update: **2021.06.06**
 
 ## Requirements 
-* Linux Ubuntu 16.04 / MacOS Catalina (recommend MacOS)
+* Linux Ubuntu 16.04+
 * ruby 2.6.5p114
 * Rails 6.0.0
 * Bundler 2.1.4
@@ -33,16 +37,16 @@ application up and running.
 * Capistrano 3.14.1 *(optional)*
 
 #### 3rd-party API
-* Kakao Developer    *[(link)](https://developers.kakao.com/)*
-* Apple Developer    *[(link)](https://developer.apple.com/)*
-* Firebase           *[(link)](https://firebase.google.com/)*
-* Amazon Web Service *[(link)](https://aws.amazon.com/)*
-* Sendgrid           *[(link)](https://sendgrid.com/)*
-* Cafe24             *[(link)](https://hosting.cafe24.com/)*
-* Kakaocert          *[(link)](https://www.kakaocert.com/)*
-* Cloudmersive       *[(link)](https://cloudmersive.com/)*
-* Sentry             *[(link)](https://sentry.io/)*
-* CircleCI           *[(link)](https://circleci.com/)*
+* [Kakao Developer](https://developers.kakao.com/)
+* [Apple Developer](https://developer.apple.com/)
+* [Firebase](https://firebase.google.com/)
+* [Amazon Web Service](https://aws.amazon.com/)
+* [Sendgrid](https://sendgrid.com/)
+* [Cafe24](https://hosting.cafe24.com/)
+* [Kakaocert](https://www.kakaocert.com/)
+* [Cloudmersive](https://cloudmersive.com/)
+* [Sentry](https://sentry.io/)
+* [CircleCI](https://circleci.com/)
 
 ## Features
 #### OAuth Social Sign-in
@@ -74,8 +78,8 @@ application up and running.
 #### Association Certification
 * University
   * Support 139 universities in Korea
-* Firm
-  * Support 25 firms in Korea
+* Company
+  * Support 25 companies in Korea
 
 #### Converting from HEIC to PNG 
 * Cloudmersive
