@@ -29,7 +29,7 @@ require "capistrano/rvm"
 
 ## bundler 이슈
 set :rbenv_type, :user
-set :rbenv_ruby, '2.6.5'
+set :rbenv_ruby, '2.7.6'
 
 ## Capistrano ↔ Bundler
 ## * bundler require가 없으면 배포 후 자동으로 Gem 설치가 안된다.

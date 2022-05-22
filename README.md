@@ -27,7 +27,7 @@ Latest update: **2021.06.06**
 
 ## Requirements 
 * Linux Ubuntu 16.04+
-* ruby 2.6.5p114
+* ruby 2.7.6
 * Rails 6.0.0
 * Bundler 2.1.4
 * PostgreSQL 9.5.23+
